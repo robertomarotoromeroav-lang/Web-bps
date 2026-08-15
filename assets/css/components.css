@@ -85,11 +85,15 @@
    Barra de anuncios
    -------------------------------------------------------------------------- */
 
+/* Altura fija: es la medida que el JS usa para esconderla al hacer scroll. */
 .announcement {
+  display: grid;
+  place-items: center;
+  height: var(--announcement-height);
   background-color: var(--color-black);
   color: var(--color-white);
   text-align: center;
-  padding: 10px var(--page-padding-inline);
+  padding-inline: var(--page-padding-inline);
 }
 
 .announcement p {
@@ -102,25 +106,51 @@
    Transparente sobre el hero, sólida al hacer scroll o al abrir el menú.
    -------------------------------------------------------------------------- */
 
-/* La cabecera de Hyperice es `static`: no queda fijada ni cambia de color al
-   hacer scroll, simplemente se va con la página. En todo su HTML no hay una
-   sola regla `sticky` o `fixed` para el header fuera del buscador abierto. */
-.header {
-  position: static;
+/* Contenedor fijo con la barra de anuncios y la cabecera dentro, tal como lo
+   resuelve Hyperice. Al hacer scroll no cambia de color: sube lo justo para
+   esconder la barra de anuncios y dejar la cabecera arriba. */
+.site-header {
+  position: fixed;
+  top: var(--header-top-position);
+  left: 0;
+  right: 0;
   z-index: var(--z-header);
+  transition: top var(--transition-base);
+}
+
+/* El contenido arranca por debajo del bloque fijo. */
+.page {
+  padding-top: calc(var(--announcement-height) + var(--header-height));
+}
+
+/* Salvo cuando hay hero: ahí la cabecera se superpone a la fotografía. */
+.page--hero {
+  padding-top: 0;
+}
+
+/* Páginas sin barra de anuncios: solo hay que reservar el alto de la cabecera. */
+.page--no-announcement {
+  padding-top: var(--header-height);
+}
+
+.header {
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Sobre el hero la cabecera se superpone a la imagen, en blanco y sin borde.
-   Como el hero ocupa la altura completa, se resta el alto de la cabecera para
-   que no empuje el contenido hacia abajo. */
+/* Sobre el hero la cabecera va transparente y en blanco. Al salir del hero
+   necesita fondo para seguir siendo legible: Hyperice usa negro al 80 % con
+   desenfoque, nunca blanco. */
 .header--overlay {
-  position: relative;
   background-color: transparent;
   border-bottom-color: transparent;
   color: var(--color-white);
-  margin-bottom: calc(var(--header-height) * -1);
+  transition: background-color var(--transition-base);
+}
+
+.header--overlay.is-past-hero {
+  background-color: rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(10px);
 }
 
 /* Al abrir el menú móvil sí necesita fondo, porque el panel cubre la página. */
@@ -760,7 +790,11 @@ a:hover > .media img,
   width: 100%;
 }
 
+/* Jerarquía del pie: el rótulo de cada columna es MAYOR que sus enlaces.
+   Rótulo 18 px en blanco, enlaces 16 px en gris que aclara al pasar. */
+/* En móvil el rótulo lo pone el botón del acordeón, así que se oculta. */
 .footer__heading {
+  display: none;
   font-size: var(--font-size-h6);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-heading);
@@ -768,25 +802,127 @@ a:hover > .media img,
   margin-bottom: 20px;
 }
 
+@media (min-width: 750px) {
+  .footer__heading {
+    display: block;
+  }
+}
+
 .footer__links {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
-/* Los enlaces del pie de Hyperice usan tamaño h5 (24 px) y color blanco,
-   atenuándose al pasar el cursor. No son letra pequeña gris. */
 .footer__links a {
-  color: var(--color-foreground-secondary);
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-heading);
-  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-link);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  line-height: 1.4;
   transition: color var(--transition-fast);
 }
 
 .footer__links a:hover {
-  color: var(--color-link);
+  color: var(--color-foreground-secondary);
+}
+
+/* Cada enlace de tecnología lleva su icono a la izquierda, en una caja fija
+   para que los rótulos queden alineados aunque el icono cambie. */
+.footer__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.footer__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* --------------------------------------------------------------------------
+   Acordeón del pie
+   En móvil Hyperice colapsa cada columna tras un botón con un +/−; en
+   escritorio las muestra desplegadas y sin botón.
+   -------------------------------------------------------------------------- */
+
+.footer__accordion-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-foreground-secondary);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
+  text-align: left;
+}
+
+.footer__accordion-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+}
+
+/* El signo se dibuja con dos barras: la vertical se oculta al desplegar,
+   convirtiendo el + en −. */
+.footer__accordion-icon::before,
+.footer__accordion-icon::after {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 1.5px;
+  background-color: currentColor;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.footer__accordion-icon::after {
+  transform: rotate(90deg);
+}
+
+.footer__accordion-toggle[aria-expanded="true"] .footer__accordion-icon::after {
+  transform: rotate(0deg);
+  opacity: 0;
+}
+
+.footer__accordion-panel {
+  overflow: hidden;
+  height: 0;
+  transition: height var(--transition-base);
+}
+
+.footer__accordion-panel > div {
+  padding-block: 18px 6px;
+}
+
+@media (min-width: 750px) {
+  /* En escritorio no hay acordeón: rótulo visible y panel siempre abierto. */
+  .footer__accordion-toggle {
+    display: none;
+  }
+
+  .footer__accordion-panel {
+    height: auto !important;
+    overflow: visible;
+  }
+
+  .footer__accordion-panel > div {
+    padding-block: 0;
+  }
 }
 
 .footer__social {

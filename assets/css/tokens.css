@@ -104,6 +104,14 @@
   --header-height: 64px;
   --header-logo-width: 140px;
 
+  /* Cabecera fija.
+     Hyperice mantiene arriba un contenedor `fixed` con la barra de anuncios y
+     la cabecera dentro, y al pasar de 50 px de scroll sube ese contenedor
+     justo el alto de la barra: la barra desaparece y la cabecera queda
+     pegada al borde superior. `--header-top-position` lo controla el JS. */
+  --announcement-height: 38px;
+  --header-top-position: 0px;
+
   /* ---------- Movimiento ----------
      Hyperice es sobrio: transiciones cortas, sin rebotes ni sombras. */
   --transition-fast: 0.2s ease;

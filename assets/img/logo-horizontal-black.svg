@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 110" role="img" aria-label="BPS Performance">
+  <title>BPS Performance (black)</title>
+  <g transform="translate(0 15) scale(1.330)" fill="#1B4DF5"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></g>
+  <g transform="translate(158 0)" color="#000000"><g transform="translate(8 8)" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="square" stroke-linejoin="round"><path d="M9 5V95M9 5h46q25 0 25 22t-25 22H9m0 0h49q25 0 25 23t-25 23H9"/><g transform="translate(108 0)"><path d="M9 95V5m0 0h48q27 0 27 26t-27 26H9"/></g><g transform="translate(217 0)"><path d="M82 16q-9-11-30-11H31Q7 5 7 27t24 21h24q27 0 27 23 0 13-11 19-9 5-19 5H31q-18 0-27-11"/></g></g></g>
+</svg>

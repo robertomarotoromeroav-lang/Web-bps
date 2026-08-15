@@ -17,15 +17,16 @@
 <link rel="stylesheet" href="assets/css/layout.css">
 </head>
 
-<body class="page">
+<body class="page page--hero">
 <a class="skip-link" href="#main">Saltar al contenido</a>
 
+<div class="site-header" data-site-header>
 <div class="announcement">
   <p>Envío gratuito en pedidos superiores a 100&nbsp;€</p>
 </div>
 
-<!-- La cabecera se superpone al hero y se va con el scroll: no queda fijada
-     ni cambia de color, igual que en Hyperice. -->
+<!-- Cabecera fija sobre el hero. Al hacer scroll no cambia de color: sube el
+     bloque lo justo para esconder la barra de anuncios, como en Hyperice. -->
 <header class="header header--overlay" data-header>
   <div class="header__inner">
     <a class="header__logo" href="index.html">
@@ -78,6 +79,7 @@
     </div>
   </div>
 </header>
+</div>
 
 <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
   <div class="mobile-menu__head">
@@ -393,29 +395,56 @@
 
         <div class="footer__columns">
           <div>
+            <button class="footer__accordion-toggle" type="button" data-accordion-toggle
+                    aria-expanded="false" aria-controls="footer-tech">
+              Compra por tecnología
+              <span class="footer__accordion-icon" aria-hidden="true"></span>
+            </button>
             <h2 class="footer__heading">Compra por tecnología</h2>
-            <ul class="footer__links">
-              <li><a href="https://bpsperformance.com/collections/presoterapia">Presoterapia</a></li>
-              <li><a href="https://bpsperformance.com/collections/energia-luminica">Luz roja</a></li>
-              <li><a href="https://bpsperformance.com/collections/recuperacion-polar">Frío</a></li>
-              <li><a href="https://bpsperformance.com/collections/liberacion-muscular">Percusión</a></li>
-            </ul>
+            <div class="footer__accordion-panel" id="footer-tech" data-accordion-panel>
+              <div>
+                <ul class="footer__links">
+              <li><a href="https://bpsperformance.com/collections/presoterapia"><span class="footer__icon" aria-hidden="true"><svg viewBox="0 0 19 19" fill="none"><path d="M3 5h13M3 9.5h13M3 14h13" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/><path d="M6 2.5c2 1.4 5 1.4 7 0M6 16.5c2-1.4 5-1.4 7 0" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/></svg></span><span>Presoterapia</span></a></li>
+              <li><a href="https://bpsperformance.com/collections/energia-luminica"><span class="footer__icon" aria-hidden="true"><svg viewBox="0 0 19 19" fill="none"><circle cx="9.5" cy="9.5" r="3.6" stroke="currentColor" stroke-width="0.9"/><path d="M9.5 1v2.4M9.5 15.6V18M18 9.5h-2.4M3.4 9.5H1M15.5 3.5l-1.7 1.7M5.2 13.8l-1.7 1.7M15.5 15.5l-1.7-1.7M5.2 5.2 3.5 3.5" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/></svg></span><span>Luz roja</span></a></li>
+              <li><a href="https://bpsperformance.com/collections/recuperacion-polar"><span class="footer__icon" aria-hidden="true"><svg viewBox="0 0 19 19" fill="none"><path d="M9.5 1v17M2 5.2l15 8.6M17 5.2 2 13.8" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/><path d="M7.2 2.9 9.5 5l2.3-2.1M7.2 16.1 9.5 14l2.3 2.1" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" fill="none"/></svg></span><span>Frío</span></a></li>
+              <li><a href="https://bpsperformance.com/collections/liberacion-muscular"><span class="footer__icon" aria-hidden="true"><svg viewBox="0 0 19 19" fill="none"><circle cx="9.5" cy="9.5" r="8.6" stroke="currentColor" stroke-width="0.9"/><circle cx="9.5" cy="9.5" r="5.9" stroke="currentColor" stroke-width="0.9"/><circle cx="9.5" cy="9.5" r="3.3" stroke="currentColor" stroke-width="0.9"/><circle cx="9.5" cy="9.5" r="1.1" fill="currentColor"/></svg></span><span>Percusión</span></a></li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div>
+            <button class="footer__accordion-toggle" type="button" data-accordion-toggle
+                    aria-expanded="false" aria-controls="footer-about">
+              Sobre nosotros
+              <span class="footer__accordion-icon" aria-hidden="true"></span>
+            </button>
             <h2 class="footer__heading">Sobre nosotros</h2>
-            <ul class="footer__links">
-              <li><a href="https://bpsperformance.com/pages/sobre-nosotros">Filosofía</a></li>
-              <li><a href="https://bpsperformance.com/blogs/noticias">Blog</a></li>
-              <li><a href="https://fisioterapiabackpackretiro.es">Pruébalos</a></li>
-            </ul>
+            <div class="footer__accordion-panel" id="footer-about" data-accordion-panel>
+              <div>
+                <ul class="footer__links">
+              <li><a href="https://bpsperformance.com/pages/sobre-nosotros"><span>Filosofía</span></a></li>
+              <li><a href="https://bpsperformance.com/blogs/noticias"><span>Blog</span></a></li>
+              <li><a href="https://fisioterapiabackpackretiro.es"><span>Pruébalos</span></a></li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div>
+            <button class="footer__accordion-toggle" type="button" data-accordion-toggle
+                    aria-expanded="false" aria-controls="footer-support">
+              Soporte
+              <span class="footer__accordion-icon" aria-hidden="true"></span>
+            </button>
             <h2 class="footer__heading">Soporte</h2>
-            <ul class="footer__links">
-              <li><a href="contacto.html">Contacto</a></li>
-              <li><a href="https://bpsperformance.com/policies/shipping-policy">Envíos</a></li>
-              <li><a href="https://bpsperformance.com/pages/preguntas-frecuentes">FAQ</a></li>
-            </ul>
+            <div class="footer__accordion-panel" id="footer-support" data-accordion-panel>
+              <div>
+                <ul class="footer__links">
+              <li><a href="contacto.html"><span>Contacto</span></a></li>
+              <li><a href="https://bpsperformance.com/policies/shipping-policy"><span>Envíos</span></a></li>
+              <li><a href="https://bpsperformance.com/pages/preguntas-frecuentes"><span>Preguntas frecuentes</span></a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>

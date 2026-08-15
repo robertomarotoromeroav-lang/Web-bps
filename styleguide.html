@@ -28,8 +28,9 @@
 </style>
 </head>
 
-<body class="page">
+<body class="page page--no-announcement">
 
+<div class="site-header" data-site-header>
 <header class="header" data-header>
   <div class="header__inner">
     <a class="header__logo" href="index.html">
@@ -47,6 +48,7 @@
     </nav>
   </div>
 </header>
+</div>
 
 <main class="container">
 
@@ -83,22 +85,33 @@
 
   <section class="sg-section">
     <p class="text-eyebrow sg-label">Logotipo</p>
-    <div class="sg-row" style="gap:48px">
-      <a class="header__logo" href="index.html">
-        <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
-        <span class="header__logo-word">BPS</span>
-      </a>
-      <span style="display:inline-flex;background:var(--color-black);padding:16px 24px" data-theme="dark">
-        <a class="header__logo" href="index.html" style="color:var(--color-white)">
-          <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true" style="color:currentColor"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
-          <span class="header__logo-word">BPS</span>
-        </a>
-      </span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px">
+      <div style="background:var(--color-white);padding:36px 28px;border:1px solid var(--color-border)">
+        <img src="assets/img/logo-stacked-black.svg" alt="Logotipo apilado en negro" width="150">
+        <p class="sg-swatch__hex" style="margin-top:20px">logo-stacked-black.svg</p>
+      </div>
+      <div style="background:var(--color-black);padding:36px 28px">
+        <img src="assets/img/logo-stacked-white.svg" alt="Logotipo apilado en blanco" width="150">
+        <p class="sg-swatch__hex" style="margin-top:20px;color:var(--color-grey-300)">logo-stacked-white.svg</p>
+      </div>
+      <div style="background:var(--color-white);padding:36px 28px;border:1px solid var(--color-border)">
+        <img src="assets/img/logo-horizontal-black.svg" alt="Logotipo horizontal en negro" width="230">
+        <p class="sg-swatch__hex" style="margin-top:20px">logo-horizontal-black.svg</p>
+      </div>
+      <div style="background:var(--color-black);padding:36px 28px">
+        <img src="assets/img/logo-horizontal-white.svg" alt="Logotipo horizontal en blanco" width="230">
+        <p class="sg-swatch__hex" style="margin-top:20px;color:var(--color-grey-300)">logo-horizontal-white.svg</p>
+      </div>
     </div>
-    <p class="text-body-small text-muted" style="margin-top:20px;max-width:58ch">
-      El isotipo va en azul sobre fondo claro y pasa a blanco sobre fotografía
-      o fondo oscuro. El wordmark está compuesto con la tipografía del sitio:
-      falta el archivo original del logotipo para reproducirlo con exactitud.
+    <p class="text-body-small text-muted" style="margin-top:24px;max-width:58ch">
+      Cuatro variantes, todas con fondo transparente. El isotipo mantiene el azul
+      corporativo en las cuatro; lo que cambia es el color del wordmark, para
+      fondo claro y para fondo oscuro. El azul no se usa en ningún otro sitio.
+    </p>
+    <p class="text-body-small text-muted" style="margin-top:12px;max-width:58ch">
+      El isotipo es geometría exacta. El wordmark está redibujado a partir del
+      logotipo facilitado: se aproxima mucho, pero para producción conviene
+      sustituirlo por el archivo vectorial original.
     </p>
   </section>
 

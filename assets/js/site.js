@@ -6,9 +6,72 @@
 (function () {
   "use strict";
 
-  /* La cabecera no reacciona al scroll: en Hyperice es estática y se va con
-     la página, sin volverse blanca ni quedar fijada. */
   var header = document.querySelector("[data-header]");
+  var root = document.documentElement;
+
+  /* ---- Cabecera fija y barra de anuncios ----
+     Réplica del comportamiento de Hyperice: pasados 50 px de scroll, el
+     bloque fijo sube exactamente el alto de la barra de anuncios, que
+     desaparece y deja la cabecera pegada arriba. Por debajo de 50 px vuelve.
+     La cabecera nunca cambia a blanco. */
+  var announcementHidden = false;
+  var hero = document.querySelector(".hero");
+
+  var onScroll = function () {
+    var y = root.scrollTop || document.body.scrollTop;
+
+    if (y >= 50 && !announcementHidden) {
+      root.style.setProperty(
+        "--header-top-position",
+        "calc(var(--announcement-height) * -1)"
+      );
+      announcementHidden = true;
+    } else if (y < 50 && announcementHidden) {
+      root.style.setProperty("--header-top-position", "0px");
+      announcementHidden = false;
+    }
+
+    /* Al dejar atrás el hero, la cabecera transparente necesita fondo para
+       seguir siendo legible sobre el contenido claro. */
+    if (header && hero) {
+      header.classList.toggle("is-past-hero", y > hero.offsetHeight - 120);
+    }
+  };
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* ---- Acordeón del pie (solo móvil) ---- */
+  var mqDesktop = window.matchMedia("(min-width: 750px)");
+
+  document.querySelectorAll("[data-accordion-toggle]").forEach(function (toggle) {
+    var panel = document.getElementById(toggle.getAttribute("aria-controls"));
+    if (!panel) return;
+
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      // Se anima a la altura real del contenido y luego se libera a auto.
+      panel.style.height = open ? "0px" : panel.scrollHeight + "px";
+    });
+  });
+
+  // En escritorio los paneles van siempre abiertos: se limpia el alto inline
+  // que hubiera dejado el acordeón en móvil.
+  var syncAccordion = function () {
+    document.querySelectorAll("[data-accordion-panel]").forEach(function (panel) {
+      if (mqDesktop.matches) {
+        panel.style.height = "";
+      } else {
+        var toggle = document.querySelector('[aria-controls="' + panel.id + '"]');
+        var open = toggle && toggle.getAttribute("aria-expanded") === "true";
+        panel.style.height = open ? panel.scrollHeight + "px" : "0px";
+      }
+    });
+  };
+
+  syncAccordion();
+  mqDesktop.addEventListener("change", syncAccordion);
 
   /* ---- Menú móvil ---- */
   var menu = document.querySelector("[data-mobile-menu]");

@@ -39,17 +39,27 @@
 }
 
 /* --------------------------------------------------------------------------
-   0. Cabecera estática
-   Hyperice no fija la cabecera: se va con la página y no cambia de color.
-   Si en el editor de temas está activada la opción de cabecera fija, esto la
-   neutraliza. Es la diferencia de comportamiento más visible.
+   0. Cabecera fija con barra de anuncios que se esconde
+   Hyperice mantiene arriba un contenedor fijo con la barra de anuncios y la
+   cabecera dentro. Pasados 50 px de scroll sube ese contenedor exactamente el
+   alto de la barra: la barra desaparece y la cabecera queda pegada al borde.
+   La cabecera NO cambia de color en ningún momento.
+
+   En Dawn: activa la cabecera fija en el editor y añade el snippet JS de
+   GUIA-SHOPIFY.md §2b, que es el que mueve --header-top-position.
    -------------------------------------------------------------------------- */
 
-.shopify-section-group-header-group,
-.shopify-section-header,
-.header-wrapper--sticky,
-sticky-header {
-  position: static !important;
+:root {
+  --header-top-position: 0px;
+}
+
+.shopify-section-group-header-group {
+  position: fixed;
+  top: var(--header-top-position);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: top 300ms ease-in-out;
 }
 
 /* --------------------------------------------------------------------------
@@ -397,25 +407,63 @@ button.shopify-payment-button__button--unbranded {
   margin-bottom: 20px;
 }
 
+/* El rótulo de cada columna es MAYOR que sus enlaces: 18 px en blanco frente
+   a 16 px en gris. Es al revés de lo que sugiere el tamaño por defecto. */
 .footer a,
-.footer .list-menu__item--link,
-.footer__list-social a {
-  color: var(--bps-white);
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+.footer .list-menu__item--link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bps-footer-fg);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
   transition: color var(--duration-default) ease;
 }
 
 .footer a:hover,
 .footer .list-menu__item--link:hover {
-  color: var(--bps-footer-fg);
+  color: var(--bps-white);
   text-decoration: none;
 }
 
 .footer .list-menu__item {
-  padding-block: 10px;
+  padding-block: 5px;
+}
+
+/* Los enlaces de la columna de tecnología llevan icono a la izquierda, en una
+   caja fija para que los rótulos queden alineados. */
+.footer .list-menu__item--link svg,
+.footer .footer-block__details-content img {
+  flex: none;
+  width: 19px;
+  height: 19px;
+}
+
+/* --------------------------------------------------------------------------
+   Acordeón del pie en móvil
+   Dawn ya colapsa los bloques del pie en móvil con <summary>; solo hay que
+   ajustar el estilo del rótulo y del signo +/-.
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 749px) {
+  .footer-block__details summary {
+    padding-block: 18px;
+    border-bottom: 1px solid var(--bps-footer-bg-2);
+  }
+
+  .footer-block__details summary .footer-block__heading {
+    margin-bottom: 0;
+  }
+
+  .footer-block__details .icon-caret {
+    width: 26px;
+    height: 26px;
+    padding: 7px;
+    border-radius: 50%;
+    background-color: var(--bps-footer-bg-2);
+  }
 }
 
 /* Los enlaces legales y el aviso de copyright sí son letra pequeña. */

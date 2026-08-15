@@ -28,8 +28,11 @@ Dawn organiza el color en *esquemas*. Configura los tres primeros así:
 | Esquema 4 (pie de página) | `#212121` | `#CBCBCB` | `#FFFFFF` | `#000000` | `#FFFFFF` |
 
 El pie merece su propio esquema: en Hyperice **no es negro puro** sino `#212121`,
-con el texto base en gris claro `#CBCBCB` y los enlaces en blanco a tamaño de
-titular (24 px), no en letra pequeña. Asigna el esquema 4 a la sección del pie.
+con el texto base en gris claro `#CBCBCB`. Asigna el esquema 4 a la sección del pie.
+
+Ojo con la jerarquía dentro del pie, que es contraintuitiva: **el rótulo de cada
+columna es mayor que sus enlaces** (18 px en blanco frente a 16 px en gris), y
+los enlaces de la columna de tecnología llevan un icono de línea a la izquierda.
 
 Elimina cualquier degradado que tengan configurado los esquemas: Hyperice usa
 planos de color puros.
@@ -69,11 +72,13 @@ planos de color puros.
 
 ### Cabecera
 
-- **Cabecera fija (sticky):** **desactivada**
+- **Cabecera fija (sticky):** **activada**, tipo "siempre visible"
 
-> La cabecera de Hyperice es `static`: se desplaza con la página y desaparece
-> al bajar. No queda fijada ni cambia de color. Si el tema trae la cabecera
-> fija activada, el CSS complementario la neutraliza igualmente.
+> La cabecera de Hyperice **sí queda fija**, pero lo que hace al bajar no es
+> cambiar de color: pasados 50 px de scroll sube el bloque superior justo el
+> alto de la barra de anuncios, de modo que la barra desaparece y la cabecera
+> queda pegada al borde. Al volver arriba, la barra reaparece. La cabecera
+> nunca se vuelve blanca. El JS de §2b es el que produce ese movimiento.
 
 ### Diseño
 
@@ -91,7 +96,7 @@ planos de color puros.
 ## 2. Instalar la hoja de estilos complementaria
 
 Cubre lo que los ajustes no alcanzan (tracking de titulares, velo del banner,
-subrayado del menú, esquema del pie, cabecera estática).
+subrayado del menú, esquema del pie, iconos y acordeón).
 
 **Opción A — CSS personalizado (la más rápida, sin editar código):**
 
@@ -109,6 +114,34 @@ Personalizar → Configuración → **CSS personalizado** → pega el contenido 
    ```
 
 Debe cargarse el último para que sus reglas ganen a las de Dawn.
+
+### 2b. Snippet de la barra de anuncios
+
+Sin esto la cabecera queda fija pero la barra de anuncios no se esconde.
+Pégalo en `layout/theme.liquid`, justo antes de `</body>`:
+
+```html
+<script>
+  // Esconde la barra de anuncios al hacer scroll, dejando la cabecera arriba.
+  (function () {
+    var root = document.documentElement
+    var bar = document.querySelector('.announcement-bar, .utility-bar')
+    var hidden = false
+    if (!bar) return
+
+    document.addEventListener('scroll', function () {
+      var y = root.scrollTop || document.body.scrollTop
+      if (y >= 50 && !hidden) {
+        root.style.setProperty('--header-top-position', '-' + bar.offsetHeight + 'px')
+        hidden = true
+      } else if (y < 50 && hidden) {
+        root.style.setProperty('--header-top-position', '0px')
+        hidden = false
+      }
+    }, { passive: true })
+  })()
+</script>
+```
 
 ---
 
@@ -204,7 +237,10 @@ que se pueda validar la maqueta con material real.
 - [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha de producto
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
 - [ ] Pie con esquema `#212121` y enlaces en blanco a 24 px
-- [ ] La cabecera no queda fijada al bajar ni cambia de color
+- [ ] La cabecera queda fija y la barra de anuncios se esconde al bajar
+- [ ] La cabecera no cambia a blanco en ningún momento
+- [ ] En móvil las columnas del pie se colapsan tras un botón con +/−
+- [ ] Los enlaces de tecnología del pie llevan su icono a la izquierda
 - [ ] Carrito, buscador y selector de país intactos
 - [ ] Contraste AA en textos sobre imagen
 - [ ] Revisión en checkout: el checkout de Shopify **no** hereda este CSS y se
