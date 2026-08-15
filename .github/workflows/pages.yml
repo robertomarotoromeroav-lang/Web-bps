@@ -1,0 +1,39 @@
+name: Publicar prototipo en GitHub Pages
+
+# El prototipo es HTML/CSS/JS plano, sin build: se sube el repositorio tal cual.
+on:
+  push:
+    branches: [claude/bpsperformance-hyperice-styles-xop5k0]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un despliegue cada vez, sin cancelar el que ya esté en curso.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # enablement: true activa Pages en el repositorio si aún no lo está,
+      # así no hace falta tocar Settings a mano.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
