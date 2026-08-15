@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de diseño — BPS Performance</title>
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+
+<style>
+  .sg-section { padding-block: 56px; border-bottom: 1px solid var(--color-border); }
+  .sg-label { margin-bottom: 28px; }
+  .sg-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .sg-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+  .sg-swatch__chip { height: 84px; border-radius: var(--radius-card); border: 1px solid var(--color-border); }
+  .sg-swatch__name { margin-top: 10px; font-size: 0.8125rem; font-weight: 500; }
+  .sg-swatch__hex { font-size: 0.75rem; color: var(--color-foreground-secondary); }
+  .sg-type > * + * { margin-top: 24px; }
+  .sg-meta { display: block; margin-top: 6px; font-size: 0.75rem; color: var(--color-foreground-secondary); letter-spacing: 0; font-weight: 400; text-transform: none; }
+</style>
+</head>
+
+<body class="page">
+
+<header class="header" data-header>
+  <div class="header__inner">
+    <a class="header__logo" href="index.html">
+      <span class="header__logo-mark" aria-hidden="true">BPS</span>
+      <span>Performance</span>
+    </a>
+    <nav class="header__nav" aria-label="Principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="styleguide.html" aria-current="page">Sistema de diseño</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Sistema de diseño</p>
+    <h1>Tokens y componentes</h1>
+    <p class="text-muted measure" style="margin-top:20px">
+      Lenguaje visual de BPS Performance derivado de hyperice.com. Los valores
+      proceden de las variables CSS y la hoja de estilos de producción de
+      Hyperice, no de una aproximación visual.
+    </p>
+  </section>
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Color</p>
+    <div class="sg-swatches">
+      <div><div class="sg-swatch__chip" style="background:#000000"></div><p class="sg-swatch__name">Negro</p><p class="sg-swatch__hex">#000000</p></div>
+      <div><div class="sg-swatch__chip" style="background:#ffffff"></div><p class="sg-swatch__name">Blanco</p><p class="sg-swatch__hex">#FFFFFF</p></div>
+      <div><div class="sg-swatch__chip" style="background:#f7f5f5"></div><p class="sg-swatch__name">Blanco roto</p><p class="sg-swatch__hex">#F7F5F5</p></div>
+      <div><div class="sg-swatch__chip" style="background:#2d2926"></div><p class="sg-swatch__name">Negro cálido</p><p class="sg-swatch__hex">#2D2926</p></div>
+      <div><div class="sg-swatch__chip" style="background:#505050"></div><p class="sg-swatch__name">Gris 500</p><p class="sg-swatch__hex">#505050</p></div>
+      <div><div class="sg-swatch__chip" style="background:#979797"></div><p class="sg-swatch__name">Gris 400</p><p class="sg-swatch__hex">#979797</p></div>
+      <div><div class="sg-swatch__chip" style="background:#cbcbcb"></div><p class="sg-swatch__name">Gris 300</p><p class="sg-swatch__hex">#CBCBCB</p></div>
+      <div><div class="sg-swatch__chip" style="background:#dfdfdf"></div><p class="sg-swatch__name">Gris 200</p><p class="sg-swatch__hex">#DFDFDF</p></div>
+    </div>
+    <p class="text-body-small text-muted" style="margin-top:24px;max-width:58ch">
+      La interfaz es estrictamente monocroma. El color lo aporta siempre la
+      fotografía del producto, nunca un acento de marca.
+    </p>
+  </section>
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Tipografía</p>
+    <div class="sg-type">
+      <h1>Recupera. Rinde. Repite.<span class="sg-meta">H1 · clamp(45px, 4.51vw, 65px) · peso 500 · tracking −0.01em · interlineado 1.1</span></h1>
+      <h2>Recuperación, rendimiento y resultados<span class="sg-meta">H2 · clamp(38px, 3.33vw, 48px) · interlineado 1</span></h2>
+      <h3>Diseñado para la élite<span class="sg-meta">H3 · clamp(32px, 2.78vw, 40px) · interlineado 1.15</span></h3>
+      <h4>Presoterapia BPS PRO<span class="sg-meta">H4 · clamp(24px, 2.22vw, 32px)</span></h4>
+      <p class="text-body">Equipamiento de alto rendimiento diseñado para atletas, profesionales y personas que exigen más de su cuerpo.<span class="sg-meta">Cuerpo · 16px · peso 400 · interlineado 1.4</span></p>
+      <p class="text-body-small">Envío gratuito en pedidos superiores a 100 €.<span class="sg-meta">Cuerpo pequeño · 14px</span></p>
+      <p class="text-eyebrow">Tecnología validada<span class="sg-meta">Rótulo · 12px · mayúsculas · tracking 0.08em — único uso admitido de versalitas</span></p>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Botones</p>
+    <div class="sg-row">
+      <button class="btn btn--primary" type="button">Comprar ahora</button>
+      <button class="btn btn--secondary" type="button">Conocer la tecnología</button>
+      <a class="btn btn--tertiary" href="#">Ver todo <span class="btn__arrow" aria-hidden="true">→</span></a>
+    </div>
+    <p class="text-body-small text-muted" style="margin-top:20px">
+      Altura 40 px · ancho mínimo 160 px · radio de píldora 62.5rem · 14 px peso 500.
+    </p>
+
+    <div class="sg-row" style="margin-top:32px;background:var(--color-black);padding:28px;border-radius:var(--radius-card)" data-theme="dark">
+      <button class="btn btn--primary" type="button">Comprar ahora</button>
+      <button class="btn btn--secondary" type="button">Conocer la tecnología</button>
+      <a class="btn btn--tertiary" href="#">Ver todo <span class="btn__arrow" aria-hidden="true">→</span></a>
+    </div>
+    <p class="text-body-small text-muted" style="margin-top:20px">
+      Sobre fondo oscuro los botones invierten automáticamente con
+      <code>data-theme="dark"</code>.
+    </p>
+  </section>
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Filtros y campos</p>
+    <div class="filters" style="padding-bottom:24px">
+      <button class="filter is-active" type="button">Todos</button>
+      <button class="filter" type="button">Presoterapia</button>
+      <button class="filter" type="button">Terapia de luz roja</button>
+    </div>
+    <div style="display:grid;gap:16px;max-width:420px">
+      <div class="field">
+        <label for="sg-input">Correo electrónico</label>
+        <input class="input" id="sg-input" type="email" placeholder="tu@correo.com">
+      </div>
+      <div class="subscribe">
+        <label class="visually-hidden" for="sg-sub">Correo</label>
+        <input class="input" id="sg-sub" type="email" placeholder="Tu correo electrónico">
+        <button class="btn btn--primary" type="button">Suscribirme</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Movimiento</p>
+    <ul class="checklist" style="max-width:640px">
+      <li>Transición de color e interfaz — <strong style="font-weight:500">0,2 s ease</strong></li>
+      <li>Apertura de menú y cambios de estado — <strong style="font-weight:500">0,3 s ease-in-out</strong></li>
+      <li>Zoom de imagen al pasar el cursor — <strong style="font-weight:500">0,6 s, escala 1,03</strong></li>
+      <li>Aparición al hacer scroll — <strong style="font-weight:500">0,7 s, desplazamiento de 16 px</strong></li>
+    </ul>
+    <p class="text-body-small text-muted" style="margin-top:20px;max-width:58ch">
+      Nada rebota, nada gira y no hay sombras. Todo el movimiento se desactiva
+      con <code>prefers-reduced-motion</code>.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer__copy">© 2026 BPS Performance. Sistema de diseño interno.</p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+/* ==========================================================================
+   BPS Performance — Design tokens
+   Sistema de diseño derivado del look & feel de hyperice.com/es-es
+   Los valores se han extraído de las variables CSS y del stylesheet de
+   producción de Hyperice para reproducir fielmente su lenguaje visual.
+   ========================================================================== */
+
+:root {
+  /* ---------- Tipografía ----------
+     Hyperice usa "Suisse Intl" (fuente de pago, Swiss Typefaces).
+     Inter se carga como sustituto libre y metricamente cercano: si el
+     cliente licencia Suisse Intl basta con servirla, el stack ya la prioriza. */
+  --font-family-primary: "Suisse Intl", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* Escala tipográfica fluida (idéntica a la de Hyperice) */
+  --font-size-h1: clamp(45px, 4.51389vw, 65px);
+  --font-size-h2: clamp(38px, 3.33333vw, 48px);
+  --font-size-h3: clamp(32px, 2.77778vw, 40px);
+  --font-size-h4: clamp(24px, 2.22222vw, 32px);
+  --font-size-h5: 1.5rem;
+  --font-size-h6: 1.125rem;
+  --font-size-body: 1rem;
+  --font-size-body-small: 0.875rem;
+  --font-size-utility: 0.875rem;
+
+  --line-height-h1: 1.1;
+  --line-height-h2: 1;
+  --line-height-h3: 1.15;
+  --line-height-h4: 1.15;
+  --line-height-h5: 1.2;
+  --line-height-body: 1.4;
+
+  --letter-spacing-heading: -0.01em;
+  --letter-spacing-body: 0;
+  --letter-spacing-utility: 0.02em;
+
+  /* ---------- Color ----------
+     Paleta monocroma. El color lo aporta la fotografía, nunca la interfaz. */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-off-white: #f7f5f5;   /* --color-accent-01 */
+  --color-warm-black: #2d2926;  /* --color-accent-02 */
+  --color-grey-900: #0a0a0a;
+  --color-grey-800: #212121;
+  --color-grey-700: #373737;
+  --color-grey-500: #505050;
+  --color-grey-400: #979797;
+  --color-grey-300: #cbcbcb;
+  --color-grey-200: #dfdfdf;
+
+  /* Roles semánticos — tema claro por defecto */
+  --color-background: var(--color-white);
+  --color-background-alt: var(--color-off-white);
+  --color-background-secondary: var(--color-white);
+  --color-foreground: var(--color-black);
+  --color-foreground-secondary: var(--color-grey-500);
+  --color-border: var(--color-grey-200);
+  --color-link: var(--color-black);
+  --color-disabled: var(--color-grey-400);
+
+  /* Botones — tema claro */
+  --button-primary-bg: var(--color-black);
+  --button-primary-color: var(--color-white);
+  --button-primary-hover-bg: var(--color-grey-500);
+  --button-primary-hover-color: var(--color-white);
+  --button-secondary-border: var(--color-black);
+  --button-secondary-color: var(--color-black);
+  --button-tertiary-color: var(--color-black);
+
+  /* Geometría de botones (valores de producción de Hyperice) */
+  --button-height: 2.5rem;
+  --button-min-width: 160px;
+  --button-padding-block: 0.5rem;
+  --button-padding-inline: 1.25rem;
+  --button-border-radius: 62.5rem; /* píldora */
+  --button-gap: 0.625rem;
+
+  /* ---------- Radios ---------- */
+  --radius-card: 8px;
+  --radius-pill: 62.5rem;
+
+  /* ---------- Layout y ritmo vertical ---------- */
+  --page-max-width: 1600px;
+  --page-padding-inline: 20px;
+  --grid-gutter: 20px;
+  --section-spacing: 64px;
+  --header-height: 64px;
+  --header-logo-width: 140px;
+
+  /* ---------- Movimiento ----------
+     Hyperice es sobrio: transiciones cortas, sin rebotes ni sombras. */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease-in-out;
+  --transition-media: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+
+  --z-header: 100;
+  --z-overlay: 200;
+}
+
+@media (min-width: 750px) {
+  :root {
+    --page-padding-inline: 32px;
+    --grid-gutter: 24px;
+    --section-spacing: 96px;
+    --header-height: 72px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --page-padding-inline: 48px;
+    --section-spacing: 120px;
+  }
+}
+
+/* ==========================================================================
+   Tema oscuro — se aplica por sección, no globalmente.
+   Hyperice alterna bloques negros a pantalla completa con bloques blancos;
+   basta con marcar la sección con [data-theme="dark"].
+   ========================================================================== */
+
+[data-theme="dark"] {
+  --color-background: var(--color-black);
+  --color-background-alt: var(--color-grey-800);
+  --color-background-secondary: var(--color-grey-700);
+  --color-foreground: var(--color-white);
+  --color-foreground-secondary: var(--color-grey-300);
+  --color-border: var(--color-grey-700);
+  --color-link: var(--color-white);
+
+  --button-primary-bg: var(--color-white);
+  --button-primary-color: var(--color-black);
+  --button-primary-hover-bg: var(--color-off-white);
+  --button-primary-hover-color: var(--color-black);
+  --button-secondary-border: var(--color-white);
+  --button-secondary-color: var(--color-white);
+  --button-tertiary-color: var(--color-white);
+}

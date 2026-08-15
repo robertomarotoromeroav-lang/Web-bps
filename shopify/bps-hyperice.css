@@ -1,0 +1,419 @@
+/* ==========================================================================
+   BPS Performance — Capa Hyperice sobre Shopify Dawn 15.4.1
+   --------------------------------------------------------------------------
+   Cubre lo que NO se puede configurar desde Personalizar. Lo que sí se puede
+   (colores, radios, ancho de página, fuentes) está en GUIA-SHOPIFY.md y debe
+   hacerse allí: es más limpio y sobrevive a las actualizaciones del tema.
+
+   Instalación: ver GUIA-SHOPIFY.md.
+   Este archivo no modifica ningún archivo original de Dawn.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tipografía
+   Dawn hereda la fuente de los ajustes del tema. Aquí solo se ajusta el
+   "aire" del texto: tracking negativo, interlineado corto y peso 500, que es
+   lo que da a Hyperice su aspecto sobrio y compacto.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --duration-short: 100ms;
+  --duration-default: 200ms;
+  --duration-long: 500ms;
+
+  /* Paleta Hyperice, disponible para el resto de reglas de esta hoja. */
+  --bps-black: #000000;
+  --bps-white: #ffffff;
+  --bps-off-white: #f7f5f5;
+  --bps-grey-500: #505050;
+  --bps-grey-300: #cbcbcb;
+  --bps-grey-200: #dfdfdf;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5,
+.card__heading,
+.banner__heading,
+.rich-text__heading,
+.title {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  /* Clave del rediseño: Hyperice no usa versalitas en los titulares.
+     Si el texto sigue apareciendo en mayúsculas es porque está escrito así
+     en el editor de temas — hay que reescribirlo (ver GUIA-SHOPIFY.md §4). */
+  text-transform: none;
+}
+
+h1, .h1, .banner__heading {
+  font-size: clamp(45px, 4.51389vw, 65px);
+}
+
+h2, .h2, .title--primary {
+  font-size: clamp(38px, 3.33333vw, 48px);
+  line-height: 1;
+}
+
+h3, .h3 {
+  font-size: clamp(32px, 2.77778vw, 40px);
+  line-height: 1.15;
+}
+
+/* Los titulares de tarjeta van mucho más discretos que en Dawn por defecto. */
+.card__heading,
+.card__heading a {
+  font-size: 1.125rem;
+  line-height: 1.2;
+}
+
+body,
+.rte,
+.banner__text {
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Botones — píldora de 40px, sin sombra ni borde grueso.
+   -------------------------------------------------------------------------- */
+
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  min-width: 160px;
+  min-height: 2.5rem;
+  padding: 0 1.25rem;
+  border-radius: 62.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: none;
+  transition: background-color var(--duration-default) ease,
+    color var(--duration-default) ease, border-color var(--duration-default) ease;
+}
+
+.button:after,
+.button:before,
+.shopify-challenge__button:after,
+.customer button:after {
+  border-radius: 62.5rem;
+  box-shadow: none;
+}
+
+/* Dawn dibuja el borde en ::after; se desactiva y se usa un borde real. */
+.button--primary:after,
+.button--secondary:after {
+  border: 0;
+}
+
+.button--secondary {
+  border: 1px solid rgb(var(--color-button));
+  background: transparent;
+}
+
+.button--secondary:hover {
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+}
+
+.button--tertiary {
+  min-width: 0;
+  min-height: 0;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Cabecera — más baja, ligera y con subrayado animado en el menú.
+   -------------------------------------------------------------------------- */
+
+.header {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--bps-grey-200);
+}
+
+.header__heading-logo {
+  max-width: 140px;
+}
+
+.header__menu-item {
+  padding: 8px 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.header__menu-item span {
+  text-decoration: none;
+  position: relative;
+}
+
+.header__menu-item span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-default) ease;
+}
+
+.header__menu-item:hover span::after {
+  transform: scaleX(1);
+}
+
+.header__inline-menu .list-menu__item--link:hover {
+  text-decoration: none;
+}
+
+/* Barra de anuncios: negra, discreta, sin degradado. */
+.announcement-bar,
+.utility-bar {
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+}
+
+.announcement-bar__message {
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  padding-block: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Banner principal — texto directamente sobre la imagen, sin caja blanca.
+   -------------------------------------------------------------------------- */
+
+.banner__box {
+  padding: 0;
+  max-width: 60rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Velo doble para garantizar contraste sobre cualquier fotografía. */
+.banner__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0.15) 55%, rgb(0 0 0 / 0) 85%),
+    linear-gradient(to top, rgb(0 0 0 / 0.85) 0%, rgb(0 0 0 / 0.45) 38%, rgb(0 0 0 / 0.1) 65%, rgb(0 0 0 / 0.4) 100%);
+  pointer-events: none;
+}
+
+.banner--content-align-left .banner__content {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.banner__buttons {
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. Tarjetas de producto y de colección
+   Sin marco, sin sombra: la imagen sobre un tile gris muy claro y el texto
+   debajo, alineado a la izquierda.
+   -------------------------------------------------------------------------- */
+
+.card-wrapper,
+.card {
+  box-shadow: none;
+}
+
+.card--standard .card__inner,
+.card__media,
+.media {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card--standard > .card__content .card__information {
+  padding-inline: 0;
+  padding-top: 1rem;
+}
+
+.card__information {
+  text-align: left;
+}
+
+.card--card,
+.card--standard .card__inner {
+  border: 0;
+  background-color: var(--bps-off-white);
+}
+
+/* Zoom muy contenido: Hyperice nunca hace movimientos bruscos. */
+.card__media .media img,
+.media--hover-effect > img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .card__media .media img,
+.card-wrapper:hover .media--hover-effect > img:first-child {
+  transform: scale(1.03);
+}
+
+.price {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.card__badge .badge {
+  border-radius: 62.5rem;
+  border: 0;
+  padding: 5px 10px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+}
+
+/* Tarjetas de colección: rótulo sobre la imagen con degradado inferior. */
+.collection-list__item .card--standard .card__inner {
+  border-radius: 8px;
+}
+
+.collection-list__item .card__heading {
+  font-size: 1.3125rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Formularios
+   -------------------------------------------------------------------------- */
+
+.field__input,
+.select__select,
+.customer .field input,
+.customer select {
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.field:after,
+.select:after,
+.field__input:focus,
+.select__select:focus {
+  box-shadow: none;
+}
+
+.newsletter-form__field-wrapper .field__input {
+  border-radius: 62.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Ritmo vertical — Hyperice respira mucho más que Dawn por defecto.
+   -------------------------------------------------------------------------- */
+
+.section-header {
+  margin-bottom: 2.5rem;
+}
+
+.title-wrapper-with-link {
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.title-wrapper-with-link .link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+@media screen and (min-width: 990px) {
+  .shopify-section:not(.shopify-section-header):not(.shopify-section-group-header-group) {
+    --spacing-sections-desktop: 120;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Pie de página — negro a sangre.
+   -------------------------------------------------------------------------- */
+
+.footer {
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+  border-top: 0;
+}
+
+.footer__content-top,
+.footer__content-bottom {
+  border-color: #373737;
+}
+
+.footer-block__heading {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--bps-white);
+}
+
+.footer a,
+.footer .list-menu__item--link,
+.footer__content-bottom a {
+  color: var(--bps-grey-300);
+  font-size: 0.875rem;
+  transition: color var(--duration-default) ease;
+}
+
+.footer a:hover,
+.footer .list-menu__item--link:hover {
+  color: var(--bps-white);
+  text-decoration: none;
+}
+
+.footer .list-social__link {
+  border: 1px solid #373737;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  color: var(--bps-white);
+}
+
+.footer .list-social__link:hover {
+  background-color: var(--bps-white);
+  color: var(--bps-black);
+}
+
+.copyright__content {
+  color: #979797;
+  font-size: 0.8125rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. Detalles
+   -------------------------------------------------------------------------- */
+
+/* Dawn pinta un degradado sutil en algunas secciones; Hyperice usa planos. */
+.gradient {
+  background-attachment: initial;
+}
+
+/* Foco visible y coherente con la paleta monocroma. */
+*:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .card__media .media img,
+  .card-wrapper:hover .media--hover-effect > img:first-child {
+    transform: none;
+  }
+}

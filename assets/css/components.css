@@ -1,0 +1,741 @@
+/* ==========================================================================
+   BPS Performance — Componentes
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Botones — píldora de 40px, ancho mínimo 160px, peso 500.
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.btn--primary,
+.btn--secondary {
+  min-width: var(--button-min-width);
+  height: var(--button-height);
+  padding-block: var(--button-padding-block);
+  padding-inline: var(--button-padding-inline);
+  border-radius: var(--button-border-radius);
+}
+
+.btn--primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+}
+
+.btn--primary:hover {
+  background-color: var(--button-primary-hover-bg);
+  color: var(--button-primary-hover-color);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--button-secondary-color);
+  border: 1px solid var(--button-secondary-border);
+}
+
+.btn--secondary:hover {
+  background-color: var(--button-secondary-border);
+  color: var(--color-background);
+}
+
+/* Enlace de texto subrayado: el "tercer nivel" de CTA en Hyperice. */
+.btn--tertiary {
+  color: var(--button-tertiary-color);
+  padding: 0;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  border-radius: 0;
+}
+
+.btn--tertiary:hover {
+  opacity: 0.6;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* La flecha se desplaza levemente al pasar el cursor. */
+.btn__arrow {
+  transition: transform var(--transition-fast);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   Barra de anuncios
+   -------------------------------------------------------------------------- */
+
+.announcement {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  text-align: center;
+  padding: 10px var(--page-padding-inline);
+}
+
+.announcement p {
+  font-size: 0.8125rem;
+  letter-spacing: var(--letter-spacing-utility);
+}
+
+/* --------------------------------------------------------------------------
+   Cabecera
+   Transparente sobre el hero, sólida al hacer scroll o al abrir el menú.
+   -------------------------------------------------------------------------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-base), border-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.header--overlay {
+  position: fixed;
+  inset: auto 0 auto 0;
+  background-color: transparent;
+  border-bottom-color: transparent;
+  color: var(--color-white);
+}
+
+.header--overlay.is-scrolled,
+.header--overlay.is-open {
+  background-color: var(--color-white);
+  border-bottom-color: var(--color-border);
+  color: var(--color-black);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--header-height);
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-padding-inline);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.header__logo-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+}
+
+.header__nav {
+  display: none;
+  margin-inline-start: 40px;
+}
+
+.header__nav ul {
+  display: flex;
+  gap: 32px;
+}
+
+.header__nav a {
+  position: relative;
+  color: inherit;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  padding-block: 8px;
+}
+
+/* Subrayado que crece desde la izquierda. */
+.header__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast);
+}
+
+.header__nav a:hover::after,
+.header__nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: auto;
+}
+
+.header__action {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: inherit;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+}
+
+.header__action:hover {
+  background-color: rgb(128 128 128 / 0.14);
+}
+
+.header__region {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  font-size: var(--font-size-body-small);
+  padding-inline: 10px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+}
+
+.header__region:hover {
+  background-color: rgb(128 128 128 / 0.14);
+}
+
+.header__burger {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: inherit;
+}
+
+@media (min-width: 990px) {
+  .header__nav,
+  .header__region {
+    display: flex;
+  }
+
+  .header__burger {
+    display: none;
+  }
+}
+
+/* Menú móvil */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: 20px var(--page-padding-inline) 40px;
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition: transform var(--transition-base), visibility var(--transition-base);
+}
+
+.mobile-menu.is-open {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.mobile-menu__head {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.mobile-menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-menu__list a {
+  display: block;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
+  padding-block: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-menu__footer {
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   Media — el tratamiento de imagen es el corazón del estilo Hyperice:
+   recorte consistente, fondo neutro y un zoom muy contenido al pasar.
+   -------------------------------------------------------------------------- */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-off-white);
+}
+
+.media--rounded {
+  border-radius: var(--radius-card);
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-media);
+}
+
+.media--contain img {
+  object-fit: contain;
+}
+
+a:hover > .media img,
+.card:hover .media img {
+  transform: scale(1.03);
+}
+
+/* --------------------------------------------------------------------------
+   Tarjeta de categoría — imagen a sangre con rótulo encima.
+   -------------------------------------------------------------------------- */
+
+.category-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  color: var(--color-white);
+  aspect-ratio: 3 / 4;
+  background-color: var(--color-warm-black);
+}
+
+.category-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-media);
+}
+
+.category-card:hover img {
+  transform: scale(1.04);
+}
+
+/* Degradado para asegurar contraste del texto sobre cualquier foto. */
+.category-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.15) 45%, rgb(0 0 0 / 0) 70%);
+}
+
+.category-card__body {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding: 20px;
+}
+
+.category-card__title {
+  font-size: var(--font-size-h6);
+  margin-bottom: 6px;
+}
+
+.category-card__text {
+  font-size: var(--font-size-body-small);
+  color: var(--color-grey-300);
+  margin-bottom: 14px;
+  text-wrap: pretty;
+}
+
+@media (min-width: 1200px) {
+  .category-card__body {
+    padding: 24px;
+  }
+
+  .category-card__title {
+    font-size: var(--font-size-h5);
+  }
+}
+
+.category-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-white);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Tarjeta de producto — imagen sobre tile gris claro, texto debajo, sin marco.
+   -------------------------------------------------------------------------- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+}
+
+.card .media {
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-card);
+  margin-bottom: 16px;
+}
+
+.card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-utility);
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.card__category {
+  font-size: 0.75rem;
+  color: var(--color-foreground-secondary);
+  margin-bottom: 6px;
+}
+
+.card__title {
+  font-size: var(--font-size-h6);
+  margin-bottom: 6px;
+}
+
+.card__text {
+  font-size: var(--font-size-body-small);
+  color: var(--color-foreground-secondary);
+  margin-bottom: 12px;
+}
+
+.card__price {
+  margin-top: auto;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.card__price--soon {
+  color: var(--color-foreground-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
+/* --------------------------------------------------------------------------
+   Prestaciones (envío, pago seguro, atención)
+   -------------------------------------------------------------------------- */
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--color-foreground);
+}
+
+.feature__title {
+  font-size: var(--font-size-h6);
+}
+
+.feature__text {
+  font-size: var(--font-size-body-small);
+  color: var(--color-foreground-secondary);
+}
+
+/* Lista de comprobación de la sección de tecnología */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-body);
+}
+
+.checklist li:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.checklist svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   Filtros de catálogo — píldoras con inversión de color al activarse.
+   -------------------------------------------------------------------------- */
+
+.filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-inline: calc(var(--page-padding-inline) * -1);
+  padding: 0 var(--page-padding-inline) 32px;
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter {
+  flex: none;
+  height: 36px;
+  padding-inline: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background-color: transparent;
+  color: var(--color-foreground);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.filter:hover {
+  border-color: var(--color-foreground);
+}
+
+.filter.is-active {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+@media (min-width: 750px) {
+  .filters {
+    flex-wrap: wrap;
+    overflow: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Formularios
+   -------------------------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 12px 16px;
+  font-size: var(--font-size-body-small);
+  transition: border-color var(--transition-fast);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: var(--color-foreground);
+  outline: none;
+}
+
+.textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Suscripción: campo y botón unidos en una sola píldora. */
+.subscribe {
+  display: flex;
+  gap: 8px;
+  max-width: 460px;
+}
+
+.subscribe .input {
+  border-radius: var(--radius-pill);
+  height: var(--button-height);
+  padding-block: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Pie de página
+   -------------------------------------------------------------------------- */
+
+.footer {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding-block: 64px 32px;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--color-grey-700);
+}
+
+.footer__heading {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-utility);
+  margin-bottom: 16px;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__links a {
+  color: var(--color-grey-300);
+  font-size: var(--font-size-body-small);
+  transition: color var(--transition-fast);
+}
+
+.footer__links a:hover {
+  color: var(--color-white);
+}
+
+.footer__social {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.footer__social a {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--color-grey-700);
+  border-radius: 50%;
+  color: var(--color-white);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.footer__social a:hover {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  padding-top: 28px;
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.footer__legal a,
+.footer__copy {
+  color: var(--color-grey-400);
+  font-size: 0.8125rem;
+}
+
+.footer__legal a:hover {
+  color: var(--color-white);
+}
+
+.footer__payments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+.footer__payment {
+  display: grid;
+  place-items: center;
+  height: 26px;
+  padding-inline: 8px;
+  background-color: var(--color-white);
+  border-radius: 4px;
+  color: var(--color-grey-800);
+  font-size: 0.5625rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+@media (min-width: 750px) {
+  .footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 990px) {
+  .footer__grid {
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 32px;
+  }
+}
