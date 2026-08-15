@@ -69,6 +69,19 @@ Sin dependencias, sin proceso de build. Ábrelo con cualquier servidor estático
 python3 -m http.server 8000
 ```
 
+### Versión publicada
+
+`.github/workflows/pages.yml` publica el prototipo en GitHub Pages en cada
+push. Para que funcione hay que activar Pages **una sola vez**: Settings →
+Pages → Source → **GitHub Actions**. El `GITHUB_TOKEN` no tiene permiso para
+activarlo por sí mismo.
+
+Una vez activo, queda en
+`https://robertomarotoromeroav-lang.github.io/Web-bps/`.
+
+Ten en cuenta que el repositorio es público, así que el prototipo publicado
+será accesible por cualquiera que tenga la URL.
+
 ### Tema oscuro por sección
 
 Hyperice alterna bloques blancos y negros a pantalla completa. Aquí basta con
