@@ -25,6 +25,11 @@ Dawn organiza el color en *esquemas*. Configura los tres primeros así:
 | Esquema 1 (por defecto) | `#FFFFFF` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
 | Esquema 2 (secciones alternas) | `#F7F5F5` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
 | Esquema 3 (bloques oscuros) | `#000000` | `#FFFFFF` | `#FFFFFF` | `#000000` | `#FFFFFF` |
+| Esquema 4 (pie de página) | `#212121` | `#CBCBCB` | `#FFFFFF` | `#000000` | `#FFFFFF` |
+
+El pie merece su propio esquema: en Hyperice **no es negro puro** sino `#212121`,
+con el texto base en gris claro `#CBCBCB` y los enlaces en blanco a tamaño de
+titular (24 px), no en letra pequeña. Asigna el esquema 4 a la sección del pie.
 
 Elimina cualquier degradado que tengan configurado los esquemas: Hyperice usa
 planos de color puros.
@@ -46,30 +51,47 @@ planos de color puros.
 ### Tarjetas de producto y de colección
 
 - **Estilo:** Estándar
-- **Radio de las esquinas de la imagen:** `8` px
+- **Radio de las esquinas de la imagen:** `0` px
 - **Grosor del borde:** `0`
 - **Opacidad de la sombra:** `0 %`
 - **Alineación del texto:** Izquierda
 - **Relleno de la imagen:** `0 %`
 
+> **Esquina recta, no redondeada.** En todo el HTML de producción de Hyperice
+> no hay una sola utilidad de redondeo aplicada a imágenes o tarjetas. El radio
+> se reserva a las píldoras (botones, iconos) y a un mínimo en los campos.
+
 ### Medios, campos y distintivos
 
-- **Radio de las esquinas de los medios:** `8` px, sombra `0 %`
-- **Campos de formulario — radio:** `8` px, sombra `0 %`
+- **Radio de las esquinas de los medios:** `0` px, sombra `0 %`
+- **Campos de formulario — radio:** `4` px, sombra `0 %`
 - **Distintivos (badges) — radio:** `40` px
+
+### Cabecera
+
+- **Cabecera fija (sticky):** **desactivada**
+
+> La cabecera de Hyperice es `static`: se desplaza con la página y desaparece
+> al bajar. No queda fijada ni cambia de color. Si el tema trae la cabecera
+> fija activada, el CSS complementario la neutraliza igualmente.
 
 ### Diseño
 
-- **Ancho de página:** `1600` px
-- **Espaciado vertical entre secciones:** `120` (escritorio)
-- **Espaciado horizontal de la cuadrícula:** `24` px
+- **Ancho de página:** `1536` px
+- **Espaciado vertical entre secciones:** `80` (escritorio)
+- **Espaciado horizontal de la cuadrícula:** `20` px
+- **Margen lateral:** 15 px en móvil, 30 px en escritorio
+
+> El ritmo real de Hyperice es más ajustado de lo que parece: su utilidad de
+> mayor separación entre secciones es `py-2xl`, que tope a 80 px, y el margen
+> lateral máximo es de 30 px.
 
 ---
 
 ## 2. Instalar la hoja de estilos complementaria
 
 Cubre lo que los ajustes no alcanzan (tracking de titulares, velo del banner,
-subrayado del menú, pie negro).
+subrayado del menú, esquema del pie, cabecera estática).
 
 **Opción A — CSS personalizado (la más rápida, sin editar código):**
 
@@ -107,7 +129,9 @@ Hyperice y la que reproduce `index.html` de este repositorio:
 4. **Imagen con texto** — bloque "Diseñado para la élite, validado por la ciencia".
 5. **Producto destacado** — Presoterapia BPS PRO con esquema de color 3 (negro).
 6. **Texto con iconos** — envío gratis / compra segura / atención 24/7.
-7. **Newsletter** — sobre esquema de color 2.
+7. **Newsletter** — no la pongas como sección propia: en Hyperice el
+   formulario de suscripción vive dentro del pie, y duplicarlo deja dos veces
+   el mismo campo seguido.
 
 ---
 
@@ -138,7 +162,25 @@ texto, y la flecha se reserva para los enlaces de tipo "Ver todo".
 
 ---
 
-## 5. Fotografía
+## 5. Logotipo
+
+El logotipo es el isotipo `[|||]` en azul corporativo sobre el wordmark **BPS**.
+
+- **Sobre fondo claro:** isotipo en azul, wordmark en negro.
+- **Sobre fotografía o fondo oscuro:** todo el logotipo en blanco.
+
+En Shopify se suben dos versiones en Personalizar → Cabecera: el logo normal y,
+si el tema lo permite, el logo para fondo transparente. El azul es el **único
+color de la paleta** y no debe aparecer en ningún componente de interfaz:
+botones, enlaces y estados siguen siendo estrictamente monocromos.
+
+> El prototipo reproduce el isotipo como SVG (es geometría pura, exacta) pero
+> compone el wordmark con la tipografía del sitio. **Hace falta el archivo
+> original del logotipo** (SVG o AI) para reproducirlo con fidelidad.
+
+---
+
+## 6. Fotografía
 
 Es el punto donde más distancia hay con Hyperice, y ningún CSS lo resuelve.
 
@@ -156,12 +198,13 @@ que se pueda validar la maqueta con material real.
 
 ---
 
-## 6. Comprobación antes de publicar
+## 7. Comprobación antes de publicar
 
 - [ ] Banner legible en móvil y escritorio (el velo debe garantizar contraste)
 - [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha de producto
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
-- [ ] Pie de página negro y enlaces legibles
+- [ ] Pie con esquema `#212121` y enlaces en blanco a 24 px
+- [ ] La cabecera no queda fijada al bajar ni cambia de color
 - [ ] Carrito, buscador y selector de país intactos
 - [ ] Contraste AA en textos sobre imagen
 - [ ] Revisión en checkout: el checkout de Shopify **no** hereda este CSS y se

@@ -33,8 +33,9 @@
 <header class="header" data-header>
   <div class="header__inner">
     <a class="header__logo" href="index.html">
-      <span class="header__logo-mark" aria-hidden="true">BPS</span>
-      <span>Performance</span>
+      <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
+      <span class="header__logo-word">BPS</span>
+      <span class="visually-hidden">Performance</span>
     </a>
     <nav class="header__nav" aria-label="Principal">
       <ul>
@@ -70,10 +71,34 @@
       <div><div class="sg-swatch__chip" style="background:#979797"></div><p class="sg-swatch__name">Gris 400</p><p class="sg-swatch__hex">#979797</p></div>
       <div><div class="sg-swatch__chip" style="background:#cbcbcb"></div><p class="sg-swatch__name">Gris 300</p><p class="sg-swatch__hex">#CBCBCB</p></div>
       <div><div class="sg-swatch__chip" style="background:#dfdfdf"></div><p class="sg-swatch__name">Gris 200</p><p class="sg-swatch__hex">#DFDFDF</p></div>
+      <div><div class="sg-swatch__chip" style="background:#212121"></div><p class="sg-swatch__name">Fondo del pie</p><p class="sg-swatch__hex">#212121</p></div>
+      <div><div class="sg-swatch__chip" style="background:#1b4df5"></div><p class="sg-swatch__name">Azul de marca</p><p class="sg-swatch__hex">#1B4DF5</p></div>
     </div>
     <p class="text-body-small text-muted" style="margin-top:24px;max-width:58ch">
-      La interfaz es estrictamente monocroma. El color lo aporta siempre la
-      fotografía del producto, nunca un acento de marca.
+      La interfaz es monocroma: el color lo aporta la fotografía. El azul
+      corporativo se reserva al logotipo y no se usa en ningún componente.
+      El pie no es negro puro sino #212121, igual que en Hyperice.
+    </p>
+  </section>
+
+  <section class="sg-section">
+    <p class="text-eyebrow sg-label">Logotipo</p>
+    <div class="sg-row" style="gap:48px">
+      <a class="header__logo" href="index.html">
+        <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
+        <span class="header__logo-word">BPS</span>
+      </a>
+      <span style="display:inline-flex;background:var(--color-black);padding:16px 24px" data-theme="dark">
+        <a class="header__logo" href="index.html" style="color:var(--color-white)">
+          <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true" style="color:currentColor"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
+          <span class="header__logo-word">BPS</span>
+        </a>
+      </span>
+    </div>
+    <p class="text-body-small text-muted" style="margin-top:20px;max-width:58ch">
+      El isotipo va en azul sobre fondo claro y pasa a blanco sobre fotografía
+      o fondo oscuro. El wordmark está compuesto con la tipografía del sitio:
+      falta el archivo original del logotipo para reproducirlo con exactitud.
     </p>
   </section>
 
@@ -99,6 +124,8 @@
     </div>
     <p class="text-body-small text-muted" style="margin-top:20px">
       Altura 40 px · ancho mínimo 160 px · radio de píldora 62.5rem · 14 px peso 500.
+      El radio solo existe aquí: imágenes y tarjetas van a esquina recta, y los
+      campos de formulario llevan 4 px.
     </p>
 
     <div class="sg-row" style="margin-top:32px;background:var(--color-black);padding:28px;border-radius:var(--radius-card)" data-theme="dark">
@@ -148,7 +175,7 @@
 
 </main>
 
-<footer class="footer">
+<footer class="footer" data-theme="footer">
   <div class="container">
     <p class="footer__copy">© 2026 BPS Performance. Sistema de diseño interno.</p>
   </div>

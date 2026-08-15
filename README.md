@@ -28,8 +28,12 @@ y de la hoja de estilos de producción de Hyperice.
 | **Escala** | H1 `clamp(45px, 4.51vw, 65px)` · H2 `clamp(38px, 3.33vw, 48px)` · H3 `clamp(32px, 2.78vw, 40px)` |
 | **Cuerpo** | 16px / interlineado 1.4 / peso 400 |
 | **Color** | Monocromo: `#000000` · `#FFFFFF` · `#F7F5F5` · `#2D2926` · `#505050` · `#DFDFDF` |
+| **Pie** | Esquema propio: fondo `#212121`, texto `#CBCBCB`, enlaces blancos a 24px |
+| **Marca** | `#1B4DF5`, exclusivo del logotipo — nunca en componentes |
 | **Botones** | Píldora `62.5rem` · alto 40px · ancho mínimo 160px · 14px peso 500 |
-| **Radios** | 8px en tarjetas e imágenes |
+| **Radios** | Esquina recta en tarjetas e imágenes · 4px en campos · píldora solo en botones e iconos |
+| **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
+| **Cabecera** | Estática: se va con el scroll, no queda fijada ni cambia de color |
 | **Movimiento** | 0,2s en interfaz · 0,6s en zoom de imagen · sin sombras ni rebotes |
 
 `styleguide.html` muestra todo esto renderizado.
@@ -41,7 +45,22 @@ y de la hoja de estilos de producción de Hyperice.
    12px. Es lo que más cambia el tono: de gimnasio a producto de precisión.
 2. **Interfaz monocroma.** Ningún acento de color. El color lo aporta la
    fotografía.
-3. **Aire.** 120px entre secciones en escritorio, frente al ritmo apretado actual.
+3. **Aire.** 80px entre secciones, con la fotografía llevando el peso visual.
+
+### Detalles verificados contra el código de Hyperice
+
+Cuatro comportamientos que a simple vista se dan por supuestos y no son como
+parecen. Todos están confirmados en su HTML y su CSS de producción:
+
+- **La cabecera no es fija.** Es `static`: se desplaza con la página y
+  desaparece al bajar. En todo su HTML no hay una sola regla `sticky` fuera del
+  buscador abierto. Tampoco cambia a blanco al hacer scroll.
+- **El pie no es negro.** Usa un esquema propio con fondo `#212121`, y sus
+  enlaces van en **blanco y a 24px**, no en gris pequeño.
+- **Nada está redondeado.** No hay una sola utilidad de redondeo sobre imágenes
+  o tarjetas. El radio se reserva a píldoras y a 4px en los campos.
+- **Los iconos de cabecera viven en píldoras** con fondo propio: gris claro
+  sobre blanco, blanco al 10 % sobre fotografía.
 
 ---
 
@@ -57,7 +76,8 @@ assets/css/tokens.css        Variables. Tema oscuro por sección con [data-theme
 assets/css/base.css          Reset y tipografía
 assets/css/components.css    Botones, cabecera, tarjetas, filtros, formularios, pie
 assets/css/layout.css        Contenedores, rejillas, hero, bloques editoriales
-assets/js/site.js            Cabecera al hacer scroll, menú móvil, filtros, reveal
+assets/js/site.js            Menú móvil, filtros de catálogo, aparición al hacer scroll
+assets/img/logo-mark.svg     Isotipo [|||] como SVG independiente
 
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1
@@ -120,9 +140,14 @@ Pendiente de decisión del cliente:
   BPS usa renders de producto sobre fondo neutro. El prototipo usa los renders
   actuales para poder validar la maqueta con material real, pero convendría
   encargar 4 fotos de estilo de vida (una por categoría) y 1 apaisada para el
-  hero. Detalle en `shopify/GUIA-SHOPIFY.md` §5.
+  hero. Detalle en `shopify/GUIA-SHOPIFY.md` §6.
 - **Tipografía.** Suisse Intl es de pago (Swiss Typefaces). El prototipo usa
   Inter. Si se licencia, basta con servirla: el stack ya la prioriza.
+- **Logotipo.** El isotipo `[|||]` está reproducido como SVG (geometría pura,
+  exacta), pero el wordmark **BPS** está compuesto con la tipografía del sitio.
+  Hace falta el **archivo original del logotipo** para reproducirlo con
+  fidelidad. El azul `#1B4DF5` está estimado del logo facilitado: es un token de
+  una sola línea en `tokens.css`, trivial de corregir con el hex de marca.
 - **Formularios.** Los de `contacto.html` y el de suscripción son maqueta
   (`action="#"`); en Shopify los gestiona el propio tema.
 - **Cabeceras y pies duplicados.** El prototipo repite cabecera y pie en cada

@@ -28,6 +28,42 @@
   --bps-grey-500: #505050;
   --bps-grey-300: #cbcbcb;
   --bps-grey-200: #dfdfdf;
+
+  /* Esquema propio del pie de página (color-scheme-footer de Hyperice). */
+  --bps-footer-bg: #212121;
+  --bps-footer-bg-2: #373737;
+  --bps-footer-fg: #cbcbcb;
+
+  /* Azul corporativo: exclusivo del logotipo, nunca en componentes. */
+  --bps-brand: #1b4df5;
+}
+
+/* --------------------------------------------------------------------------
+   0. Cabecera estática
+   Hyperice no fija la cabecera: se va con la página y no cambia de color.
+   Si en el editor de temas está activada la opción de cabecera fija, esto la
+   neutraliza. Es la diferencia de comportamiento más visible.
+   -------------------------------------------------------------------------- */
+
+.shopify-section-group-header-group,
+.shopify-section-header,
+.header-wrapper--sticky,
+sticky-header {
+  position: static !important;
+}
+
+/* --------------------------------------------------------------------------
+   0b. Esquinas rectas
+   En todo el HTML de Hyperice no hay una sola utilidad de redondeo sobre
+   imágenes o tarjetas: el radio se reserva a píldoras y a los campos.
+   -------------------------------------------------------------------------- */
+
+.card__inner,
+.card__media,
+.media,
+.global-media-settings,
+.collection-list__item .card--standard .card__inner {
+  border-radius: 0;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -234,7 +270,6 @@ button.shopify-payment-button__button--unbranded {
 .card--standard .card__inner,
 .card__media,
 .media {
-  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -281,11 +316,6 @@ button.shopify-payment-button__button--unbranded {
   color: var(--bps-white);
 }
 
-/* Tarjetas de colección: rótulo sobre la imagen con degradado inferior. */
-.collection-list__item .card--standard .card__inner {
-  border-radius: 8px;
-}
-
 .collection-list__item .card__heading {
   font-size: 1.3125rem;
 }
@@ -298,7 +328,7 @@ button.shopify-payment-button__button--unbranded {
 .select__select,
 .customer .field input,
 .customer select {
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 0.875rem;
 }
 
@@ -310,7 +340,7 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .newsletter-form__field-wrapper .field__input {
-  border-radius: 62.5rem;
+  border-radius: 4px;
 }
 
 /* --------------------------------------------------------------------------
@@ -336,7 +366,7 @@ button.shopify-payment-button__button--unbranded {
 
 @media screen and (min-width: 990px) {
   .shopify-section:not(.shopify-section-header):not(.shopify-section-group-header-group) {
-    --spacing-sections-desktop: 120;
+    --spacing-sections-desktop: 80;
   }
 }
 
@@ -344,44 +374,66 @@ button.shopify-payment-button__button--unbranded {
    8. Pie de página — negro a sangre.
    -------------------------------------------------------------------------- */
 
+/* El pie de Hyperice NO es negro puro: su esquema de color es #212121 con
+   texto base #cbcbcb, y los enlaces van en blanco y a tamaño de titular
+   (24 px), no en letra pequeña gris. */
 .footer {
-  background-color: var(--bps-black);
-  color: var(--bps-white);
+  background-color: var(--bps-footer-bg);
+  color: var(--bps-footer-fg);
   border-top: 0;
 }
 
 .footer__content-top,
 .footer__content-bottom {
-  border-color: #373737;
+  border-color: var(--bps-footer-bg-2);
 }
 
 .footer-block__heading {
-  font-size: 0.875rem;
+  font-size: 1.125rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   text-transform: none;
   color: var(--bps-white);
+  margin-bottom: 20px;
 }
 
 .footer a,
 .footer .list-menu__item--link,
-.footer__content-bottom a {
-  color: var(--bps-grey-300);
-  font-size: 0.875rem;
+.footer__list-social a {
+  color: var(--bps-white);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   transition: color var(--duration-default) ease;
 }
 
 .footer a:hover,
 .footer .list-menu__item--link:hover {
-  color: var(--bps-white);
+  color: var(--bps-footer-fg);
   text-decoration: none;
 }
 
+.footer .list-menu__item {
+  padding-block: 10px;
+}
+
+/* Los enlaces legales y el aviso de copyright sí son letra pequeña. */
+.footer__content-bottom a,
+.footer__copyright a,
+.copyright__content {
+  color: var(--bps-footer-fg);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
 .footer .list-social__link {
-  border: 1px solid #373737;
+  border: 0;
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
+  background-color: var(--bps-footer-bg-2);
   color: var(--bps-white);
 }
 
@@ -390,9 +442,13 @@ button.shopify-payment-button__button--unbranded {
   color: var(--bps-black);
 }
 
-.copyright__content {
-  color: #979797;
-  font-size: 0.8125rem;
+/* Campo de suscripción del pie: alto, rectangular y con fondo propio. */
+.footer .newsletter-form__field-wrapper .field__input {
+  height: 60px;
+  border-radius: 4px;
+  border-color: transparent;
+  background-color: var(--bps-footer-bg-2);
+  color: var(--bps-white);
 }
 
 /* --------------------------------------------------------------------------

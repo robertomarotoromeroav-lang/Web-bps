@@ -102,28 +102,30 @@
    Transparente sobre el hero, sólida al hacer scroll o al abrir el menú.
    -------------------------------------------------------------------------- */
 
+/* La cabecera de Hyperice es `static`: no queda fijada ni cambia de color al
+   hacer scroll, simplemente se va con la página. En todo su HTML no hay una
+   sola regla `sticky` o `fixed` para el header fuera del buscador abierto. */
 .header {
-  position: sticky;
-  top: 0;
+  position: static;
   z-index: var(--z-header);
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-border);
-  transition: background-color var(--transition-base), border-color var(--transition-base),
-    color var(--transition-base);
 }
 
+/* Sobre el hero la cabecera se superpone a la imagen, en blanco y sin borde.
+   Como el hero ocupa la altura completa, se resta el alto de la cabecera para
+   que no empuje el contenido hacia abajo. */
 .header--overlay {
-  position: fixed;
-  inset: auto 0 auto 0;
+  position: relative;
   background-color: transparent;
   border-bottom-color: transparent;
   color: var(--color-white);
+  margin-bottom: calc(var(--header-height) * -1);
 }
 
-.header--overlay.is-scrolled,
+/* Al abrir el menú móvil sí necesita fondo, porque el panel cubre la página. */
 .header--overlay.is-open {
   background-color: var(--color-white);
-  border-bottom-color: var(--color-border);
   color: var(--color-black);
 }
 
@@ -140,24 +142,30 @@
 .header__logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: inherit;
-  font-size: 1rem;
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
+/* La marca conserva el azul corporativo salvo sobre fondo oscuro, donde pasa
+   a blanco para garantizar contraste (Hyperice hace lo mismo con su isotipo). */
 .header__logo-mark {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
-  font-size: 0.6875rem;
-  letter-spacing: 0.02em;
+  width: 42px;
+  height: auto;
+  color: var(--color-brand);
+  flex: none;
+}
+
+.header__logo-word {
+  font-size: 1.0625rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.header--overlay .header__logo-mark,
+[data-theme="footer"] .header__logo-mark {
+  color: currentColor;
 }
 
 .header__nav {
@@ -204,33 +212,42 @@
   margin-inline-start: auto;
 }
 
-.header__action {
+/* Los iconos de Hyperice viven dentro de una píldora con fondo propio:
+   gris claro sobre blanco, y blanco al 10 % sobre fotografía. Al pasar el
+   cursor la píldora se invierte a blanco sólido. */
+.header__action,
+.header__region {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  height: 38px;
   color: inherit;
-  border-radius: 50%;
-  transition: background-color var(--transition-fast);
+  background-color: var(--color-stroke-light, #dfdfdf);
+  border-radius: var(--radius-pill);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.header__action:hover {
-  background-color: rgb(128 128 128 / 0.14);
+.header__action {
+  width: 38px;
 }
 
 .header__region {
   display: none;
+  grid-auto-flow: column;
   align-items: center;
   gap: 6px;
-  color: inherit;
   font-size: var(--font-size-body-small);
-  padding-inline: 10px;
-  height: 40px;
-  border-radius: var(--radius-pill);
+  padding-inline: 14px;
 }
 
+.header--overlay .header__action,
+.header--overlay .header__region {
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.header__action:hover,
 .header__region:hover {
-  background-color: rgb(128 128 128 / 0.14);
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 .header__burger {
@@ -587,10 +604,18 @@ a:hover > .media img,
   background-color: transparent;
   color: inherit;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-input);
   padding: 12px 16px;
   font-size: var(--font-size-body-small);
   transition: border-color var(--transition-fast);
+}
+
+/* En el pie el campo va sobre fondo propio y con más altura, como en Hyperice. */
+[data-theme="footer"] .input,
+[data-theme="footer"] .textarea {
+  background-color: var(--color-background-secondary);
+  border-color: transparent;
+  height: 60px;
 }
 
 .input:focus,
@@ -618,68 +643,187 @@ a:hover > .media img,
   padding-block: 0;
 }
 
+/* En el pie el campo es rectangular y alto, no una píldora. */
+[data-theme="footer"] .subscribe {
+  max-width: none;
+}
+
+[data-theme="footer"] .subscribe .input {
+  border-radius: var(--radius-input);
+  height: 60px;
+}
+
 /* --------------------------------------------------------------------------
    Pie de página
    -------------------------------------------------------------------------- */
 
+/* Pie calcado del de Hyperice: fondo #212121 (no negro puro), enlaces en
+   tamaño de titular y no en letra pequeña, y bloque de ayuda + newsletter
+   antes de las columnas. */
 .footer {
-  background-color: var(--color-black);
-  color: var(--color-white);
-  padding-block: 64px 32px;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  padding-block: 60px 24px;
 }
 
-.footer__grid {
-  display: grid;
-  grid-template-columns: 1fr;
+@media (min-width: 990px) {
+  .footer {
+    padding-block: 80px 24px;
+  }
+}
+
+/* Fila superior: columna estrecha de ayuda a la izquierda, newsletter y
+   enlaces a la derecha. En móvil se invierte el orden. */
+.footer__top {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
   gap: 40px;
-  padding-bottom: 48px;
-  border-bottom: 1px solid var(--color-grey-700);
+}
+
+.footer__aside {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 30px;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  color: inherit;
+  max-width: 264px;
+}
+
+.footer__help-title {
+  display: block;
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-foreground-secondary);
+  margin-bottom: 5px;
+}
+
+.footer__help-text {
+  display: block;
+  font-size: var(--font-size-body-small);
+}
+
+.footer__help-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+}
+
+.footer__main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer__newsletter-title {
+  font-size: var(--font-size-h5);
+  color: var(--color-foreground-secondary);
+  margin-bottom: 20px;
+}
+
+@media (min-width: 990px) {
+  .footer__newsletter-title {
+    font-size: var(--font-size-h4);
+    margin-bottom: 30px;
+  }
+}
+
+.footer__legal-note {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  color: var(--color-foreground);
+}
+
+.footer__legal-note a {
+  color: var(--color-foreground-secondary);
+  text-decoration: underline;
+}
+
+.footer__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+  width: 100%;
 }
 
 .footer__heading {
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-h6);
   font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-utility);
-  margin-bottom: 16px;
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-foreground-secondary);
+  margin-bottom: 20px;
 }
 
 .footer__links {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
+/* Los enlaces del pie de Hyperice usan tamaño h5 (24 px) y color blanco,
+   atenuándose al pasar el cursor. No son letra pequeña gris. */
 .footer__links a {
-  color: var(--color-grey-300);
-  font-size: var(--font-size-body-small);
+  color: var(--color-foreground-secondary);
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
+  line-height: 1.2;
   transition: color var(--transition-fast);
 }
 
 .footer__links a:hover {
-  color: var(--color-white);
+  color: var(--color-link);
 }
 
 .footer__social {
   display: flex;
-  gap: 8px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 30px;
 }
 
 .footer__social a {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--color-grey-700);
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  color: var(--color-white);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .footer__social a:hover {
   background-color: var(--color-white);
-  border-color: var(--color-white);
   color: var(--color-black);
+}
+
+@media (min-width: 990px) {
+  .footer__top {
+    flex-direction: row;
+  }
+
+  .footer__aside {
+    max-width: 320px;
+    min-width: 320px;
+  }
+
+  .footer__main {
+    width: 66%;
+  }
 }
 
 .footer__bottom {
@@ -687,7 +831,9 @@ a:hover > .media img,
   flex-wrap: wrap;
   align-items: center;
   gap: 16px 24px;
-  padding-top: 28px;
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
 }
 
 .footer__legal {
@@ -698,12 +844,12 @@ a:hover > .media img,
 
 .footer__legal a,
 .footer__copy {
-  color: var(--color-grey-400);
+  color: var(--color-foreground);
   font-size: 0.8125rem;
 }
 
 .footer__legal a:hover {
-  color: var(--color-white);
+  color: var(--color-foreground-secondary);
 }
 
 .footer__payments {
@@ -727,15 +873,8 @@ a:hover > .media img,
   white-space: nowrap;
 }
 
-@media (min-width: 750px) {
-  .footer__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 990px) {
-  .footer__grid {
-    grid-template-columns: 1.6fr repeat(3, 1fr);
-    gap: 32px;
-  }
+/* Las píldoras de pago mantienen fondo blanco también sobre el pie oscuro. */
+[data-theme="footer"] .footer__payment {
+  background-color: var(--color-white);
+  color: var(--color-grey-800);
 }

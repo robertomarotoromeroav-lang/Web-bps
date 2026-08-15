@@ -24,12 +24,14 @@
   <p>Envío gratuito en pedidos superiores a 100&nbsp;€</p>
 </div>
 
-<!-- La cabecera flota sobre el hero y se vuelve sólida al hacer scroll. -->
+<!-- La cabecera se superpone al hero y se va con el scroll: no queda fijada
+     ni cambia de color, igual que en Hyperice. -->
 <header class="header header--overlay" data-header>
   <div class="header__inner">
     <a class="header__logo" href="index.html">
-      <span class="header__logo-mark" aria-hidden="true">BPS</span>
-      <span>Performance</span>
+      <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
+      <span class="header__logo-word">BPS</span>
+      <span class="visually-hidden">Performance</span>
     </a>
 
     <nav class="header__nav" aria-label="Principal">
@@ -343,87 +345,79 @@
     </div>
   </section>
 
-  <!-- ====================== Newsletter ====================== -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="band reveal">
-        <div>
-          <h2 class="h3">Entrena, recupera, repite</h2>
-          <p class="text-muted measure" style="margin-top:16px">
-            Protocolos de recuperación, novedades y acceso anticipado a lanzamientos.
-            Sin ruido, solo lo que te hace rendir más.
-          </p>
-        </div>
-
-        <form class="subscribe" action="#" method="post">
-          <label class="visually-hidden" for="newsletter-email">Correo electrónico</label>
-          <input class="input" id="newsletter-email" name="email" type="email" placeholder="Tu correo electrónico" required>
-          <button class="btn btn--primary" type="submit">Suscribirme</button>
-        </form>
-      </div>
-    </div>
-  </section>
+  <!-- La suscripción vive en el pie, como en Hyperice: repetirla aquí
+       duplicaba el mismo formulario dos veces seguidas. -->
 
 </main>
 
-<footer class="footer">
+<footer class="footer" data-theme="footer">
   <div class="container">
-    <div class="footer__grid">
-      <div>
-        <a class="header__logo" href="index.html">
-          <span class="header__logo-mark" aria-hidden="true">BPS</span>
-          <span>Performance</span>
+    <div class="footer__top">
+      <div class="footer__aside">
+        <a class="footer__help" href="contacto.html">
+          <span>
+            <span class="footer__help-title">¿Tienes alguna otra pregunta?</span>
+            <span class="footer__help-text">Nuestro equipo está aquí para ayudarte.</span>
+          </span>
+          <span class="footer__help-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
         </a>
-        <p class="text-body-small" style="margin-top:16px;max-width:34ch;color:var(--color-grey-300)">
-          Recuperación de élite y rendimiento máximo. Tecnología validada para
-          quienes exigen más.
-        </p>
-
         <div class="footer__social">
           <a href="https://www.facebook.com/people/BPS-Performance-System/61586134767767/" aria-label="Facebook">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M13.5 22v-9h3l.5-3.5h-3.5V7.4c0-1 .3-1.7 1.8-1.7H17V2.6C16.7 2.5 15.6 2.4 14.3 2.4c-2.7 0-4.5 1.6-4.5 4.6v2.5H7V13h2.8v9z"/>
-            </svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-9h3l.5-3.5h-3.5V7.4c0-1 .3-1.7 1.8-1.7H17V2.6C16.7 2.5 15.6 2.4 14.3 2.4c-2.7 0-4.5 1.6-4.5 4.6v2.5H7V13h2.8v9z"/></svg>
           </a>
           <a href="https://www.instagram.com/bps_performance_system/" aria-label="Instagram">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
-            </svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
           <a href="https://www.tiktok.com/@bps_performance_system" aria-label="TikTok">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M16.5 2h-3v13a2.6 2.6 0 1 1-2.6-2.6c.2 0 .4 0 .6.1V9.4a5.7 5.7 0 1 0 5 5.6V8.7a6.6 6.6 0 0 0 3.8 1.2V6.8a3.8 3.8 0 0 1-3.8-3.8z"/>
-            </svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13a2.6 2.6 0 1 1-2.6-2.6c.2 0 .4 0 .6.1V9.4a5.7 5.7 0 1 0 5 5.6V8.7a6.6 6.6 0 0 0 3.8 1.2V6.8a3.8 3.8 0 0 1-3.8-3.8z"/></svg>
           </a>
         </div>
       </div>
 
-      <div>
-        <h2 class="footer__heading">Nuestras soluciones</h2>
-        <ul class="footer__links">
-          <li><a href="https://bpsperformance.com/collections/liberacion-muscular">Liberación muscular</a></li>
-          <li><a href="https://bpsperformance.com/collections/recuperacion-polar">Recuperación fría</a></li>
-          <li><a href="https://bpsperformance.com/collections/energia-luminica">Terapia de luz roja</a></li>
-          <li><a href="https://bpsperformance.com/collections/presoterapia">Presoterapia</a></li>
-        </ul>
-      </div>
+      <div class="footer__main">
+        <div style="width:100%">
+          <h2 class="footer__newsletter-title">Mantente en contacto y recibe novedades sobre nuestra última tecnología.</h2>
+          <form class="subscribe" action="#" method="post">
+            <label class="visually-hidden" for="footer-email">Correo electrónico</label>
+            <input class="input" id="footer-email" name="email" type="email" placeholder="Correo electrónico" required>
+            <button class="btn btn--primary" type="submit">Suscribirse</button>
+          </form>
+          <p class="footer__legal-note">
+            Al enviar tu dirección de correo aceptas la
+            <a href="https://bpsperformance.com/policies/privacy-policy">Política de privacidad</a> y los
+            <a href="https://bpsperformance.com/policies/terms-of-service">Términos del servicio</a>.
+          </p>
+        </div>
 
-      <div>
-        <h2 class="footer__heading">Sobre nosotros</h2>
-        <ul class="footer__links">
-          <li><a href="https://bpsperformance.com/pages/sobre-nosotros">Nuestra filosofía</a></li>
-          <li><a href="https://bpsperformance.com/blogs/noticias">Blog</a></li>
-          <li><a href="https://fisioterapiabackpackretiro.es">Prueba nuestros productos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="footer__heading">Soporte</h2>
-        <ul class="footer__links">
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="https://bpsperformance.com/policies/shipping-policy">Envíos y devoluciones</a></li>
-          <li><a href="https://bpsperformance.com/pages/preguntas-frecuentes">Preguntas frecuentes</a></li>
-        </ul>
+        <div class="footer__columns">
+          <div>
+            <h2 class="footer__heading">Compra por tecnología</h2>
+            <ul class="footer__links">
+              <li><a href="https://bpsperformance.com/collections/presoterapia">Presoterapia</a></li>
+              <li><a href="https://bpsperformance.com/collections/energia-luminica">Luz roja</a></li>
+              <li><a href="https://bpsperformance.com/collections/recuperacion-polar">Frío</a></li>
+              <li><a href="https://bpsperformance.com/collections/liberacion-muscular">Percusión</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer__heading">Sobre nosotros</h2>
+            <ul class="footer__links">
+              <li><a href="https://bpsperformance.com/pages/sobre-nosotros">Filosofía</a></li>
+              <li><a href="https://bpsperformance.com/blogs/noticias">Blog</a></li>
+              <li><a href="https://fisioterapiabackpackretiro.es">Pruébalos</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer__heading">Soporte</h2>
+            <ul class="footer__links">
+              <li><a href="contacto.html">Contacto</a></li>
+              <li><a href="https://bpsperformance.com/policies/shipping-policy">Envíos</a></li>
+              <li><a href="https://bpsperformance.com/pages/preguntas-frecuentes">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -433,20 +427,16 @@
         <a href="https://bpsperformance.com/policies/terms-of-service">Términos del servicio</a>
         <a href="https://bpsperformance.com/policies/refund-policy">Política de reembolso</a>
         <a href="https://bpsperformance.com/policies/legal-notice">Aviso legal</a>
-        <a href="https://bpsperformance.com/policies/shipping-policy">Política de envío</a>
       </div>
 
       <div class="footer__payments" aria-label="Formas de pago">
         <span class="footer__payment">VISA</span>
         <span class="footer__payment">MASTERCARD</span>
         <span class="footer__payment">AMEX</span>
-        <span class="footer__payment">MAESTRO</span>
         <span class="footer__payment">PAYPAL</span>
         <span class="footer__payment">APPLE PAY</span>
         <span class="footer__payment">GOOGLE PAY</span>
-        <span class="footer__payment">SHOP PAY</span>
         <span class="footer__payment">KLARNA</span>
-        <span class="footer__payment">UNIONPAY</span>
       </div>
     </div>
 

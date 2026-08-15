@@ -6,17 +6,9 @@
 (function () {
   "use strict";
 
-  /* ---- Cabecera: pasa de transparente a sólida al salir del hero ---- */
+  /* La cabecera no reacciona al scroll: en Hyperice es estática y se va con
+     la página, sin volverse blanca ni quedar fijada. */
   var header = document.querySelector("[data-header]");
-
-  if (header && header.classList.contains("header--overlay")) {
-    var setScrolled = function () {
-      header.classList.toggle("is-scrolled", window.scrollY > 40);
-    };
-
-    setScrolled();
-    window.addEventListener("scroll", setScrolled, { passive: true });
-  }
 
   /* ---- Menú móvil ---- */
   var menu = document.querySelector("[data-mobile-menu]");
