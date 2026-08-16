@@ -29,7 +29,7 @@ y de la hoja de estilos de producción de Hyperice.
 | **Cuerpo** | 16px / interlineado 1.4 / peso 400 |
 | **Color** | Monocromo: `#000000` · `#FFFFFF` · `#F7F5F5` · `#2D2926` · `#505050` · `#DFDFDF` |
 | **Pie** | Esquema propio: fondo `#212121`, texto `#CBCBCB`. Rótulo de columna 18px > enlaces 16px |
-| **Marca** | `#1B4DF5`, exclusivo del logotipo — nunca en componentes |
+| **Marca** | `#0B59F8`, medido sobre el logotipo. Exclusivo del logotipo — nunca en componentes |
 | **Botones** | Píldora `62.5rem` · alto 40px · ancho mínimo 160px · 14px peso 500 |
 | **Radios** | Esquina recta en tarjetas e imágenes · 4px en campos · píldora solo en botones e iconos |
 | **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
@@ -162,10 +162,12 @@ Pendiente de decisión del cliente:
   Inter. Si se licencia, basta con servirla: el stack ya la prioriza.
 - **Logotipo.** Cuatro variantes en SVG con fondo transparente: apilado y
   horizontal, cada una con el wordmark en negro y en blanco. El isotipo mantiene
-  el azul en las cuatro. El isotipo es geometría exacta; el wordmark está
-  redibujado a partir del logo facilitado y se aproxima mucho, pero para
-  producción conviene sustituirlo por el **archivo vectorial original**. El azul
-  `#1B4DF5` está estimado: es un token de una línea en `tokens.css`.
+  el azul en las cuatro. Se generan **vectorizando el archivo original** con
+  `tools/build-logos.py`, así que las formas son las del logotipo. Si cambia,
+  reemplaza `assets/img/logo-original.jpg` y vuelve a ejecutarlo.
+- **Logotipo antiguo en la tienda.** El que sigue publicado en Shopify lleva
+  degradado azul y "PERFORMANCE" debajo; el nuevo es azul plano y sin bajada.
+  Hay que sustituirlo también allí o convivirán los dos.
 - **Formularios y carrito.** Los formularios son maqueta (`action="#"`) y el
   botón de compra enlaza a la ficha real en Shopify: el prototipo no procesa
   pedidos. En la tienda lo gestiona el propio tema.
