@@ -93,6 +93,8 @@
   var openers = document.querySelectorAll("[data-menu-open]");
   var closers = document.querySelectorAll("[data-menu-close]");
 
+  var lastFocused = null;
+
   var setMenu = function (open) {
     if (!menu) return;
 
@@ -105,6 +107,17 @@
     });
 
     if (header) header.classList.toggle("is-open", open);
+
+    // El drawer es un diálogo: al abrirlo el foco entra en él y al cerrarlo
+    // vuelve al botón que lo abrió, para no perder el sitio con teclado.
+    if (open) {
+      lastFocused = document.activeElement;
+      var first = menu.querySelector("[data-menu-close]");
+      if (first) first.focus();
+    } else if (lastFocused) {
+      lastFocused.focus();
+      lastFocused = null;
+    }
   };
 
   openers.forEach(function (button) {

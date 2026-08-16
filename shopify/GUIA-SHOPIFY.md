@@ -240,6 +240,8 @@ que se pueda validar la maqueta con material real.
 - [ ] La cabecera queda fija y la barra de anuncios se esconde al bajar
 - [ ] La cabecera no cambia a blanco en ningún momento
 - [ ] En móvil las columnas del pie se colapsan tras un botón con +/−
+- [ ] El menú móvil abre como cajón desde la izquierda, con fondo translúcido
+      y cierre al pulsar fuera (en Dawn: Cabecera → tipo de menú «cajón»)
 - [ ] Los enlaces de tecnología del pie llevan su icono a la izquierda
 - [ ] Carrito, buscador y selector de país intactos
 - [ ] Contraste AA en textos sobre imagen

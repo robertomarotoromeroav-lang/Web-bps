@@ -25,6 +25,8 @@
   <p>Envío gratuito en pedidos superiores a 100&nbsp;€</p>
 </div>
 
+<!-- Cabecera fija sobre el hero. Al hacer scroll no cambia de color: sube el
+     bloque lo justo para esconder la barra de anuncios, como en Hyperice. -->
 <header class="header" data-header>
   <div class="header__inner">
     <a class="header__logo" href="index.html" aria-label="BPS Performance — inicio">
@@ -39,7 +41,7 @@
         <li><a href="index.html">Inicio</a></li>
         <li><a href="productos.html">Productos</a></li>
         <li><a href="index.html#tecnologia">Tecnología</a></li>
-        <li><a href="blog.html">Blog</a></li>
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
@@ -51,21 +53,25 @@
         </svg>
         España (EUR&nbsp;€)
       </a>
+
       <a class="header__action" href="#buscar" aria-label="Buscar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
         </svg>
       </a>
+
       <a class="header__action" href="#cuenta" aria-label="Mi cuenta">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
         </svg>
       </a>
+
       <a class="header__action" href="#carrito" aria-label="Carrito">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>
         </svg>
       </a>
+
       <button class="header__burger" type="button" data-menu-open aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M3 7h18M3 12h18M3 17h18"/>
@@ -76,23 +82,57 @@
 </header>
 </div>
 
-<div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
-  <div class="mobile-menu__head">
-    <button class="header__burger" type="button" data-menu-close aria-label="Cerrar menú">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M6 6l12 12M18 6L6 18"/>
-      </svg>
-    </button>
-  </div>
-  <nav class="mobile-menu__list" aria-label="Menú móvil">
-    <a href="index.html">Inicio</a>
-    <a href="productos.html">Productos</a>
-    <a href="index.html#tecnologia">Tecnología</a>
-    <a href="blog.html">Blog</a>
-    <a href="contacto.html">Contacto</a>
-  </nav>
-  <div class="mobile-menu__footer">
-    <a class="btn btn--primary btn--full" href="productos.html">Ver todos los productos</a>
+<div class="drawer" id="mobile-menu" data-mobile-menu aria-hidden="true">
+  <div class="drawer__backdrop" data-menu-close></div>
+
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+    <div class="drawer__head">
+      <a class="drawer__logo" href="index.html" aria-label="BPS Performance — inicio">
+        <img src="assets/img/logo-horizontal-black.svg" alt="BPS Performance" width="200" height="43">
+      </a>
+      <button class="drawer__close" type="button" data-menu-close aria-label="Cerrar menú">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="drawer__nav" aria-label="Menú móvil">
+      <a class="drawer__link" href="index.html">Inicio</a>
+
+      <div>
+        <button class="drawer__toggle" type="button" data-accordion-toggle
+                aria-expanded="false" aria-controls="drawer-productos">
+          Productos
+          <span class="footer__accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="drawer__panel-body" id="drawer-productos" data-accordion-panel>
+          <div class="drawer__sublist">
+            <a href="coleccion.html">Presoterapia</a>
+            <a href="coleccion.html">Terapia de luz roja</a>
+            <a href="coleccion.html">Recuperación fría</a>
+            <a href="coleccion.html">Liberación muscular</a>
+            <a href="productos.html">Ver todo el catálogo</a>
+          </div>
+        </div>
+      </div>
+
+      <a class="drawer__link" href="index.html#tecnologia">Tecnología</a>
+      <a class="drawer__link" href="sobre-nosotros.html">Nosotros</a>
+      <a class="drawer__link" href="blog.html">Blog</a>
+      <a class="drawer__link" href="faq.html">Preguntas frecuentes</a>
+      <a class="drawer__link" href="contacto.html">Contacto</a>
+    </nav>
+
+    <div class="drawer__foot">
+      <a class="header__region" href="#region">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/>
+        </svg>
+        España (EUR&nbsp;€)
+      </a>
+      <a class="btn btn--primary btn--full" href="productos.html">Ver todos los productos</a>
+    </div>
   </div>
 </div>
 

@@ -65,6 +65,10 @@ parecen. Todos están confirmados en su HTML y su CSS de producción:
   o tarjetas. El radio se reserva a píldoras y a 4px en los campos.
 - **Los iconos de cabecera viven en píldoras** con fondo propio: gris claro
   sobre blanco, blanco al 10 % sobre fotografía.
+- **El menú móvil es un drawer anclado a la izquierda**, con fondo translúcido
+  y desenfoque, que se cierra al pulsar fuera. No es un panel que baja desde
+  arriba. Repite el logotipo en su cabecera y lleva el botón de cierre en
+  píldora a la derecha.
 
 ---
 
@@ -85,13 +89,28 @@ assets/css/tokens.css        Variables. Tema oscuro por sección con [data-theme
 assets/css/base.css          Reset y tipografía
 assets/css/components.css    Botones, cabecera, tarjetas, filtros, formularios, pie
 assets/css/layout.css        Contenedores, rejillas, hero, bloques editoriales
-assets/js/site.js            Menú móvil, filtros de catálogo, aparición al hacer scroll
+assets/js/site.js            Cabecera, drawer móvil, acordeones, filtros y cantidad
 assets/img/                  Logotipo en 4 variantes (apilado/horizontal x negro/blanco)
 
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1
 tools/build-logos.py         Regenera el logotipo vectorizando el original
+tools/sync-chrome.py         Propaga cabecera, menú y pie desde index.html
 ```
+
+### Mantener la cabecera y el pie sincronizados
+
+Al ser HTML estático, cada página lleva su copia de la cabecera y del pie, y
+editarlas a mano las desincroniza enseguida. **Cambia solo `index.html` y
+propaga:**
+
+```bash
+python3 tools/sync-chrome.py
+```
+
+Ajusta por página el enlace marcado como actual, los anclas de la home y el
+espacio que reserva la cabecera fija. En Shopify esto lo resuelven los
+*snippets* de Dawn y el script deja de hacer falta.
 
 Cada archivo HTML es una **plantilla**, no una página suelta: `coleccion.html`
 sirve para las cuatro categorías y `producto.html` para los doce productos. En
@@ -174,6 +193,7 @@ Pendiente de decisión del cliente:
 - **Contenido del blog.** Hay un solo artículo publicado, así que el listado
   muestra uno destacado. El diseño admite rejilla cuando haya más.
 - **Cabeceras y pies duplicados.** El prototipo repite cabecera y pie en cada
-  HTML por ser estático. En Shopify eso lo resuelven los *snippets* de Dawn.
+  HTML por ser estático; `tools/sync-chrome.py` los mantiene idénticos. En
+  Shopify eso lo resuelven los *snippets* de Dawn.
 - **Fuentes desde Google Fonts.** Si se prefiere no depender de Google por
   RGPD, Inter puede autoalojarse en `assets/fonts/`.

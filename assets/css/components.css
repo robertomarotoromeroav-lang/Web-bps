@@ -128,11 +128,6 @@
   padding-top: 0;
 }
 
-/* Páginas sin barra de anuncios: solo hay que reservar el alto de la cabecera. */
-.page--no-announcement {
-  padding-top: var(--header-height);
-}
-
 .header {
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-border);
@@ -312,50 +307,160 @@
   }
 }
 
-/* Menú móvil */
-.mobile-menu {
+/* --------------------------------------------------------------------------
+   Menú móvil
+   Hyperice lo resuelve como un drawer anclado a la izquierda con fondo
+   translúcido y desenfoque, no como un panel que baja desde arriba. Se cierra
+   pulsando fuera, y la cabecera del propio drawer repite logotipo y botón de
+   cierre en píldora.
+   -------------------------------------------------------------------------- */
+
+.drawer {
   position: fixed;
   inset: 0;
   z-index: var(--z-overlay);
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-white);
-  color: var(--color-black);
-  padding: 20px var(--page-padding-inline) 40px;
-  transform: translateY(-100%);
   visibility: hidden;
-  transition: transform var(--transition-base), visibility var(--transition-base);
 }
 
-.mobile-menu.is-open {
-  transform: translateY(0);
+.drawer.is-open {
   visibility: visible;
 }
 
-.mobile-menu__head {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 24px;
+.drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.4);
+  opacity: 0;
+  transition: opacity var(--transition-base);
 }
 
-.mobile-menu__list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.drawer.is-open .drawer__backdrop {
+  opacity: 1;
 }
 
-.mobile-menu__list a {
-  display: block;
-  font-size: var(--font-size-h4);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-heading);
-  padding-block: 12px;
+.drawer__panel {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: min(88vw, 400px);
+  background-color: rgb(255 255 255 / 0.92);
+  backdrop-filter: blur(20px);
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+  overflow-y: auto;
+}
+
+.drawer.is-open .drawer__panel {
+  transform: translateX(0);
+}
+
+/* Cabecera de 80px, como el drawer de Hyperice. */
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 80px;
+  padding-inline: var(--page-padding-inline);
   border-bottom: 1px solid var(--color-border);
 }
 
-.mobile-menu__footer {
-  margin-top: auto;
-  padding-top: 32px;
+.drawer__logo img {
+  height: 26px;
+  width: auto;
+}
+
+/* El cierre es una píldora con fondo, que se invierte al pasar el cursor. */
+.drawer__close {
+  display: grid;
+  place-items: center;
+  height: 30px;
+  padding-inline: 12px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-stroke-light);
+  color: var(--color-black);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.drawer__close:hover {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.drawer__nav {
+  display: flex;
+  flex-direction: column;
+  padding: 8px var(--page-padding-inline);
+}
+
+.drawer__link,
+.drawer__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-foreground);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
+  text-align: left;
+}
+
+/* Sobre el fondo claro del drawer, el signo necesita su propia píldora gris:
+   la del pie es para fondo oscuro y aquí quedaría invisible. */
+.drawer__toggle .footer__accordion-icon {
+  background-color: var(--color-stroke-light);
+  color: var(--color-black);
+}
+
+.drawer__panel-body {
+  overflow: hidden;
+  height: 0;
+  transition: height var(--transition-base);
+}
+
+.drawer__sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0 16px;
+}
+
+.drawer__sublist a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 8px;
+  color: var(--color-foreground-secondary);
+  font-size: var(--font-size-body);
+}
+
+.drawer__sublist a:hover {
+  color: var(--color-foreground);
+}
+
+.drawer__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px var(--page-padding-inline) 28px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* El selector de país recupera su forma de píldora dentro del drawer. */
+.drawer__foot .header__region {
+  display: inline-grid;
+  justify-self: start;
+}
+
+@media (min-width: 990px) {
+  .drawer {
+    display: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
