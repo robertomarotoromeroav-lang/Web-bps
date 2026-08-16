@@ -148,12 +148,6 @@
   backdrop-filter: blur(10px);
 }
 
-/* Al abrir el menú móvil sí necesita fondo, porque el panel cubre la página. */
-.header--overlay.is-open {
-  background-color: var(--color-white);
-  color: var(--color-black);
-}
-
 .header__inner {
   display: flex;
   align-items: center;
@@ -188,16 +182,6 @@
 
 .header--overlay .header__logo-img--on-dark {
   display: block;
-}
-
-/* Con el menú móvil abierto la cabecera tiene fondo blanco, así que vuelve
-   la versión de fondo claro. */
-.header--overlay.is-open .header__logo-img--on-light {
-  display: block;
-}
-
-.header--overlay.is-open .header__logo-img--on-dark {
-  display: none;
 }
 
 @media (min-width: 750px) {
@@ -309,10 +293,10 @@
 
 /* --------------------------------------------------------------------------
    Menú móvil
-   Hyperice lo resuelve como un drawer anclado a la izquierda con fondo
-   translúcido y desenfoque, no como un panel que baja desde arriba. Se cierra
-   pulsando fuera, y la cabecera del propio drawer repite logotipo y botón de
-   cierre en píldora.
+   Hyperice lo resuelve como un cajón anclado a la izquierda sobre fondo negro
+   al 80 % con desenfoque y texto blanco: no es un panel blanco. Los separadores
+   y las píldoras van en blanco al 20 %, y no hay velo oscuro adicional porque
+   el propio cajón ya es translúcido.
    -------------------------------------------------------------------------- */
 
 .drawer {
@@ -326,16 +310,10 @@
   visibility: visible;
 }
 
+/* Capta el clic fuera del cajón; no tiñe, solo cierra. */
 .drawer__backdrop {
   position: absolute;
   inset: 0;
-  background-color: rgb(0 0 0 / 0.4);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.drawer.is-open .drawer__backdrop {
-  opacity: 1;
 }
 
 .drawer__panel {
@@ -344,18 +322,22 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   width: min(88vw, 400px);
-  background-color: rgb(255 255 255 / 0.92);
+  background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(20px);
+  color: var(--color-foreground);
   transform: translateX(-100%);
   transition: transform var(--transition-base);
   overflow-y: auto;
+
+  /* Sobre el cajón oscuro las líneas son blanco al 20 %, no el gris del tema. */
+  --color-border: rgb(255 255 255 / 0.2);
 }
 
 .drawer.is-open .drawer__panel {
   transform: translateX(0);
 }
 
-/* Cabecera de 80px, como el drawer de Hyperice. */
+/* Cabecera de 80px, como el cajón de Hyperice. */
 .drawer__head {
   display: flex;
   align-items: center;
@@ -371,21 +353,26 @@
   width: auto;
 }
 
-/* El cierre es una píldora con fondo, que se invierte al pasar el cursor. */
+/* Píldora traslúcida que se invierte a blanco sólido al pasar el cursor. */
+.drawer__close,
+.drawer__foot .header__region {
+  background-color: rgb(255 255 255 / 0.2);
+  color: var(--color-white);
+}
+
 .drawer__close {
   display: grid;
   place-items: center;
   height: 30px;
   padding-inline: 12px;
   border-radius: var(--radius-pill);
-  background-color: var(--color-stroke-light);
-  color: var(--color-black);
   transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.drawer__close:hover {
-  background-color: var(--color-black);
-  color: var(--color-white);
+.drawer__close:hover,
+.drawer__foot .header__region:hover {
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 .drawer__nav {
@@ -401,20 +388,26 @@
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  padding-block: 16px;
+  padding-block: 18px;
   border-bottom: 1px solid var(--color-border);
-  color: var(--color-foreground);
-  font-size: var(--font-size-h6);
+  color: var(--color-white);
+  font-size: var(--font-size-h5);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-heading);
+  line-height: 1.2;
   text-align: left;
+  transition: opacity var(--transition-fast);
 }
 
-/* Sobre el fondo claro del drawer, el signo necesita su propia píldora gris:
-   la del pie es para fondo oscuro y aquí quedaría invisible. */
+.drawer__link:hover,
+.drawer__toggle:hover {
+  opacity: 0.6;
+}
+
+/* El signo +/- reutiliza el del pie, pero en blanco traslúcido. */
 .drawer__toggle .footer__accordion-icon {
-  background-color: var(--color-stroke-light);
-  color: var(--color-black);
+  background-color: rgb(255 255 255 / 0.2);
+  color: var(--color-white);
 }
 
 .drawer__panel-body {
@@ -426,35 +419,39 @@
 .drawer__sublist {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 0 16px;
+  padding: 4px 0 16px;
 }
 
 .drawer__sublist a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-block: 8px;
-  color: var(--color-foreground-secondary);
+  padding-block: 10px;
+  color: var(--color-grey-300);
   font-size: var(--font-size-body);
+  transition: color var(--transition-fast);
 }
 
 .drawer__sublist a:hover {
-  color: var(--color-foreground);
+  color: var(--color-white);
 }
 
 .drawer__foot {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 14px;
   padding: 20px var(--page-padding-inline) 28px;
   border-top: 1px solid var(--color-border);
 }
 
-/* El selector de país recupera su forma de píldora dentro del drawer. */
 .drawer__foot .header__region {
   display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
   justify-self: start;
+  gap: 6px;
+  height: 38px;
+  padding-inline: 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-body-small);
 }
 
 @media (min-width: 990px) {

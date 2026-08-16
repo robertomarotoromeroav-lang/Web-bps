@@ -15,7 +15,9 @@
      desaparece y deja la cabecera pegada arriba. Por debajo de 50 px vuelve.
      La cabecera nunca cambia a blanco. */
   var announcementHidden = false;
-  var hero = document.querySelector(".hero");
+  // La cabecera se superpone tanto al hero de la home como a la cabecera
+  // editorial de las páginas de categoría y de filosofía.
+  var hero = document.querySelector(".hero, .collection-hero");
 
   var onScroll = function () {
     var y = root.scrollTop || document.body.scrollTop;

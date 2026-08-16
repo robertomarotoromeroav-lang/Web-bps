@@ -34,6 +34,7 @@ y de la hoja de estilos de producción de Hyperice.
 | **Radios** | Esquina recta en tarjetas e imágenes · 4px en campos · píldora solo en botones e iconos |
 | **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
 | **Cabecera** | Fija. Al bajar esconde la barra de anuncios; nunca cambia de color |
+| **Menú móvil** | Cajón desde la izquierda, negro al 80 % con desenfoque de 20px |
 | **Movimiento** | 0,2s en interfaz · 0,6s en zoom de imagen · sin sombras ni rebotes |
 
 `styleguide.html` muestra todo esto renderizado.
@@ -65,10 +66,11 @@ parecen. Todos están confirmados en su HTML y su CSS de producción:
   o tarjetas. El radio se reserva a píldoras y a 4px en los campos.
 - **Los iconos de cabecera viven en píldoras** con fondo propio: gris claro
   sobre blanco, blanco al 10 % sobre fotografía.
-- **El menú móvil es un drawer anclado a la izquierda**, con fondo translúcido
-  y desenfoque, que se cierra al pulsar fuera. No es un panel que baja desde
-  arriba. Repite el logotipo en su cabecera y lleva el botón de cierre en
-  píldora a la derecha.
+- **El menú móvil es un cajón oscuro anclado a la izquierda.** No es un panel
+  blanco que baja desde arriba: su CSS declara `background-color: #000c` (negro
+  al 80 %) con desenfoque de 20 px y texto blanco, y los separadores y píldoras
+  van en blanco al 20 %. No lleva velo oscuro adicional, porque el propio cajón
+  ya es translúcido. Repite el logotipo en su cabecera y cierra al pulsar fuera.
 
 ---
 

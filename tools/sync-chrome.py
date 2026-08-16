@@ -55,8 +55,9 @@ def slice_chrome(html):
 
 
 def apply_to(html, header, drawer, footer, current, body_class, is_home):
-    # La cabecera solo se superpone a la imagen en páginas con hero a sangre.
-    if not is_home:
+    # La cabecera se superpone a la imagen en toda página con hero a sangre,
+    # no solo en la home: la de categoría y la de filosofía también lo llevan.
+    if "page--hero" not in body_class:
         header = header.replace(' class="header header--overlay"', ' class="header"')
 
     # Desde fuera de la home, el ancla de tecnología necesita la ruta.
