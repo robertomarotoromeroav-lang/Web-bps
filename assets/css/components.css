@@ -169,33 +169,46 @@
   padding-inline: var(--page-padding-inline);
 }
 
+/* El logotipo son los archivos de marca vectorizados, no texto compuesto.
+   Se sirven las dos versiones y se muestra la que corresponda al fondo: el
+   isotipo mantiene el azul en ambas, solo cambia el color del wordmark. */
 .header__logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: inherit;
-  white-space: nowrap;
-}
-
-/* La marca conserva el azul corporativo salvo sobre fondo oscuro, donde pasa
-   a blanco para garantizar contraste (Hyperice hace lo mismo con su isotipo). */
-.header__logo-mark {
-  width: 42px;
-  height: auto;
-  color: var(--color-brand);
   flex: none;
 }
 
-.header__logo-word {
-  font-size: 1.0625rem;
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.header__logo-img {
+  width: auto;
+  height: 26px;
 }
 
-.header--overlay .header__logo-mark,
-[data-theme="footer"] .header__logo-mark {
-  color: currentColor;
+.header__logo-img--on-dark {
+  display: none;
+}
+
+.header--overlay .header__logo-img--on-light {
+  display: none;
+}
+
+.header--overlay .header__logo-img--on-dark {
+  display: block;
+}
+
+/* Con el menú móvil abierto la cabecera tiene fondo blanco, así que vuelve
+   la versión de fondo claro. */
+.header--overlay.is-open .header__logo-img--on-light {
+  display: block;
+}
+
+.header--overlay.is-open .header__logo-img--on-dark {
+  display: none;
+}
+
+@media (min-width: 750px) {
+  .header__logo-img {
+    height: 30px;
+  }
 }
 
 .header__nav {

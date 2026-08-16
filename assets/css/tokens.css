@@ -43,9 +43,9 @@
      nunca los componentes de interfaz. */
 
   /* Azul corporativo de BPS. Único color de la paleta y exclusivo del
-     logotipo. Valor aproximado a partir del logo facilitado: sustituir por el
-     hex exacto de la guía de marca cuando esté disponible. */
-  --color-brand: #1b4df5;
+     logotipo: no debe aparecer en ningún componente de interfaz. Medido sobre
+     el isotipo del logotipo original por tools/build-logos.py. */
+  --color-brand: #0b59f8;
 
   --color-black: #000000;
   --color-white: #ffffff;

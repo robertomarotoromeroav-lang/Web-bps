@@ -33,10 +33,11 @@
 <div class="site-header" data-site-header>
 <header class="header" data-header>
   <div class="header__inner">
-    <a class="header__logo" href="index.html">
-      <svg class="header__logo-mark" viewBox="0 0 100 60" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="6" height="60"/><rect x="0" y="0" width="17" height="6"/><rect x="0" y="54" width="17" height="6"/><rect x="25.5" y="10.5" width="10" height="39"/><rect x="46" y="10.5" width="10" height="39"/><rect x="66.5" y="10.5" width="10" height="39"/><rect x="94" y="0" width="6" height="60"/><rect x="83" y="0" width="17" height="6"/><rect x="83" y="54" width="17" height="6"/></svg>
-      <span class="header__logo-word">BPS</span>
-      <span class="visually-hidden">Performance</span>
+    <a class="header__logo" href="index.html" aria-label="BPS Performance — inicio">
+      <img class="header__logo-img header__logo-img--on-light"
+           src="assets/img/logo-horizontal-black.svg" alt="BPS Performance" width="200" height="43">
+      <img class="header__logo-img header__logo-img--on-dark"
+           src="assets/img/logo-horizontal-white.svg" alt="" aria-hidden="true" width="200" height="43">
     </a>
     <nav class="header__nav" aria-label="Principal">
       <ul>
@@ -74,7 +75,7 @@
       <div><div class="sg-swatch__chip" style="background:#cbcbcb"></div><p class="sg-swatch__name">Gris 300</p><p class="sg-swatch__hex">#CBCBCB</p></div>
       <div><div class="sg-swatch__chip" style="background:#dfdfdf"></div><p class="sg-swatch__name">Gris 200</p><p class="sg-swatch__hex">#DFDFDF</p></div>
       <div><div class="sg-swatch__chip" style="background:#212121"></div><p class="sg-swatch__name">Fondo del pie</p><p class="sg-swatch__hex">#212121</p></div>
-      <div><div class="sg-swatch__chip" style="background:#1b4df5"></div><p class="sg-swatch__name">Azul de marca</p><p class="sg-swatch__hex">#1B4DF5</p></div>
+      <div><div class="sg-swatch__chip" style="background:#0b59f8"></div><p class="sg-swatch__name">Azul de marca</p><p class="sg-swatch__hex">#0B59F8</p></div>
     </div>
     <p class="text-body-small text-muted" style="margin-top:24px;max-width:58ch">
       La interfaz es monocroma: el color lo aporta la fotografía. El azul
@@ -109,9 +110,11 @@
       fondo claro y para fondo oscuro. El azul no se usa en ningún otro sitio.
     </p>
     <p class="text-body-small text-muted" style="margin-top:12px;max-width:58ch">
-      El isotipo es geometría exacta. El wordmark está redibujado a partir del
-      logotipo facilitado: se aproxima mucho, pero para producción conviene
-      sustituirlo por el archivo vectorial original.
+      Las cuatro se generan vectorizando el archivo original con
+      <code>tools/build-logos.py</code>, así que las formas del isotipo y de las
+      letras son las del logotipo, no un redibujado. Si el logotipo cambia,
+      basta con reemplazar <code>assets/img/logo-original.jpg</code> y volver a
+      ejecutar el script.
     </p>
   </section>
 

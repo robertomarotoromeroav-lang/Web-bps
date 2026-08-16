@@ -5,7 +5,7 @@ Vectoriza con potrace en vez de redibujar, de modo que las formas del isotipo y
 del wordmark son exactamente las del archivo original. Si el logotipo cambia,
 basta con reemplazar la imagen y volver a ejecutar esto.
 
-    python3 tools/build-logos.py assets/img/logo-original.png
+    python3 tools/build-logos.py assets/img/logo-original.jpg
 
 Requisitos: potrace (apt install potrace) y Pillow (pip install pillow).
 
@@ -28,7 +28,7 @@ import tempfile
 from PIL import Image
 
 OUT_DIR = pathlib.Path("assets/img")
-GAP_STACKED = 0.14   # separación entre isotipo y wordmark, en altos de isotipo
+GAP_STACKED = 0.23   # separación entre isotipo y wordmark, en altos de isotipo
 GAP_HORIZONTAL = 0.18
 
 
@@ -107,10 +107,15 @@ def brand_colour(im, box):
 
 
 def group(part, x, y, scale, colour):
-    w, h, open_tag, paths = part
+    """Compone el grupo de potrace añadiendo la colocación y el color.
+
+    El `<g …>` que devuelve potrace viene sin cerrar, porque su atributo `fill`
+    va en la línea siguiente; hay que cerrarlo aquí.
+    """
+    _w, _h, open_tag, paths = part
     tag = open_tag.replace('<g transform="', f'<g transform="translate({x:.2f} {y:.2f}) '
-                                             f'scale({scale:.5f}) ')
-    return f'  <g fill="{colour}">\n  {tag}\n{paths}\n</g>\n  </g>'
+                                             f'scale({scale:.5f}) ') + ">"
+    return f'  <g fill="{colour}">\n  {tag}\n{paths}\n  </g>\n  </g>'
 
 
 def svg_document(view_w, view_h, body, title):
@@ -121,7 +126,7 @@ def svg_document(view_w, view_h, body, title):
 
 def main():
     source = pathlib.Path(sys.argv[1] if len(sys.argv) > 1
-                          else "assets/img/logo-original.png")
+                          else "assets/img/logo-original.jpg")
     if not source.exists():
         sys.exit(f"No existe {source}. Sube ahí el logotipo original y reintenta.")
 
