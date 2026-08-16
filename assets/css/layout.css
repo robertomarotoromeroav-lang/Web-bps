@@ -522,3 +522,15 @@
     align-items: center;
   }
 }
+
+/* Las tarjetas de categoría llevan imagen y texto en horizontal, así que
+   necesitan más aire entre ellas que una rejilla de tarjetas normal. */
+.category-grid {
+  gap: 40px var(--grid-gutter);
+}
+
+@media (min-width: 990px) {
+  .category-grid {
+    gap: 56px 48px;
+  }
+}

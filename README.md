@@ -31,7 +31,7 @@ y de la hoja de estilos de producción de Hyperice.
 | **Pie** | Esquema propio: fondo `#212121`, texto `#CBCBCB`. Rótulo de columna 18px > enlaces 16px |
 | **Marca** | `#0B59F8`, medido sobre el logotipo. Exclusivo del logotipo — nunca en componentes |
 | **Botones** | Píldora `62.5rem` · alto 40px · ancho mínimo 160px · 14px peso 500 |
-| **Radios** | Esquina recta en tarjetas e imágenes · 4px en campos · píldora solo en botones e iconos |
+| **Radios** | 4px en tarjetas y campos · 2px en imágenes de categoría · píldora en botones e iconos |
 | **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
 | **Cabecera** | Fija e idéntica en todo el sitio: negra al 80 % con desenfoque y contenido en blanco |
 | **Menú móvil** | Cajón desde la izquierda, negro al 80 % con desenfoque de 20px |
@@ -50,7 +50,7 @@ y de la hoja de estilos de producción de Hyperice.
 
 ### Detalles verificados contra el código de Hyperice
 
-Cinco comportamientos que a simple vista se dan por supuestos y no son como
+Comportamientos que a simple vista se dan por supuestos y no son como
 parecen. Todos están confirmados en su HTML y su CSS de producción:
 
 - **La cabecera es fija, pero no cambia de color.** El `<header>` es `static`,
@@ -65,8 +65,14 @@ parecen. Todos están confirmados en su HTML y su CSS de producción:
   mayor que sus enlaces** (16px, gris), no al revés.
 - **Los enlaces de tecnología del pie llevan icono** de línea a la izquierda, y
   en móvil cada columna se colapsa tras un botón con un `+`.
-- **Nada está redondeado.** No hay una sola utilidad de redondeo sobre imágenes
-  o tarjetas. El radio se reserva a píldoras y a 4px en los campos.
+- **La tarjeta de producto es una caja, no una imagen suelta.** Fondo `#f7f5f5`
+  y 4px de radio, partida en dos por una línea: arriba la imagen en proporción
+  13/12, abajo un panel con título, descripción y una fila de precio con acción
+  rápida. Por eso las filas de producto van sobre blanco: si la sección fuese
+  del mismo gris, la tarjeta desaparecería.
+- **La tarjeta de categoría no superpone el texto a la foto.** Pone la imagen a
+  un lado —apaisada en móvil, vertical en escritorio— y al otro un bloque con
+  icono de la terapia, titular, descripción y botón.
 - **Los iconos de cabecera viven en píldoras** con fondo propio: gris claro
   sobre blanco, blanco al 10 % sobre fotografía.
 - **El menú móvil es un cajón oscuro anclado a la izquierda.** No es un panel

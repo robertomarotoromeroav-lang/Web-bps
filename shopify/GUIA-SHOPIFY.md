@@ -53,20 +53,24 @@ planos de color puros.
 
 ### Tarjetas de producto y de colección
 
-- **Estilo:** Estándar
-- **Radio de las esquinas de la imagen:** `0` px
+- **Estilo:** **Tarjeta** (no Estándar)
+- **Color de fondo de la tarjeta:** esquema 2, es decir `#F7F5F5`
+- **Radio de las esquinas:** `4` px
 - **Grosor del borde:** `0`
 - **Opacidad de la sombra:** `0 %`
 - **Alineación del texto:** Izquierda
 - **Relleno de la imagen:** `0 %`
+- **Proporción de la imagen:** personalizada, `13/12`
 
-> **Esquina recta, no redondeada.** En todo el HTML de producción de Hyperice
-> no hay una sola utilidad de redondeo aplicada a imágenes o tarjetas. El radio
-> se reserva a las píldoras (botones, iconos) y a un mínimo en los campos.
+> La tarjeta de Hyperice **no es una imagen con el texto suelto debajo**: es una
+> caja con fondo `#F7F5F5` y 4 px de radio, partida por una línea `#DFDFDF`
+> entre la imagen y el panel de texto. Por eso las secciones que muestran
+> productos deben ir sobre **fondo blanco** (esquema 1): sobre el esquema 2 la
+> tarjeta se funde con la sección y desaparece.
 
 ### Medios, campos y distintivos
 
-- **Radio de las esquinas de los medios:** `0` px, sombra `0 %`
+- **Radio de las esquinas de los medios:** `2` px, sombra `0 %`
 - **Campos de formulario — radio:** `4` px, sombra `0 %`
 - **Distintivos (badges) — radio:** `40` px
 

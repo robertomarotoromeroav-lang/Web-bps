@@ -482,82 +482,84 @@ a:hover > .media img,
 }
 
 /* --------------------------------------------------------------------------
-   Tarjeta de categoría — imagen a sangre con rótulo encima.
+   Tarjeta de categoría
+   Hyperice no superpone el texto a la fotografía: pone la imagen a un lado
+   —apaisada en móvil, vertical en escritorio— y al otro un bloque con icono
+   de la terapia, titular, descripción y botón.
    -------------------------------------------------------------------------- */
 
 .category-card {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  color: var(--color-white);
-  aspect-ratio: 3 / 4;
-  background-color: var(--color-warm-black);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: inherit;
 }
 
-.category-card img {
-  position: absolute;
-  inset: 0;
+.category-card__media {
+  aspect-ratio: 350 / 250;
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background-color: var(--color-off-white);
+}
+
+.category-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-media);
 }
 
-.category-card:hover img {
-  transform: scale(1.04);
-}
-
-/* Degradado para asegurar contraste del texto sobre cualquier foto. */
-.category-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.15) 45%, rgb(0 0 0 / 0) 70%);
+.category-card:hover .category-card__media img {
+  transform: scale(1.02);
 }
 
 .category-card__body {
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 1;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.category-card__icon {
+  width: 22px;
+  height: 22px;
+  color: var(--color-foreground);
 }
 
 .category-card__title {
-  font-size: var(--font-size-h6);
-  margin-bottom: 6px;
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  margin-bottom: 5px;
 }
 
 .category-card__text {
   font-size: var(--font-size-body-small);
-  color: var(--color-grey-300);
-  margin-bottom: 14px;
+  color: var(--color-foreground-secondary);
   text-wrap: pretty;
 }
 
-@media (min-width: 1200px) {
-  .category-card__body {
-    padding: 24px;
+@media (min-width: 990px) {
+  /* En escritorio la imagen ocupa el 40 % y el texto el resto, como en su
+     carrusel de categorías. */
+  .category-card {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 24px;
+    align-items: center;
   }
 
-  .category-card__title {
-    font-size: var(--font-size-h5);
+  .category-card__media {
+    aspect-ratio: 200 / 250;
   }
-}
-
-.category-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-white);
-  font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-medium);
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 2px;
 }
 
 /* --------------------------------------------------------------------------
-   Tarjeta de producto — imagen sobre tile gris claro, texto debajo, sin marco.
+   Tarjeta de producto
+   La de Hyperice no es una imagen con texto suelto debajo: es una caja con
+   fondo #f7f5f5 y 4px de radio, partida en dos por una línea. Arriba la
+   imagen en proporción 13/12, abajo el panel con título, descripción y una
+   fila de precio.
    -------------------------------------------------------------------------- */
 
 .card {
@@ -568,15 +570,42 @@ a:hover > .media img,
 }
 
 .card .media {
-  aspect-ratio: 1 / 1;
-  border-radius: var(--radius-card);
-  margin-bottom: 16px;
+  aspect-ratio: 13 / 12;
+  background-color: var(--color-off-white);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  margin-bottom: 0;
+}
+
+/* El panel crece para que, en una fila, todas las tarjetas acaben a la misma
+   altura y los precios queden alineados. */
+.card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 10px 10px;
+  background-color: var(--color-off-white);
+  border-top: 1px solid var(--color-stroke-light);
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+@media (min-width: 990px) {
+  .card__body {
+    padding: 15px 20px 20px;
+  }
+}
+
+.card__text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .card__badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
   z-index: 1;
   background-color: var(--color-black);
   color: var(--color-white);
@@ -587,32 +616,64 @@ a:hover > .media img,
   border-radius: var(--radius-pill);
 }
 
-.card__category {
-  font-size: 0.75rem;
-  color: var(--color-foreground-secondary);
-  margin-bottom: 6px;
+.card__title {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
+  line-height: 1.2;
 }
 
-.card__title {
-  font-size: var(--font-size-h6);
-  margin-bottom: 6px;
+@media (min-width: 990px) {
+  .card__title {
+    font-size: var(--font-size-h6);
+  }
 }
 
 .card__text {
   font-size: var(--font-size-body-small);
-  color: var(--color-foreground-secondary);
-  margin-bottom: 12px;
+  color: var(--color-grey-500);
+  line-height: 1.4;
+}
+
+/* Fila inferior: precio a la izquierda y acción rápida a la derecha. */
+.card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .card__price {
-  margin-top: auto;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-utility);
   font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-utility);
 }
 
 .card__price--soon {
-  color: var(--color-foreground-secondary);
+  color: var(--color-grey-500);
   font-weight: var(--font-weight-regular);
+}
+
+.card__was {
+  margin-inline-start: 8px;
+  color: var(--color-grey-400);
+  font-weight: var(--font-weight-regular);
+  text-decoration: line-through;
+}
+
+/* Añadir al carrito sin salir del listado, como el "quick shop" de Hyperice. */
+.card__quick {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  color: var(--color-foreground);
+  transition: opacity var(--transition-fast);
+}
+
+.card__quick:hover {
+  opacity: 0.6;
 }
 
 /* --------------------------------------------------------------------------

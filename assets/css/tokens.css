@@ -88,10 +88,11 @@
   --button-gap: 0.625rem;
 
   /* ---------- Radios ----------
-     Hyperice no redondea imágenes ni tarjetas: en su HTML no hay una sola
-     utilidad `rounded-*` sobre los medios. El radio se reserva a las píldoras
-     (botones, iconos) y a un radio mínimo en los campos de formulario. */
-  --radius-card: 0px;
+     Hyperice redondea muy poco, pero redondea: `rounded-md` (4px) en tarjetas
+     y campos, y `rounded-sm` (2px) en las imágenes de categoría. Lo único
+     plenamente redondo son las píldoras. */
+  --radius-card: 4px;
+  --radius-media: 2px;
   --radius-input: 4px;
   --radius-pill: 62.5rem;
 
