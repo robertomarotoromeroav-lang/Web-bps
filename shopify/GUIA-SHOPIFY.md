@@ -1,65 +1,68 @@
-# Cómo aplicar el look & feel Hyperice en bpsperformance.com
+# Llevar el rediseño a bpsperformance.com
+
+Plan de ejecución para aplicar en la tienda real lo que muestra el prototipo.
 
 La tienda corre sobre **Shopify con el tema Dawn 15.4.1** (verificado en el HTML
-de producción: `Shopify.theme = {"name":"Dawn","schema_version":"15.4.1"}`).
+de producción: `Shopify.theme = {"name":"Dawn","schema_version":"15.4.1"}`). Eso
+es una buena noticia: buena parte se consigue **cambiando ajustes en el editor
+de temas**, sin tocar código.
 
-Eso es una buena noticia: la mayor parte del rediseño se consigue **cambiando
-ajustes en el editor de temas**, sin tocar código. Solo el 20 % final necesita
-CSS, y va en un archivo aparte que no modifica ningún fichero original de Dawn.
+> **Antes de empezar:** Tienda online → Temas → ⋯ → **Duplicar**. Trabaja sobre
+> la copia y publícala solo cuando esté validada. Así la tienda sigue vendiendo
+> mientras tanto y puedes abandonar sin consecuencias.
 
-> Trabaja siempre sobre una **copia duplicada del tema** (Tienda online → Temas →
-> ⋯ → Duplicar) y publícala solo cuando esté validada.
+## Orden recomendado
+
+| Paso | Qué es | Dónde |
+|---|---|---|
+| 1 | Ajustes del tema | Editor, sin código |
+| 2 | Hoja de estilos y dos snippets | Código |
+| 3 | Logotipo | Editor |
+| 4 | Estructura de la home | Editor |
+| 5 | Reescribir textos a caja baja | Editor |
+| 6 | Fotografía | Encargo externo |
+| 7 | Comprobar y publicar | — |
+
+Los pasos 1 a 3 ya dan el 80 % del cambio visual. El 5 es el que más tiempo
+come. El 6 es el único que no depende de vosotros.
 
 ---
 
-## 1. Ajustes del tema (Personalizar → Configuración)
+## 1. Ajustes del tema
 
-Estos valores replican los tokens reales de Hyperice.
+**Personalizar → Configuración.** Estos valores replican los tokens reales de
+Hyperice.
 
 ### Colores
 
-Dawn organiza el color en *esquemas*. Configura los tres primeros así:
+Dawn organiza el color en *esquemas*:
 
 | Esquema | Fondo | Texto | Botón sólido | Texto del botón | Botón contorno |
 |---|---|---|---|---|---|
-| Esquema 1 (por defecto) | `#FFFFFF` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
-| Esquema 2 (secciones alternas) | `#F7F5F5` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
-| Esquema 3 (bloques oscuros) | `#000000` | `#FFFFFF` | `#FFFFFF` | `#000000` | `#FFFFFF` |
-| Esquema 4 (pie de página) | `#212121` | `#CBCBCB` | `#FFFFFF` | `#000000` | `#FFFFFF` |
+| 1 · por defecto | `#FFFFFF` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
+| 2 · secciones alternas | `#F7F5F5` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
+| 3 · bloques oscuros | `#000000` | `#FFFFFF` | `#FFFFFF` | `#000000` | `#FFFFFF` |
+| 4 · pie de página | `#212121` | `#CBCBCB` | `#FFFFFF` | `#000000` | `#FFFFFF` |
 
-El pie merece su propio esquema: en Hyperice **no es negro puro** sino `#212121`,
-con el texto base en gris claro `#CBCBCB`. Asigna el esquema 4 a la sección del pie.
-
-Ojo con la jerarquía dentro del pie, que es contraintuitiva: **el rótulo de cada
-columna es mayor que sus enlaces** (18 px en blanco frente a 16 px en gris), y
-los enlaces de la columna de tecnología llevan un icono de línea a la izquierda.
-
-Elimina cualquier degradado que tengan configurado los esquemas: Hyperice usa
-planos de color puros.
+Elimina cualquier degradado de los esquemas: Hyperice usa planos de color puros.
 
 ### Tipografía
 
 - **Fuente de titulares y de cuerpo:** la misma para ambas. Hyperice usa *Suisse
   Intl* (de pago, Swiss Typefaces). Alternativas en el catálogo de Shopify, de
   más a menos parecida: **Inter** → **Helvetica Now** → **Assistant**.
-- **Escala de titulares:** 100 %
-- **Escala del cuerpo:** 100 %
+- **Escala de titulares y de cuerpo:** 100 %
 
 ### Botones
 
-- **Radio del borde:** `40` px (con la altura de 40 px queda píldora perfecta)
-- **Grosor del borde:** `1` px
-- **Opacidad de la sombra:** `0 %`
+- **Radio del borde:** `40` px · **Grosor:** `1` px · **Sombra:** `0 %`
 
 ### Tarjetas de producto y de colección
 
-- **Estilo:** **Tarjeta** (no Estándar)
-- **Color de fondo de la tarjeta:** esquema 2, es decir `#F7F5F5`
-- **Radio de las esquinas:** `4` px
-- **Grosor del borde:** `0`
-- **Opacidad de la sombra:** `0 %`
-- **Alineación del texto:** Izquierda
-- **Relleno de la imagen:** `0 %`
+- **Estilo:** **Tarjeta** (no «Estándar»)
+- **Color de fondo:** esquema 2, es decir `#F7F5F5`
+- **Radio de las esquinas:** `4` px · **Borde:** `0` · **Sombra:** `0 %`
+- **Alineación del texto:** Izquierda · **Relleno de la imagen:** `0 %`
 - **Proporción de la imagen:** personalizada, `13/12`
 
 > La tarjeta de Hyperice **no es una imagen con el texto suelto debajo**: es una
@@ -70,48 +73,35 @@ planos de color puros.
 
 ### Medios, campos y distintivos
 
-- **Radio de las esquinas de los medios:** `2` px, sombra `0 %`
-- **Campos de formulario — radio:** `4` px, sombra `0 %`
-- **Distintivos (badges) — radio:** `40` px
+- **Medios:** radio `2` px, sombra `0 %`
+- **Campos de formulario:** radio `4` px, sombra `0 %`
+- **Distintivos:** radio `40` px
 
 ### Cabecera
 
-- **Cabecera fija (sticky):** **activada**, tipo "siempre visible"
-
-> La cabecera de Hyperice **sí queda fija**, pero lo que hace al bajar no es
-> cambiar de color: pasados 50 px de scroll sube el bloque superior justo el
-> alto de la barra de anuncios, de modo que la barra desaparece y la cabecera
-> queda pegada al borde. Al volver arriba, la barra reaparece. La cabecera
-> nunca se vuelve blanca. El JS de §2b es el que produce ese movimiento.
+- **Cabecera fija:** **activada**, tipo «siempre visible»
+- **Menú móvil:** tipo **cajón**
 
 ### Diseño
 
 - **Ancho de página:** `1536` px
-- **Espaciado vertical entre secciones:** `80` (escritorio)
+- **Espaciado entre secciones:** `80` (escritorio)
 - **Espaciado horizontal de la cuadrícula:** `20` px
-- **Margen lateral:** 15 px en móvil, 30 px en escritorio
-
-> El ritmo real de Hyperice es más ajustado de lo que parece: su utilidad de
-> mayor separación entre secciones es `py-2xl`, que tope a 80 px, y el margen
-> lateral máximo es de 30 px.
 
 ---
 
-## 2. Instalar la hoja de estilos complementaria
+## 2. Código
 
-Cubre lo que los ajustes no alcanzan (tracking de titulares, velo del banner,
-subrayado del menú, esquema del pie, iconos y acordeón).
+### 2a. La hoja de estilos
 
-**Opción A — CSS personalizado (la más rápida, sin editar código):**
+**Opción A — sin editar código (más rápida):** Personalizar → Configuración →
+**CSS personalizado** → pega el contenido de `bps-hyperice.css`.
 
-Personalizar → Configuración → **CSS personalizado** → pega el contenido de
-`bps-hyperice.css`.
-
-**Opción B — como archivo del tema (recomendada si vais a iterar):**
+**Opción B — como archivo del tema (mejor si vais a iterar):**
 
 1. Tienda online → Temas → ⋯ → **Editar código**
-2. `Assets` → **Añadir un archivo nuevo** → `bps-hyperice.css` y pega el contenido
-3. En `layout/theme.liquid`, justo **antes** de `</head>`, añade:
+2. `Assets` → **Añadir un archivo nuevo** → `bps-hyperice.css`, pega el contenido
+3. En `layout/theme.liquid`, justo **antes** de `</head>`:
 
    ```liquid
    {{ 'bps-hyperice.css' | asset_url | stylesheet_tag }}
@@ -119,19 +109,19 @@ Personalizar → Configuración → **CSS personalizado** → pega el contenido 
 
 Debe cargarse el último para que sus reglas ganen a las de Dawn.
 
-### 2b. Snippet de la barra de anuncios
+### 2b. Esconder la barra de anuncios al bajar
 
 Sin esto la cabecera queda fija pero la barra de anuncios no se esconde.
-Pégalo en `layout/theme.liquid`, justo antes de `</body>`:
+En `layout/theme.liquid`, antes de `</body>`:
 
 ```html
 <script>
-  // Esconde la barra de anuncios al hacer scroll, dejando la cabecera arriba.
+  // Pasados 50px, sube el bloque superior el alto de la barra de anuncios.
   (function () {
     var root = document.documentElement
     var bar = document.querySelector('.announcement-bar, .utility-bar')
-    var hidden = false
     if (!bar) return
+    var hidden = false
 
     document.addEventListener('scroll', function () {
       var y = root.scrollTop || document.body.scrollTop
@@ -147,39 +137,81 @@ Pégalo en `layout/theme.liquid`, justo antes de `</body>`:
 </script>
 ```
 
+### 2c. Cabecera transparente sobre las plantillas con imagen a sangre
+
+En la home y en las colecciones que abren con imagen a sangre, la cabecera no
+debe taparla. Junto al script anterior:
+
+```html
+<script>
+  // Marca las plantillas que abren con imagen a sangre y avisa al dejarla atrás.
+  (function () {
+    var hero = document.querySelector('.banner--medium, .banner--large, .collection-hero')
+    if (!hero) return
+    document.body.classList.add('bps-hero')
+
+    var header = document.querySelector('.header')
+    document.addEventListener('scroll', function () {
+      var y = document.documentElement.scrollTop || document.body.scrollTop
+      header.classList.toggle('bps-past-hero', y > hero.offsetHeight - 120)
+    }, { passive: true })
+  })()
+</script>
+```
+
 ---
 
-## 3. Estructura de la home
+## 3. Logotipo
 
-Reordena las secciones en Personalizar hasta dejar esta secuencia, que es la de
-Hyperice y la que reproduce `index.html` de este repositorio:
+En `assets/img/` de este repositorio hay cuatro variantes en SVG con fondo
+transparente, generadas vectorizando el original:
 
-1. **Banner con imagen** — imagen a pantalla completa (mín. 88 % de alto),
-   contenido abajo a la izquierda, contenedor desactivado, superposición al 0 %
-   (el velo lo pone el CSS). Dos botones: uno sólido y uno de contorno.
-   **Asigna a esta sección el esquema de color 3 (fondo negro).** Es
-   imprescindible: con el esquema 1, el botón de contorno se dibuja en negro
-   sobre la fotografía oscura y resulta invisible. Con el esquema 3 el sólido
-   pasa a blanco y el de contorno a borde blanco.
-2. **Lista de colecciones** — las 4 categorías, en carrusel deslizable en móvil.
-3. **Productos destacados** — 4 productos, tarjeta estándar.
-4. **Imagen con texto** — bloque "Diseñado para la élite, validado por la ciencia".
-5. **Producto destacado** — Presoterapia BPS PRO con esquema de color 3 (negro).
+| Archivo | Uso |
+|---|---|
+| `logo-horizontal-white.svg` | **Cabecera y menú móvil** (van sobre fondo oscuro) |
+| `logo-horizontal-black.svg` | Fondo claro |
+| `logo-stacked-white.svg` / `-black.svg` | Usos donde el logotipo va apilado |
+
+Personalizar → **Cabecera** → sube `logo-horizontal-white.svg` y pon el ancho en
+`200` px.
+
+- El isotipo mantiene el azul `#0B59F8` en las cuatro variantes; lo único que
+  cambia es el color del wordmark.
+- **El azul es exclusivo del logotipo.** No debe aparecer en botones, enlaces ni
+  estados: el resto de la interfaz es estrictamente monocroma.
+- El logotipo que sigue publicado en la tienda es **el antiguo** (con degradado
+  azul y «PERFORMANCE» debajo). Hay que sustituirlo también en el favicon y en
+  las imágenes para redes, o convivirán los dos.
+
+---
+
+## 4. Estructura de la home
+
+Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
+`index.html`:
+
+1. **Banner con imagen** — a pantalla completa, contenido abajo a la izquierda,
+   contenedor desactivado, superposición al 0 % (el velo lo pone el CSS).
+   Dos botones: uno sólido y uno de contorno.
+   **Asígnale el esquema de color 3.** Es imprescindible: con el esquema 1 el
+   botón de contorno se dibuja en negro sobre la fotografía y resulta invisible.
+2. **Lista de colecciones** — las 4 categorías.
+3. **Productos destacados** — 4 productos, **sobre esquema 1 (blanco)**.
+4. **Imagen con texto** — «Diseñado para la élite, validado por la ciencia».
+5. **Producto destacado** — Presoterapia BPS PRO, esquema 3.
 6. **Texto con iconos** — envío gratis / compra segura / atención 24/7.
-7. **Newsletter** — no la pongas como sección propia: en Hyperice el
-   formulario de suscripción vive dentro del pie, y duplicarlo deja dos veces
-   el mismo campo seguido.
+7. **Newsletter** — *no* como sección propia: en Hyperice vive dentro del pie, y
+   duplicarla deja dos veces el mismo campo seguido.
 
 ---
 
-## 4. Contenido: pasar los textos a caja baja
+## 5. Textos a caja baja
 
-**Este es el cambio que más transforma la percepción de la marca y no se puede
-hacer con CSS**, porque los textos están escritos en mayúsculas en el editor.
+**Es el cambio que más transforma la percepción de la marca y no se puede hacer
+con CSS**, porque los textos están escritos en mayúsculas en el editor.
 
 Hyperice escribe **todos los titulares en caja baja**, con mayúscula solo
-inicial. Las versalitas quedan reservadas a etiquetas pequeñas (rótulos de
-sección de 12 px). Reescribe en el editor de temas:
+inicial. Las versalitas quedan para etiquetas pequeñas de 12 px.
 
 | Actual | Nuevo |
 |---|---|
@@ -195,62 +227,46 @@ sección de 12 px). Reescribe en el editor de temas:
 | `CONOCE LA TECNOLOGÍA →` | `Conocer la tecnología` |
 
 Quita también las flechas `→` de los botones: en Hyperice el botón lleva solo
-texto, y la flecha se reserva para los enlaces de tipo "Ver todo".
-
----
-
-## 5. Logotipo
-
-El logotipo es el isotipo `[|||]` en azul corporativo sobre el wordmark **BPS**.
-
-- **Sobre fondo claro:** isotipo en azul, wordmark en negro.
-- **Sobre fotografía o fondo oscuro:** todo el logotipo en blanco.
-
-En Shopify se suben dos versiones en Personalizar → Cabecera: el logo normal y,
-si el tema lo permite, el logo para fondo transparente. El azul es el **único
-color de la paleta** y no debe aparecer en ningún componente de interfaz:
-botones, enlaces y estados siguen siendo estrictamente monocromos.
-
-> El prototipo reproduce el isotipo como SVG (es geometría pura, exacta) pero
-> compone el wordmark con la tipografía del sitio. **Hace falta el archivo
-> original del logotipo** (SVG o AI) para reproducirlo con fidelidad.
+texto, y la flecha se reserva a los enlaces de tipo «Ver todo».
 
 ---
 
 ## 6. Fotografía
 
-Es el punto donde más distancia hay con Hyperice, y ningún CSS lo resuelve.
+Es la mayor distancia con Hyperice y ningún CSS la resuelve.
 
-- Hyperice usa **fotografía de estilo de vida** —personas entrenando y
-  recuperándose, luz natural, contexto real— en banner y tarjetas de colección.
-  BPS usa hoy renders de producto sobre fondo neutro.
-- Recomendación: mantener los renders en la **ficha y la rejilla de producto**
-  (funcionan bien ahí) y encargar **4 fotos de estilo de vida**, una por
-  categoría, más **1 apaisada para el banner**.
-- Mantén un tratamiento uniforme: alto contraste, sin filtros de color, recorte
-  consistente.
+Hyperice usa **fotografía de estilo de vida** —personas entrenando y
+recuperándose, luz natural, contexto real— en el banner y en las tarjetas de
+categoría. BPS usa renders de producto sobre fondo neutro.
 
-Mientras tanto, el prototipo de este repositorio usa los renders actuales para
-que se pueda validar la maqueta con material real.
+- Mantén los renders en la **ficha y la rejilla de producto**: ahí funcionan.
+- Encarga **4 fotos de estilo de vida**, una por categoría, más **1 apaisada**
+  para el banner.
+- **Antes de encargar nada, mira lo que ya tenéis.** Entre las imágenes de la
+  Presoterapia BPS PRO hay una foto de una persona usando el equipo en camilla,
+  justo del tipo que hace falta. Si existe esa sesión completa, puede que el
+  banner esté resuelto sin gastar.
+- Tratamiento uniforme: alto contraste, sin filtros de color, recorte consistente.
 
 ---
 
-## 7. Comprobación antes de publicar
+## 7. Comprobar antes de publicar
 
-- [ ] Banner legible en móvil y escritorio (el velo debe garantizar contraste)
-- [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha de producto
-- [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
-- [ ] Pie con esquema `#212121` y enlaces en blanco a 24 px
-- [ ] La cabecera queda fija y la barra de anuncios se esconde al bajar
 - [ ] La cabecera es la misma en todas las plantillas: oscura translúcida con
       logotipo y textos en blanco, nunca blanca
-- [ ] Sobre las plantillas con imagen a sangre va transparente, y gana fondo al
-      dejar atrás la imagen
-- [ ] En móvil las columnas del pie se colapsan tras un botón con +/−
-- [ ] El menú móvil abre como cajón desde la izquierda, con fondo translúcido
-      y cierre al pulsar fuera (en Dawn: Cabecera → tipo de menú «cajón»)
-- [ ] Los enlaces de tecnología del pie llevan su icono a la izquierda
+- [ ] Sobre las plantillas con imagen a sangre va transparente y gana fondo al
+      dejarla atrás
+- [ ] La barra de anuncios se esconde al bajar y reaparece al volver arriba
+- [ ] Banner legible en móvil y escritorio
+- [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha
+- [ ] Las tarjetas de producto se leen como caja: fondo gris sobre sección blanca
+- [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
+- [ ] Pie con esquema `#212121` y rótulos de columna mayores que sus enlaces
+- [ ] En móvil, el menú abre como cajón desde la izquierda y las columnas del
+      pie se colapsan con +/−
 - [ ] Carrito, buscador y selector de país intactos
 - [ ] Contraste AA en textos sobre imagen
-- [ ] Revisión en checkout: el checkout de Shopify **no** hereda este CSS y se
-      personaliza aparte (Configuración → Pago → Personalizar)
+
+> El **checkout de Shopify no hereda este CSS**: se personaliza aparte en
+> Configuración → Pago → Personalizar. Conviene al menos subir ahí el logotipo
+> nuevo y ajustar el color de acento, o el salto de la tienda al pago cantará.
