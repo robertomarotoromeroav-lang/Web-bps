@@ -213,6 +213,12 @@ Pendiente de decisión del cliente:
 - **Logotipo antiguo en la tienda.** El que sigue publicado en Shopify lleva
   degradado azul y "PERFORMANCE" debajo; el nuevo es azul plano y sin bajada.
   Hay que sustituirlo también allí o convivirán los dos.
+- **Pantallas de Dawn sin cubrir.** El prototipo diseñó las plantillas de
+  contenido, no las de la mecánica de compra, así que en la tienda seguirán con
+  el aspecto de serie los filtros de colección, el selector de cantidad, el
+  aviso de «añadido al carrito», el buscador, el acordeón de preguntas, el
+  listado del blog y la fila de iconos de la home. Ninguna rompe nada. Están
+  listadas con su clase de Dawn al final de `shopify/GUIA-SHOPIFY.md`.
 - **Formularios y carrito.** Los formularios son maqueta (`action="#"`) y el
   botón de compra enlaza a la ficha real en Shopify: el prototipo no procesa
   pedidos. En la tienda lo gestiona el propio tema.

@@ -87,21 +87,31 @@ Elimina cualquier degradado de los esquemas: Hyperice usa planos de color puros.
 Esto **no** está en Configuración: se ajusta en Personalizar → plantilla
 **Producto** → sección **Información del producto**.
 
+Hoy la ficha está en **«Apiladas»**: por eso se ven las tres imágenes seguidas
+de arriba abajo, que es justo lo que hay que quitar.
+
 - **Diseño de escritorio:** **Carrusel de miniaturas**. Es la única opción de
   Dawn que muestra **una imagen cada vez**; «Apiladas» y «2 columnas» dejan la
-  pila que precisamente hay que quitar.
-- **Miniaturas en móvil:** **Ocultar**. Así Dawn dibuja puntos de posición, que
-  es lo que usa Hyperice en móvil.
+  pila.
+- **Miniaturas en móvil:** **Ocultar**
 - **Ajuste de la imagen:** **Contener** · **Tamaño:** Grande · **Limitar a la
   altura de la ventana:** activado
 - **Zoom de la imagen:** **Abrir caja de luz** (Hyperice abre un modal al pulsar)
 
-> Hyperice tampoco tiene tira de miniaturas en escritorio: solo flechas al pasar
-> el ratón y puntos. Su HTML llega a referenciar una tira que no existe, y las
-> miniaturas solo salen dentro del modal de zoom. Dawn no ofrece esa
-> combinación, así que el carrusel de miniaturas es lo más cercano sin editar
-> `sections/main-product.liquid`. El CSS ya da a esas miniaturas el formato de
-> Hyperice: 63 × 70 px y subrayado en la activa.
+> **Dos diferencias que Dawn no sabe hacer y conviene saber de antemano.**
+>
+> Hyperice **no tiene tira de miniaturas** en la galería principal: solo flechas
+> al pasar el ratón y puntos. Su HTML llega a referenciar una tira que no
+> existe, y las miniaturas solo aparecen dentro del modal de zoom. Dawn no
+> ofrece esa combinación, así que el carrusel de miniaturas es lo más cercano.
+> El CSS les da el formato de Hyperice: 63 px de ancho y subrayado en la activa.
+>
+> Y Dawn **no pinta puntos en la ficha**, sino un contador **«1 / 3»** entre dos
+> flechas, colocado *debajo* de la imagen (comprobado en el HTML de la ficha
+> real de la tienda). El CSS lo recoloca sobre la imagen dentro de la misma
+> píldora blanca que usa Hyperice, pero seguirá diciendo «1 / 3» en vez de
+> mostrar puntos. Cambiarlo de verdad exige tocar `snippets/media-gallery.liquid`,
+> y entonces el tema deja de actualizarse limpio: no compensa.
 
 ### Diseño
 
@@ -284,7 +294,7 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 - [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha
 - [ ] Las tarjetas de producto se leen como caja: fondo gris sobre sección blanca
 - [ ] La ficha muestra **una imagen cada vez** —nunca la pila completa— con
-      miniaturas subrayadas en escritorio y puntos en móvil
+      miniaturas subrayadas en escritorio y el contador «1 / 3» sobre la imagen
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
 - [ ] Pie con esquema `#212121` y rótulos de columna mayores que sus enlaces
 - [ ] En móvil, el menú abre como cajón desde la izquierda y las columnas del
@@ -295,3 +305,31 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 > El **checkout de Shopify no hereda este CSS**: se personaliza aparte en
 > Configuración → Pago → Personalizar. Conviene al menos subir ahí el logotipo
 > nuevo y ajustar el color de acento, o el salto de la tienda al pago cantará.
+
+
+---
+
+## Lo que esta guía **no** cubre
+
+El prototipo diseñó las plantillas de contenido, no las de la mecánica de
+compra, así que hay pantallas de Dawn que se quedarán con su aspecto de serie.
+Ninguna rompe nada, pero se notan al lado del resto. Comprobado sobre el HTML
+de la tienda real, con las clases que usa hoy cada una:
+
+| Pantalla | Clase de Dawn | Dónde se ve |
+|---|---|---|
+| Filtros de colección | `.facets` | Categorías. Es la más visible de la lista |
+| Selector de cantidad | `.quantity`, `.quantity__button` | Ficha, junto al botón de compra |
+| Aviso de «añadido al carrito» | `.cart-notification` | Al comprar. La tienda usa el **aviso**, no el cajón lateral |
+| Carrito y pago | `.cart-items`, checkout | Carrito |
+| Buscador | `.search-modal`, `.predictive-search` | Cabecera, en todas las páginas |
+| Acordeón de preguntas | `.accordion` | Página de preguntas frecuentes |
+| Listado del blog | `.article-card`, `.blog-articles` | Blog |
+| Fila de iconos | `.multicolumn` | Home, la banda de envío / pago / atención |
+
+El checkout, además, **no hereda este CSS pase lo que pase**: se personaliza
+aparte en Configuración → Pago.
+
+Son ampliaciones naturales de `bps-hyperice.css` si al ver la tienda montada
+desentonan. La ventaja de dejarlas fuera ahora es que cada una necesita
+comprobarse contra la tienda montada, no contra el prototipo.
