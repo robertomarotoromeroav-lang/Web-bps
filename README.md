@@ -34,6 +34,7 @@ y de la hoja de estilos de producción de Hyperice.
 | **Radios** | 4px en tarjetas y campos · 2px en imágenes de categoría · píldora en botones e iconos |
 | **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
 | **Cabecera** | Fija e idéntica en todo el sitio: negra al 80 % con desenfoque, contenido en blanco y línea inferior al 28 % |
+| **Galería de ficha** | Carrusel de una imagen: proporción 390/430, flechas de 30px al pasar el ratón y puntos de 7px en píldora blanca |
 | **Menú móvil** | Cajón desde la izquierda, negro al 80 % con desenfoque de 20px |
 | **Movimiento** | 0,2s en interfaz · 0,6s en zoom de imagen · sin sombras ni rebotes |
 
@@ -73,6 +74,14 @@ parecen. Todos están confirmados en su HTML y su CSS de producción:
 - **La tarjeta de categoría no superpone el texto a la foto.** Pone la imagen a
   un lado —apaisada en móvil, vertical en escritorio— y al otro un bloque con
   icono de la terapia, titular, descripción y botón.
+- **La ficha de producto no apila las imágenes: las pasa en carrusel.** Se ve
+  una sola cada vez, en proporción 390/430, y se recorre arrastrando. Sobre ella
+  hay puntos de 7px dentro de una píldora blanca y, solo en escritorio y solo al
+  pasar el ratón, dos flechas circulares de 30px que se invierten a negro al
+  apuntarlas. **No hay tira de miniaturas en la galería principal** —su HTML la
+  referencia pero el elemento no existe—: las miniaturas aparecen únicamente
+  dentro del modal de zoom. La galería queda pegada mientras el panel de compra
+  sigue bajando.
 - **Los iconos de cabecera viven en píldoras** con fondo propio: gris claro
   sobre blanco, blanco al 10 % sobre fotografía.
 - **El menú móvil es un cajón oscuro anclado a la izquierda.** No es un panel
@@ -100,7 +109,7 @@ assets/css/tokens.css        Variables. Tema oscuro por sección con [data-theme
 assets/css/base.css          Reset y tipografía
 assets/css/components.css    Botones, cabecera, tarjetas, filtros, formularios, pie
 assets/css/layout.css        Contenedores, rejillas, hero, bloques editoriales
-assets/js/site.js            Cabecera, drawer móvil, acordeones, filtros y cantidad
+assets/js/site.js            Cabecera, drawer móvil, acordeones, galería, filtros y cantidad
 assets/img/                  Logotipo en 4 variantes (apilado/horizontal x negro/blanco)
 
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
@@ -182,6 +191,12 @@ cantidad.
 
 Pendiente de decisión del cliente:
 
+- **Recorte de la galería de producto.** Hyperice estira la imagen al alto de la
+  ventana y la recorta (`object-fit: cover`), porque su fotografía es apaisada.
+  Los renders de BPS son cuadrados y sobre fondo neutro: recortarlos cortaría el
+  producto, así que la galería mantiene la proporción 390/430 y encaja la imagen
+  entera. Si se encarga la fotografía nueva del punto siguiente, conviene volver
+  a `cover` y al alto de ventana.
 - **Fotografía.** Es la mayor distancia con Hyperice y no se resuelve con CSS.
   Hyperice usa fotografía de estilo de vida (personas entrenando, luz natural);
   BPS usa renders de producto sobre fondo neutro. El prototipo usa los renders

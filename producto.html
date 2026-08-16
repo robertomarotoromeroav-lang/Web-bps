@@ -147,18 +147,35 @@
       </nav>
 
       <div class="product">
-        <div class="product__gallery">
-          <div class="media product__media">
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Presoterapia_BPS_PRO_portada.png?v=1781166472&width=1200"
-                 alt="Presoterapia BPS PRO vista general" width="1200" height="1200" fetchpriority="high">
-          </div>
-          <div class="media product__media">
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/image_1780382336660833.png?v=1780382604&width=1200"
-                 alt="Detalle de las cámaras de compresión" loading="lazy" width="1200" height="1200">
-          </div>
-          <div class="media product__media">
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/image_1780381929162129.png?v=1780382604&width=1200"
-                 alt="Presoterapia BPS PRO en uso" loading="lazy" width="1200" height="1200">
+        <!-- Galería en carrusel, como la ficha de Hyperice: una imagen a la vez
+             con arrastre lateral, flechas que aparecen al pasar el ratón y
+             puntos de posición. El desplazamiento lo lleva scroll-snap, así que
+             el gesto táctil funciona sin JavaScript. -->
+        <div class="product__gallery" data-gallery>
+          <div class="product__viewport">
+            <ul class="product__track" data-gallery-track>
+              <li class="product__slide">
+                <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Presoterapia_BPS_PRO_portada.png?v=1781166472&width=1200"
+                     alt="Presoterapia BPS PRO vista general" width="1200" height="1200" fetchpriority="high">
+              </li>
+              <li class="product__slide">
+                <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/image_1780382336660833.png?v=1780382604&width=1200"
+                     alt="Detalle de las cámaras de compresión" loading="lazy" width="1200" height="1200">
+              </li>
+              <li class="product__slide">
+                <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/image_1780381929162129.png?v=1780382604&width=1200"
+                     alt="Presoterapia BPS PRO en uso" loading="lazy" width="1200" height="1200">
+              </li>
+            </ul>
+
+            <button class="product__nav product__nav--prev" type="button" data-gallery-prev aria-label="Imagen anterior">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 2 4 8l6 6"/></svg>
+            </button>
+            <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Imagen siguiente">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m6 2 6 6-6 6"/></svg>
+            </button>
+
+            <div class="product__bullets" data-gallery-bullets></div>
           </div>
         </div>
 

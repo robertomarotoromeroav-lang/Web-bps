@@ -82,6 +82,27 @@ Elimina cualquier degradado de los esquemas: Hyperice usa planos de color puros.
 - **Cabecera fija:** **activada**, tipo «siempre visible»
 - **Menú móvil:** tipo **cajón**
 
+### Galería de la ficha de producto
+
+Esto **no** está en Configuración: se ajusta en Personalizar → plantilla
+**Producto** → sección **Información del producto**.
+
+- **Diseño de escritorio:** **Carrusel de miniaturas**. Es la única opción de
+  Dawn que muestra **una imagen cada vez**; «Apiladas» y «2 columnas» dejan la
+  pila que precisamente hay que quitar.
+- **Miniaturas en móvil:** **Ocultar**. Así Dawn dibuja puntos de posición, que
+  es lo que usa Hyperice en móvil.
+- **Ajuste de la imagen:** **Contener** · **Tamaño:** Grande · **Limitar a la
+  altura de la ventana:** activado
+- **Zoom de la imagen:** **Abrir caja de luz** (Hyperice abre un modal al pulsar)
+
+> Hyperice tampoco tiene tira de miniaturas en escritorio: solo flechas al pasar
+> el ratón y puntos. Su HTML llega a referenciar una tira que no existe, y las
+> miniaturas solo salen dentro del modal de zoom. Dawn no ofrece esa
+> combinación, así que el carrusel de miniaturas es lo más cercano sin editar
+> `sections/main-product.liquid`. El CSS ya da a esas miniaturas el formato de
+> Hyperice: 63 × 70 px y subrayado en la activa.
+
 ### Diseño
 
 - **Ancho de página:** `1536` px
@@ -262,6 +283,8 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 - [ ] Banner legible en móvil y escritorio
 - [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha
 - [ ] Las tarjetas de producto se leen como caja: fondo gris sobre sección blanca
+- [ ] La ficha muestra **una imagen cada vez** —nunca la pila completa— con
+      miniaturas subrayadas en escritorio y puntos en móvil
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
 - [ ] Pie con esquema `#212121` y rótulos de columna mayores que sus enlaces
 - [ ] En móvil, el menú abre como cajón desde la izquierda y las columnas del

@@ -371,8 +371,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   Ficha de producto — galería a la izquierda, panel de compra pegajoso a la
-   derecha en escritorio; apilado en móvil.
+   Ficha de producto — galería en carrusel a la izquierda y panel de compra a
+   la derecha en escritorio; apilado en móvil.
+
+   Igual que en Hyperice: una sola imagen visible que se recorre lateralmente,
+   nunca la pila completa. En escritorio la galería queda pegada mientras el
+   panel de compra sigue bajando.
    -------------------------------------------------------------------------- */
 
 .product {
@@ -382,33 +386,171 @@
 
 .product__gallery {
   display: grid;
-  gap: var(--grid-gutter);
+  align-content: start;
 }
 
-.product__media {
-  aspect-ratio: 1 / 1;
+/* Marco del carrusel, en la proporción 390/430 de Hyperice. Ellos lo estiran
+   al alto de la ventana en escritorio, pero su fotografía es apaisada y se
+   recorta; los renders de BPS son cuadrados y quedarían con dos franjas
+   vacías, así que aquí se mantiene la proporción. */
+.product__viewport {
+  position: relative;
+  aspect-ratio: 390 / 430;
+  max-height: 100dvh;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background-color: var(--color-off-white);
+}
+
+/* El desplazamiento es scroll nativo con anclaje: el gesto táctil y la rueda
+   horizontal funcionan solos, y las flechas solo llaman a scrollTo. */
+.product__track {
+  display: flex;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.product__track::-webkit-scrollbar {
+  display: none;
+}
+
+.product__slide {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Los renders de BPS van sobre fondo neutro: recortarlos (object-fit: cover,
+   que es lo que hace Hyperice con su fotografía apaisada) cortaría el producto,
+   así que se encajan enteros sobre el mismo gris de la tarjeta. */
+.product__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Flechas: círculo blanco de 30px que solo aparece al pasar el ratón, y nunca
+   en táctil, donde se arrastra. */
+.product__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  translate: 0 -50%;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-white);
+  backdrop-filter: blur(10px);
+  color: var(--color-black);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.product__nav svg {
+  width: 16px;
+  height: 16px;
+}
+
+.product__nav--prev {
+  left: 20px;
+}
+
+.product__nav--next {
+  right: 20px;
+}
+
+.product__nav[disabled] {
+  cursor: default;
+}
+
+@media (hover: hover) and (min-width: 990px) {
+  .product__nav {
+    display: flex;
+  }
+
+  .product__viewport:hover .product__nav,
+  .product__nav:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .product__nav:hover:not([disabled]) {
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .product__viewport:hover .product__nav[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+/* Puntos de posición dentro de una píldora blanca, sobre la imagen. */
+.product__bullets {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  translate: -50% 0;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-white);
+}
+
+.product__bullets:empty {
+  display: none;
+}
+
+.product__bullet {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-grey-400);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.product__bullet.is-active {
+  background-color: var(--color-foreground);
 }
 
 @media (min-width: 990px) {
   .product {
-    grid-template-columns: 1.25fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 64px;
     align-items: start;
   }
 
-  /* La primera imagen ocupa el ancho completo y el resto va a dos columnas. */
+  /* Como en Hyperice, la galería se queda pegada mientras el panel de compra
+     sigue bajando. Se separa del borde el alto de la cabecera fija. */
   .product__gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .product__gallery > :first-child {
-    grid-column: 1 / -1;
-  }
-
-  .product__panel {
     position: sticky;
-    /* Se separa del borde el alto de la cabecera fija. */
     top: calc(var(--header-height) + 24px);
+  }
+
+  .product__bullets {
+    bottom: 20px;
   }
 }
 

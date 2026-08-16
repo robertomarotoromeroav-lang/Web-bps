@@ -177,6 +177,85 @@
     });
   }
 
+  /* ---- Galería de la ficha de producto ----
+     El carrusel lo mueve el propio scroll con anclaje, así que aquí solo hay
+     que sincronizar los puntos y las flechas con la posición del carril. */
+  var gallery = document.querySelector("[data-gallery]");
+
+  if (gallery) {
+    var track = gallery.querySelector("[data-gallery-track]");
+    var slides = Array.prototype.slice.call(track.querySelectorAll(".product__slide"));
+    var bulletBox = gallery.querySelector("[data-gallery-bullets]");
+    var prev = gallery.querySelector("[data-gallery-prev]");
+    var next = gallery.querySelector("[data-gallery-next]");
+    var bullets = [];
+    var current = 0;
+
+    var goTo = function (index, smooth) {
+      var target = Math.max(0, Math.min(slides.length - 1, index));
+      track.scrollTo({
+        left: track.clientWidth * target,
+        behavior: smooth === false ? "auto" : "smooth"
+      });
+    };
+
+    // Con una sola imagen no hay nada que recorrer: ni puntos ni flechas.
+    if (slides.length > 1) {
+      slides.forEach(function (slide, index) {
+        var bullet = document.createElement("button");
+        bullet.type = "button";
+        bullet.className = "product__bullet";
+        bullet.setAttribute("aria-label", "Ir a la imagen " + (index + 1));
+        bullet.addEventListener("click", function () {
+          goTo(index);
+        });
+        bulletBox.appendChild(bullet);
+        bullets.push(bullet);
+      });
+    } else {
+      if (prev) prev.remove();
+      if (next) next.remove();
+    }
+
+    var sync = function () {
+      var index = Math.round(track.scrollLeft / track.clientWidth);
+      if (index === current && bullets.length && bullets[current].classList.contains("is-active")) return;
+      current = index;
+
+      bullets.forEach(function (bullet, i) {
+        bullet.classList.toggle("is-active", i === current);
+        bullet.setAttribute("aria-current", i === current ? "true" : "false");
+      });
+
+      if (prev) prev.disabled = current === 0;
+      if (next) next.disabled = current === slides.length - 1;
+    };
+
+    if (prev) {
+      prev.addEventListener("click", function () {
+        goTo(current - 1);
+      });
+    }
+
+    if (next) {
+      next.addEventListener("click", function () {
+        goTo(current + 1);
+      });
+    }
+
+    track.addEventListener("scroll", function () {
+      window.requestAnimationFrame(sync);
+    }, { passive: true });
+
+    // Al cambiar de orientación o de tamaño el carril mide otra cosa y el
+    // scroll queda a medio camino entre dos imágenes.
+    window.addEventListener("resize", function () {
+      goTo(current, false);
+    });
+
+    sync();
+  }
+
   /* ---- Aparición progresiva de secciones ---- */
   var revealables = document.querySelectorAll(".reveal");
 

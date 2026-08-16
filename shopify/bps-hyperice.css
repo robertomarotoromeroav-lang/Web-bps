@@ -471,7 +471,86 @@ button.shopify-payment-button__button--unbranded {
 .newsletter-form__field-wrapper .field__input { border-radius: 4px; }
 
 /* --------------------------------------------------------------------------
-   9. Ritmo vertical
+   9. Galería de la ficha de producto
+   El diseño («Carrusel de miniaturas» + puntos en móvil) se elige en
+   Personalizar; ver GUIA-SHOPIFY.md §1. Aquí solo se le da el acabado de
+   Hyperice: fondo neutro, miniaturas subrayadas y flechas circulares.
+   -------------------------------------------------------------------------- */
+
+/* Fondo de la imagen: el mismo gris de la tarjeta, para que los renders sobre
+   fondo neutro no floten sobre el blanco de la página. */
+.product-media-container,
+.product__media-item .product__media { background-color: var(--bps-off-white); }
+
+.product-media-container { border: 0; border-radius: 2px; }
+
+/* Miniaturas de 63 × 70: sin recuadro ni radio, solo un subrayado en la
+   activa. Dawn dibuja un anillo con ::after que hay que apagar. */
+.thumbnail-list__item { --thumbnail-size: 63px; }
+
+.thumbnail {
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  transition: border-color var(--duration-default) ease;
+}
+
+.thumbnail:hover,
+.thumbnail:focus { box-shadow: none; }
+
+.thumbnail img { object-fit: contain; }
+
+.thumbnail[aria-current]:after { display: none; }
+
+.thumbnail[aria-current="true"] { border-bottom-color: var(--bps-black); }
+
+/* Flechas del carrusel: círculo blanco de 30px que se invierte al apuntarlo. */
+.product-media-container .slider-button,
+.thumbnail-slider .slider-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 100px;
+  background-color: var(--bps-white);
+  color: var(--bps-black);
+  transition: background-color var(--duration-default) ease,
+    color var(--duration-default) ease;
+}
+
+.product-media-container .slider-button:not([disabled]):hover,
+.thumbnail-slider .slider-button:not([disabled]):hover {
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+}
+
+.product-media-container .slider-button .icon,
+.thumbnail-slider .slider-button .icon { width: 16px; height: 16px; }
+
+/* Puntos de posición dentro de una píldora blanca, sobre la imagen. */
+.product__media-wrapper .slider-counter--dots {
+  width: auto;
+  margin-inline: auto;
+  gap: 10px;
+  padding: 5px 10px;
+  border-radius: 100px;
+  background-color: var(--bps-white);
+}
+
+.product__media-wrapper .slider-counter__link .dot {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  background-color: var(--bps-grey-400);
+}
+
+.product__media-wrapper .slider-counter__link--active .dot {
+  background-color: var(--bps-black);
+}
+
+/* --------------------------------------------------------------------------
+   10. Ritmo vertical
    Su separación máxima entre secciones es 80px, bastante menos de lo que suele
    usar Dawn.
    -------------------------------------------------------------------------- */
@@ -498,7 +577,7 @@ button.shopify-payment-button__button--unbranded {
 }
 
 /* --------------------------------------------------------------------------
-   10. Pie de página
+   11. Pie de página
    Esquema propio: #212121, no negro puro. El rótulo de cada columna es MAYOR
    que sus enlaces —18px en blanco frente a 16px en gris—, al revés de lo que
    sugiere el tamaño por defecto.
@@ -601,7 +680,7 @@ button.shopify-payment-button__button--unbranded {
 }
 
 /* --------------------------------------------------------------------------
-   11. Detalles
+   12. Detalles
    -------------------------------------------------------------------------- */
 
 /* Dawn pinta un degradado sutil en algunas secciones; Hyperice usa planos. */
