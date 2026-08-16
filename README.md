@@ -33,7 +33,7 @@ y de la hoja de estilos de producción de Hyperice.
 | **Botones** | Píldora `62.5rem` · alto 40px · ancho mínimo 160px · 14px peso 500 |
 | **Radios** | 4px en tarjetas y campos · 2px en imágenes de categoría · píldora en botones e iconos |
 | **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
-| **Cabecera** | Fija e idéntica en todo el sitio: negra al 80 % con desenfoque y contenido en blanco |
+| **Cabecera** | Fija e idéntica en todo el sitio: negra al 80 % con desenfoque, contenido en blanco y línea inferior al 28 % |
 | **Menú móvil** | Cajón desde la izquierda, negro al 80 % con desenfoque de 20px |
 | **Movimiento** | 0,2s en interfaz · 0,6s en zoom de imagen · sin sombras ni rebotes |
 

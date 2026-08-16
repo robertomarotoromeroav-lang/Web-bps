@@ -135,19 +135,25 @@
 .header {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
-  border-bottom: 0;
+  /* Línea imprescindible: sobre las secciones negras a sangre la cabecera
+     tiene el mismo color que el fondo y, sin ella, no se distingue dónde
+     acaba. El contenido de debajo parecía continuar la cabecera. */
+  border-bottom: 1px solid rgb(255 255 255 / 0.28);
   color: var(--color-white);
-  transition: background-color var(--transition-base);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
+/* Sobre la fotografía del hero no hace falta separarla de nada. */
 .page--hero .header {
   background-color: transparent;
   backdrop-filter: none;
+  border-bottom-color: transparent;
 }
 
 .page--hero .header.is-past-hero {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
+  border-bottom-color: rgb(255 255 255 / 0.28);
 }
 
 .header__inner {

@@ -254,6 +254,8 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 
 - [ ] La cabecera es la misma en todas las plantillas: oscura translúcida con
       logotipo y textos en blanco, nunca blanca
+- [ ] Se distingue dónde acaba la cabecera **también al pasar sobre una sección
+      negra a sangre**: si la línea inferior falta, ahí desaparece
 - [ ] Sobre las plantillas con imagen a sangre va transparente y gana fondo al
       dejarla atrás
 - [ ] La barra de anuncios se esconde al bajar y reaparece al volver arriba

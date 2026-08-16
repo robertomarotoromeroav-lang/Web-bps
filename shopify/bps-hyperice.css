@@ -86,11 +86,13 @@ body,
 
 .header {
   padding-block: 12px;
-  border-bottom: 0;
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
+  /* Sin esta línea, sobre una sección negra a sangre la cabecera tiene el
+     mismo color que el fondo y no se ve dónde acaba. */
+  border-bottom: 1px solid rgb(255 255 255 / 0.28);
   color: var(--bps-white);
-  transition: background-color 300ms ease-in-out;
+  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
 }
 
 /* Plantillas con imagen a sangre: la cabecera no debe taparla. Añade la clase
@@ -98,11 +100,13 @@ body,
 .bps-hero .header {
   background-color: transparent;
   backdrop-filter: none;
+  border-bottom-color: transparent;
 }
 
 .bps-hero .header.bps-past-hero {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
+  border-bottom-color: rgb(255 255 255 / 0.28);
 }
 
 .header a,
