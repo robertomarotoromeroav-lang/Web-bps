@@ -128,22 +128,24 @@
   padding-top: 0;
 }
 
+/* La cabecera es la misma en todo el sitio: oscura translúcida con desenfoque
+   y contenido en blanco, como la que Hyperice usa fuera de la portada. Lo
+   único que cambia es que, mientras se superpone al hero, va transparente para
+   no tapar la fotografía; en cuanto se deja atrás, gana su fondo. */
 .header {
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
-}
-
-/* Sobre el hero la cabecera va transparente y en blanco. Al salir del hero
-   necesita fondo para seguir siendo legible: Hyperice usa negro al 80 % con
-   desenfoque, nunca blanco. */
-.header--overlay {
-  background-color: transparent;
-  border-bottom-color: transparent;
+  background-color: rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 0;
   color: var(--color-white);
   transition: background-color var(--transition-base);
 }
 
-.header--overlay.is-past-hero {
+.page--hero .header {
+  background-color: transparent;
+  backdrop-filter: none;
+}
+
+.page--hero .header.is-past-hero {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
 }
@@ -158,9 +160,9 @@
   padding-inline: var(--page-padding-inline);
 }
 
-/* El logotipo son los archivos de marca vectorizados, no texto compuesto.
-   Se sirven las dos versiones y se muestra la que corresponda al fondo: el
-   isotipo mantiene el azul en ambas, solo cambia el color del wordmark. */
+/* El logotipo es el archivo de marca vectorizado, no texto compuesto. Como la
+   cabecera es siempre oscura, basta con la versión de wordmark blanco: el
+   isotipo conserva su azul. */
 .header__logo {
   display: flex;
   align-items: center;
@@ -170,18 +172,6 @@
 .header__logo-img {
   width: auto;
   height: 26px;
-}
-
-.header__logo-img--on-dark {
-  display: none;
-}
-
-.header--overlay .header__logo-img--on-light {
-  display: none;
-}
-
-.header--overlay .header__logo-img--on-dark {
-  display: block;
 }
 
 @media (min-width: 750px) {
@@ -261,8 +251,8 @@
   padding-inline: 14px;
 }
 
-.header--overlay .header__action,
-.header--overlay .header__region {
+.header__action,
+.header__region {
   background-color: rgb(255 255 255 / 0.1);
 }
 

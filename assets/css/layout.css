@@ -169,7 +169,10 @@
   width: 100%;
   max-width: var(--page-max-width);
   margin-inline: auto;
-  padding: 0 var(--page-padding-inline) clamp(48px, 8vw, 96px);
+  /* El relleno superior reserva el bloque fijo: en pantallas bajas el texto
+     crecería hacia arriba y acabaría detrás de la cabecera. */
+  padding: calc(var(--announcement-height) + var(--header-height)) var(--page-padding-inline)
+    clamp(48px, 8vw, 96px);
 }
 
 .hero__eyebrow {
@@ -422,6 +425,9 @@
   display: flex;
   align-items: flex-end;
   min-height: 52svh;
+  /* Reserva el alto del bloque fijo: sin esto, en pantallas bajas el titular
+     sube hasta quedar detrás de la cabecera. */
+  padding-top: calc(var(--announcement-height) + var(--header-height));
   background-color: var(--color-black);
   color: var(--color-foreground);
   overflow: hidden;

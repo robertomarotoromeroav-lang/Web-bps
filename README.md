@@ -33,7 +33,7 @@ y de la hoja de estilos de producción de Hyperice.
 | **Botones** | Píldora `62.5rem` · alto 40px · ancho mínimo 160px · 14px peso 500 |
 | **Radios** | Esquina recta en tarjetas e imágenes · 4px en campos · píldora solo en botones e iconos |
 | **Ritmo** | 80px entre secciones · margen lateral 15px móvil / 30px escritorio |
-| **Cabecera** | Fija. Al bajar esconde la barra de anuncios; nunca cambia de color |
+| **Cabecera** | Fija e idéntica en todo el sitio: negra al 80 % con desenfoque y contenido en blanco |
 | **Menú móvil** | Cajón desde la izquierda, negro al 80 % con desenfoque de 20px |
 | **Movimiento** | 0,2s en interfaz · 0,6s en zoom de imagen · sin sombras ni rebotes |
 
@@ -57,6 +57,9 @@ parecen. Todos están confirmados en su HTML y su CSS de producción:
   y lo que queda fijo es el contenedor `<main-header>` que lo envuelve. Pasados
   50 px de scroll ese contenedor sube justo el alto de la barra de anuncios: la
   barra desaparece y la cabecera queda pegada arriba. Al volver arriba reaparece.
+  Su fondo es oscuro translúcido (`bg-black/80` con desenfoque), **no blanco**:
+  aquí es la misma en todas las páginas, y solo va transparente mientras se
+  superpone a un hero, para no tapar la fotografía.
 - **El pie no es negro.** Usa un esquema propio con fondo `#212121`. Y su
   jerarquía es contraintuitiva: **el rótulo de cada columna (18px, blanco) es
   mayor que sus enlaces** (16px, gris), no al revés.

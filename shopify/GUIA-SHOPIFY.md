@@ -238,7 +238,10 @@ que se pueda validar la maqueta con material real.
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
 - [ ] Pie con esquema `#212121` y enlaces en blanco a 24 px
 - [ ] La cabecera queda fija y la barra de anuncios se esconde al bajar
-- [ ] La cabecera no cambia a blanco en ningún momento
+- [ ] La cabecera es la misma en todas las plantillas: oscura translúcida con
+      logotipo y textos en blanco, nunca blanca
+- [ ] Sobre las plantillas con imagen a sangre va transparente, y gana fondo al
+      dejar atrás la imagen
 - [ ] En móvil las columnas del pie se colapsan tras un botón con +/−
 - [ ] El menú móvil abre como cajón desde la izquierda, con fondo translúcido
       y cierre al pulsar fuera (en Dawn: Cabecera → tipo de menú «cajón»)
