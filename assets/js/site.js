@@ -56,22 +56,37 @@
     });
   });
 
-  // En escritorio los paneles van siempre abiertos: se limpia el alto inline
-  // que hubiera dejado el acordeón en móvil.
+  // Los acordeones del pie solo colapsan en móvil; en escritorio se muestran
+  // abiertos y sin botón. Los de la página de preguntas frecuentes, en cambio,
+  // colapsan siempre, así que quedan fuera de esta sincronización.
   var syncAccordion = function () {
-    document.querySelectorAll("[data-accordion-panel]").forEach(function (panel) {
+    document.querySelectorAll('[data-accordion-panel="mobile"]').forEach(function (panel) {
       if (mqDesktop.matches) {
         panel.style.height = "";
-      } else {
-        var toggle = document.querySelector('[aria-controls="' + panel.id + '"]');
-        var open = toggle && toggle.getAttribute("aria-expanded") === "true";
-        panel.style.height = open ? panel.scrollHeight + "px" : "0px";
+        return;
       }
+      var toggle = document.querySelector('[aria-controls="' + panel.id + '"]');
+      var open = toggle && toggle.getAttribute("aria-expanded") === "true";
+      panel.style.height = open ? panel.scrollHeight + "px" : "0px";
     });
   };
 
   syncAccordion();
   mqDesktop.addEventListener("change", syncAccordion);
+
+  /* ---- Selector de cantidad de la ficha de producto ---- */
+  document.querySelectorAll(".qty").forEach(function (widget) {
+    var input = widget.querySelector(".qty__input");
+    if (!input) return;
+
+    widget.querySelectorAll(".qty__btn").forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        var value = parseInt(input.value, 10) || 1;
+        // El primer botón resta, el segundo suma. Nunca baja de 1.
+        input.value = Math.max(1, index === 0 ? value - 1 : value + 1);
+      });
+    });
+  });
 
   /* ---- Menú móvil ---- */
   var menu = document.querySelector("[data-mobile-menu]");

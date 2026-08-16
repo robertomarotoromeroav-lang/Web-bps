@@ -5,9 +5,9 @@ lenguaje visual de [hyperice.com/es-es](https://hyperice.com/es-es).
 
 Contiene dos cosas:
 
-1. **Un prototipo estático completo y navegable** (`index.html`, `productos.html`,
-   `contacto.html`, `styleguide.html`) para validar el diseño con contenido real
-   antes de tocar la tienda.
+1. **Un prototipo estático completo y navegable** —nueve páginas que cubren
+   todas las plantillas de la tienda— para validar el diseño con contenido real
+   antes de tocar Shopify.
 2. **Una guía y una hoja de estilos para aplicarlo en la tienda Shopify real**
    (`shopify/`), que corre sobre el tema Dawn 15.4.1.
 
@@ -73,6 +73,11 @@ parecen. Todos están confirmados en su HTML y su CSS de producción:
 ```
 index.html               Home completa
 productos.html           Catálogo (12 productos) con filtro por categoría
+coleccion.html           Plantilla de categoría (Presoterapia)
+producto.html            Ficha de producto (Presoterapia BPS PRO)
+sobre-nosotros.html      Filosofía de marca y los tres pilares
+faq.html                 Preguntas frecuentes en acordeón
+blog.html                Listado de artículos
 contacto.html            Formulario y vías de contacto
 styleguide.html          Sistema de diseño renderizado
 
@@ -85,7 +90,12 @@ assets/img/                  Logotipo en 4 variantes (apilado/horizontal x negro
 
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1
+tools/build-logos.py         Regenera el logotipo vectorizando el original
 ```
+
+Cada archivo HTML es una **plantilla**, no una página suelta: `coleccion.html`
+sirve para las cuatro categorías y `producto.html` para los doce productos. En
+Shopify una sola plantilla cubre todas las instancias.
 
 Sin dependencias, sin proceso de build. Ábrelo con cualquier servidor estático:
 
@@ -134,8 +144,11 @@ secciones de la home y textos a reescribir— está en
 
 ## Estado y limitaciones
 
-**Verificado** con Chromium a 1440px y 390px: sin desbordamiento horizontal, sin
-errores de consola, sin imágenes rotas, en las cuatro páginas.
+**Verificado** con Chromium a 1440px y 390px en las nueve páginas: sin
+desbordamiento horizontal, sin errores de consola, sin imágenes rotas y sin
+enlaces internos rotos. Comprobado además el comportamiento de la cabecera a
+distintas alturas de scroll, la apertura de los acordeones y el selector de
+cantidad.
 
 Pendiente de decisión del cliente:
 
@@ -153,8 +166,11 @@ Pendiente de decisión del cliente:
   redibujado a partir del logo facilitado y se aproxima mucho, pero para
   producción conviene sustituirlo por el **archivo vectorial original**. El azul
   `#1B4DF5` está estimado: es un token de una línea en `tokens.css`.
-- **Formularios.** Los de `contacto.html` y el de suscripción son maqueta
-  (`action="#"`); en Shopify los gestiona el propio tema.
+- **Formularios y carrito.** Los formularios son maqueta (`action="#"`) y el
+  botón de compra enlaza a la ficha real en Shopify: el prototipo no procesa
+  pedidos. En la tienda lo gestiona el propio tema.
+- **Contenido del blog.** Hay un solo artículo publicado, así que el listado
+  muestra uno destacado. El diseño admite rejilla cuando haya más.
 - **Cabeceras y pies duplicados.** El prototipo repite cabecera y pie en cada
   HTML por ser estático. En Shopify eso lo resuelven los *snippets* de Dawn.
 - **Fuentes desde Google Fonts.** Si se prefiere no depender de Google por

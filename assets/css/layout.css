@@ -366,3 +366,153 @@
     transform: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Ficha de producto — galería a la izquierda, panel de compra pegajoso a la
+   derecha en escritorio; apilado en móvil.
+   -------------------------------------------------------------------------- */
+
+.product {
+  display: grid;
+  gap: 32px;
+}
+
+.product__gallery {
+  display: grid;
+  gap: var(--grid-gutter);
+}
+
+.product__media {
+  aspect-ratio: 1 / 1;
+}
+
+.product__panel > * + * {
+  margin-top: 0;
+}
+
+@media (min-width: 990px) {
+  .product {
+    grid-template-columns: 1.25fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* La primera imagen ocupa el ancho completo y el resto va a dos columnas. */
+  .product__gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product__gallery > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .product__panel {
+    position: sticky;
+    /* Se separa del borde el alto de la cabecera fija. */
+    top: calc(var(--header-height) + 24px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Cabecera de colección — como el hero pero más baja.
+   -------------------------------------------------------------------------- */
+
+.collection-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 52svh;
+  background-color: var(--color-black);
+  color: var(--color-foreground);
+  overflow: hidden;
+}
+
+.collection-hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.collection-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0.15) 55%, rgb(0 0 0 / 0) 85%),
+    linear-gradient(to top, rgb(0 0 0 / 0.8) 0%, rgb(0 0 0 / 0.35) 45%, rgb(0 0 0 / 0.35) 100%);
+}
+
+.collection-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding: 0 var(--page-padding-inline) clamp(32px, 5vw, 64px);
+}
+
+/* --------------------------------------------------------------------------
+   Pilares de la página de filosofía
+   -------------------------------------------------------------------------- */
+
+.pillars {
+  display: flex;
+  flex-direction: column;
+}
+
+.pillar {
+  display: flex;
+  gap: 24px;
+  padding-block: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.pillar:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pillar__num {
+  flex: none;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-foreground-secondary);
+  padding-top: 4px;
+  min-width: 40px;
+}
+
+/* --------------------------------------------------------------------------
+   Artículo del blog
+   -------------------------------------------------------------------------- */
+
+.article {
+  display: grid;
+  gap: 28px;
+  color: inherit;
+}
+
+.article__media {
+  aspect-ratio: 16 / 10;
+}
+
+.article__meta {
+  font-size: 0.75rem;
+  color: var(--color-foreground-secondary);
+  margin-bottom: 12px;
+}
+
+.article__body > * + * {
+  margin-top: 16px;
+}
+
+@media (min-width: 990px) {
+  .article--featured {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+}

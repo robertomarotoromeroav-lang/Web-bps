@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BPS Performance — Recuperación de élite y rendimiento máximo</title>
-<meta name="description" content="Equipamiento de recuperación de alto rendimiento: presoterapia, terapia de luz roja, recuperación fría y liberación muscular. Tecnología validada para atletas y profesionales.">
+<title>Presoterapia — BPS Performance</title>
+<meta name="description" content="Gama de presoterapia BPS: compresión secuencial para movilizar fluidos y revitalizar los músculos.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="assets/css/layout.css">
 </head>
 
-<body class="page page--hero">
+<body class="page">
 <a class="skip-link" href="#main">Saltar al contenido</a>
 
 <div class="site-header" data-site-header>
@@ -25,9 +25,7 @@
   <p>Envío gratuito en pedidos superiores a 100&nbsp;€</p>
 </div>
 
-<!-- Cabecera fija sobre el hero. Al hacer scroll no cambia de color: sube el
-     bloque lo justo para esconder la barra de anuncios, como en Hyperice. -->
-<header class="header header--overlay" data-header>
+<header class="header" data-header>
   <div class="header__inner">
     <a class="header__logo" href="index.html" aria-label="BPS Performance — inicio">
       <img class="header__logo-img header__logo-img--on-light"
@@ -38,9 +36,9 @@
 
     <nav class="header__nav" aria-label="Principal">
       <ul>
-        <li><a href="index.html" aria-current="page">Inicio</a></li>
-        <li><a href="productos.html">Productos</a></li>
-        <li><a href="#tecnologia">Tecnología</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html" aria-current="page">Productos</a></li>
+        <li><a href="index.html#tecnologia">Tecnología</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
@@ -53,25 +51,21 @@
         </svg>
         España (EUR&nbsp;€)
       </a>
-
       <a class="header__action" href="#buscar" aria-label="Buscar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
         </svg>
       </a>
-
       <a class="header__action" href="#cuenta" aria-label="Mi cuenta">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
         </svg>
       </a>
-
       <a class="header__action" href="#carrito" aria-label="Carrito">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>
         </svg>
       </a>
-
       <button class="header__burger" type="button" data-menu-open aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M3 7h18M3 12h18M3 17h18"/>
@@ -90,15 +84,13 @@
       </svg>
     </button>
   </div>
-
   <nav class="mobile-menu__list" aria-label="Menú móvil">
     <a href="index.html">Inicio</a>
     <a href="productos.html">Productos</a>
-    <a href="#tecnologia">Tecnología</a>
+    <a href="index.html#tecnologia">Tecnología</a>
     <a href="blog.html">Blog</a>
     <a href="contacto.html">Contacto</a>
   </nav>
-
   <div class="mobile-menu__footer">
     <a class="btn btn--primary btn--full" href="productos.html">Ver todos los productos</a>
   </div>
@@ -106,250 +98,74 @@
 
 <main id="main">
 
-  <!-- ====================== Hero ====================== -->
-  <!-- data-theme="dark" invierte los botones: el secundario es de contorno
-       blanco, no negro, que sobre la fotografía sería invisible. -->
-  <section class="hero" data-theme="dark">
-    <div class="hero__media">
-      <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Recovery_Pod_portada.jpg?v=1781166382&width=2000"
-           alt="Bañera de inmersión en frío BPS Recovery Pod" fetchpriority="high" width="2000" height="1333">
+  <section class="collection-hero" data-theme="dark">
+    <div class="collection-hero__media">
+      <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Fusion_Boots_portada.jpg?v=1779463164&width=2000"
+           alt="Botas de presoterapia BPS" fetchpriority="high" width="2000" height="1333">
     </div>
-
-    <div class="hero__inner">
-      <p class="text-utility hero__eyebrow">Recovery &amp; Performance Technology</p>
-      <h1 class="hero__title">Recupera. Rinde. Repite.</h1>
+    <div class="collection-hero__inner">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="index.html">Inicio</a> <span aria-hidden="true">/</span> <span>Presoterapia</span>
+      </nav>
+      <h1 style="margin-top:16px">Presoterapia</h1>
       <p class="hero__text">
-        Equipamiento de alto rendimiento diseñado para atletas, profesionales
-        y personas que exigen más de su cuerpo.
+        Compresión secuencial para movilizar fluidos, limpiar toxinas y
+        revitalizar los músculos. Piernas ligeras, sesión tras sesión.
       </p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="productos.html">Comprar ahora</a>
-        <a class="btn btn--secondary" href="#tecnologia">Conocer la tecnología</a>
-      </div>
     </div>
   </section>
 
-  <!-- ====================== Categorías ====================== -->
   <section class="section">
     <div class="container">
-      <div class="section__head reveal">
-        <div>
-          <p class="text-eyebrow">Nuestras soluciones</p>
-          <h2 class="section__title">Recuperación, rendimiento y resultados</h2>
-        </div>
-        <a class="btn btn--tertiary" href="productos.html">
-          Ver todo <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="scroller reveal">
-        <a class="category-card" href="coleccion.html">
-          <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Fusion_Boots_portada.jpg?v=1779463164&width=900"
-               alt="Botas de presoterapia BPS Fusion" loading="lazy" width="900" height="1200">
-          <div class="category-card__body">
-            <h3 class="category-card__title">Presoterapia</h3>
-            <p class="category-card__text">Drenaje linfático, recuperación muscular y piernas ligeras.</p>
-            <span class="category-card__link">Explorar <span aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-        <a class="category-card" href="coleccion.html">
-          <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Pro-Panel_principal.jpg?v=1779463278&width=900"
-               alt="Panel de terapia de luz roja BPS Pro-Panel" loading="lazy" width="900" height="1200">
-          <div class="category-card__body">
-            <h3 class="category-card__title">Terapia de luz roja</h3>
-            <p class="category-card__text">Regenera tejidos, reduce la inflamación y acelera la recuperación.</p>
-            <span class="category-card__link">Explorar <span aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-        <a class="category-card" href="coleccion.html">
-          <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Ice_Bath_portada.jpg?v=1779463557&width=900"
-               alt="Bañera de crioterapia portátil BPS Ice Bath" loading="lazy" width="900" height="1200">
-          <div class="category-card__body">
-            <h3 class="category-card__title">Recuperación fría</h3>
-            <p class="category-card__text">Reduce la inflamación, acelera la recuperación y fortalece el cuerpo.</p>
-            <span class="category-card__link">Explorar <span aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-        <a class="category-card" href="coleccion.html">
-          <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Pistola_BPS_portada.png?v=1779463238&width=900"
-               alt="Pistola de masaje de percusión BPS Performance" loading="lazy" width="900" height="1200">
-          <div class="category-card__body">
-            <h3 class="category-card__title">Liberación muscular</h3>
-            <p class="category-card__text">Alivia tensiones, mejora la movilidad y previene lesiones.</p>
-            <span class="category-card__link">Explorar <span aria-hidden="true">→</span></span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== Productos destacados ====================== -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section__head reveal">
-        <div>
-          <p class="text-eyebrow">Los más buscados</p>
-          <h2 class="section__title">Empieza por aquí</h2>
-        </div>
-        <a class="btn btn--tertiary" href="productos.html">
-          Ver catálogo <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="scroller reveal">
+      <div class="grid grid--3">
         <a class="card" href="producto.html">
-          <div class="media media--rounded">
-            <span class="card__badge">Más vendido</span>
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Presoterapia_BPS_PRO_portada.png?v=1781166472&width=800"
-                 alt="Presoterapia BPS PRO" loading="lazy" width="800" height="800">
-          </div>
+          <div class="media"><span class="card__badge">Más vendido</span><img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Presoterapia_BPS_PRO_portada.png?v=1781166472&width=800" alt="Presoterapia BPS PRO" loading="lazy" width="800" height="800"></div>
           <p class="card__category">Presoterapia</p>
-          <h3 class="card__title">Presoterapia BPS PRO</h3>
-          <p class="card__text">Recuperación muscular profesional para piernas.</p>
+          <h2 class="card__title">Presoterapia BPS PRO</h2>
+          <p class="card__text">6 cámaras, pantalón incluido y diseño portátil.</p>
           <p class="card__price">649,00 €</p>
         </a>
-
         <a class="card" href="producto.html">
-          <div class="media media--rounded">
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Pro-Panel_principal.jpg?v=1779463278&width=800"
-                 alt="BPS Pro-Panel de terapia de luz roja" loading="lazy" width="800" height="800">
-          </div>
-          <p class="card__category">Terapia de luz roja</p>
-          <h3 class="card__title">BPS Pro-Panel</h3>
-          <p class="card__text">Luz roja de cuerpo completo para uso diario.</p>
-          <p class="card__price">999,00 €</p>
+          <div class="media"><img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Presoterapia_BPS_PLUS_portada.png?v=1779464097&width=800" alt="Presoterapia BPS PLUS" loading="lazy" width="800" height="800"></div>
+          <p class="card__category">Presoterapia</p>
+          <h2 class="card__title">Presoterapia BPS PLUS</h2>
+          <p class="card__text">Recuperación muscular inalámbrica.</p>
+          <p class="card__price">549,00 €</p>
         </a>
-
         <a class="card" href="producto.html">
-          <div class="media media--rounded">
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Recovery_Pod_portada.jpg?v=1781166382&width=800"
-                 alt="BPS Recovery Pod" loading="lazy" width="800" height="800">
-          </div>
-          <p class="card__category">Recuperación fría</p>
-          <h3 class="card__title">BPS Recovery Pod</h3>
-          <p class="card__text">Inmersión en frío con control de temperatura.</p>
-          <p class="card__price">1.850,00 €</p>
-        </a>
-
-        <a class="card" href="producto.html">
-          <div class="media media--rounded">
-            <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Pistola_BPS_portada.png?v=1779463238&width=800"
-                 alt="Pistola de masaje de percusión BPS" loading="lazy" width="800" height="800">
-          </div>
-          <p class="card__category">Liberación muscular</p>
-          <h3 class="card__title">Pistola de masaje BPS</h3>
-          <p class="card__text">Percusión profesional para descarga profunda.</p>
-          <p class="card__price">99,00 €</p>
+          <div class="media"><span class="card__badge">Próximamente</span><img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Fusion_Boots_portada.jpg?v=1779463164&width=800" alt="BPS Fusion Boots" loading="lazy" width="800" height="800"></div>
+          <p class="card__category">Presoterapia</p>
+          <h2 class="card__title">BPS Fusion Boots</h2>
+          <p class="card__text">Presoterapia con luz roja integrada.</p>
+          <p class="card__price card__price--soon">Disponible próximamente</p>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ====================== Tecnología ====================== -->
-  <section class="section" id="tecnologia">
+  <section class="section section--alt section--tight">
     <div class="container">
-      <div class="split split--reverse reveal">
-        <div class="media media--rounded split__media">
-          <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/BPS_Clinic-Stand_portada.png?v=1779463201&width=1200"
-               alt="Lámpara profesional de luz roja BPS Clinic-Stand" loading="lazy" width="1200" height="1200">
-        </div>
-
+      <div class="split">
         <div class="split__body">
-          <p class="text-eyebrow">Tecnología validada</p>
-          <h2 class="h2">Diseñado para la élite, validado por la ciencia</h2>
+          <p class="text-eyebrow">Cómo funciona</p>
+          <h2 class="h3">Compresión secuencial, no un masaje cualquiera</h2>
           <p class="text-muted measure">
-            Seleccionamos únicamente productos con eficacia probada para garantizar
-            resultados reales. Cada dispositivo se prueba en consulta antes de entrar
-            en catálogo.
+            Las cámaras se inflan por tramos, de tobillo a cadera, acompañando el
+            retorno venoso en lugar de trabajar contra él. Por eso la sensación de
+            piernas ligeras aparece desde la primera sesión.
           </p>
-
-          <ul class="checklist">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>
-              Mejora del rendimiento cognitivo
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>
-              Aceleración de la recuperación
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>
-              Optimización a nivel celular
-            </li>
-          </ul>
-
           <div class="split__actions">
-            <a class="btn btn--primary" href="sobre-nosotros.html">Nuestra filosofía</a>
-            <a class="btn btn--tertiary" href="https://fisioterapiabackpackretiro.es">
-              Prueba nuestros productos <span class="btn__arrow" aria-hidden="true">→</span>
-            </a>
+            <a class="btn btn--primary" href="producto.html">Ver la gama</a>
+            <a class="btn btn--tertiary" href="faq.html">Resolver dudas <span class="btn__arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== Producto destacado ====================== -->
-  <section class="showcase" data-theme="dark">
-    <div class="showcase__grid">
-      <div class="showcase__media">
-        <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/Presoterapia_BPS_PRO_portada.png?v=1781166472&width=1400"
-             alt="Presoterapia BPS PRO en uso" loading="lazy" width="1400" height="1400">
-      </div>
-
-      <div class="showcase__body">
-        <p class="text-eyebrow">Producto destacado</p>
-        <h2 class="h2">Presoterapia BPS PRO</h2>
-        <p class="text-muted measure">
-          Sistema de compresión diseñado para favorecer la recuperación de piernas,
-          mejorar la sensación de ligereza y apoyar rutinas de descarga muscular en
-          deportistas y personas activas.
-        </p>
-        <p class="showcase__price">649,00 €</p>
-        <div class="split__actions">
-          <a class="btn btn--primary" href="producto.html">Comprar</a>
-          <a class="btn btn--secondary" href="coleccion.html">Ver la gama</a>
+        <div class="media split__media">
+          <img src="https://cdn.shopify.com/s/files/1/1002/0847/6507/files/image_1780382336660833.png?v=1780382604&width=1200"
+               alt="Detalle de las cámaras de compresión" loading="lazy" width="1200" height="1200">
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ====================== Prestaciones ====================== -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="grid grid--3 reveal">
-        <div class="feature">
-          <svg class="feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-            <path d="M2 7h11v9H2zM13 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>
-          </svg>
-          <h3 class="feature__title">Envío gratis</h3>
-          <p class="feature__text">En pedidos superiores a 100 € te enviamos gratis los productos.</p>
-        </div>
-
-        <div class="feature">
-          <svg class="feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-            <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/>
-          </svg>
-          <h3 class="feature__title">Compra segura</h3>
-          <p class="feature__text">Pago 100 % seguro y protegido para que no tengas ningún problema.</p>
-        </div>
-
-        <div class="feature">
-          <svg class="feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-            <path d="M4 13a8 8 0 0 1 16 0"/><rect x="2" y="13" width="4" height="6" rx="1.5"/><rect x="18" y="13" width="4" height="6" rx="1.5"/>
-          </svg>
-          <h3 class="feature__title">Atención 24/7</h3>
-          <p class="feature__text">Atención personalizada para resolver todas tus dudas.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- La suscripción vive en el pie, como en Hyperice: repetirla aquí
-       duplicaba el mismo formulario dos veces seguidas. -->
 
 </main>
 
