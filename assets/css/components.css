@@ -714,16 +714,18 @@ a:hover > .media img,
   gap: 0;
 }
 
+/* Las líneas van solo ENTRE elementos. Cerrando la lista por arriba y por
+   abajo, lo que viniera después quedaba encajonado entre dos rayas y se leía
+   como un componente con marco. */
 .checklist li {
   display: flex;
   align-items: center;
   gap: 14px;
   padding-block: 18px;
-  border-bottom: 1px solid var(--color-border);
   font-size: var(--font-size-body);
 }
 
-.checklist li:first-child {
+.checklist li + li {
   border-top: 1px solid var(--color-border);
 }
 
@@ -1227,13 +1229,13 @@ a:hover > .media img,
   margin-top: 32px;
 }
 
+/* Sin línea superior: basta el espacio. Con ella, el bloque de compra quedaba
+   cerrado por abajo y parecía una caja. */
 .product__notes {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-border);
   font-size: var(--font-size-body-small);
   color: var(--color-foreground-secondary);
 }
