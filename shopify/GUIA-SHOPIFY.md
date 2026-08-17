@@ -16,15 +16,22 @@ de temas**, sin tocar código.
 | Paso | Qué es | Dónde |
 |---|---|---|
 | 1 | Ajustes del tema | Editor, sin código |
-| 2 | Hoja de estilos y dos snippets | Código |
-| 3 | Logotipo | Editor |
-| 4 | Estructura de la home | Editor |
-| 5 | Reescribir textos a caja baja | Editor |
-| 6 | Fotografía | Encargo externo |
-| 7 | Comprobar y publicar | — |
+| 2 | **Retirar el código antiguo** | Editor y código |
+| 3 | Hoja de estilos y dos snippets | Código |
+| 4 | Logotipo y favicon | Editor |
+| 5 | Estructura de la home | Editor |
+| 6 | Reescribir textos a caja baja | Editor |
+| 7 | Fotografía | Encargo externo |
+| 8 | Comprobar y publicar | — |
 
-Los pasos 1 a 3 ya dan el 80 % del cambio visual. El 5 es el que más tiempo
-come. El 6 es el único que no depende de vosotros.
+Los pasos 1 a 4 ya dan el 80 % del cambio visual. El 6 es el que más tiempo
+come. El 7 es el único que no depende de vosotros.
+
+**El paso 2 es nuevo y va antes de la hoja de estilos a propósito.** La tienda
+lleva código a medida acumulado —botones con borde degradado, una palabra en azul
+en el titular, CSS con `!important` en una sección— y si lo dejas puesto no
+sabrás qué falla por lo viejo y qué por lo nuevo. Está inventariado, con su
+ubicación exacta, en **[`CODIGO-EXISTENTE.md`](CODIGO-EXISTENTE.md)**.
 
 ---
 
@@ -68,9 +75,9 @@ fábrica —las tres familias de tarjetas—, así que esas hay que bajarlas a m
 
 | Ajuste | Valor | Nota |
 |---|---|---|
-| Logo | `logo-horizontal-white.svg` | Blanco, porque la cabecera es oscura. Ver §3 |
+| Logo | `logo-horizontal-white.svg` | Blanco, porque la cabecera es oscura. Ver §4 |
 | Ancho | `200` | |
-| Favicon | *pendiente* | Hace falta un PNG cuadrado del isotipo `[|||]`. Hoy sigue el logotipo antiguo |
+| Favicon | `favicon-512.png` | Recién generado. Hoy sigue el logotipo antiguo. Ver §4 |
 
 ### Colores
 
@@ -385,9 +392,29 @@ en la lista de colecciones de la home.
 
 ---
 
-## 2. Código
+## 2. Retirar el código antiguo
 
-### 2a. La hoja de estilos
+Está todo en **[`CODIGO-EXISTENTE.md`](CODIGO-EXISTENTE.md)**: qué hay, en qué
+sección vive y qué hacer con cada trozo. En resumen, y en este orden:
+
+1. **Quitar los cuatro botones `.btn-grad-custom`** —borde degradado azul, radio
+   de 20 px— del banner de la home, de la sección de tecnología, de «Imagen con
+   texto» y del botón «Enviar» de contacto.
+2. **Borrar el CSS personalizado de la sección «Texto enriquecido»** de la home.
+   Es el más urgente: lleva `!important`, así que ganaría a la hoja nueva y
+   dejaría el primer párrafo azul y centrado en móvil sin explicación aparente.
+3. **Reescribir el titular del banner**, que hoy es `RECUPERA.` /
+   `<span style="color:#0080FF">RINDE.</span>` / `REPITE.` escrito a mano.
+4. **Decidir qué hacer con las tres secciones generadas con IA**, que traen su
+   propio ancho de 1200 px y radios de 8 px.
+
+Categoría, ficha, catálogo y blog están limpios: no hace falta tocarlos.
+
+---
+
+## 3. Código
+
+### 3a. La hoja de estilos
 
 **Opción A — como archivo del tema (recomendada):**
 
@@ -410,7 +437,7 @@ Es más rápida, pero ese campo lo inyecta Shopify por su cuenta y no controlas 
 qué orden acaba. Si tras pegarlo el ancho de página o la proporción de las
 tarjetas no cambian, es por eso: pásate a la opción A.
 
-### 2b. Esconder la barra de anuncios al bajar
+### 3b. Esconder la barra de anuncios al bajar
 
 Sin esto la cabecera queda fija pero la barra de anuncios no se esconde.
 En `layout/theme.liquid`, antes de `</body>`:
@@ -438,7 +465,7 @@ En `layout/theme.liquid`, antes de `</body>`:
 </script>
 ```
 
-### 2c. Cabecera transparente sobre las plantillas con imagen a sangre
+### 3c. Cabecera transparente sobre las plantillas con imagen a sangre
 
 En la home y en las colecciones que abren con imagen a sangre, la cabecera no
 debe taparla. Junto al script anterior:
@@ -462,7 +489,7 @@ debe taparla. Junto al script anterior:
 
 ---
 
-## 3. Logotipo
+## 4. Logotipo y favicon
 
 En `assets/img/` de este repositorio hay cuatro variantes en SVG con fondo
 transparente, generadas vectorizando el original:
@@ -481,12 +508,30 @@ Personalizar → **Cabecera** → sube `logo-horizontal-white.svg` y pon el anch
 - **El azul es exclusivo del logotipo.** No debe aparecer en botones, enlaces ni
   estados: el resto de la interfaz es estrictamente monocroma.
 - El logotipo que sigue publicado en la tienda es **el antiguo** (con degradado
-  azul y «PERFORMANCE» debajo). Hay que sustituirlo también en el favicon y en
-  las imágenes para redes, o convivirán los dos.
+  azul y «PERFORMANCE» debajo). Hay que sustituirlo también en las imágenes para
+  redes, o convivirán los dos.
+
+### El favicon
+
+En `assets/img/` hay tres PNG con fondo transparente, generados a partir del
+isotipo `[|||]` del logotipo original con `tools/build-favicon.py`:
+
+| Archivo | Uso |
+|---|---|
+| `favicon-512.png` | **El que se sube a Shopify.** Personalizar → Configuración → Logo → Favicon |
+| `favicon-180.png` | Icono de pantalla de inicio en iOS, si algún día se configura aparte |
+| `favicon-32.png` | Solo para comprobar cómo se ve al tamaño real de una pestaña |
+
+Shopify reescala solo, así que basta con subir el de 512. El fondo va
+transparente y el azul `#0B59F8` se lee tanto en pestañas claras como oscuras,
+así que no hacen falta dos versiones.
+
+Se usa solo el isotipo, no el logotipo completo: a 32 px las letras «BPS» se
+empastan y no se distingue nada.
 
 ---
 
-## 4. Estructura de la home
+## 5. Estructura de la home
 
 Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
 `index.html`:
@@ -506,7 +551,7 @@ Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
 
 ---
 
-## 5. Textos a caja baja
+## 6. Textos a caja baja
 
 **Es el cambio que más transforma la percepción de la marca y no se puede hacer
 con CSS**, porque los textos están escritos en mayúsculas en el editor.
@@ -532,7 +577,7 @@ texto, y la flecha se reserva a los enlaces de tipo «Ver todo».
 
 ---
 
-## 6. Fotografía
+## 7. Fotografía
 
 Es la mayor distancia con Hyperice y ningún CSS la resuelve.
 
@@ -551,7 +596,7 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 
 ---
 
-## 7. Comprobar antes de publicar
+## 8. Comprobar antes de publicar
 
 - [ ] La cabecera es la misma en todas las plantillas: oscura translúcida con
       logotipo y textos en blanco, nunca blanca

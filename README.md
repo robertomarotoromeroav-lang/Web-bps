@@ -110,11 +110,13 @@ assets/css/base.css          Reset y tipografía
 assets/css/components.css    Botones, cabecera, tarjetas, filtros, formularios, pie
 assets/css/layout.css        Contenedores, rejillas, hero, bloques editoriales
 assets/js/site.js            Cabecera, drawer móvil, acordeones, galería, filtros y cantidad
-assets/img/                  Logotipo en 4 variantes (apilado/horizontal x negro/blanco)
+assets/img/                  Logotipo en 4 variantes y favicon en 3 tamaños
 
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1
+shopify/CODIGO-EXISTENTE.md  El código a medida que ya hay en la tienda, y qué hacer con él
 tools/build-logos.py         Regenera el logotipo vectorizando el original
+tools/build-favicon.py       Regenera el favicon a partir del isotipo
 tools/sync-chrome.py         Propaga cabecera, menú y pie desde index.html
 ```
 
@@ -212,7 +214,13 @@ Pendiente de decisión del cliente:
   reemplaza `assets/img/logo-original.jpg` y vuelve a ejecutarlo.
 - **Logotipo antiguo en la tienda.** El que sigue publicado en Shopify lleva
   degradado azul y "PERFORMANCE" debajo; el nuevo es azul plano y sin bajada.
-  Hay que sustituirlo también allí o convivirán los dos.
+  Hay que sustituirlo también allí o convivirán los dos. El favicon ya está
+  resuelto: `tools/build-favicon.py` lo genera a partir del isotipo.
+- **Código a medida acumulado en la tienda.** La tienda lleva botones con borde
+  degradado, una palabra en azul metida a mano en el titular del banner, CSS con
+  `!important` en una sección y tres secciones generadas con IA con su propio
+  ancho y sus propios radios. Todo inventariado en
+  `shopify/CODIGO-EXISTENTE.md`; hay que retirarlo antes de aplicar la hoja.
 - **Pantallas de Dawn sin cubrir.** El prototipo diseñó las plantillas de
   contenido, no las de la mecánica de compra, así que en la tienda seguirán con
   el aspecto de serie los filtros de colección, el selector de cantidad, el
