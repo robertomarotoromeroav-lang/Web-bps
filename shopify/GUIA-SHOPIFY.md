@@ -57,19 +57,56 @@ Elimina cualquier degradado de los esquemas: Hyperice usa planos de color puros.
 
 - **Radio del borde:** `40` px · **Grosor:** `1` px · **Sombra:** `0 %`
 
-### Tarjetas de producto y de colección
+### Tarjetas de producto
 
 - **Estilo:** **Tarjeta** (no «Estándar»)
 - **Color de fondo:** esquema 2, es decir `#F7F5F5`
 - **Radio de las esquinas:** `4` px · **Borde:** `0` · **Sombra:** `0 %`
 - **Alineación del texto:** Izquierda · **Relleno de la imagen:** `0 %`
-- **Proporción de la imagen:** personalizada, `13/12`
+
+> En vuestra tienda **esto ya está así**: las tarjetas de la página de categoría
+> salen con `card--card` y esquema 2. Compruébalo y sigue.
 
 > La tarjeta de Hyperice **no es una imagen con el texto suelto debajo**: es una
 > caja con fondo `#F7F5F5` y 4 px de radio, partida por una línea `#DFDFDF`
 > entre la imagen y el panel de texto. Por eso las secciones que muestran
 > productos deben ir sobre **fondo blanco** (esquema 1): sobre el esquema 2 la
 > tarjeta se funde con la sección y desaparece.
+
+### Tarjetas de colección
+
+- **Estilo:** **Estándar** ← *sí, al contrario que las de producto*
+- **Alineación del texto:** Izquierda · **Sombra:** `0 %`
+
+> No es un descuido. La tarjeta de categoría de Hyperice **no es una caja**: pone
+> la imagen a un lado y el texto al otro. El CSS construye ese diseño a partir de
+> `card--standard`; si eliges «Tarjeta» aquí, esas reglas no se aplican y las
+> categorías salen como cajas de producto.
+
+### Proporción de las imágenes
+
+**Esto no está en Configuración, y en Dawn no existe ninguna opción
+«personalizada».** Es un ajuste **de cada sección**, y solo ofrece tres valores:
+*Adaptar a la imagen*, *Vertical* (125 %) y *Cuadrada* (100 %). La proporción
+13/12 de Hyperice —92,31 %— no se puede pedir desde el editor.
+
+Se resuelve así:
+
+1. En el editor, pon **Cuadrada** en cada sección que muestre productos, para que
+   la vista previa no engañe. Está dentro de la propia sección, no en
+   Configuración:
+   - Home → **Colección destacada** → Proporción de la imagen
+   - Plantilla Colección → **Cuadrícula de productos** → Proporción de la imagen
+   - Plantilla Búsqueda → **Resultados** → Proporción de la imagen
+2. El **93 % restante lo pone `bps-hyperice.css`**, que fuerza el 92,31 % exacto
+   sobre las tarjetas de producto. No tienes que hacer nada más.
+
+En la **lista de colecciones** de la home la proporción que elijas da igual: el
+CSS la sustituye por la del diseño lado a lado (apaisada en móvil, vertical en
+escritorio).
+
+Hoy vuestra tienda tiene *Cuadrada* en la cuadrícula de la categoría y *Vertical*
+en la lista de colecciones de la home.
 
 ### Medios, campos y distintivos
 
@@ -293,6 +330,7 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 - [ ] Banner legible en móvil y escritorio
 - [ ] Botones en píldora de 40 px en todas las plantillas, incluida la ficha
 - [ ] Las tarjetas de producto se leen como caja: fondo gris sobre sección blanca
+- [ ] Las tarjetas de **categoría** no son cajas: imagen a un lado y texto al otro
 - [ ] La ficha muestra **una imagen cada vez** —nunca la pila completa— con
       miniaturas subrayadas en escritorio y el contador «1 / 3» sobre la imagen
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños

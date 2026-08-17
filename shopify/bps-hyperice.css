@@ -335,6 +335,17 @@ button.shopify-payment-button__button--unbranded {
 .card-wrapper,
 .card { box-shadow: none; }
 
+/* Proporción 13/12, o sea alto = 92.31 % del ancho.
+   En Dawn la proporción NO es un ajuste global ni admite valores propios: es de
+   cada sección y solo ofrece Adaptar / Vertical (125 %) / Cuadrada (100 %). Así
+   que el valor exacto se fija aquí. Dawn lo escribe en un atributo style, sobre
+   `.card` y sobre `.card__inner`, de ahí que haga falta !important.
+
+   Pendiente de mirar en la vista previa: se ha deducido del HTML de la tienda,
+   donde las tarjetas llegan con `style="--ratio-percent: 100.0%"`. */
+.product-card-wrapper .card,
+.product-card-wrapper .card__inner { --ratio-percent: 92.31% !important; }
+
 .card--card {
   background-color: var(--bps-off-white);
   border: 0;
@@ -411,6 +422,11 @@ button.shopify-payment-button__button--unbranded {
    7. Tarjeta de colección
    No superpone el texto a la fotografía: imagen a un lado —apaisada en móvil,
    vertical en escritorio— y al otro el bloque de texto con su botón.
+
+   OJO: estas reglas parten de `card--standard`, así que en Personalizar las
+   tarjetas de colección deben quedarse en estilo **"Estándar"**, justo al
+   contrario que las de producto. Con "Tarjeta" no se aplican y las categorías
+   salen como cajas de producto. Ver GUIA §1.
    -------------------------------------------------------------------------- */
 
 .collection-list__item .card--standard {
