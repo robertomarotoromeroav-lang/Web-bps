@@ -30,66 +30,153 @@ come. El 6 es el único que no depende de vosotros.
 
 ## 1. Ajustes del tema
 
-**Personalizar → Configuración.** Estos valores replican los tokens reales de
-Hyperice. Los nombres están tomados de `settings_schema.json` y de la traducción
-al español de **Dawn 15.4.1**, así que son literalmente los que verás.
+**Personalizar → Configuración.** Aquí está **todo** lo configurable de Dawn, con
+el valor que hay que dejar en cada ajuste. Nombres, rangos y valores de fábrica
+salen de `config/settings_schema.json` y de la traducción al español de la
+etiqueta **v15.4.1**, así que son literalmente los que verás en pantalla.
 
-Configuración tiene estos apartados, en este orden. Los que se tocan van en
-negrita, y ojo porque **varios no se llaman como uno esperaría**:
+Configuración tiene 21 apartados en este orden. Ojo, porque **varios no se
+llaman como uno esperaría**:
 
-> Logo · **Colores** · **Tipografía** · **Diseño** · Animaciones · **Botones** ·
-> Botones de variantes · **Entradas** *(= campos de formulario)* ·
-> **Tarjetas de producto** · **Tarjetas de colección** · Tarjetas de blogs ·
-> Contenedores de contenido · **Multimedia** *(= imágenes y vídeo)* ·
-> Menús desplegables y ventanas emergentes · Cajones · **Emblemas**
-> *(= distintivos de oferta y agotado)* · Información de marca · Redes sociales ·
-> Comportamiento de búsqueda · Formato de moneda · Carrito
+> Logo · Colores · Tipografía · Diseño · Animaciones · Botones · Botones de
+> variantes · **Entradas** *(= campos de formulario)* · Tarjetas de producto ·
+> Tarjetas de colección · Tarjetas de blogs · Contenedores de contenido ·
+> **Multimedia** *(= imágenes y vídeo)* · Menús desplegables y ventanas
+> emergentes · Cajones · **Emblemas** *(= distintivos de oferta y agotado)* ·
+> Información de marca · Redes sociales · Comportamiento de búsqueda · Formato
+> de moneda · Carrito
 
-**Lo que no está en Configuración** son la cabecera y la galería de la ficha:
-esos viven en sus propias secciones y están al final de este paso.
+### Regla que ahorra 40 ajustes
+
+**Hyperice no usa sombras en ningún componente.** Nueve apartados tienen un
+bloque **Sombra** con cuatro controles cada uno. En todos ellos, sin excepción:
+
+> **Opacidad `0`** · Desalineación horizontal `0` · Desalineación vertical `0` ·
+> Difuminar `0`
+
+Con la opacidad a `0` los otros tres dan igual, así que basta con bajar esa. Las
+tablas de abajo **ya no repiten el bloque Sombra**: dalo por hecho en todas.
+
+Los apartados afectados: Botones, Botones de variantes, Entradas, Tarjetas de
+producto, Tarjetas de colección, Tarjetas de blogs, Contenedores de contenido,
+Multimedia, Menús desplegables, Cajones. Tres traen la opacidad a `10` de
+fábrica —las tres familias de tarjetas—, así que esas hay que bajarlas a mano.
+
+---
+
+### Logo
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Logo | `logo-horizontal-white.svg` | Blanco, porque la cabecera es oscura. Ver §3 |
+| Ancho | `200` | |
+| Favicon | *pendiente* | Hace falta un PNG cuadrado del isotipo `[|||]`. Hoy sigue el logotipo antiguo |
 
 ### Colores
 
-Dawn organiza el color en *esquemas*:
+Dawn trae **cinco** esquemas de fábrica y los usa por defecto en sitios que no
+son evidentes, así que hay que repasar los cinco. Cada uno tiene siete campos:
 
-| Esquema | Fondo | Texto | Botón sólido | Texto del botón | Botón contorno |
-|---|---|---|---|---|---|
-| 1 · por defecto | `#FFFFFF` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
-| 2 · secciones alternas | `#F7F5F5` | `#000000` | `#000000` | `#FFFFFF` | `#000000` |
-| 3 · bloques oscuros | `#000000` | `#FFFFFF` | `#FFFFFF` | `#000000` | `#FFFFFF` |
-| 4 · pie de página | `#212121` | `#CBCBCB` | `#FFFFFF` | `#000000` | `#FFFFFF` |
+| Esquema | Fondo | Texto | Fondo de botón sólido | Etiqueta de botón sólido | Botón de contorno | Uso |
+|---|---|---|---|---|---|---|
+| **1** | `#FFFFFF` | `#000000` | `#000000` | `#FFFFFF` | `#000000` | Por defecto |
+| **2** | `#F7F5F5` | `#000000` | `#000000` | `#FFFFFF` | `#000000` | Tarjeta de producto y secciones alternas |
+| **3** | `#000000` | `#FFFFFF` | `#FFFFFF` | `#000000` | `#FFFFFF` | Bloques oscuros y emblemas |
+| **4** | `#212121` | `#CBCBCB` | `#FFFFFF` | `#000000` | `#FFFFFF` | Pie de página |
+| **5** | `#000000` | `#FFFFFF` | `#FFFFFF` | `#000000` | `#FFFFFF` | Ver aviso |
 
-Elimina cualquier degradado de los esquemas: Hyperice usa planos de color puros.
+En los cinco, además:
+
+- **Degradado de fondo:** quítalo. Hyperice usa planos de color puros.
+- **Sombra:** el color da igual, porque la opacidad va a `0` en todas partes.
+
+> **El esquema 5 viene azul `#334FB4` de fábrica**, y Dawn lo usa por defecto
+> para el distintivo de «Oferta». Si no lo tocas, aparecerá una etiqueta azul
+> sobre las tarjetas y romperá el monocromo, que es la regla más visible de todo
+> el rediseño. Pásalo a negro como en la tabla —y aparte, en **Emblemas**, apunta
+> el distintivo de oferta al esquema 3.
+
+> El texto va en **`#000000` puro**, no en el `#121212` de fábrica.
 
 ### Tipografía
 
-El apartado se divide en **Títulos** y **Cuerpo**, cada uno con *Fuente* y
-*Escala*.
+Se divide en **Títulos** y **Cuerpo**, cada uno con *Fuente* y *Escala*.
 
-- **Fuente:** la misma en los dos. Hyperice usa *Suisse Intl* (de pago, Swiss
-  Typefaces). Alternativas en el catálogo de Shopify, de más a menos parecida:
-  **Inter** → **Helvetica Now** → **Assistant**.
-- **Escala:** `100` % en ambos
+| Ajuste | Valor |
+|---|---|
+| Títulos → Fuente | **Inter** |
+| Títulos → Escala | `100` % |
+| Cuerpo → Fuente | **Inter**, la misma |
+| Cuerpo → Escala | `100` % |
+
+Hyperice usa *Suisse Intl* (de pago, Swiss Typefaces). Alternativas del catálogo
+de Shopify, de más a menos parecida: **Inter** → **Helvetica Now** →
+**Assistant**. Assistant es la que trae Dawn de fábrica: hay que cambiarla.
+
+### Diseño
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Ancho de página | `1500` | Ver aviso |
+| Espacio entre las secciones de la plantilla | `80` | De fábrica viene `0` |
+| Cuadrícula → Espacio horizontal | `20` | |
+| Cuadrícula → Espacio vertical | `20` | |
+
+> **Por qué 1500 y no 1536.** El ancho de Hyperice es 1536 px, pero el control va
+> de 1000 a 1600 **de 100 en 100**: 1536 no se puede elegir. Pon 1500 y el CSS
+> fija el 1536 exacto. Evita `1600`: con ese valor concreto Dawn suma además
+> 2 rem de margen propio.
+
+### Animaciones
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Revelar secciones al desplazarse | **Sí** | El prototipo lo hace |
+| Efecto hover | **Predeterminado** | Ni «Elevación vertical» ni «Elevación 3D»: Hyperice solo amplía la imagen un 2 %, sin mover la tarjeta |
 
 ### Botones
 
-Dentro de **Borde**:
+| Ajuste | Valor |
+|---|---|
+| Borde → Grosor | `1` |
+| Borde → Opacidad | `100` % |
+| Borde → Radio de esquina | `40` |
 
-- **Grosor:** `1` · **Opacidad:** `100` % · **Radio de esquina:** `40`
+`40` es el máximo del control y es lo que da la píldora.
 
-Dentro de **Sombra**:
+### Botones de variantes
 
-- **Opacidad:** `0` %
+Son los selectores de talla o color de la ficha.
+
+| Ajuste | Valor |
+|---|---|
+| Borde → Grosor | `1` |
+| Borde → Opacidad | `100` % |
+| Borde → Radio de esquina | `40` |
+
+### Entradas
+
+Son los campos de formulario. **No se llama «Campos de formulario».**
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Borde → Grosor | `1` | |
+| Borde → Opacidad | `15` % | El borde de Hyperice es `#DFDFDF`, que sobre blanco es un 13 % de negro. Con `100` saldría negro puro y pesaría demasiado |
+| Borde → Radio de esquina | `4` | |
 
 ### Tarjetas de producto
 
-- **Estilo:** **Tarjeta** (no «Estándar»)
-- **Color de fondo:** esquema 2, es decir `#F7F5F5`
-- **Radio de las esquinas:** `4` px · **Borde:** `0` · **Sombra:** `0 %`
-- **Alineación del texto:** Izquierda · **Relleno de la imagen:** `0 %`
+| Ajuste | Valor |
+|---|---|
+| Estilo | **Tarjeta** |
+| Relleno de imagen | `0` % |
+| Alineación de texto | **Izquierda** |
+| Esquema de color | **Esquema 2** (`#F7F5F5`) |
+| Borde → Grosor | `0` |
+| Borde → Opacidad | `0` % |
+| Borde → Radio de esquina | `4` |
 
-> En vuestra tienda **esto ya está así**: las tarjetas de la página de categoría
-> salen con `card--card` y esquema 2. Compruébalo y sigue.
+> En vuestra tienda **esto ya está así**. Compruébalo y sigue.
 
 > La tarjeta de Hyperice **no es una imagen con el texto suelto debajo**: es una
 > caja con fondo `#F7F5F5` y 4 px de radio, partida por una línea `#DFDFDF`
@@ -99,86 +186,165 @@ Dentro de **Sombra**:
 
 ### Tarjetas de colección
 
-- **Estilo:** **Estándar** ← *sí, al contrario que las de producto*
-- **Alineación del texto:** Izquierda · **Sombra:** `0 %`
+| Ajuste | Valor |
+|---|---|
+| Estilo | **Estándar** ← *al contrario que las de producto* |
+| Relleno de imagen | `0` % |
+| Alineación de texto | **Izquierda** |
+| Esquema de color | **Esquema 1** (blanco) |
+| Borde → Grosor | `0` |
+| Borde → Radio de esquina | `2` |
 
 > No es un descuido. La tarjeta de categoría de Hyperice **no es una caja**: pone
 > la imagen a un lado y el texto al otro. El CSS construye ese diseño a partir de
 > `card--standard`; si eliges «Tarjeta» aquí, esas reglas no se aplican y las
 > categorías salen como cajas de producto.
 
-### Proporción de las imágenes
+### Tarjetas de blogs
 
-**Esto no está en Configuración, y en Dawn no existe ninguna opción
-«personalizada».** Es un ajuste **de cada sección**, y solo ofrece tres valores:
-*Adaptar a la imagen*, *Vertical* (125 %) y *Cuadrada* (100 %). La proporción
-13/12 de Hyperice —92,31 %— no se puede pedir desde el editor.
+| Ajuste | Valor |
+|---|---|
+| Estilo | **Estándar** |
+| Relleno de imagen | `0` % |
+| Alineación de texto | **Izquierda** |
+| Esquema de color | **Esquema 1** (blanco) |
+| Borde → Grosor | `0` |
+| Borde → Radio de esquina | `2` |
 
-Se resuelve así:
+El listado del blog no lo cubre el CSS (ver el final de la guía), así que estos
+valores son lo que lo acerca al prototipo sin escribir una línea.
 
-1. En el editor, pon **Cuadrada** en cada sección que muestre productos, para que
-   la vista previa no engañe. Está dentro de la propia sección, no en
-   Configuración:
-   - Home → **Colección destacada** → Proporción de la imagen
-   - Plantilla Colección → **Cuadrícula de productos** → Proporción de la imagen
-   - Plantilla Búsqueda → **Resultados** → Proporción de la imagen
-2. El **93 % restante lo pone `bps-hyperice.css`**, que fuerza el 92,31 % exacto
-   sobre las tarjetas de producto. No tienes que hacer nada más.
+### Contenedores de contenido
 
-En la **lista de colecciones** de la home la proporción que elijas da igual: el
-CSS la sustituye por la del diseño lado a lado (apaisada en móvil, vertical en
-escritorio).
+Son las cajas de texto sobre imagen de algunas secciones.
 
-Hoy vuestra tienda tiene *Cuadrada* en la cuadrícula de la categoría y *Vertical*
-en la lista de colecciones de la home.
+| Ajuste | Valor |
+|---|---|
+| Borde → Grosor | `0` |
+| Borde → Opacidad | `0` % |
+| Borde → Radio de esquina | `4` |
 
 ### Multimedia
 
 Es el apartado de las imágenes y los vídeos. **No se llama «Medios».**
 
-- **Borde → Radio de esquina:** `2` · **Grosor:** `0`
-- **Sombra → Opacidad:** `0` %
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Borde → Grosor | `0` | De fábrica viene `1`: hay que quitarlo. Las imágenes de Hyperice no llevan marco |
+| Borde → Opacidad | `0` % | |
+| Borde → Radio de esquina | `2` | |
 
-### Entradas
+### Menús desplegables y ventanas emergentes
 
-Son los campos de formulario. **No se llama «Campos de formulario».**
+| Ajuste | Valor |
+|---|---|
+| Borde → Grosor | `1` |
+| Borde → Opacidad | `15` % |
+| Borde → Radio de esquina | `4` |
 
-- **Borde → Radio de esquina:** `4` · **Grosor:** `1`
-- **Sombra → Opacidad:** `0` %
+### Cajones
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Borde → Grosor | `0` | El menú móvil va a fondo oscuro translúcido, sin línea. De fábrica viene `1` |
+| Borde → Opacidad | `0` % | |
 
 ### Emblemas
 
 Son los distintivos de «Oferta» y «Agotado». **No se llama «Distintivos».**
 
-- **Radio de esquina:** `40` (ya viene así de fábrica, comprueba y sigue)
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Posición de las tarjetas | **Arriba a la izquierda** | De fábrica viene abajo a la izquierda; el prototipo lo pone arriba |
+| Radio de esquina | `40` | Ya viene así |
+| Esquema de color de distintivo de oferta | **Esquema 3** | De fábrica apunta al **5, que es azul** |
+| Esquema de color de emblema de agotado | **Esquema 3** | Ya viene así |
+
+### Información de marca
+
+Alimenta el bloque de marca del pie. **Opcional**, pero si lo dejas vacío el pie
+sale más pobre que el del prototipo.
+
+| Ajuste | Valor |
+|---|---|
+| Titular | Una línea corta de marca, en caja baja |
+| Descripción | Dos o tres líneas |
+| Imagen | `logo-horizontal-white.svg` |
+| Ancho de imagen | `160` |
+
+### Redes sociales
+
+Pon las URL reales de BPS en las redes que tengáis y **deja vacías las demás**:
+Dawn solo dibuja el icono de las que tienen URL, así que una casilla vacía no
+deja hueco.
+
+### Comportamiento de búsqueda
+
+| Ajuste | Valor |
+|---|---|
+| Sugerencias de búsqueda | **Sí** |
+| Proveedor de producto | **No** |
+| Precio del producto | **Sí** |
+
+### Formato de moneda
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Códigos de moneda | **No** | De fábrica está activado y escribe «649,00 € EUR». Hyperice pone solo «649,00 €» |
+
+### Carrito
+
+| Ajuste | Valor | Nota |
+|---|---|---|
+| Tipo | **Notificación emergente** | Es lo que tenéis hoy. Ver aviso |
+| Proveedor | **No** | |
+| Nota del carrito | **No** | |
+| Esquema de color | **Esquema 1** | |
+
+> **Por qué no el carrito lateral.** Hyperice usa cajón, y por fidelidad sería lo
+> suyo. Pero el cajón de carrito de Dawn **no lo toca esta hoja de estilos**, así
+> que saldría blanco y de serie: cambiar a cajón empeoraría el resultado, no lo
+> mejoraría. Déjalo en notificación hasta que se estilice.
+
+---
+
+## Lo que **no** está en Configuración
+
+Tres cosas de este paso viven en sus propias secciones. Es la causa más habitual
+de buscar un ajuste y no encontrarlo.
 
 ### Cabecera
 
-**Esto no está en Configuración**: es Personalizar → sección **Cabecera**, en la
-lista de secciones de cualquier plantilla.
+Personalizar → sección **Cabecera**, en la lista de secciones de cualquier
+plantilla.
 
-- **Encabezado fijo:** **Siempre**
+| Ajuste | Valor |
+|---|---|
+| Encabezado fijo | **Siempre** |
 
 > Y **no busques ningún ajuste de menú móvil**: no existe. En Dawn el menú de
-> móvil es siempre un cajón, no se elige. Lo único configurable es *Tipo de menú*,
-> que afecta solo a escritorio (Desplegable / Mega menú / Cajón) y puede quedarse
-> como esté.
+> móvil es siempre un cajón, no se elige. Lo único configurable es *Tipo de
+> menú*, que afecta solo a escritorio (Desplegable / Mega menú / Cajón) y puede
+> quedarse como esté.
 
 ### Galería de la ficha de producto
 
-Esto **no** está en Configuración: se ajusta en Personalizar → plantilla
-**Producto** → sección **Información del producto**.
+Personalizar → plantilla **Producto** → sección **Información del producto**.
 
-Hoy la ficha está en **«Apiladas»**: por eso se ven las tres imágenes seguidas
-de arriba abajo, que es justo lo que hay que quitar.
+Hoy está en **«Apiladas»**: por eso se ven las tres imágenes seguidas de arriba
+abajo, que es justo lo que hay que quitar.
 
-- **Diseño de escritorio:** **Carrusel de miniaturas**. Es la única opción de
-  Dawn que muestra **una imagen cada vez**; «Apiladas» y «2 columnas» dejan la
-  pila.
-- **Miniaturas en móvil:** **Ocultar**
-- **Ajuste de la imagen:** **Contener** · **Tamaño:** Grande · **Limitar a la
-  altura de la ventana:** activado
-- **Zoom de la imagen:** **Abrir caja de luz** (Hyperice abre un modal al pulsar)
+| Ajuste | Valor |
+|---|---|
+| Diseño de escritorio | **Carrusel de miniaturas** |
+| Miniaturas en móvil | **Ocultar** |
+| Ajuste de la imagen | **Contener** |
+| Tamaño | **Grande** |
+| Limitar a la altura de la ventana | **Sí** |
+| Zoom de la imagen | **Abrir caja de luz** |
+
+«Carrusel de miniaturas» es la única opción de Dawn que muestra **una imagen cada
+vez**; «Apiladas» y «2 columnas» dejan la pila.
 
 > **Dos diferencias que Dawn no sabe hacer y conviene saber de antemano.**
 >
@@ -195,16 +361,27 @@ de arriba abajo, que es justo lo que hay que quitar.
 > mostrar puntos. Cambiarlo de verdad exige tocar `snippets/media-gallery.liquid`,
 > y entonces el tema deja de actualizarse limpio: no compensa.
 
-### Diseño
+### Proporción de las imágenes de producto
 
-- **Ancho de página:** `1500`
-- **Espacio entre las secciones de la plantilla:** `80`
-- **Cuadrícula → Espacio horizontal:** `20`
+**En Dawn no existe ninguna opción «personalizada».** Es un ajuste **de cada
+sección**, y solo ofrece tres valores: *Adaptar a la imagen*, *Vertical* (125 %)
+y *Cuadrada* (100 %). La proporción 13/12 de Hyperice —92,31 %— no se puede pedir
+desde el editor.
 
-> **Por qué 1500 y no 1536.** El ancho de Hyperice es 1536 px, pero el control de
-> Dawn va de 1000 a 1600 **de 100 en 100**: 1536 no se puede elegir. Pon 1500 —el
-> seleccionable más cercano— y el CSS fija después el 1536 exacto. Evita `1600`:
-> con ese valor concreto Dawn añade además 2 rem de margen propio.
+1. Pon **Cuadrada** en cada sección que muestre productos, para que la vista
+   previa no engañe:
+   - Home → **Colección destacada** → Proporción de la imagen
+   - Plantilla Colección → **Cuadrícula de productos** → Proporción de la imagen
+   - Plantilla Búsqueda → **Resultados** → Proporción de la imagen
+2. El **92,31 % exacto lo pone `bps-hyperice.css`** sobre las tarjetas de
+   producto. No hay que hacer nada más.
+
+En la **lista de colecciones** de la home la proporción da igual: el CSS la
+sustituye por la del diseño lado a lado (apaisada en móvil, vertical en
+escritorio).
+
+Hoy vuestra tienda tiene *Cuadrada* en la cuadrícula de la categoría y *Vertical*
+en la lista de colecciones de la home.
 
 ---
 
@@ -390,6 +567,10 @@ categoría. BPS usa renders de producto sobre fondo neutro.
 - [ ] La ficha muestra **una imagen cada vez** —nunca la pila completa— con
       miniaturas subrayadas en escritorio y el contador «1 / 3» sobre la imagen
 - [ ] Ningún titular en mayúsculas salvo los rótulos pequeños
+- [ ] **Ningún azul fuera del logotipo**: mira sobre todo el distintivo de
+      «Oferta», que de fábrica sale azul
+- [ ] Los precios se leen «649,00 €», sin el «EUR» detrás
+- [ ] Ninguna sombra en tarjetas, botones ni campos
 - [ ] Pie con esquema `#212121` y rótulos de columna mayores que sus enlaces
 - [ ] En móvil, el menú abre como cajón desde la izquierda y las columnas del
       pie se colapsan con +/−
