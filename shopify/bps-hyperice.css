@@ -34,6 +34,12 @@
 
   /* Desplazamiento del bloque superior, que mueve el JS de la §2b. */
   --header-top-position: 0px;
+
+  /* Ancho de página de Hyperice: 1536px. El control de Dawn va de 1000 a 1600
+     de 100 en 100, así que 1536 no se puede elegir desde el editor (pon 1500,
+     ver GUIA §1) y el valor exacto se fija aquí. Dawn declara esta variable en
+     un :root de theme.liquid; esta hoja se carga después y gana. */
+  --page-width: 153.6rem;
 }
 
 /* --------------------------------------------------------------------------

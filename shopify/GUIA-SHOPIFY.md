@@ -31,7 +31,22 @@ come. El 6 es el único que no depende de vosotros.
 ## 1. Ajustes del tema
 
 **Personalizar → Configuración.** Estos valores replican los tokens reales de
-Hyperice.
+Hyperice. Los nombres están tomados de `settings_schema.json` y de la traducción
+al español de **Dawn 15.4.1**, así que son literalmente los que verás.
+
+Configuración tiene estos apartados, en este orden. Los que se tocan van en
+negrita, y ojo porque **varios no se llaman como uno esperaría**:
+
+> Logo · **Colores** · **Tipografía** · **Diseño** · Animaciones · **Botones** ·
+> Botones de variantes · **Entradas** *(= campos de formulario)* ·
+> **Tarjetas de producto** · **Tarjetas de colección** · Tarjetas de blogs ·
+> Contenedores de contenido · **Multimedia** *(= imágenes y vídeo)* ·
+> Menús desplegables y ventanas emergentes · Cajones · **Emblemas**
+> *(= distintivos de oferta y agotado)* · Información de marca · Redes sociales ·
+> Comportamiento de búsqueda · Formato de moneda · Carrito
+
+**Lo que no está en Configuración** son la cabecera y la galería de la ficha:
+esos viven en sus propias secciones y están al final de este paso.
 
 ### Colores
 
@@ -48,14 +63,23 @@ Elimina cualquier degradado de los esquemas: Hyperice usa planos de color puros.
 
 ### Tipografía
 
-- **Fuente de titulares y de cuerpo:** la misma para ambas. Hyperice usa *Suisse
-  Intl* (de pago, Swiss Typefaces). Alternativas en el catálogo de Shopify, de
-  más a menos parecida: **Inter** → **Helvetica Now** → **Assistant**.
-- **Escala de titulares y de cuerpo:** 100 %
+El apartado se divide en **Títulos** y **Cuerpo**, cada uno con *Fuente* y
+*Escala*.
+
+- **Fuente:** la misma en los dos. Hyperice usa *Suisse Intl* (de pago, Swiss
+  Typefaces). Alternativas en el catálogo de Shopify, de más a menos parecida:
+  **Inter** → **Helvetica Now** → **Assistant**.
+- **Escala:** `100` % en ambos
 
 ### Botones
 
-- **Radio del borde:** `40` px · **Grosor:** `1` px · **Sombra:** `0 %`
+Dentro de **Borde**:
+
+- **Grosor:** `1` · **Opacidad:** `100` % · **Radio de esquina:** `40`
+
+Dentro de **Sombra**:
+
+- **Opacidad:** `0` %
 
 ### Tarjetas de producto
 
@@ -108,16 +132,37 @@ escritorio).
 Hoy vuestra tienda tiene *Cuadrada* en la cuadrícula de la categoría y *Vertical*
 en la lista de colecciones de la home.
 
-### Medios, campos y distintivos
+### Multimedia
 
-- **Medios:** radio `2` px, sombra `0 %`
-- **Campos de formulario:** radio `4` px, sombra `0 %`
-- **Distintivos:** radio `40` px
+Es el apartado de las imágenes y los vídeos. **No se llama «Medios».**
+
+- **Borde → Radio de esquina:** `2` · **Grosor:** `0`
+- **Sombra → Opacidad:** `0` %
+
+### Entradas
+
+Son los campos de formulario. **No se llama «Campos de formulario».**
+
+- **Borde → Radio de esquina:** `4` · **Grosor:** `1`
+- **Sombra → Opacidad:** `0` %
+
+### Emblemas
+
+Son los distintivos de «Oferta» y «Agotado». **No se llama «Distintivos».**
+
+- **Radio de esquina:** `40` (ya viene así de fábrica, comprueba y sigue)
 
 ### Cabecera
 
-- **Cabecera fija:** **activada**, tipo «siempre visible»
-- **Menú móvil:** tipo **cajón**
+**Esto no está en Configuración**: es Personalizar → sección **Cabecera**, en la
+lista de secciones de cualquier plantilla.
+
+- **Encabezado fijo:** **Siempre**
+
+> Y **no busques ningún ajuste de menú móvil**: no existe. En Dawn el menú de
+> móvil es siempre un cajón, no se elige. Lo único configurable es *Tipo de menú*,
+> que afecta solo a escritorio (Desplegable / Mega menú / Cajón) y puede quedarse
+> como esté.
 
 ### Galería de la ficha de producto
 
@@ -152,9 +197,14 @@ de arriba abajo, que es justo lo que hay que quitar.
 
 ### Diseño
 
-- **Ancho de página:** `1536` px
-- **Espaciado entre secciones:** `80` (escritorio)
-- **Espaciado horizontal de la cuadrícula:** `20` px
+- **Ancho de página:** `1500`
+- **Espacio entre las secciones de la plantilla:** `80`
+- **Cuadrícula → Espacio horizontal:** `20`
+
+> **Por qué 1500 y no 1536.** El ancho de Hyperice es 1536 px, pero el control de
+> Dawn va de 1000 a 1600 **de 100 en 100**: 1536 no se puede elegir. Pon 1500 —el
+> seleccionable más cercano— y el CSS fija después el 1536 exacto. Evita `1600`:
+> con ese valor concreto Dawn añade además 2 rem de margen propio.
 
 ---
 
@@ -162,10 +212,7 @@ de arriba abajo, que es justo lo que hay que quitar.
 
 ### 2a. La hoja de estilos
 
-**Opción A — sin editar código (más rápida):** Personalizar → Configuración →
-**CSS personalizado** → pega el contenido de `bps-hyperice.css`.
-
-**Opción B — como archivo del tema (mejor si vais a iterar):**
+**Opción A — como archivo del tema (recomendada):**
 
 1. Tienda online → Temas → ⋯ → **Editar código**
 2. `Assets` → **Añadir un archivo nuevo** → `bps-hyperice.css`, pega el contenido
@@ -175,7 +222,16 @@ de arriba abajo, que es justo lo que hay que quitar.
    {{ 'bps-hyperice.css' | asset_url | stylesheet_tag }}
    ```
 
-Debe cargarse el último para que sus reglas ganen a las de Dawn.
+Que vaya justo antes de `</head>` no es un detalle: Dawn declara sus variables en
+un `:root` al principio de `theme.liquid`, y varias reglas de esta hoja
+—el ancho de página, por ejemplo— ganan **solo por ir después**.
+
+**Opción B — sin editar código:** Personalizar → Configuración → **CSS
+personalizado**, y pega ahí el contenido.
+
+Es más rápida, pero ese campo lo inyecta Shopify por su cuenta y no controlas en
+qué orden acaba. Si tras pegarlo el ancho de página o la proporción de las
+tarjetas no cambian, es por eso: pásate a la opción A.
 
 ### 2b. Esconder la barra de anuncios al bajar
 
