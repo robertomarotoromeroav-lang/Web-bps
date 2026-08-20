@@ -392,11 +392,35 @@ tema contra Dawn v15.4.1 y no hay ni una edición. Lo modificado está en
 
 1. Tienda online → Temas → ⋯ → **Editar código**
 2. `Assets` → **Añadir un archivo nuevo** → `bps-hyperice.css`, pega el contenido
-3. En `layout/theme.liquid`, justo **antes de `</body>`** —no antes de `</head>`:
+3. En `layout/theme.liquid`, pega **esta línea** justo antes de `</body>`
+   —**no** antes de `</head>`:
 
    ```liquid
    {{ 'bps-hyperice.css' | asset_url | stylesheet_tag }}
    ```
+
+`layout/theme.liquid` es un archivo largo, pero solo tiene dos cierres que
+importan: `</head>` sobre la línea 299 y `</body>` sobre la 375. La línea va en el
+segundo. El final del archivo queda así —las tres últimas líneas son las de Dawn,
+que ya estaban:
+
+```liquid
+    {%- if settings.cart_type == 'drawer' -%}
+      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {{ 'bps-hyperice.css' | asset_url | stylesheet_tag }}   <-- aquí
+  </body>
+</html>
+```
+
+Es la misma línea que ya tienes puesta arriba: se trata de **cortarla de donde
+está y pegarla aquí**, no de duplicarla. Junto a ella deben quedar los dos
+`<script>` de §3b y §3c; el orden entre los tres es indiferente.
+
+**Cómo comprobar que quedó bien:** abre la tienda, mira el código fuente
+(Ctrl+U) y busca `bps-hyperice.css`. Tiene que aparecer **por debajo** de
+`component-menu-drawer.css`. Si aparece por encima, sigue en el `<head>`.
 
 > **Por qué al final del `<body>` y no en el `<head>`.** Dawn no carga el CSS de
 > sus componentes en la cabecera del documento: lo va inyectando **dentro del
