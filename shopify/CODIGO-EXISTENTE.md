@@ -38,11 +38,12 @@ Conclusión: **no hay que restaurar ningún archivo de `assets/`**. Todo el cód
 medida vive en el editor (bloques y CSS de sección), en `layout/theme.liquid` y en
 un *snippet*.
 
-> **Sí hay un archivo del tema creado a mano:** un comentario en el código de la
-> página de contacto lo nombra —
-> *«puedes copiar y pegar el bloque `<style>` completo de
-> `boton-personalizado.liquid` aquí»*. Búscalo en **`snippets/boton-personalizado.liquid`**:
-> es el que genera los botones degradados de la home.
+> **Pero sí hay archivos del tema modificados**, fuera de `assets/`: tres
+> secciones con el botón nativo sustituido (`image-banner.liquid`,
+> `image-with-text.liquid` y `contact-form.liquid`), el *snippet*
+> `boton-personalizado.liquid` creado a mano, y `layout/theme.liquid` con el
+> bloque muerto del §5. Todo con el Liquid exacto que debe quedar en
+> **[`ARCHIVOS-MODIFICADOS.md`](ARCHIVOS-MODIFICADOS.md)**.
 
 ---
 

@@ -372,9 +372,17 @@ sección vive y qué hacer con cada trozo. En resumen, y en este orden:
 6. **Decidir qué hacer con las tres secciones generadas con IA**, que traen su
    propio ancho de 1200 px y radios de 8 px.
 
+7. **Restaurar los cuatro archivos del tema que están modificados** y borrar el
+   *snippet* del botón degradado. Están en
+   **[`ARCHIVOS-MODIFICADOS.md`](ARCHIVOS-MODIFICADOS.md)**, con el Liquid exacto
+   que debe quedar en cada uno, y los originales de Dawn en
+   `dawn-original/`. **Esto no es opcional:** mientras el botón degradado siga en
+   su sitio, ni los ajustes de Configuración ni la hoja de estilos le llegan,
+   porque no lleva la clase `button`.
+
 **Los archivos de `assets/` están intactos**: se compararon los 65 que carga el
-tema contra Dawn v15.4.1 y no hay ni una edición. No hace falta restaurar nada
-ahí.
+tema contra Dawn v15.4.1 y no hay ni una edición. Lo modificado está en
+`sections/`, en `snippets/` y en `layout/theme.liquid`.
 
 ---
 
