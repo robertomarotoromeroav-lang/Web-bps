@@ -317,78 +317,35 @@ deja hueco.
 
 ## Lo que **no** está en Configuración
 
-Tres cosas de este paso viven en sus propias secciones. Es la causa más habitual
-de buscar un ajuste y no encontrarlo.
+Tres cosas de este paso viven en **secciones**, no en Configuración. Es la causa
+más habitual de buscar un ajuste y no encontrarlo — y el nombre no ayuda:
 
-### Cabecera
-
-Personalizar → sección **Cabecera**, en la lista de secciones de cualquier
-plantilla.
-
-| Ajuste | Valor |
+| Lo buscarías como | Se llama |
 |---|---|
-| Encabezado fijo | **Siempre** |
+| Cabecera | **«Encabezado»** |
+| Ficha de producto | **«Información de producto»** |
+| Banner con imagen | **«Banner de imagen»** |
+| Proporción de la imagen | **«Relación de aspecto de imagen»** |
 
-> Y **no busques ningún ajuste de menú móvil**: no existe. En Dawn el menú de
-> móvil es siempre un cajón, no se elige. Lo único configurable es *Tipo de
-> menú*, que afecta solo a escritorio (Desplegable / Mega menú / Cajón) y puede
-> quedarse como esté.
+Los tres ajustes clave:
 
-### Galería de la ficha de producto
+- **Encabezado fijo → Siempre.** Está en la sección **Encabezado**, y es el
+  **quinto ajuste**, justo debajo de «Tipo de menú». Hoy está en «Al desplazarse
+  hacia arriba», que esconde la cabecera al bajar.
+- **Diseño → Carrusel de miniaturas.** En la sección **Información de producto**,
+  bajo «Multimedia». Hoy está en «Apilado», que es lo que deja las tres imágenes
+  seguidas de arriba abajo.
+- **Relación de aspecto de imagen → Cuadrado.** En cada sección que muestre
+  productos. En Dawn no existe ninguna opción «personalizada»: solo *Adaptar a la
+  imagen*, *Retrato* (125 %) y *Cuadrado* (100 %). El 92,31 % que corresponde a la
+  proporción 13/12 lo fija `bps-hyperice.css`.
 
-Personalizar → plantilla **Producto** → sección **Información del producto**.
-
-Hoy está en **«Apiladas»**: por eso se ven las tres imágenes seguidas de arriba
-abajo, que es justo lo que hay que quitar.
-
-| Ajuste | Valor |
-|---|---|
-| Diseño de escritorio | **Carrusel de miniaturas** |
-| Miniaturas en móvil | **Ocultar** |
-| Ajuste de la imagen | **Contener** |
-| Tamaño | **Grande** |
-| Limitar a la altura de la ventana | **Sí** |
-| Zoom de la imagen | **Abrir caja de luz** |
-
-«Carrusel de miniaturas» es la única opción de Dawn que muestra **una imagen cada
-vez**; «Apiladas» y «2 columnas» dejan la pila.
-
-> **Dos diferencias que Dawn no sabe hacer y conviene saber de antemano.**
->
-> Hyperice **no tiene tira de miniaturas** en la galería principal: solo flechas
-> al pasar el ratón y puntos. Su HTML llega a referenciar una tira que no
-> existe, y las miniaturas solo aparecen dentro del modal de zoom. Dawn no
-> ofrece esa combinación, así que el carrusel de miniaturas es lo más cercano.
-> El CSS les da el formato de Hyperice: 63 px de ancho y subrayado en la activa.
->
-> Y Dawn **no pinta puntos en la ficha**, sino un contador **«1 / 3»** entre dos
-> flechas, colocado *debajo* de la imagen (comprobado en el HTML de la ficha
-> real de la tienda). El CSS lo recoloca sobre la imagen dentro de la misma
-> píldora blanca que usa Hyperice, pero seguirá diciendo «1 / 3» en vez de
-> mostrar puntos. Cambiarlo de verdad exige tocar `snippets/media-gallery.liquid`,
-> y entonces el tema deja de actualizarse limpio: no compensa.
-
-### Proporción de las imágenes de producto
-
-**En Dawn no existe ninguna opción «personalizada».** Es un ajuste **de cada
-sección**, y solo ofrece tres valores: *Adaptar a la imagen*, *Vertical* (125 %)
-y *Cuadrada* (100 %). La proporción 13/12 de Hyperice —92,31 %— no se puede pedir
-desde el editor.
-
-1. Pon **Cuadrada** en cada sección que muestre productos, para que la vista
-   previa no engañe:
-   - Home → **Colección destacada** → Proporción de la imagen
-   - Plantilla Colección → **Cuadrícula de productos** → Proporción de la imagen
-   - Plantilla Búsqueda → **Resultados** → Proporción de la imagen
-2. El **92,31 % exacto lo pone `bps-hyperice.css`** sobre las tarjetas de
-   producto. No hay que hacer nada más.
-
-En la **lista de colecciones** de la home la proporción da igual: el CSS la
-sustituye por la del diseño lado a lado (apaisada en móvil, vertical en
-escritorio).
-
-Hoy vuestra tienda tiene *Cuadrada* en la cuadrícula de la categoría y *Vertical*
-en la lista de colecciones de la home.
+**Todos los ajustes de todas las secciones que hay que tocar están en
+[`AJUSTES-SECCIONES.md`](AJUSTES-SECCIONES.md)**, con sus opciones completas, sus
+valores de fábrica y el valor que debe quedar. Trece secciones, y ahí va también
+un aviso que afecta a casi todas: **el relleno de sección hay que bajarlo a `0`**,
+porque los 36 px que trae de fábrica se suman a los 80 del ajuste global y dejan
+152 px entre secciones.
 
 ---
 
@@ -536,7 +493,7 @@ empastan y no se distingue nada.
 Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
 `index.html`:
 
-1. **Banner con imagen** — a pantalla completa, contenido abajo a la izquierda,
+1. **Banner de imagen** — a pantalla completa, contenido abajo a la izquierda,
    contenedor desactivado, superposición al 0 % (el velo lo pone el CSS).
    Dos botones: uno sólido y uno de contorno.
    **Asígnale el esquema de color 3.** Es imprescindible: con el esquema 1 el
@@ -548,6 +505,11 @@ Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
 6. **Texto con iconos** — envío gratis / compra segura / atención 24/7.
 7. **Newsletter** — *no* como sección propia: en Hyperice vive dentro del pie, y
    duplicarla deja dos veces el mismo campo seguido.
+
+Los ajustes de cada una de estas secciones, opción por opción, están en
+**[`AJUSTES-SECCIONES.md`](AJUSTES-SECCIONES.md)**. Y no te olvides de bajar a
+`0` el **relleno** de todas: los 36 px de fábrica se suman a los 80 del ajuste
+global.
 
 ---
 
@@ -616,6 +578,10 @@ categoría. BPS usa renders de producto sobre fondo neutro.
       «Oferta», que de fábrica sale azul
 - [ ] Los precios se leen «649,00 €», sin el «EUR» detrás
 - [ ] Ninguna sombra en tarjetas, botones ni campos
+- [ ] El espacio entre secciones es de 80 px, no de 152: el relleno de cada
+      sección tiene que estar a `0`
+- [ ] Ninguna imagen con forma de arco, gota o diamante: «Forma de la imagen»
+      en Predeterminado
 - [ ] Pie con esquema `#212121` y rótulos de columna mayores que sus enlaces
 - [ ] En móvil, el menú abre como cajón desde la izquierda y las columnas del
       pie se colapsan con +/−

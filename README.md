@@ -114,6 +114,7 @@ assets/img/                  Logotipo en 4 variantes y favicon en 3 tamaños
 
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1
+shopify/AJUSTES-SECCIONES.md Ajustes de cada sección de Dawn, opción por opción
 shopify/CODIGO-EXISTENTE.md  El código a medida que ya hay en la tienda, y qué hacer con él
 tools/build-logos.py         Regenera el logotipo vectorizando el original
 tools/build-favicon.py       Regenera el favicon a partir del isotipo
