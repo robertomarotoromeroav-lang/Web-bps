@@ -507,6 +507,14 @@ empastan y no se distingue nada.
 
 ## 5. Estructura de la home
 
+> **Este paso es el que más se parece o menos al prototipo, y es fácil dejarlo a
+> medias.** Los ajustes y la hoja de estilos pueden estar perfectos y la home
+> seguir sin parecerse, porque lo que la define no son los colores: son **las dos
+> secciones de producto**. La tarjeta gris sobre blanco es el elemento más
+> reconocible de todo el rediseño, y si en la home no hay ninguna sección de
+> productos, no aparece ni una vez. Compruébalo con `product-card-wrapper` en el
+> código fuente: si sale `0`, falta lo principal.
+
 Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
 `index.html`:
 
@@ -516,9 +524,11 @@ Reordena las secciones hasta dejar esta secuencia, que es la que reproduce
    **Asígnale el esquema de color 3.** Es imprescindible: con el esquema 1 el
    botón de contorno se dibuja en negro sobre la fotografía y resulta invisible.
 2. **Lista de colecciones** — las 4 categorías.
-3. **Productos destacados** — 4 productos, **sobre esquema 1 (blanco)**.
+3. **Colección destacada** — 4 productos, **sobre esquema 1 (blanco)**. ⚠️ La más
+   importante de la lista: es la que trae las tarjetas de producto a la home.
 4. **Imagen con texto** — «Diseñado para la élite, validado por la ciencia».
-5. **Producto destacado** — Presoterapia BPS PRO, esquema 3.
+5. **Producto destacado** — Presoterapia BPS PRO, esquema 3. Es el bloque negro a
+   sangre; sin él la home no tiene ningún corte oscuro.
 6. **Texto con iconos** — envío gratis / compra segura / atención 24/7.
 7. **Newsletter** — *no* como sección propia: en Hyperice vive dentro del pie, y
    duplicarla deja dos veces el mismo campo seguido.
