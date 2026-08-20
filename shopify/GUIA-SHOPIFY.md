@@ -450,17 +450,40 @@ para que quede arriba, y sin envoltorio **fija las dos por separado en `top: 0`*
 la barra se dibuja encima de la cabecera, la tapa y además le roba los clics, así
 que el menú de hamburguesa deja de responder.
 
-En `layout/theme.liquid`, sobre la línea 310, busca:
+En `layout/theme.liquid`, sobre la **línea 310**, hay una línea suelta entre el
+carrito y `<main>`. **Así está ahora:**
 
 ```liquid
-{% sections 'header-group' %}
+    {%- if settings.cart_type == 'drawer' -%}
+      {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
 ```
 
-y envuélvelo:
+**Así tiene que quedar** — solo se añaden las dos líneas marcadas, una encima y
+otra debajo. La de `{% sections %}` no se toca:
 
 ```liquid
-<div class="bps-header-group">{% sections 'header-group' %}</div>
+    {%- if settings.cart_type == 'drawer' -%}
+      {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    <div class="bps-header-group">          <-- añadir
+    {% sections 'header-group' %}
+    </div>                                  <-- añadir
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
 ```
+
+Eso es «envolver»: dejar la línea dentro de un `<div>`. No se borra ni se mueve
+nada, solo se le pone una etiqueta de apertura delante y su cierre detrás.
+
+**Cómo comprobarlo:** guarda, abre la tienda y mira el código fuente (Ctrl+U).
+Busca `bps-header-group`: debe salir **una sola vez**, y justo debajo tienen que
+quedar la barra de anuncios y la cabecera.
 
 Comprobado en una reproducción de la tienda: antes, barra y cabecera las dos en
 `top: 0` y el clic en la hamburguesa interceptado por la barra. Después, barra en
