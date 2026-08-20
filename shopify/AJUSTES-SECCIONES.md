@@ -137,6 +137,25 @@ Bloques:
 | Diseño móvil → Carrusel | Desactivado | Estas se apilan |
 | Relleno → Arriba / Abajo | **`0`** | |
 
+> ⚠️ **Esta sección no puede dar la tarjeta de categoría del prototipo.**
+> Comprobado sobre el HTML: la tarjeta de Dawn contiene **imagen, titular, la
+> descripción de la colección y una flecha**. Y nada más. El **icono de la
+> terapia y el botón no existen** en esta sección, ni como ajuste ni como bloque,
+> así que ningún CSS los puede añadir.
+>
+> Tres salidas, de menos a más trabajo:
+>
+> 1. **Dejarlo así.** La hoja ya la pone en horizontal —imagen a un lado, texto al
+>    otro— y la flecha hace de llamada a la acción. Es lo más parecido sin tocar
+>    código. Rellena la **descripción de cada colección** en Shopify admin, que es
+>    de donde sale el texto.
+> 2. **Cuatro secciones «Imagen con texto»**, una por categoría. Cada una tiene
+>    imagen, titular, texto y **botón**, así que sale la tarjeta completa del
+>    prototipo. A cambio ocupan cuatro secciones a lo ancho en vez de una rejilla
+>    de 2×2, y el icono sigue sin poder ir aparte de la imagen.
+> 3. **Una sección a medida.** Es la única forma de tener icono + titular +
+>    descripción + botón en una rejilla, exactamente como el prototipo.
+
 ## Cuadrícula de productos
 
 *(La plantilla de categoría.)*

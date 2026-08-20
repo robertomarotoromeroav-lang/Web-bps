@@ -101,7 +101,30 @@ body,
   left: 0;
   right: 0;
   z-index: 100;
-  transition: top 300ms ease-in-out;
+  transition: top 300ms ease-in-out, background-color 300ms ease-in-out,
+    border-color 300ms ease-in-out;
+
+  /* El negro al 80 % y el desenfoque van AQUÍ, en el bloque entero, no en la
+     cabecera. Hyperice tiene una sola superficie translúcida arriba; si la barra
+     de anuncios lleva su propio negro opaco, se ve una franja sólida encima del
+     cajón del menú y la translucidez no se aprecia. */
+  background-color: rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgb(255 255 255 / 0.28);
+}
+
+/* Sobre una imagen a sangre el bloque entero va transparente, y recupera el
+   fondo al dejarla atrás. La clase la pone el JS de §3c en el <body>. */
+.bps-hero .bps-header-group {
+  background-color: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+.bps-hero.bps-past-hero .bps-header-group {
+  background-color: rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom-color: rgb(255 255 255 / 0.28);
 }
 
 /* Al salir del flujo, el bloque fijo dejaría de reservar su espacio y el
@@ -111,29 +134,11 @@ body:not(.bps-hero) #MainContent {
   padding-top: var(--bps-header-space, 107px);
 }
 
+/* Ni la cabecera ni la barra pintan fondo: lo pone el bloque que las envuelve. */
 .header {
   padding-block: 12px;
-  background-color: rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(10px);
-  /* Sin esta línea, sobre una sección negra a sangre la cabecera tiene el
-     mismo color que el fondo y no se ve dónde acaba. */
-  border-bottom: 1px solid rgb(255 255 255 / 0.28);
-  color: var(--bps-white);
-  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
-}
-
-/* Plantillas con imagen a sangre: la cabecera no debe taparla. Añade la clase
-   `bps-hero` al <body> desde theme.liquid (ver GUIA §3c). */
-.bps-hero .header {
   background-color: transparent;
-  backdrop-filter: none;
-  border-bottom-color: transparent;
-}
-
-.bps-hero .header.bps-past-hero {
-  background-color: rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom-color: rgb(255 255 255 / 0.28);
+  color: var(--bps-white);
 }
 
 .header a,
@@ -201,10 +206,14 @@ body:not(.bps-hero) #MainContent {
   color: var(--bps-black);
 }
 
-/* Barra de anuncios: negra, discreta, sin degradado. */
+/* Barra de anuncios: sin fondo propio, para que el bloque se lea como una sola
+   superficie translúcida. Dawn le pone además la clase `gradient`, que pinta un
+   plano opaco con más especificidad, así que hay que anularla también. */
 .announcement-bar,
-.utility-bar {
-  background-color: var(--bps-black);
+.announcement-bar.gradient,
+.utility-bar,
+.utility-bar.gradient {
+  background: transparent;
   color: var(--bps-white);
 }
 

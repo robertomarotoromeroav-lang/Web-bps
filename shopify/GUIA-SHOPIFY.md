@@ -519,6 +519,11 @@ En `layout/theme.liquid`, antes de `</body>`:
 
 ### 3c. Cabecera transparente sobre las plantillas con imagen a sangre
 
+> ⚠️ **Si ya tenías este script puesto, cámbialo.** La versión anterior marcaba
+> la clase en `.header`; ahora tiene que marcarla en el `<body>`, porque el fondo
+> lo pinta el bloque `.bps-header-group` que envuelve la barra y la cabecera. Con
+> el script antiguo la cabecera se queda transparente para siempre sobre la home.
+
 En la home y en las colecciones que abren con imagen a sangre, la cabecera no
 debe taparla. Junto al script anterior:
 
@@ -530,10 +535,11 @@ debe taparla. Junto al script anterior:
     if (!hero) return
     document.body.classList.add('bps-hero')
 
-    var header = document.querySelector('.header')
     document.addEventListener('scroll', function () {
       var y = document.documentElement.scrollTop || document.body.scrollTop
-      header.classList.toggle('bps-past-hero', y > hero.offsetHeight - 120)
+      // La clase va en el <body>: el fondo lo pinta el bloque .bps-header-group,
+      // que envuelve la barra de anuncios y la cabecera.
+      document.body.classList.toggle('bps-past-hero', y > hero.offsetHeight - 120)
     }, { passive: true })
   })()
 </script>
