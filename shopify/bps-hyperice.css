@@ -87,13 +87,28 @@ body,
    barra de anuncios, que desaparece (ese movimiento lo hace el JS de §3b).
    -------------------------------------------------------------------------- */
 
-.shopify-section-group-header-group {
+/* OJO: Dawn pone la clase `shopify-section-group-header-group` en CADA sección
+   del grupo —la barra de anuncios y la cabecera—, no en un envoltorio. Fijarla
+   ahí dejaba las dos en `top: 0`, superpuestas: la barra tapaba la cabecera y
+   además le robaba los clics. Hay que envolver el grupo en theme.liquid:
+
+     <div class="bps-header-group">{% sections 'header-group' %}</div>
+
+   Ver GUIA §3d. */
+.bps-header-group {
   position: fixed;
   top: var(--header-top-position);
   left: 0;
   right: 0;
   z-index: 100;
   transition: top 300ms ease-in-out;
+}
+
+/* Al salir del flujo, el bloque fijo dejaría de reservar su espacio y el
+   contenido se metería debajo. En las plantillas con imagen a sangre eso es lo
+   que se busca; en las demás hay que devolver el hueco. */
+body:not(.bps-hero) #MainContent {
+  padding-top: var(--bps-header-space, 107px);
 }
 
 .header {
@@ -199,6 +214,30 @@ body,
   padding-block: 10px;
 }
 
+/* En móvil Dawn coloca la hamburguesa a la IZQUIERDA del logo: su rejilla es
+   "left-icons heading icons" y el elemento header-drawer va en la primera zona,
+   con un margen negativo. El prototipo la pone a la derecha, junto al resto de
+   iconos. Se cambia la rejilla por una fila flexible y se reordena. */
+@media screen and (max-width: 989px) {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .header__heading,
+  .header__heading-link { order: 1; justify-self: start; }
+
+  .header__icons { order: 2; }
+
+  header-drawer {
+    order: 3;
+    justify-self: end;
+    margin-left: 0;
+  }
+}
+
 /* --------------------------------------------------------------------------
    3. Menú móvil
    Cajón anclado a la izquierda sobre negro al 80 % con desenfoque y texto
@@ -214,7 +253,23 @@ body,
   width: min(88vw, 400px);
 }
 
-.menu-drawer__inner-container { border-right: 0; }
+/* El cajón es negro al 80 % con desenfoque, pero Dawn pinta un fondo opaco del
+   esquema de color en el propio cajón (clase `gradient`) y en sus contenedores.
+   Si no se limpian, el desenfoque no se ve y sale negro pleno. */
+.menu-drawer__inner-container,
+.menu-drawer__navigation-container {
+  background: transparent;
+  border-right: 0;
+}
+
+/* Dawn le añade además la clase `gradient`, que pinta un fondo opaco y tiene más
+   especificidad que `.menu-drawer` a secas. Hay que repetir aquí el valor o el
+   cajón sale negro pleno; y si en su lugar se pone `transparent`, se queda sin
+   fondo y el menú se lee sobre la página. */
+.menu-drawer,
+.menu-drawer.gradient {
+  background-color: rgb(0 0 0 / 0.8);
+}
 
 .menu-drawer__navigation { padding-top: 8px; }
 
@@ -425,6 +480,66 @@ button.shopify-payment-button__button--unbranded {
   color: var(--bps-white);
 }
 
+/* La categoría, encima del título.
+   Dawn pinta el proveedor DEBAJO del título, dentro de `.card-information`. Con
+   `display: contents` sus hijos pasan a ser hijos de la caja flexible, y así se
+   puede subir solo la categoría con `order`.
+
+   Requiere dos cosas en el editor: poner la categoría en el campo **Proveedor**
+   de cada producto y activar «Proveedor» en la sección. Ver GUIA §1. */
+.card--card .card__information {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card--card .card-information { display: contents; }
+
+.card--card .card-information > .caption-with-letter-spacing {
+  order: -1;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bps-grey-500);
+}
+
+.card--card .card__heading { order: 0; }
+.card--card .card-information > .price { order: 2; }
+
+/* Compra rápida: Dawn dibuja un botón ancho debajo del contenido. El prototipo
+   lleva un icono redondo en la fila del precio. Se recoloca y se cambia el texto
+   por el icono de carrito.
+
+   Pendiente de mirar en la vista previa: es la regla más delicada de la hoja. */
+.card--card .card__content { position: relative; }
+
+.card--card .quick-add {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  margin: 0;
+  width: auto;
+}
+
+.card--card .quick-add__submit {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 62.5rem;
+  font-size: 0;
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+  box-shadow: none;
+}
+
+.card--card .quick-add__submit .icon,
+.card--card .quick-add__submit svg { width: 16px; height: 16px; }
+
+.card--card .quick-add__submit:not([aria-disabled='true']):hover {
+  background-color: var(--bps-grey-500);
+}
+
 /* Zoom muy contenido: Hyperice usa 1.02, nunca un salto brusco. */
 .card__media .media img,
 .media--hover-effect > img {
@@ -620,9 +735,21 @@ button.shopify-payment-button__button--unbranded {
   padding-bottom: 2px;
 }
 
-@media screen and (min-width: 990px) {
-  .shopify-section:not(.shopify-section-header):not(.shopify-section-group-header-group) {
-    --spacing-sections-desktop: 80;
+/* Dawn separa las secciones con `.section + .section { margin-top: var(...) }`.
+   Aquí había una regla que redefinía `--spacing-sections-desktop: 80` SIN
+   unidades: `margin-top: 80` es una declaración inválida, así que el margen
+   caía a 0 y todas las secciones quedaban pegadas. El valor ya lo da el ajuste
+   «Espacio entre las secciones de la plantilla», así que no hay nada que forzar.
+
+   Lo que sí hace falta: las secciones a medida no llevan la clase `.section`, y
+   rompen la cadena dos veces —ellas y la siguiente—. Esto la restaura. */
+.shopify-section + .shopify-section:not(.shopify-section-group-header-group):not(.shopify-section-group-footer-group) {
+  margin-top: var(--spacing-sections-mobile);
+}
+
+@media screen and (min-width: 750px) {
+  .shopify-section + .shopify-section:not(.shopify-section-group-header-group):not(.shopify-section-group-footer-group) {
+    margin-top: var(--spacing-sections-desktop);
   }
 }
 
@@ -746,3 +873,29 @@ button.shopify-payment-button__button--unbranded {
   .card:hover .card__media .media img,
   .card-wrapper:hover .media--hover-effect > img:first-child { transform: none; }
 }
+
+/* --------------------------------------------------------------------------
+   13. Multicolumna — la banda de envío / pago / atención
+   Dawn dimensiona el icono por el ancho de la columna, así que incluso con
+   «Ancho de un tercio de columna» sale de ~150px. El prototipo usa iconos de
+   línea de 28px alineados a la izquierda.
+   -------------------------------------------------------------------------- */
+
+.multicolumn-card__image-wrapper,
+.multicolumn-card__image-wrapper--third-width {
+  width: 28px;
+  max-width: 28px;
+}
+
+.multicolumn-card__image-wrapper .media { padding-bottom: 100% !important; }
+
+.multicolumn-list__item .multicolumn-card {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.multicolumn-card__info { padding: 0; }
+
+.multicolumn-card__info .h3 { font-size: 18px; }
+
+.multicolumn-card__info .rte { font-size: 14px; color: var(--bps-grey-500); }

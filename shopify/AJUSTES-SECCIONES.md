@@ -305,11 +305,22 @@ la imagen*, *Retrato* (125 %) y *Cuadrado* (100 %). La proporción 13/12 de
 Hyperice —92,31 %— no se puede pedir. Pon **Cuadrado** para que la vista previa
 no engañe; el valor exacto lo fija `bps-hyperice.css`.
 
-### El «Agregado rápido» no sale como en el prototipo
+### Las secciones a medida rompen el espaciado
 
-En el prototipo la tarjeta lleva un icono de carrito pequeño y redondo en la fila
-del precio, como en Hyperice. El «Agregado rápido» de Dawn no es eso: dibuja un
-botón ancho de «Agregar al carrito» debajo del contenido de la tarjeta.
+Dawn separa las secciones con `.section + .section`. Las secciones generadas con
+IA **no llevan la clase `.section`**, así que rompen la cadena **dos veces**: ni
+ellas reciben margen ni la siguiente. En la home eso deja dos huecos a cero.
 
-Déjalo en **Ninguno**. Es la única diferencia con el prototipo que se elige a
-propósito: activarlo se aleja más de Hyperice que no tenerlo.
+La hoja de estilos lo arregla por su cuenta con `.shopify-section +
+.shopify-section`. Si prefieres arreglarlo en origen, añade `"class": "section"`
+al `{% schema %}` de esa sección.
+
+### El «Agregado rápido» y la categoría de la tarjeta
+
+Los dos se pueden tener, con una vuelta:
+
+- **Agregado rápido → Estándar.** Dawn dibuja un botón ancho debajo del contenido;
+  la hoja lo recoloca como icono redondo en la fila del precio.
+- **Proveedor → Activado**, y pon la categoría en el campo **Proveedor** de cada
+  producto. Dawn lo pinta debajo del título; la hoja lo sube encima y lo deja en
+  versalitas de 12px. No hay otra forma sin tocar `card-product.liquid`.

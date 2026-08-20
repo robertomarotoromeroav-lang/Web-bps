@@ -441,6 +441,31 @@ personalizado**. Es más rápida, pero ese campo lo inyecta Shopify por su cuent
 no controlas en qué orden acaba, así que pueden repetirse los problemas de arriba.
 Si la usas y algo no cambia, pásate al archivo del tema.
 
+### 3d. Envolver el grupo de la cabecera ⚠️
+
+**Sin esto la cabecera no funciona.** Dawn pone la clase
+`shopify-section-group-header-group` en **cada** sección del grupo —la barra de
+anuncios y la cabecera—, no en un envoltorio. La hoja de estilos fija ese grupo
+para que quede arriba, y sin envoltorio **fija las dos por separado en `top: 0`**:
+la barra se dibuja encima de la cabecera, la tapa y además le roba los clics, así
+que el menú de hamburguesa deja de responder.
+
+En `layout/theme.liquid`, sobre la línea 310, busca:
+
+```liquid
+{% sections 'header-group' %}
+```
+
+y envuélvelo:
+
+```liquid
+<div class="bps-header-group">{% sections 'header-group' %}</div>
+```
+
+Comprobado en una reproducción de la tienda: antes, barra y cabecera las dos en
+`top: 0` y el clic en la hamburguesa interceptado por la barra. Después, barra en
+`0` y cabecera en `38`, sin solaparse y con el cajón abriéndose.
+
 ### 3b. Esconder la barra de anuncios al bajar
 
 Sin esto la cabecera queda fija pero la barra de anuncios no se esconde.
