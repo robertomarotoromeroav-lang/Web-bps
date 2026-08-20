@@ -354,18 +354,27 @@ porque los 36 px que trae de fábrica se suman a los 80 del ajuste global y deja
 Está todo en **[`CODIGO-EXISTENTE.md`](CODIGO-EXISTENTE.md)**: qué hay, en qué
 sección vive y qué hacer con cada trozo. En resumen, y en este orden:
 
-1. **Quitar los cuatro botones `.btn-grad-custom`** —borde degradado azul, radio
-   de 20 px— del banner de la home, de la sección de tecnología, de «Imagen con
-   texto» y del botón «Enviar» de contacto.
+1. **Borrar el `<style>` de la página «Sobre nosotros»**. Es el de mayor efecto:
+   redefine `body`, `h1`, `h2` y `.container`, y cambia la `font-family` del
+   `body`, así que en esa página **la tipografía del tema no se aplica** — ni la
+   de ahora ni la nueva.
 2. **Borrar el CSS personalizado de la sección «Texto enriquecido»** de la home.
-   Es el más urgente: lleva `!important`, así que ganaría a la hoja nueva y
-   dejaría el primer párrafo azul y centrado en móvil sin explicación aparente.
-3. **Reescribir el titular del banner**, que hoy es `RECUPERA.` /
+   Lleva `!important`, así que ganaría a la hoja nueva y dejaría el primer párrafo
+   azul y centrado en móvil sin explicación aparente.
+3. **Quitar los cuatro botones `.btn-grad-custom`** —borde degradado azul, radio
+   de 20 px— del banner de la home, de la sección de tecnología, de «Imagen con
+   texto» y del botón «Enviar» de contacto. Y al final, el *snippet* que los
+   genera: `snippets/boton-personalizado.liquid`.
+4. **Borrar el bloque de CSS muerto del final de `layout/theme.liquid`**, que se
+   sirve en las 32 páginas y no estiliza nada.
+5. **Reescribir el titular del banner**, que hoy es `RECUPERA.` /
    `<span style="color:#0080FF">RINDE.</span>` / `REPITE.` escrito a mano.
-4. **Decidir qué hacer con las tres secciones generadas con IA**, que traen su
+6. **Decidir qué hacer con las tres secciones generadas con IA**, que traen su
    propio ancho de 1200 px y radios de 8 px.
 
-Categoría, ficha, catálogo y blog están limpios: no hace falta tocarlos.
+**Los archivos de `assets/` están intactos**: se compararon los 65 que carga el
+tema contra Dawn v15.4.1 y no hay ni una edición. No hace falta restaurar nada
+ahí.
 
 ---
 

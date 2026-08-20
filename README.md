@@ -217,11 +217,14 @@ Pendiente de decisión del cliente:
   degradado azul y "PERFORMANCE" debajo; el nuevo es azul plano y sin bajada.
   Hay que sustituirlo también allí o convivirán los dos. El favicon ya está
   resuelto: `tools/build-favicon.py` lo genera a partir del isotipo.
-- **Código a medida acumulado en la tienda.** La tienda lleva botones con borde
-  degradado, una palabra en azul metida a mano en el titular del banner, CSS con
-  `!important` en una sección y tres secciones generadas con IA con su propio
-  ancho y sus propios radios. Todo inventariado en
-  `shopify/CODIGO-EXISTENTE.md`; hay que retirarlo antes de aplicar la hoja.
+- **Código a medida acumulado en la tienda.** Botones con borde degradado, una
+  palabra en azul metida a mano en el titular del banner, CSS con `!important` en
+  una sección, un `<style>` que redefine `body` y los titulares en «Sobre
+  nosotros», CSS muerto en las 32 páginas y tres secciones generadas con IA con su
+  propio ancho y sus propios radios. Todo inventariado en
+  `shopify/CODIGO-EXISTENTE.md`; hay que retirarlo antes de aplicar la hoja. Los
+  65 archivos de `assets/` sí están intactos: comparados uno a uno con Dawn
+  15.4.1.
 - **Pantallas de Dawn sin cubrir.** El prototipo diseñó las plantillas de
   contenido, no las de la mecánica de compra, así que en la tienda seguirán con
   el aspecto de serie los filtros de colección, el selector de cantidad, el
