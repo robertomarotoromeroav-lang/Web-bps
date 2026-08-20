@@ -114,9 +114,9 @@ Bloques:
 | Tarjeta → Relación de aspecto de imagen | **Cuadrado** | De fábrica «Adaptar». Ver el aviso del final |
 | Tarjeta → Forma de la imagen | Predeterminado ⚠️ | Ni Arco, ni Gota, ni Diamante: cualquiera de esas recorta la imagen con una silueta |
 | Tarjeta → Mostrar segunda imagen al pasar el cursor | Desactivado | Hyperice no cambia de imagen: la amplía un 2 % |
-| Tarjeta → Proveedor | Desactivado | |
+| Tarjeta → Proveedor | **Activado** | Es la categoría sobre el título. Pon la categoría en el campo **Proveedor** de cada producto; la hoja la sube encima del titular |
 | Tarjeta → Calificación del producto | Desactivado | |
-| Tarjeta → Agregado rápido | Ninguno | Ver el aviso del final |
+| Tarjeta → Agregado rápido | **Estándar** | La hoja lo convierte en el icono redondo de la fila del precio |
 | Diseño móvil → Columnas | **`1`** | Para que la tarjeta se vea grande y la siguiente asome por el borde |
 | Diseño móvil → Carrusel | **Activado** | En móvil Hyperice pasa las tarjetas de lado, no las apila |
 | Relleno → Arriba / Abajo | **`0`** | El ritmo entre secciones ya lo pone «Espacio entre las secciones» de Configuración; si además dejas los 36 de fábrica, se suman |
@@ -150,9 +150,9 @@ Bloques:
 | Tarjeta → Relación de aspecto de imagen | **Cuadrado** | |
 | Tarjeta → Forma de la imagen | Predeterminado ⚠️ | |
 | Tarjeta → Mostrar segunda imagen al pasar el cursor | Desactivado | |
-| Tarjeta → Proveedor | Desactivado | |
+| Tarjeta → Proveedor | **Activado** | Es la categoría sobre el título. Pon la categoría en el campo **Proveedor** de cada producto; la hoja la sube encima del titular |
 | Tarjeta → Calificación del producto | Desactivado | |
-| Tarjeta → Agregado rápido | Ninguno | |
+| Tarjeta → Agregado rápido | **Estándar** | Igual que arriba |
 | Filtrado → Filtros | Activado | |
 | Filtrado → Diseño de filtro | Horizontal | Los filtros no los estiliza la hoja: saldrán con el aspecto de Dawn. Horizontal es el que menos canta |
 | Filtrado → Ordenación | Activado | |
