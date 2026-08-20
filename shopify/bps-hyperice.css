@@ -7,7 +7,13 @@
    más limpio y sobrevive a las actualizaciones del tema.
 
    No modifica ningún archivo original de Dawn.
-   Instalación y snippets de JS: GUIA-SHOPIFY.md §2.
+   Instalación y snippets de JS: GUIA-SHOPIFY.md §3.
+
+   OJO CON LAS UNIDADES: Dawn declara html { font-size: 62.5% }, así que en la
+   tienda 1rem = 10px, no 16px como en el prototipo. Por eso aquí las medidas van
+   en px: un 0.875rem copiado del prototipo saldría a 8,75px en vez de 14px, y
+   toda la tipografía se quedaría al 62,5 %. Los dos únicos rem que quedan
+   —62.5rem de radio y 153.6rem de ancho— ya están calculados sobre esa raíz.
    ========================================================================== */
 
 :root {
@@ -32,7 +38,7 @@
   /* Azul corporativo: exclusivo del logotipo, nunca en componentes. */
   --bps-brand: #0b59f8;
 
-  /* Desplazamiento del bloque superior, que mueve el JS de la §2b. */
+  /* Desplazamiento del bloque superior, que mueve el JS de la §3b. */
   --header-top-position: 0px;
 
   /* Ancho de página de Hyperice: 1536px. El control de Dawn va de 1000 a 1600
@@ -78,7 +84,7 @@ body,
    Un solo aspecto en todo el sitio: fija, negra al 80 % con desenfoque y
    contenido en blanco. Solo va transparente mientras se superpone a una imagen
    a sangre. Al bajar no cambia de color: sube el bloque justo el alto de la
-   barra de anuncios, que desaparece (ese movimiento lo hace el JS de §2b).
+   barra de anuncios, que desaparece (ese movimiento lo hace el JS de §3b).
    -------------------------------------------------------------------------- */
 
 .shopify-section-group-header-group {
@@ -102,7 +108,7 @@ body,
 }
 
 /* Plantillas con imagen a sangre: la cabecera no debe taparla. Añade la clase
-   `bps-hero` al <body> desde theme.liquid (ver GUIA §2c). */
+   `bps-hero` al <body> desde theme.liquid (ver GUIA §3c). */
 .bps-hero .header {
   background-color: transparent;
   backdrop-filter: none;
@@ -126,9 +132,15 @@ body,
   max-width: 200px;
 }
 
+/* La separación entre enlaces la da el hueco de la lista, como en el prototipo
+   (ul con gap: 32px). Dawn la conseguía con `padding: 1.2rem` en cada enlace, así
+   que al poner aquí solo relleno vertical hay que devolver ese aire en la lista o
+   los enlaces se pegan unos a otros. */
+.header__inline-menu .list-menu--inline { gap: 32px; }
+
 .header__menu-item {
   padding: 8px 0;
-  font-size: 0.875rem;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
@@ -182,7 +194,7 @@ body,
 }
 
 .announcement-bar__message {
-  font-size: 0.8125rem;
+  font-size: 13px;
   letter-spacing: 0.02em;
   padding-block: 10px;
 }
@@ -210,7 +222,7 @@ body,
 .menu-drawer__menu-item:hover {
   color: var(--bps-white);
   background-color: transparent;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -221,7 +233,7 @@ body,
 .menu-drawer__menu-item:hover { opacity: 0.6; }
 
 .menu-drawer__submenu .menu-drawer__menu-item {
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 400;
   color: var(--bps-grey-300);
   border-bottom: 0;
@@ -252,10 +264,10 @@ body,
 .customer button,
 button.shopify-payment-button__button--unbranded {
   min-width: 160px;
-  min-height: 2.5rem;
-  padding: 0 1.25rem;
+  min-height: 40px;
+  padding: 0 20px;
   border-radius: 62.5rem;
-  font-size: 0.875rem;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
@@ -301,7 +313,7 @@ button.shopify-payment-button__button--unbranded {
 
 .banner__box {
   padding: 0;
-  max-width: 60rem;
+  max-width: 960px;
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -327,7 +339,7 @@ button.shopify-payment-button__button--unbranded {
    detrás de la cabecera. */
 .banner__content { padding-top: 110px; }
 
-.banner__buttons { gap: 12px; margin-top: 2rem; }
+.banner__buttons { gap: 12px; margin-top: 32px; }
 
 /* --------------------------------------------------------------------------
    6. Tarjeta de producto
@@ -374,25 +386,25 @@ button.shopify-payment-button__button--unbranded {
 
 .card__heading,
 .card__heading a {
-  font-size: 0.875rem;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
 }
 
 @media screen and (min-width: 990px) {
   .card__heading,
-  .card__heading a { font-size: 1.125rem; }
+  .card__heading a { font-size: 18px; }
 }
 
 .card__caption,
 .card-information__text {
-  font-size: 0.875rem;
+  font-size: 14px;
   color: var(--bps-grey-500);
   line-height: 1.4;
 }
 
 .price {
-  font-size: 0.875rem;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
@@ -406,7 +418,7 @@ button.shopify-payment-button__button--unbranded {
   border-radius: 62.5rem;
   border: 0;
   padding: 5px 10px;
-  font-size: 0.6875rem;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.02em;
   background-color: var(--bps-black);
@@ -458,7 +470,7 @@ button.shopify-payment-button__button--unbranded {
   text-align: left;
 }
 
-.collection-list__item .card__heading { font-size: 1.5rem; line-height: 1.2; }
+.collection-list__item .card__heading { font-size: 24px; line-height: 1.2; }
 
 @media screen and (min-width: 990px) {
   .collection-list__item .card--standard {
@@ -482,7 +494,7 @@ button.shopify-payment-button__button--unbranded {
 .customer .field input,
 .customer select {
   border-radius: 4px;
-  font-size: 0.875rem;
+  font-size: 14px;
 }
 
 .field:after,
@@ -536,7 +548,7 @@ button.shopify-payment-button__button--unbranded {
 .product__media-wrapper .slider-counter {
   min-width: 0;
   padding-inline: 2px;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: var(--bps-black);
 }
 
@@ -593,15 +605,15 @@ button.shopify-payment-button__button--unbranded {
    usar Dawn.
    -------------------------------------------------------------------------- */
 
-.section-header { margin-bottom: 2.5rem; }
+.section-header { margin-bottom: 40px; }
 
 .title-wrapper-with-link {
   align-items: flex-end;
-  margin-bottom: 2.5rem;
+  margin-bottom: 40px;
 }
 
 .title-wrapper-with-link .link {
-  font-size: 0.875rem;
+  font-size: 14px;
   font-weight: 500;
   text-decoration: none;
   border-bottom: 1px solid currentColor;
@@ -631,7 +643,7 @@ button.shopify-payment-button__button--unbranded {
 .footer__content-bottom { border-color: var(--bps-footer-bg-2); }
 
 .footer-block__heading {
-  font-size: 1.125rem;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.01em;
   text-transform: none;
@@ -645,7 +657,7 @@ button.shopify-payment-button__button--unbranded {
   align-items: center;
   gap: 10px;
   color: var(--bps-footer-fg);
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.4;
@@ -674,7 +686,7 @@ button.shopify-payment-button__button--unbranded {
 .footer__copyright a,
 .copyright__content {
   color: var(--bps-footer-fg);
-  font-size: 0.8125rem;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.4;
 }

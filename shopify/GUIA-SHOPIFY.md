@@ -390,26 +390,32 @@ tema contra Dawn v15.4.1 y no hay ni una edición. Lo modificado está en
 
 ### 3a. La hoja de estilos
 
-**Opción A — como archivo del tema (recomendada):**
-
 1. Tienda online → Temas → ⋯ → **Editar código**
 2. `Assets` → **Añadir un archivo nuevo** → `bps-hyperice.css`, pega el contenido
-3. En `layout/theme.liquid`, justo **antes** de `</head>`:
+3. En `layout/theme.liquid`, justo **antes de `</body>`** —no antes de `</head>`:
 
    ```liquid
    {{ 'bps-hyperice.css' | asset_url | stylesheet_tag }}
    ```
 
-Que vaya justo antes de `</head>` no es un detalle: Dawn declara sus variables en
-un `:root` al principio de `theme.liquid`, y varias reglas de esta hoja
-—el ancho de página, por ejemplo— ganan **solo por ir después**.
+> **Por qué al final del `<body>` y no en el `<head>`.** Dawn no carga el CSS de
+> sus componentes en la cabecera del documento: lo va inyectando **dentro del
+> cuerpo**, una etiqueta `<link>` por sección, a medida que las pinta. En la home
+> son **veinte hojas** —entre ellas `component-menu-drawer.css`,
+> `component-card.css`, `section-footer.css` y `section-image-banner.css`.
+>
+> Puestas después de la nuestra, y con la misma especificidad —una clase contra
+> una clase—, **ganan por ir más abajo en el documento**. Medido: con la hoja en
+> el `<head>`, el cajón del menú sale a 390 px de ancho y negro opaco; movida al
+> final del `<body>`, sale a 343 px y negro al 80 %, que es lo que pide el diseño.
+>
+> Cargarla al final es exactamente lo que hace Dawn con sus propias hojas, así
+> que no introduce ningún parpadeo que el tema no tenga ya.
 
-**Opción B — sin editar código:** Personalizar → Configuración → **CSS
-personalizado**, y pega ahí el contenido.
-
-Es más rápida, pero ese campo lo inyecta Shopify por su cuenta y no controlas en
-qué orden acaba. Si tras pegarlo el ancho de página o la proporción de las
-tarjetas no cambian, es por eso: pásate a la opción A.
+**Alternativa sin editar código:** Personalizar → Configuración → **CSS
+personalizado**. Es más rápida, pero ese campo lo inyecta Shopify por su cuenta y
+no controlas en qué orden acaba, así que pueden repetirse los problemas de arriba.
+Si la usas y algo no cambia, pásate al archivo del tema.
 
 ### 3b. Esconder la barra de anuncios al bajar
 
@@ -609,6 +615,13 @@ categoría. BPS usa renders de producto sobre fondo neutro.
       sección tiene que estar a `0`
 - [ ] Ninguna imagen con forma de arco, gota o diamante: «Forma de la imagen»
       en Predeterminado
+- [ ] **El botón mide 40 px de alto y su texto 14 px.** Si sale a 25 px y 8,75 px,
+      la hoja de estilos está usando `rem` con la raíz de 10 px de Dawn
+- [ ] **En móvil el cajón del menú no ocupa todo el ancho** (343 px, no 390) y se
+      transparenta. Si ocupa todo y es negro opaco, la hoja se está cargando en el
+      `<head>` en vez de al final del `<body>`
+- [ ] Los enlaces del menú de cabecera están separados, no pegados
+- [ ] Ningún titular en azul: busca `0080ff` **en minúsculas** en el código fuente
 - [ ] Pie con esquema `#212121` y rótulos de columna mayores que sus enlaces
 - [ ] En móvil, el menú abre como cajón desde la izquierda y las columnas del
       pie se colapsan con +/−
