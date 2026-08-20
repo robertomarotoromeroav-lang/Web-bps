@@ -238,3 +238,80 @@ Con el tema duplicado en vista previa, abre la home y mira el código fuente:
 - [ ] Cero apariciones de `ai-info-multicolumn` en las páginas que no sean la home
 - [ ] Los botones son píldoras negras de 40 px de alto: si lo son, ya les está
       llegando la configuración y la hoja de estilos
+
+---
+
+## 6. El bloque de tecnología generado con la IA de Shopify
+
+Es el bloque «Diseñado para la élite». No hay que borrarlo: está bien escrito
+—usa `{% style %}`, `block.shopify_attributes`, `image_url` con ancho y
+`loading="lazy"`— pero **se pinta su propio botón**, y por eso no obedece.
+
+En `shopify/bloques/tecnologia.liquid` de este repositorio está **la versión
+corregida completa**, lista para pegar. Los ajustes de contenido —titular,
+descripción, los cuatro iconos y el botón— se conservan intactos: solo cambian
+los de estilo.
+
+### Por qué su botón le gana a la hoja de estilos
+
+El bloque trae esto, que es una copia de las reglas de `.button` de Dawn:
+
+```css
+.ai-elite-science-button-{{ ai_gen_id }} {
+  min-width: 12rem;
+  padding: 1.5rem 3rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  …
+}
+```
+
+Y el enlace lleva **las dos clases**: `class="ai-elite-science-button-… button"`.
+Las dos reglas tienen la misma especificidad —una clase cada una—, así que **gana
+la que va después en el documento**. Y la del bloque va después: `{% style %}` se
+imprime en el cuerpo de la página, mientras que `bps-hyperice.css` se carga en el
+`<head>`.
+
+Resultado concreto con la configuración de la guía:
+
+| | El sistema pide | El bloque impone |
+|---|---|---|
+| Alto | 40 px | ~48 px (`padding: 1.5rem` + `font-size: 1.5rem`) |
+| Tamaño de texto | 14 px | 15 px |
+| Tracking | 0 | `0.1rem` |
+| Sombra al pasar el ratón | ninguna | crece 0,4 rem |
+
+El radio sí lo respeta, porque usa `var(--buttons-radius)`. De ahí que parezca
+«casi» bien: es una píldora, pero más alta y con la letra más grande que las
+demás.
+
+**La corrección es quitar las dos reglas `.ai-elite-science-button-…`** y dejar el
+enlace con `class="button"` a secas. No hay que añadir nada.
+
+### Los otros cinco arreglos
+
+| Qué | Original | Corregido | Por qué |
+|---|---|---|---|
+| Fuentes | Dos selectores propios, fijados a **Assistant** | `var(--font-heading-family)` y `var(--font-body-family)` | Tal como está, el bloque **seguiría en Assistant al pasar el tema a Inter**. Es justo lo contrario de lo que pedía el *prompt* |
+| Colores | `#121212` y `#f3f3f3` a mano | `rgb(var(--color-foreground))` | Son los grises de fábrica de Dawn, no los de la paleta nueva. Así el bloque sigue el esquema de color de su sección |
+| Ancho | Ajuste propio, **máximo 1400 px** | La clase `page-width` de Dawn | La página son **1536 px**: con ese control no había forma de igualarla |
+| Titular | `36px` fijos, `×0.8` en móvil | La clase `h2` del tema | Recupera la escala fluida `clamp(38px, 3.33vw, 48px)` |
+| Iconos y alineación | Centrado, caja gris de 80 px con radio 12 | Izquierda, icono suelto de 28 px | Es como se ven las tres columnas en el prototipo |
+
+Y el relleno vertical pasa a `0` de fábrica, para que el ritmo lo lleve el
+espaciado entre secciones y no se sume por partida doble.
+
+### Después de pegarlo
+
+En el editor, dentro del bloque:
+
+| Ajuste | Valor |
+|---|---|
+| Titular | `Diseñado para la élite, validado por la ciencia` |
+| Texto del botón | `Conocer la tecnología` — sin la flecha |
+| Enlace del botón | la colección o la página de tecnología |
+| Espaciado superior / inferior | `0` |
+| Tamaño de iconos | `28` |
+
+Y comprueba en el código fuente que el enlace sale como `<a href="…"
+class="button">`, **sin** ninguna clase `ai-elite-science-button-…`.

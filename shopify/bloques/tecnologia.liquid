@@ -1,0 +1,400 @@
+{% comment %}
+  Bloque «Diseñado para la élite», corregido para el rediseño BPS/Hyperice.
+
+  Qué cambia respecto al que generó la IA de Shopify:
+
+  1. Se ha ELIMINADO el CSS del botón. Era una copia de las reglas de .button de
+     Dawn, y al vivir en un {% style %} del cuerpo ganaba a la hoja del tema y a
+     bps-hyperice.css. El <a> conserva class="button", así que ahora hereda la
+     píldora, el alto y la tipografía del sistema.
+  2. Las fuentes salen de --font-heading-family y --font-body-family en vez de dos
+     selectores de fuente propios. El original venía fijado a Assistant, así que
+     el bloque no habría cambiado al pasar el tema a Inter.
+  3. Los colores salen del esquema de color de la sección con
+     rgb(var(--color-foreground)) y rgb(var(--color-background)), en vez de estar
+     escritos a mano en #121212 y #f3f3f3.
+  4. El ancho lo lleva la clase page-width de Dawn. El ajuste propio llegaba como
+     máximo a 1400px y la página son 1536: no había forma de igualarlo.
+  5. El titular usa la clase h2 del tema, con su escala fluida, en vez de un
+     tamaño en píxeles.
+  6. Alineación a la izquierda y sin caja gris tras los iconos, como el resto de
+     los bloques de tres columnas del prototipo.
+  7. Relleno vertical a 0 de fábrica: el ritmo lo pone el espaciado de sección.
+
+  Se han quitado los ajustes de fuente, color, ancho y tamaño de titular. Los de
+  contenido —titular, descripción, iconos y botón— se conservan intactos.
+{% endcomment %}
+
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-elite-science-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-elite-science-heading-{{ ai_gen_id }} {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-style: var(--font-heading-style);
+    color: rgb(var(--color-foreground));
+    margin: 0 0 {{ block.settings.heading_spacing }}px;
+    max-width: 24ch;
+  }
+
+  .ai-elite-science-description-{{ ai_gen_id }} {
+    font-family: var(--font-body-family);
+    font-weight: var(--font-body-weight);
+    color: rgba(var(--color-foreground), 0.75);
+    margin: 0 0 {{ block.settings.description_spacing }}px;
+    line-height: 1.4;
+    max-width: 58ch;
+  }
+
+  .ai-elite-science-icons-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: {{ block.settings.icon_gap }}px;
+    margin-bottom: {{ block.settings.icons_spacing }}px;
+  }
+
+  .ai-elite-science-icon-item-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: {{ block.settings.icon_text_gap }}px;
+  }
+
+  /* Sin caja ni radio: el icono va suelto, como en el prototipo. */
+  .ai-elite-science-icon-wrapper-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(var(--color-foreground));
+  }
+
+  .ai-elite-science-icon-wrapper-{{ ai_gen_id }} img,
+  .ai-elite-science-icon-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-elite-science-icon-placeholder-{{ ai_gen_id }} svg {
+    fill: rgba(var(--color-foreground), 0.4);
+  }
+
+  .ai-elite-science-icon-text-{{ ai_gen_id }} {
+    font-family: var(--font-body-family);
+    font-weight: var(--font-body-weight);
+    font-size: 0.875rem;
+    color: rgb(var(--color-foreground));
+    line-height: 1.4;
+  }
+
+  /* El botón NO se estiliza aquí: lo hace .button, del tema y de
+     bps-hyperice.css. Si alguien vuelve a añadir reglas para él en este
+     bloque, volverán a ganarle a la hoja de estilos. */
+
+  @media screen and (max-width: 749px) {
+    .ai-elite-science-icons-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: {{ block.settings.icon_gap | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-elite-science-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="page-width">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-elite-science-heading-{{ ai_gen_id }} h2">
+        {{ block.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="ai-elite-science-description-{{ ai_gen_id }} rte">
+        {{ block.settings.description }}
+      </div>
+    {% endif %}
+
+    <div class="ai-elite-science-icons-{{ ai_gen_id }}">
+      {% for i in (1..4) %}
+        {% liquid
+          case i
+            when 1
+              assign enabled = block.settings.icon_1_enabled
+              assign image = block.settings.icon_1_image
+              assign text = block.settings.icon_1_text
+            when 2
+              assign enabled = block.settings.icon_2_enabled
+              assign image = block.settings.icon_2_image
+              assign text = block.settings.icon_2_text
+            when 3
+              assign enabled = block.settings.icon_3_enabled
+              assign image = block.settings.icon_3_image
+              assign text = block.settings.icon_3_text
+            when 4
+              assign enabled = block.settings.icon_4_enabled
+              assign image = block.settings.icon_4_image
+              assign text = block.settings.icon_4_text
+          endcase
+        %}
+        {% if enabled %}
+          <div class="ai-elite-science-icon-item-{{ ai_gen_id }}">
+            <div class="ai-elite-science-icon-wrapper-{{ ai_gen_id }}">
+              {% if image %}
+                <img
+                  src="{{ image | image_url: width: 200 }}"
+                  alt="{{ text | strip_html | escape }}"
+                  loading="lazy"
+                  width="200"
+                  height="200"
+                >
+              {% else %}
+                <div class="ai-elite-science-icon-placeholder-{{ ai_gen_id }}">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            {% if text != blank %}
+              <div class="ai-elite-science-icon-text-{{ ai_gen_id }}">
+                {{ text }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if block.settings.button_text != blank %}
+      <a href="{{ block.settings.button_link }}" class="button">
+        {{- block.settings.button_text | strip_html -}}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Diseñado para la élite",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titular",
+      "default": "Diseñado para la élite, validado por la ciencia"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descripción",
+      "default": "<p>Seleccionamos únicamente productos con eficacia probada para la recuperación muscular, la reducción de la inflamación y la optimización del rendimiento.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Icono 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_1_enabled",
+      "label": "Mostrar icono 1",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_1_image",
+      "label": "Imagen del icono 1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "icon_1_text",
+      "label": "Texto",
+      "default": "Mejora del rendimiento cognitivo"
+    },
+    {
+      "type": "header",
+      "content": "Icono 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_2_enabled",
+      "label": "Mostrar icono 2",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_2_image",
+      "label": "Imagen del icono 2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "icon_2_text",
+      "label": "Texto",
+      "default": "Aceleración de la recuperación"
+    },
+    {
+      "type": "header",
+      "content": "Icono 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_3_enabled",
+      "label": "Mostrar icono 3",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_3_image",
+      "label": "Imagen del icono 3"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "icon_3_text",
+      "label": "Texto",
+      "default": "Optimización a nivel celular"
+    },
+    {
+      "type": "header",
+      "content": "Icono 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_4_enabled",
+      "label": "Mostrar icono 4",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_4_image",
+      "label": "Imagen del icono 4"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "icon_4_text",
+      "label": "Texto"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "Conocer la tecnología"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "paragraph",
+      "content": "Déjalos en 0 y que el ritmo lo lleve el espaciado entre secciones del tema."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "label": "Espacio después del titular",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "description_spacing",
+      "label": "Espacio después de la descripción",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "icons_spacing",
+      "label": "Espacio después de los iconos",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Iconos"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño de iconos",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "icon_gap",
+      "label": "Espacio entre iconos",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "icon_text_gap",
+      "label": "Espacio entre icono y texto",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diseñado para la élite"
+    }
+  ]
+}
+{% endschema %}

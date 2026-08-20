@@ -118,6 +118,7 @@ shopify/AJUSTES-SECCIONES.md Ajustes de cada sección de Dawn, opción por opci�
 shopify/CODIGO-EXISTENTE.md  El código a medida que ya hay en la tienda, y qué hacer con él
 shopify/ARCHIVOS-MODIFICADOS.md  Los 4 archivos del tema tocados y el Liquid que debe quedar
 shopify/dawn-original/       Las 3 secciones de Dawn 15.4.1 sin modificar, para restaurar
+shopify/bloques/             Bloques generados con IA, corregidos para el sistema
 tools/build-logos.py         Regenera el logotipo vectorizando el original
 tools/build-favicon.py       Regenera el favicon a partir del isotipo
 tools/sync-chrome.py         Propaga cabecera, menú y pie desde index.html
