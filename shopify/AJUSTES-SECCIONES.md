@@ -296,7 +296,7 @@ el único sitio donde las versalitas son correctas, porque es el rótulo pequeñ
 | Utilidades → Selector de idioma | Activado | |
 | Utilidades → Íconos de forma de pago | Activado | |
 | Utilidades → Enlaces a las políticas | Activado | |
-| Espaciado → Margen superior | `0` | |
+| Espaciado → Margen superior | `0` | El hueco antes del pie lo pone la hoja (§14), que fija 80px. Si lo pones aquí también, se suman |
 | Relleno → Arriba | **`48`** | El pie del prototipo tiene más aire que el de Dawn |
 | Relleno → Abajo | `36` | |
 

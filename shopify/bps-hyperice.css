@@ -905,6 +905,31 @@ button.shopify-payment-button__button--unbranded {
 
 .multicolumn-card__info { padding: 0; }
 
-.multicolumn-card__info .h3 { font-size: 18px; }
+/* OJO: el titular es un <h3> SIN clase `.h3`, así que le caía la regla general de
+   titulares de la §1 y salía a 40px. En el prototipo es un rótulo de 18px. */
+.multicolumn-card__info h3,
+.multicolumn-card__info .inline-richtext {
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
 
-.multicolumn-card__info .rte { font-size: 14px; color: var(--bps-grey-500); }
+.multicolumn-card__info .rte,
+.multicolumn-card__info .rte p {
+  font-size: 14px;
+  color: var(--bps-grey-500);
+}
+
+/* --------------------------------------------------------------------------
+   14. Hueco antes del pie
+   La regla de la §10 excluye el grupo del pie —para no separar sus secciones
+   entre sí—, y eso dejaba la última sección pegada al pie. Dawn tiene un ajuste
+   «Margen superior» en el pie, pero de fábrica va a 0 y aquí se fija para no
+   depender de que alguien lo recuerde.
+   -------------------------------------------------------------------------- */
+
+.footer { margin-top: var(--spacing-sections-mobile); }
+
+@media screen and (min-width: 750px) {
+  .footer { margin-top: var(--spacing-sections-desktop); }
+}
