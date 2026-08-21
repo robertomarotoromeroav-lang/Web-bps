@@ -532,19 +532,27 @@ En `layout/theme.liquid`, antes de `</body>`:
 
 ### 3c. Cabecera transparente sobre las plantillas con imagen a sangre
 
-> ⚠️ **Si ya tenías este script puesto, cámbialo.** La versión anterior marcaba
-> la clase en `.header`; ahora tiene que marcarla en el `<body>`, porque el fondo
-> lo pinta el bloque `.bps-header-group` que envuelve la barra y la cabecera. Con
-> el script antiguo la cabecera se queda transparente para siempre sobre la home.
+> ⚠️ **Si ya tenías este script puesto, cámbialo, y hay DOS cambios.** El primero:
+> la versión más antigua marcaba la clase en `.header` y ahora va en el `<body>`,
+> porque el fondo lo pinta el bloque `.bps-header-group`. El segundo, más
+> reciente: **hay que quitar `.collection-hero` del selector**. Con esa clase
+> dentro, todas las páginas de colección se tomaban por hero y el título quedaba
+> escondido debajo de la cabecera. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §C-3.
 
-En la home y en las colecciones que abren con imagen a sangre, la cabecera no
-debe taparla. Junto al script anterior:
+Solo la sección **«Banner de imagen»** va a sangre por debajo de la cabecera, y
+es la única que debe marcarse. Junto al script anterior:
 
 ```html
 <script>
   // Marca las plantillas que abren con imagen a sangre y avisa al dejarla atrás.
   (function () {
-    var hero = document.querySelector('.banner--medium, .banner--large, .collection-hero')
+    // OJO: aquí NO va `.collection-hero`. Dawn le pone esa clase a la sección
+    // «Banner de colección» en TODAS las colecciones, con imagen o sin ella, y
+    // además coloca la foto AL LADO del texto, no detrás: el banner solo tiene
+    // 40px de relleno, así que el título se metía debajo de la cabecera fija.
+    // Si alguna colección tiene que abrir con imagen a sangre, se le añade una
+    // sección «Banner de imagen» encima y entonces sí entra por `banner--large`.
+    var hero = document.querySelector('.banner--medium, .banner--large')
     if (!hero) return
     document.body.classList.add('bps-hero')
 

@@ -162,6 +162,26 @@ Bloques:
 > 3. **Una sección a medida.** Es la única forma de tener icono + titular +
 >    descripción + botón en una rejilla, exactamente como el prototipo.
 
+## Banner de colección
+
+*(La cabecera de las páginas de colección: el titular y la descripción que
+pones en la colección desde el admin. Equivale a la franja hueso de
+`.page-head` del prototipo.)*
+
+| Ajuste | Valor | Por qué |
+|---|---|---|
+| Descripción | Activado | Es la entradilla bajo el titular |
+| Imagen | **Desactivado** ⚠️ | Dawn no la pone detrás del texto sino **al lado**, y el resultado no se parece al prototipo. Si una colección tiene que abrir con foto a sangre, añádele encima una sección **«Banner de imagen»** |
+| Esquema de colores | **Esquema 2** ⚠️ | Hoy está en el **4**, que es el del pie: la franja sale casi negra con el texto en gris. El prototipo la tiene en hueso `#F7F5F5` con el texto en negro |
+
+> ⚠️ **Esta sección NO es un hero, y el script de la §3c no debe marcarla.** Con
+> `.collection-hero` dentro del selector, todas las colecciones se tomaban por
+> hero: la cabecera se quedaba transparente y el titular aparecía escrito encima
+> del logotipo y del menú. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §C-3.
+
+El relleno de la franja (56 arriba, 40 abajo) y el tamaño del titular los pone
+la hoja de estilos: esta sección no tiene ajustes de relleno.
+
 ## Cuadrícula de productos
 
 *(La plantilla de categoría.)*

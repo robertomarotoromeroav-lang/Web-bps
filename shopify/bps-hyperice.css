@@ -1227,3 +1227,44 @@ button.shopify-payment-button__button--unbranded {
   .footer-block--menu:has(.bps-footer-toggle) ul { display: none; }
   .footer-block--menu.bps-open ul { display: block; padding-block: 8px 16px; }
 }
+
+/* --------------------------------------------------------------------------
+   16. Banner de colección
+   Es la cabecera de las páginas de colección, y en el prototipo equivale a la
+   franja hueso de `.page-head`: migas, titular y entradilla sobre #f7f5f5.
+
+   ⚠️ Esta sección NO es un hero. Dawn le pone la clase `.collection-hero` a
+   todas las colecciones, con imagen o sin ella, y cuando la lleva coloca la foto
+   AL LADO del texto, no detrás. El script de la §3c no debe marcarla: si la
+   marca, la página pierde el hueco que reserva la cabecera fija y el titular se
+   queda debajo. Ver PARTE 2 §C-3.
+   -------------------------------------------------------------------------- */
+
+/* El aire de la franja, igual que `.page-head` del prototipo: 56 arriba y 40
+   abajo. Dawn la deja a `padding: 0`. Solo cuando no lleva imagen: con imagen la
+   maquetación es otra y Dawn ya le pone su propio relleno. */
+.collection-hero:not(.collection-hero--with-image) {
+  padding-block: 56px 40px;
+}
+
+@media screen and (max-width: 749px) {
+  .collection-hero:not(.collection-hero--with-image) {
+    padding-block: 40px 28px;
+  }
+}
+
+/* Dawn lo saca con la clase `h1` —65px—; en el prototipo la cabecerita de página
+   usa el tamaño de h2. */
+.collection-hero__title {
+  font-size: clamp(38px, 3.33333vw, 48px);
+  line-height: 1;
+  margin-block: 0;
+}
+
+.collection-hero__title + .collection-hero__description {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: var(--bps-grey-500);
+  max-width: 58ch;
+}

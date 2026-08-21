@@ -35,9 +35,9 @@ esta parte corrige.
 
 | | Cuántas |
 |---|---|
-| Ajustes del editor pendientes de poner (§A) | 11 |
-| Fallos de la hoja, ya corregidos en el repositorio (§B) | 13 |
-| Código de `theme.liquid` pendiente de aplicar (§C) | 2 |
+| Ajustes del editor pendientes de poner (§A) | 13 |
+| Fallos de la hoja, ya corregidos en el repositorio (§B) | 14 |
+| Código de `theme.liquid` pendiente de aplicar (§C) | 3 |
 | Límites de Dawn que no se pueden igualar (§D) | 3 |
 
 Y al final, dos apartados que no son diferencias sino respuestas a preguntas
@@ -48,7 +48,7 @@ una a una las ocho páginas del prototipo.
 
 ## §A · Ajustes del editor que faltan
 
-Estos once valores explican la mayor parte de lo que se ve distinto. **Ninguno
+Estos trece valores explican la mayor parte de lo que se ve distinto. **Ninguno
 necesita tocar código.**
 
 ### A-1. El espaciado entre secciones ⚠️ *(corrige la guía original)*
@@ -137,11 +137,18 @@ Medido: con los dos puestos, la barra inferior del pie ocupa **189 px**; sin
 ellos, **112**. El prototipo tiene 51, y la diferencia que queda es contenido
 real, no un fallo: ver B-12.
 
+### A-6. El banner de colección está con el esquema del pie
+
+| Ajuste | Valor | Por qué |
+|---|---|---|
+| Banner de colección → **Esquema de colores** | **Esquema 2** | Hoy está en el **4**, que es el del pie: la franja del titular sale en `#212121` con el texto en gris. El prototipo la tiene en hueso `#F7F5F5` con texto negro |
+| Banner de colección → **Imagen** | **Desactivado** | Dawn no la pone detrás del texto sino al lado. Ver C-3 |
+
 ---
 
 ## §B · Fallos de la hoja de estilos (ya corregidos)
 
-Estos trece los ha destapado la medición y **ya están arreglados en
+Estos catorce los ha destapado la medición y **ya están arreglados en
 `bps-hyperice.css`**. Hay que volver a subir la hoja (paso 3a de la guía) para
 que surtan efecto.
 
@@ -160,6 +167,7 @@ que surtan efecto.
 | **B-11. Logotipo y menú pegados** | 20 px entre uno y otro (`column-gap: 2rem` de Dawn) | 56 px, los del prototipo |
 | **B-12. La barra inferior del pie, ilegible** | 242 px de alto, en dos filas apiladas, y los cuatro enlaces de políticas pegados sin separación | Una fila: legal a la izquierda, pagos a la derecha, con 16 px entre enlaces |
 | **B-13. Iconos de redes descentrados** | Sobrevivía el `padding: 1.1rem` de Dawn y el SVG medía 20×22 en un círculo de 30: se salía por la derecha | SVG de 15 px centrado, 7,5 px por los cuatro lados |
+| **B-14. Franja del titular de colección** | Sin relleno (`padding: 0`) y titular a 65 px | 56/40 de relleno y titular a 48 px, como la cabecerita del prototipo |
 
 Sobre B-3: no bastaba una regla para `.page-width`. Dawn tiene tres selectores
 que pesan más (`.utility-bar__grid.page-width`,
@@ -226,6 +234,43 @@ solapa — exactamente lo de tu captura. La línea correcta es:
 ```js
 document.body.classList.toggle('bps-past-hero', y > 40)
 ```
+
+### C-3. Las páginas de colección no se ven 🔴 *(esto es lo que estás viendo)*
+
+Navegando a cualquier colección —`/collections/los-mas-buscados`,
+`/collections/all`— el titular aparece **escrito encima del logotipo y del
+menú**, y la cabecera se queda transparente. Reproducido y medido: el `<h1>` cae
+a 56 px del borde superior mientras el bloque de cabecera llega hasta 107.
+
+La causa está en una sola palabra del selector de la §3c:
+
+```js
+// MAL — lo que hay hoy en la tienda
+var hero = document.querySelector('.banner--medium, .banner--large, .collection-hero')
+```
+
+```js
+// BIEN
+var hero = document.querySelector('.banner--medium, .banner--large')
+```
+
+**Por qué.** Dawn le pone la clase `collection-hero` a la sección «Banner de
+colección» en **todas** las colecciones, tenga imagen o no. El script la tomaba
+por una imagen a sangre, marcaba el `<body>` con `bps-hero`, y eso hace dos cosas
+a la vez: deja la cabecera transparente y —lo grave— **anula el hueco que reserva
+la cabecera fija**, porque la regla es `body:not(.bps-hero) #MainContent`. Sin ese
+hueco el contenido arranca en `top: 0`, debajo de la cabecera.
+
+Y no vale con distinguir las colecciones que sí llevan imagen: **Dawn coloca la
+foto AL LADO del texto, no detrás**, y el banner solo tiene 40 px de relleno, así
+que el titular se metería igualmente debajo de la cabecera. Las colecciones no
+son hero nunca. Si alguna tiene que abrir con foto a sangre, se le añade encima
+una sección **«Banner de imagen»** y entonces entra por `banner--large`, que sí
+es full-bleed.
+
+Comprobado tras el cambio en las cuatro plantillas —colección, ficha, página y
+blog—: la cabecera sale opaca, se reservan los 111 px y ningún titular queda
+tapado. Las otras tres ya estaban bien; el fallo era solo de las colecciones.
 
 ---
 
@@ -598,7 +643,8 @@ píxel entre prototipo y tienda:
 ## Orden para aplicarlo
 
 1. **Sube la hoja** `bps-hyperice.css` otra vez (guía §3a). Cierra §B de golpe.
-2. **Arregla los dos scripts** de `theme.liquid` (§C). El del pie es urgente.
+2. **Arregla los scripts** de `theme.liquid` (§C). El de las colecciones (C-3) es
+   el más urgente: hoy esas páginas no se pueden leer.
 3. **Espaciado** (§A-1): «Espacio entre las secciones» a `0` y luego el relleno
    sección por sección. Es lo que más se nota.
 4. **Cabecera y logotipo** (§A-2), **pie** (§A-4) y **apagar los dos selectores
