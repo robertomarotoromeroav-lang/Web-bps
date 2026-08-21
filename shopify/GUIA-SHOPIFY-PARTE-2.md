@@ -36,7 +36,7 @@ esta parte corrige.
 | | Cuántas |
 |---|---|
 | Ajustes del editor pendientes de poner (§A) | 13 |
-| Fallos de la hoja, ya corregidos en el repositorio (§B) | 15 |
+| Fallos de la hoja, ya corregidos en el repositorio (§B) | 19 |
 | Código de `theme.liquid` pendiente de aplicar (§C) | 3 |
 | Límites de Dawn que no se pueden igualar (§D) | 3 |
 
@@ -149,7 +149,7 @@ real, no un fallo: ver B-12.
 
 ## §B · Fallos de la hoja de estilos (ya corregidos)
 
-Estos quince los ha destapado la medición y **ya están arreglados en
+Estos diecinueve los ha destapado la medición y **ya están arreglados en
 `bps-hyperice.css`**. Hay que volver a subir la hoja (paso 3a de la guía) para
 que surtan efecto.
 
@@ -170,6 +170,10 @@ que surtan efecto.
 | **B-13. Iconos de redes descentrados** | Sobrevivía el `padding: 1.1rem` de Dawn y el SVG medía 20×22 en un círculo de 30: se salía por la derecha | SVG de 15 px centrado, 7,5 px por los cuatro lados |
 | **B-14. Franja del titular de colección** | Sin relleno (`padding: 0`) y titular a 65 px | 56/40 de relleno y titular a 48 px, como la cabecerita del prototipo |
 | **B-15. Divisoria de más sobre la foto** | El selector sin `>` pintaba el borde también en el `.card__content` de dentro de `.card__inner`: una raya cruzando la parte de arriba de la imagen | Solo en el panel de texto |
+| **B-16. Titular de «Texto enriquecido» descuadrado** | Arrancaba en `x=0`, pegado al borde, y se partía en **tres líneas**: Dawn no le da el ancho de página y le pone `max-width: 78rem` | `x=30` como los demás titulares, y en **una línea** |
+| **B-17. Botón del banner pegado a la foto en móvil** | Dawn deja el contenido del banner sin relleno inferior en móvil: 50 px en escritorio y **0** en móvil | 96 px por debajo del botón, los del prototipo |
+| **B-18. Reparto del pie** | Dawn apila: las tres columnas a todo lo ancho, luego el boletín a todo lo ancho y las redes colgando a su derecha | Dos columnas: redes a la izquierda en 320 px, boletín arriba a la derecha y los tres menús debajo. Medido: los mismos `x=30 / x=499` y anchos `320 / 911` del prototipo |
+| **B-19. El `+` del pie sin círculo** | Era un «+» de texto suelto | Círculo de 26 px sobre `#373737` con las dos barras de 11 px, como el prototipo |
 
 Sobre B-3: no bastaba una regla para `.page-width`. Dawn tiene tres selectores
 que pesan más (`.utility-bar__grid.page-width`,
@@ -723,6 +727,36 @@ orden del panel queda exactamente el del prototipo:
 
 Para verlo hace falta además tener puesto **«Proveedor → Activado»** (§A-3): sin
 él falta el antetítulo, aunque la descripción sale igual.
+
+### H-3. Si has puesto el snippet y la descripción no sale
+
+Es lo que te está pasando: he mirado el HTML de la tienda publicada y no aparece
+ni un `bps-card__descripcion` en ninguna tarjeta. Eso puede venir de dos sitios y
+**desde fuera no se distinguen**, porque cuando el metacampo está vacío el Liquid
+no imprime nada: el HTML queda exactamente igual que si el snippet no estuviera.
+
+Hay una prueba de un minuto que lo separa. Cambia temporalmente la línea del
+snippet por esta, sin el `if`:
+
+```liquid
+<p class="bps-card__descripcion">PRUEBA</p>
+```
+
+- **Si sale «PRUEBA» en todas las tarjetas** → el snippet está bien puesto y en el
+  tema publicado. Lo que falta es el **dato**: repasa el paso 1 (¿existe la
+  definición del metacampo, con la clave `custom.descripcion_corta` exacta?) y el
+  paso 3 (¿está rellenado en los productos?). Deshaz la prueba y vuelve al bloque
+  con el `if`.
+- **Si no sale nada** → el snippet no está en el tema que está publicado. Lo más
+  habitual es haberlo editado en un tema duplicado, o haber guardado sin
+  publicar. Comprueba que estás en *Tienda online → Temas → **Tema actual***.
+
+Lo que sí he podido comprobar desde fuera, y está bien: **la hoja publicada ya
+lleva la regla** de `.bps-card__descripcion`, así que en cuanto salga el texto se
+verá con su estilo. Y el «Agregado rápido» ya está activado —el icono aparece en
+26 sitios del HTML—, aunque el **«Proveedor» solo está puesto en la colección
+destacada de la portada, no en las páginas de colección**: ahí falta el
+antetítulo. Ver §A-3.
 
 > **Un aviso sobre los títulos.** En la tienda los productos se llaman
 > «Presoterapia BPS PLUS: Recuperación Muscular Inalámbrica» y ocupan dos líneas

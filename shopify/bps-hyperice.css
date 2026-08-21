@@ -529,6 +529,14 @@ button.shopify-payment-button__button--unbranded {
    detrás de la cabecera. */
 .banner__content { padding-top: 110px; }
 
+/* En móvil Dawn deja el contenido del banner SIN relleno inferior —medido: 50px
+   en escritorio y 0 en móvil— y el botón quedaba pegado al borde de la foto. El
+   prototipo deja 96px por debajo del botón en las dos pantallas. */
+@media screen and (max-width: 749px) {
+  .banner__content { padding-bottom: 56px; }
+  .banner__box { padding-bottom: 40px; }
+}
+
 .banner__buttons { gap: 12px; margin-top: 32px; }
 
 /* Alto del banner. La opción «Grande» de Dawn son 72rem fijos —720px medidos—
@@ -1231,15 +1239,32 @@ button.shopify-payment-button__button--unbranded {
     border-bottom: 1px solid var(--bps-footer-bg-2);
   }
 
+  /* El signo va DENTRO de un círculo de 26px, como en el prototipo. Antes era un
+     «+» de texto suelto, sin fondo.
+
+     El círculo y las dos barras se dibujan con un solo pseudoelemento: el fondo
+     redondo con `background-color` y las barras con dos degradados planos de
+     11×1,5px cruzados. Así no hace falta un elemento extra dentro del botón, que
+     el script de la §3e no crea. Al abrir, la barra vertical se queda en altura
+     0 y el «+» pasa a «−». */
   .footer-block--menu .bps-footer-toggle::after {
-    content: "+";
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 1;
-    color: var(--bps-white);
+    content: "";
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: var(--bps-footer-bg-2);
+    background-image: linear-gradient(currentColor, currentColor),
+      linear-gradient(currentColor, currentColor);
+    background-size: 11px 1.5px, 1.5px 11px;
+    background-position: center, center;
+    background-repeat: no-repeat;
+    transition: background-size var(--duration-default) ease;
   }
 
-  .footer-block--menu.bps-open .bps-footer-toggle::after { content: "−"; }
+  .footer-block--menu.bps-open .bps-footer-toggle::after {
+    background-size: 11px 1.5px, 1.5px 0;
+  }
 
   /* Cerrada de partida; el script solo cambia la clase.
 
@@ -1290,4 +1315,112 @@ button.shopify-payment-button__button--unbranded {
   font-size: 16px;
   color: var(--bps-grey-500);
   max-width: 58ch;
+}
+
+/* --------------------------------------------------------------------------
+   17. Texto enriquecido
+   Se usa para los antetítulos y titulares que van sueltos encima de otra
+   sección. Dawn lo maqueta con dos medidas propias que lo descuadran del resto
+   de la web:
+
+   - El envoltorio no usa el ancho de página. Con «Ancho completo» activado va a
+     `width: 100%` y el titular arranca en x=0, pegado al borde; sin él, Dawn
+     deja 40px de margen en vez de los 30 de las demás secciones. Medido: los
+     titulares de sección empiezan en x=30 y este en x=0.
+   - `.rich-text__blocks` lleva `max-width: 78rem`, o sea 780px. Un titular de
+     48px como «Recuperación, rendimiento y resultados» no cabe y se parte en
+     tres líneas cuando en el prototipo va en una.
+   -------------------------------------------------------------------------- */
+
+.rich-text__wrapper,
+.rich-text:not(.rich-text--full-width) .rich-text__wrapper {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .rich-text__wrapper,
+  .rich-text:not(.rich-text--full-width) .rich-text__wrapper {
+    padding-inline: 30px;
+  }
+}
+
+/* El titular puede ocupar todo el ancho; el texto corrido no, que a 1380px se
+   lee mal. */
+.rich-text__blocks { max-width: none; }
+
+.rich-text__blocks .rich-text__text,
+.rich-text__blocks .rich-text__caption { max-width: 58ch; }
+
+/* --------------------------------------------------------------------------
+   18. Reparto del pie
+   El prototipo divide la parte de arriba del pie en dos columnas: una estrecha
+   de 320px a la izquierda con las redes sociales, y otra del 66 % a la derecha
+   con el boletín arriba y las tres columnas de menú debajo. Medido en el
+   prototipo: aside en x=30 con 320 de ancho, main en x=499 con 911.
+
+   Dawn lo apila: primero las tres columnas de menú a todo lo ancho, después el
+   boletín también a todo lo ancho y las redes colgando a la derecha del boletín.
+
+   Su árbol es este, y es lo que permite recolocarlo sin tocar Liquid:
+
+     .footer__content-top
+       .footer__blocks-wrapper        ← las tres columnas de menú
+       .footer-block--newsletter
+         .footer-block__newsletter    ← rótulo y formulario
+         .footer__list-social         ← los iconos
+
+   El `display: contents` del bloque de boletín sube esos dos hijos a la rejilla
+   del padre, y así el formulario y los iconos se pueden colocar por separado.
+   -------------------------------------------------------------------------- */
+
+/* Dawn centra el bloque del boletín y le pone un ancho máximo propio, así que en
+   móvil arrancaba en x=26 en vez de en el margen de 15. El centrado está en
+   `.footer-block--newsletter`, que es un flex con `justify-content: center` y
+   lleva dentro el formulario y los iconos. */
+.footer-block__newsletter {
+  max-width: none;
+  margin-inline: 0;
+  text-align: left;
+}
+
+@media screen and (max-width: 989px) {
+  .footer-block--newsletter {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .footer__content-top {
+    display: grid;
+    /* 320px + 66% reproduce el reparto del prototipo; el hueco que sobra lo
+       reparte `space-between`, que es lo que hace su flex. */
+    grid-template-columns: 320px 66%;
+    grid-template-areas:
+      "lado boletin"
+      "lado menus";
+    justify-content: space-between;
+    row-gap: 40px;
+    align-items: start;
+  }
+
+  .footer__content-top > .footer-block--newsletter { display: contents; }
+
+  .footer__content-top .footer-block__newsletter {
+    grid-area: boletin;
+    max-width: none;
+    margin: 0;
+  }
+
+  .footer__content-top .footer__list-social {
+    grid-area: lado;
+    justify-content: flex-start;
+    margin: 0;
+  }
+
+  .footer__content-top > .footer__blocks-wrapper { grid-area: menus; }
 }
