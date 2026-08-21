@@ -539,11 +539,55 @@ debe taparla. Junto al script anterior:
       var y = document.documentElement.scrollTop || document.body.scrollTop
       // La clase va en el <body>: el fondo lo pinta el bloque .bps-header-group,
       // que envuelve la barra de anuncios y la cabecera.
-      document.body.classList.toggle('bps-past-hero', y > hero.offsetHeight - 120)
+      // 40px, no el alto del hero: la cabecera tiene que ganar fondo en cuanto
+      // se empieza a bajar. Con el umbral al final del hero, el texto del banner
+      // pasaba por debajo de una cabecera todavía transparente y se solapaba.
+      document.body.classList.toggle('bps-past-hero', y > 40)
     }, { passive: true })
   })()
 </script>
 ```
+
+### 3e. Plegar las columnas del pie en móvil
+
+En el prototipo cada columna del pie se colapsa tras un `+`. **Dawn no hace eso**
+—comprobado: sus bloques de menú no llevan ningún `<summary>` ni botón—, así que
+hace falta este script. Junto a los anteriores:
+
+```html
+<script>
+  // Convierte cada columna de menú del pie en un desplegable, solo en móvil.
+  (function () {
+    var PUNTO = 750
+    var bloques = document.querySelectorAll('.footer-block--menu')
+    if (!bloques.length) return
+
+    bloques.forEach(function (bloque) {
+      var titulo = bloque.querySelector('.footer-block__heading')
+      var lista = bloque.querySelector('ul')
+      if (!titulo || !lista) return
+
+      titulo.setAttribute('role', 'button')
+      titulo.setAttribute('tabindex', '0')
+      titulo.classList.add('bps-footer-toggle')
+
+      var abrir = function () {
+        if (window.innerWidth >= PUNTO) return
+        var abierto = bloque.classList.toggle('bps-open')
+        titulo.setAttribute('aria-expanded', abierto ? 'true' : 'false')
+      }
+
+      titulo.addEventListener('click', abrir)
+      titulo.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir() }
+      })
+    })
+  })()
+</script>
+```
+
+El `+` y el plegado los dibuja la hoja de estilos (§15). En escritorio no pasa
+nada: las columnas se muestran siempre abiertas y el título no reacciona.
 
 ---
 

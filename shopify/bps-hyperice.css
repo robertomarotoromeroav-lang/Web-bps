@@ -104,24 +104,34 @@ body,
   transition: top 300ms ease-in-out, background-color 300ms ease-in-out,
     border-color 300ms ease-in-out;
 
-  /* El negro al 80 % y el desenfoque van AQUÍ, en el bloque entero, no en la
-     cabecera. Hyperice tiene una sola superficie translúcida arriba; si la barra
-     de anuncios lleva su propio negro opaco, se ve una franja sólida encima del
-     cajón del menú y la translucidez no se aprecia. */
+  /* El bloque solo posiciona: no pinta. La barra de anuncios lleva su color de
+     esquema (opaco) y la cabecera su negro al 80 % con desenfoque. */
+}
+
+/* La cabecera es la superficie translúcida. Va en `.header-wrapper` —el
+   <sticky-header> que envuelve al <header>— porque ese elemento trae
+   `color-scheme-3 gradient`, o sea un negro OPACO propio: si solo se estiliza
+   `.header`, el envoltorio pinta encima y se ve una banda sólida. */
+.header-wrapper,
+.header-wrapper.gradient {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgb(255 255 255 / 0.28);
+  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
 }
 
-/* Sobre una imagen a sangre el bloque entero va transparente, y recupera el
-   fondo al dejarla atrás. La clase la pone el JS de §3c en el <body>. */
-.bps-hero .bps-header-group {
+/* Sobre una imagen a sangre la cabecera va transparente mientras está arriba, y
+   recupera el fondo en cuanto se empieza a bajar. La clase la pone el JS de §3c
+   en el <body>. */
+.bps-hero .header-wrapper,
+.bps-hero .header-wrapper.gradient {
   background-color: transparent;
   backdrop-filter: none;
   border-bottom-color: transparent;
 }
 
-.bps-hero.bps-past-hero .bps-header-group {
+.bps-hero.bps-past-hero .header-wrapper,
+.bps-hero.bps-past-hero .header-wrapper.gradient {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(10px);
   border-bottom-color: rgb(255 255 255 / 0.28);
@@ -140,15 +150,11 @@ body:not(.bps-hero) #MainContent {
    lleva `color-scheme-3 gradient`, o sea un negro OPACO propio. Si no se anula,
    se ve una banda negra sólida del alto de la cabecera y la translucidez solo
    aparece en el resto del bloque, como dos franjas distintas. */
-.header-wrapper,
-.header-wrapper.gradient,
 .header {
-  padding-block: 0;
+  padding-block: 12px;
   background: transparent;
   color: var(--bps-white);
 }
-
-.header { padding-block: 12px; }
 
 /* El bloque fijo no debe tener más alto que sus dos barras. El ajuste «Margen
    inferior» de la sección Encabezado mete su hueco DENTRO del bloque, y ese
@@ -224,14 +230,11 @@ body:not(.bps-hero) #MainContent {
   color: var(--bps-black);
 }
 
-/* Barra de anuncios: sin fondo propio, para que el bloque se lea como una sola
-   superficie translúcida. Dawn le pone además la clase `gradient`, que pinta un
-   plano opaco con más especificidad, así que hay que anularla también. */
+/* Barra de anuncios: negra opaca, la de su esquema de color. No es una superficie
+   translúcida como la cabecera: es una franja de aviso y se lee mejor plana. */
 .announcement-bar,
-.announcement-bar.gradient,
-.utility-bar,
-.utility-bar.gradient {
-  background: transparent;
+.utility-bar {
+  background-color: var(--bps-black);
   color: var(--bps-white);
 }
 
@@ -262,6 +265,14 @@ body:not(.bps-hero) #MainContent {
     order: 3;
     justify-self: end;
     margin-left: 0;
+  }
+
+  /* El icono se dibuja con currentColor y hereda del contexto: sin esto puede
+     salir negro sobre la cabecera oscura y no verse. */
+  header-drawer .header__icon,
+  header-drawer summary,
+  header-drawer svg {
+    color: var(--bps-white);
   }
 }
 
@@ -950,4 +961,38 @@ button.shopify-payment-button__button--unbranded {
 
 @media screen and (min-width: 750px) {
   .footer { margin-top: var(--spacing-sections-desktop); }
+}
+
+/* --------------------------------------------------------------------------
+   15. Columnas del pie plegables en móvil
+   Dawn no las plega: sus bloques de menú no traen ningún <summary> ni botón. El
+   script de la §3e marca los títulos, y aquí se les da el `+` y el plegado.
+   En escritorio se muestran siempre abiertas.
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 749px) {
+  .footer-block--menu .bps-footer-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    padding-block: 14px;
+    margin: 0;
+    border-bottom: 1px solid var(--bps-footer-bg-2);
+  }
+
+  .footer-block--menu .bps-footer-toggle::after {
+    content: "+";
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--bps-white);
+  }
+
+  .footer-block--menu.bps-open .bps-footer-toggle::after { content: "−"; }
+
+  /* Cerrada de partida; el script solo cambia la clase. */
+  .footer-block--menu ul { display: none; }
+  .footer-block--menu.bps-open ul { display: block; padding-block: 8px 16px; }
 }
