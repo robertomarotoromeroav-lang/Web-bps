@@ -1,17 +1,23 @@
-# Archivos de sección originales de Dawn
+# Archivos originales de Dawn
 
-Copias **sin modificar** de tres secciones de Dawn, tomadas de la etiqueta
-**v15.4.1** del repositorio oficial `Shopify/dawn` — la misma versión que corre
-en bpsperformance.com.
+Copias **sin modificar**, tomadas de la etiqueta **v15.4.1** del repositorio
+oficial `Shopify/dawn` — la misma versión que corre en bpsperformance.com.
 
 ```
 image-banner.liquid      507 líneas
 image-with-text.liquid   487 líneas
 contact-form.liquid      218 líneas
+card-product.liquid      624 líneas   ← este es distinto, ver abajo
 ```
 
-Están aquí porque en la tienda **los tres tienen el botón nativo sustituido** por
-uno con borde degradado. Ver [`../ARCHIVOS-MODIFICADOS.md`](../ARCHIVOS-MODIFICADOS.md),
+Las **tres primeras** están aquí porque en la tienda tienen el botón nativo
+sustituido por uno con borde degradado.
+
+`card-product.liquid` está por otro motivo: en la tienda **no está tocado**, pero
+hay que tocarlo a propósito para añadirle la descripción corta de la tarjeta. La
+versión modificada está en [`../snippets/card-product.liquid`](../snippets/card-product.liquid)
+y el procedimiento en [`../GUIA-SHOPIFY-PARTE-2.md`](../GUIA-SHOPIFY-PARTE-2.md)
+§H. Esta copia es la red de seguridad para volver atrás. Ver [`../ARCHIVOS-MODIFICADOS.md`](../ARCHIVOS-MODIFICADOS.md),
 que explica qué se tocó en cada uno.
 
 Tienes dos formas de arreglarlo:

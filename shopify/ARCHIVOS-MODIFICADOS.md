@@ -19,6 +19,12 @@ está aquí sí está, y con esto la parte de botones queda limpia.
 | `snippets/boton-personalizado.liquid` | **Creado.** Es el que genera el botón degradado |
 | `layout/theme.liquid` | Lleva pegado un bloque de CSS muerto al final |
 
+Y uno más que **hay que modificar a propósito**, no porque esté mal:
+
+| Archivo | Qué hay que hacerle |
+|---|---|
+| `snippets/card-product.liquid` | Añadirle la descripción corta de la tarjeta, que Dawn no tiene. Copia lista en `shopify/snippets/card-product.liquid`. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §H |
+
 En `shopify/dawn-original/` de este repositorio están **los tres archivos de
 sección tal cual los publica Shopify en la etiqueta v15.4.1**, por si preferís
 reemplazarlos enteros en vez de parchear.

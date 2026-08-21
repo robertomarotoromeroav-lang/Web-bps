@@ -576,14 +576,37 @@ button.shopify-payment-button__button--unbranded {
 
 .card--card .card__inner { border-radius: 4px 4px 0 0; }
 
-.card--card .card__content {
+/* El `>` importa. Dawn pone DOS `.card__content` en cada tarjeta: uno dentro de
+   `.card__inner`, encima de la imagen, para el distintivo de oferta, y otro
+   detrás como panel de texto. Sin el `>`, la divisoria se dibujaba también en el
+   de dentro y aparecía una raya cruzando la parte de arriba de la foto. */
+.card--card > .card__content {
   padding: 15px 10px 10px;
   border-top: 1px solid var(--bps-stroke);
 }
 
 @media screen and (min-width: 990px) {
-  .card--card .card__content { padding: 15px 20px 20px; }
+  .card--card > .card__content { padding: 15px 20px 20px; }
 }
+
+/* Descripción corta, la línea gris bajo el título. La tarjeta de Dawn no tiene
+   ese campo: lo añade el metacampo `custom.descripcion_corta` con las once
+   líneas que lleva `snippets/card-product.liquid`. Ver PARTE 2 §H.
+   El `order: 1` la coloca entre el título (0) y el precio (2), porque
+   `.card-information` va en `display: contents` y el orden lo manda la rejilla
+   del panel. */
+.bps-card__descripcion {
+  order: 1;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--bps-grey-500);
+  text-wrap: pretty;
+}
+
+/* En las tarjetas de artículo del blog no se pinta: ahí el resumen ya lo pone
+   Dawn con su propio campo. */
+.article-card .bps-card__descripcion { display: none; }
 
 .card__information { text-align: left; padding-inline: 0; }
 

@@ -36,13 +36,14 @@ esta parte corrige.
 | | Cuántas |
 |---|---|
 | Ajustes del editor pendientes de poner (§A) | 13 |
-| Fallos de la hoja, ya corregidos en el repositorio (§B) | 14 |
+| Fallos de la hoja, ya corregidos en el repositorio (§B) | 15 |
 | Código de `theme.liquid` pendiente de aplicar (§C) | 3 |
 | Límites de Dawn que no se pueden igualar (§D) | 3 |
 
-Y al final, dos apartados que no son diferencias sino respuestas a preguntas
-tuyas: **§F**, si conviene cambiar a otro tema gratuito, y **§G**, cómo montar
-una a una las ocho páginas del prototipo.
+Y al final, tres apartados que no son diferencias sino respuestas a preguntas
+tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar una a
+una las ocho páginas del prototipo; y **§H**, la descripción corta de la tarjeta
+y la línea separadora.
 
 ---
 
@@ -148,7 +149,7 @@ real, no un fallo: ver B-12.
 
 ## §B · Fallos de la hoja de estilos (ya corregidos)
 
-Estos catorce los ha destapado la medición y **ya están arreglados en
+Estos quince los ha destapado la medición y **ya están arreglados en
 `bps-hyperice.css`**. Hay que volver a subir la hoja (paso 3a de la guía) para
 que surtan efecto.
 
@@ -168,6 +169,7 @@ que surtan efecto.
 | **B-12. La barra inferior del pie, ilegible** | 242 px de alto, en dos filas apiladas, y los cuatro enlaces de políticas pegados sin separación | Una fila: legal a la izquierda, pagos a la derecha, con 16 px entre enlaces |
 | **B-13. Iconos de redes descentrados** | Sobrevivía el `padding: 1.1rem` de Dawn y el SVG medía 20×22 en un círculo de 30: se salía por la derecha | SVG de 15 px centrado, 7,5 px por los cuatro lados |
 | **B-14. Franja del titular de colección** | Sin relleno (`padding: 0`) y titular a 65 px | 56/40 de relleno y titular a 48 px, como la cabecerita del prototipo |
+| **B-15. Divisoria de más sobre la foto** | El selector sin `>` pintaba el borde también en el `.card__content` de dentro de `.card__inner`: una raya cruzando la parte de arriba de la imagen | Solo en el panel de texto |
 
 Sobre B-3: no bastaba una regla para `.page-width`. Dawn tiene tres selectores
 que pesan más (`.utility-bar__grid.page-width`,
@@ -279,10 +281,9 @@ tapado. Las otras tres ya estaban bien; el fallo era solo de las colecciones.
 Dos cosas del prototipo que **no tienen equivalente** en la tarjeta de producto
 de Dawn. No son fallos de configuración: el campo no existe.
 
-- **D-1. La descripción corta de la tarjeta.** En el prototipo cada producto
-  lleva una línea gris debajo del título («Recuperación muscular profesional
-  para piernas»). La tarjeta de Dawn tiene título, proveedor, precio y
-  distintivos, y nada más. Para tenerla haría falta una sección a medida.
+- **D-1. La descripción corta de la tarjeta.** ~~Haría falta una sección a
+  medida.~~ **Resuelto: ver §H-2.** No hacía falta una sección nueva, sino un
+  metacampo y once líneas en `snippets/card-product.liquid`.
 - **D-2. El icono y el botón de la tarjeta de categoría**, ya anotado en
   `AJUSTES-SECCIONES.md`. La «Lista de colecciones» no ofrece ninguno de los
   dos. La alternativa sin programar es montar las cuatro categorías con cuatro
@@ -620,6 +621,117 @@ es bajar el título de página de los 52 px de Dawn a los 48 del prototipo.
 
 ---
 
+## §H · La descripción corta de la tarjeta y la línea separadora
+
+Las dos cosas que preguntaste. Una hay que añadirla y la otra ya está: conviene
+separarlas porque el trabajo es muy distinto.
+
+### H-1. La línea separadora ya está puesta
+
+Medida en la colección publicada y en el prototipo, sobre el mismo navegador:
+
+| | Prototipo | Tienda publicada |
+|---|---|---|
+| Borde superior del panel | `1px solid rgb(223, 223, 223)` | **el mismo** |
+| Fondo a cada lado | `#f7f5f5` | `#f7f5f5` |
+
+No hay nada que añadir: la hoja ya la dibuja en `.card--card > .card__content`, y
+la regla está también en la versión que tienes publicada. **Lo que pasa es que
+apenas se ve**, y es a propósito: `#dfdfdf` sobre `#f7f5f5` da un contraste de
+**1,23 : 1**. Es un pelo, no una raya.
+
+Y es el valor correcto: en el CSS de producción de Hyperice esa línea es
+`--color-stroke-light: #dfdfdf`, exactamente la misma. Se nota más o menos según
+la foto —contra una imagen de fondo blanco se lee; contra una gris clara
+desaparece—, y eso pasa igual en Hyperice.
+
+Si aun así la quieres más visible, es una línea al final de la hoja. **Ojo: esto
+ya se separa de Hyperice**, así que va como añadido opcional y no como valor por
+defecto:
+
+```css
+/* Divisoria de tarjeta más marcada que la de Hyperice. Opcional. */
+.card--card > .card__content { border-top-color: var(--bps-grey-300); }
+```
+
+`--bps-grey-300` es `#cbcbcb` y sube el contraste a 1,55 : 1. Con
+`--bps-grey-400` (`#979797`) se va a 2,6 : 1, que ya es una raya de verdad.
+
+> De paso, mirando esto encontré un fallo mío: la divisoria se estaba pintando
+> **también** en el `.card__content` que Dawn mete dentro de `.card__inner`, o sea
+> una raya cruzando la parte de arriba de la foto. Corregido en B-15.
+
+### H-2. La descripción corta: metacampo más once líneas
+
+Esta sí hay que añadirla, y es el §D-1 que estaba pendiente. La tarjeta de Dawn
+tiene título, proveedor, precio y distintivos, y ningún campo para una
+descripción. Son tres pasos.
+
+**Paso 1 · Crea el metacampo.** *Admin → Configuración → Metacampos y metaobjetos
+→ Productos → Agregar definición.*
+
+| Campo | Valor |
+|---|---|
+| Nombre | `Descripción corta` |
+| Espacio de nombres y clave | **`custom.descripcion_corta`** ⚠️ tal cual, sin acento en «descripcion» |
+| Tipo | **Texto → Texto de una línea** |
+| Validaciones | Máximo de caracteres: `90` |
+
+La clave tiene que ser exactamente esa, porque es la que lee el Liquid. Si pones
+otra, cambia también la línea del `assign`.
+
+**Paso 2 · Sustituye el snippet.** En este repositorio está la copia lista:
+**`shopify/snippets/card-product.liquid`**. Es el archivo de Dawn 15.4.1 con las
+once líneas añadidas y nada más —comprobado: mismas etiquetas Liquid abiertas y
+cerradas que el original—. Cópialo entero sobre
+`snippets/card-product.liquid`.
+
+Si prefieres editar a mano, es este bloque **justo después del `</h3>` del
+titular y justo antes del `<div class="card-information">`**:
+
+```liquid
+{%- assign bps_desc = card_product.metafields.custom.descripcion_corta.value -%}
+{%- if bps_desc != blank -%}
+  <p class="bps-card__descripcion">{{ bps_desc | escape }}</p>
+{%- endif -%}
+```
+
+Va **dos veces**, porque el snippet tiene dos ramas: la tarjeta con foto y la
+tarjeta sin foto. En el archivo de Dawn sin tocar son las líneas 125 y 162.
+
+⚠️ **Este snippet lo usa media tienda**: la portada, las colecciones, el
+buscador y los productos relacionados. La copia de fábrica está en
+`shopify/dawn-original/card-product.liquid` por si hay que volver atrás, y el
+cambio queda apuntado en
+[`ARCHIVOS-MODIFICADOS.md`](ARCHIVOS-MODIFICADOS.md).
+
+**Paso 3 · Rellena el campo** en cada producto, en la parte de abajo de su ficha
+en el admin. Frases de una línea, como en el prototipo: «Recuperación muscular
+profesional para piernas», «Recuperación muscular inalámbrica».
+
+El CSS ya está en la hoja, no hay que tocar nada: 14 px, gris `#505050`,
+interlineado 1,4. Lo único que merece explicación es el `order: 1`, que la coloca
+entre el título y el precio; hace falta porque el panel de la tarjeta es una
+rejilla y `.card-information` va en `display: contents`.
+
+**Resultado comprobado**, simulando el metacampo sobre la colección publicada. El
+orden del panel queda exactamente el del prototipo:
+
+> PRESOTERAPIA *(antetítulo, 12 px)* → **Presoterapia BPS PLUS** *(título, 18 px)*
+> → Recuperación muscular profesional para piernas *(descripción, 14 px gris)* →
+> 549,00 € *(precio, 14 px)*
+
+Para verlo hace falta además tener puesto **«Proveedor → Activado»** (§A-3): sin
+él falta el antetítulo, aunque la descripción sale igual.
+
+> **Un aviso sobre los títulos.** En la tienda los productos se llaman
+> «Presoterapia BPS PLUS: Recuperación Muscular Inalámbrica» y ocupan dos líneas
+> en la tarjeta. En el prototipo el título es corto —«Presoterapia BPS PLUS»— y el
+> resto va en la descripción. Si quieres el reparto del prototipo, el título largo
+> hay que acortarlo en el admin y mover la segunda mitad al metacampo.
+
+---
+
 ## Lo que ya está bien
 
 Para que quede constancia de lo que **no** hay que tocar, esto coincide al
@@ -654,8 +766,11 @@ píxel entre prototipo y tienda:
 6. **Las páginas interiores** (§G), en este orden de rentabilidad: Contacto,
    Preguntas frecuentes, Colección, Ficha de producto, Sobre nosotros, Blog. Lo
    primero de cada una es **quitar la sección de la IA** que hay ahora.
-7. Decide qué hacer con §D: dejarlo así o encargar las secciones a medida con el
-   prompt de [`PROMPT-SECCIONES.md`](PROMPT-SECCIONES.md). Lo de cambiar de tema
-   está contestado en §F: no hace falta.
+7. **La descripción corta de la tarjeta** (§H-2): el metacampo, el snippet y
+   rellenar el campo producto a producto. La línea separadora no hay que tocarla,
+   ya está (§H-1).
+8. Decide qué hacer con lo que queda de §D: dejarlo así o encargar las secciones
+   a medida con el prompt de [`PROMPT-SECCIONES.md`](PROMPT-SECCIONES.md). Lo de
+   cambiar de tema está contestado en §F: no hace falta.
 
 Después de esto vuelvo a medir y te digo si queda algo.
