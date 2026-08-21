@@ -48,6 +48,33 @@
   --page-width: 153.6rem;
 }
 
+/* Márgenes laterales. Dawn deja 50px a cada lado en escritorio y 30 en móvil;
+   el prototipo deja 30 y 15. Medido con el navegador: el logotipo arrancaba en
+   x=50 en la tienda y en x=30 en el prototipo. Ver PARTE 2 §B-3.
+
+   Hay que repetir los selectores de Dawn porque varios pesan más que
+   `.page-width` a secas: `.utility-bar__grid.page-width`,
+   `.header:not(.drawer-menu).page-width` y uno con `:has()` para la barra de
+   anuncios. Con una sola regla genérica el relleno no cambiaba.
+   `--narrow` se deja fuera: es el ancho corto de artículos y notas legales. */
+.page-width:not(.page-width--narrow),
+.utility-bar__grid.page-width {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .page-width:not(.page-width--narrow),
+  .page-width-tablet,
+  .page-width-desktop,
+  .utility-bar__grid.page-width,
+  .header:not(.drawer-menu).page-width,
+  body:has(.section-header .header:not(.drawer-menu)) .utility-bar .page-width {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
 /* --------------------------------------------------------------------------
    1. Tipografía
    Dawn hereda la fuente de los ajustes del tema. Aquí solo se ajusta el aire
@@ -77,6 +104,21 @@ body,
 .banner__text {
   line-height: 1.4;
   letter-spacing: 0;
+}
+
+/* Dawn escribe el texto del cuerpo en `rgba(var(--color-foreground), 0.75)`, o
+   sea negro al 75 %: gris oscuro. El prototipo usa negro pleno y reserva el gris
+   para el texto secundario. Medido: rgba(0,0,0,0.75) en la tienda contra
+   rgb(0,0,0) en el prototipo. */
+body {
+  color: rgb(var(--color-foreground));
+}
+
+/* El párrafo del banner iba al blanco al 75 % de Dawn; el prototipo usa el gris
+   claro de la paleta. */
+.banner__text,
+.banner__text * {
+  color: var(--bps-grey-300);
 }
 
 /* --------------------------------------------------------------------------
@@ -141,7 +183,10 @@ body,
    contenido se metería debajo. En las plantillas con imagen a sangre eso es lo
    que se busca; en las demás hay que devolver el hueco. */
 body:not(.bps-hero) #MainContent {
-  padding-top: var(--bps-header-space, 107px);
+  /* 111px = 38 de la barra de anuncios + 73 de la cabecera, medidos en el
+     prototipo. Antes ponía 107, que era el alto de la tienda con el relleno de
+     cabecera a 12; con el relleno a 16 (PARTE 2 §A-1) el bloque mide 111. */
+  padding-top: var(--bps-header-space, 111px);
 }
 
 /* Ni la cabecera ni la barra pintan fondo: lo pone el bloque que las envuelve.
@@ -172,8 +217,10 @@ body:not(.bps-hero) #MainContent {
   color: var(--bps-white);
 }
 
+/* 160px es el ancho que el logotipo ocupa en el prototipo (medido: 160×30).
+   El ajuste «Ancho» del logotipo debe valer 160 también: ver PARTE 2 §A-2. */
 .header__heading-logo {
-  max-width: 200px;
+  max-width: 160px;
 }
 
 /* La separación entre enlaces la da el hueco de la lista, como en el prototipo
@@ -219,6 +266,9 @@ body:not(.bps-hero) #MainContent {
   background-color: rgb(255 255 255 / 0.1);
   border-radius: 62.5rem;
   height: 38px;
+  /* `min-width` no bastaba: Dawn declara `width: 4.4rem` en `.header__icon` y
+     ganaba, así que las píldoras salían ovaladas (38×44 medidos). */
+  width: 38px;
   min-width: 38px;
   transition: background-color var(--duration-default) ease,
     color var(--duration-default) ease;
@@ -256,8 +306,19 @@ body:not(.bps-hero) #MainContent {
     gap: 8px;
   }
 
+  /* Dawn deja 30px de margen lateral en la cabecera móvil; el prototipo deja 15,
+     y por eso la hamburguesa quedaba metida hacia dentro (medido: 30px al borde
+     contra 15px del prototipo). El logotipo arrancaba en x=38 en vez de x=15. */
+  .header {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
   .header__heading,
   .header__heading-link { order: 1; justify-self: start; }
+
+  /* El enlace del logotipo trae relleno propio que desplazaba la imagen. */
+  .header__heading-link { padding-left: 0; }
 
   .header__icons { order: 2; }
 
@@ -381,8 +442,12 @@ button.shopify-payment-button__button--unbranded {
 .button--primary:after,
 .button--secondary:after { border: 0; }
 
+/* El borde va en `currentColor`, no en `--color-button`. Con `--color-button` el
+   botón de contorno salía con aro NEGRO sobre fondo oscuro y letra blanca
+   (medido en el esquema 3: borde rgb(0,0,0), texto rgb(255,255,255)). En el
+   prototipo el borde es siempre del color de la letra. */
 .button--secondary {
-  border: 1px solid rgb(var(--color-button));
+  border: 1px solid currentColor;
   background: transparent;
 }
 
@@ -433,6 +498,19 @@ button.shopify-payment-button__button--unbranded {
 .banner__content { padding-top: 110px; }
 
 .banner__buttons { gap: 12px; margin-top: 32px; }
+
+/* Alto del banner. La opción «Grande» de Dawn son 72rem fijos —720px medidos—
+   y el prototipo usa 88svh, o sea 792px en una pantalla de 900. Se iguala aquí
+   porque el editor solo ofrece cuatro alturas fijas. */
+.banner--large:not(.banner--adapt) {
+  min-height: 88svh;
+}
+
+/* En móvil el alto lo manda el contenido, no el envoltorio: Dawn le pone
+   `min-height: 39rem` (390px). El prototipo mantiene el 88svh. */
+.banner--large:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
+  min-height: 88svh;
+}
 
 /* --------------------------------------------------------------------------
    6. Tarjeta de producto
@@ -939,7 +1017,7 @@ button.shopify-payment-button__button--unbranded {
 .multicolumn-card__info h3,
 .multicolumn-card__info .inline-richtext {
   font-size: 18px;
-  line-height: 1.2;
+  line-height: 1.15;
   margin-bottom: 6px;
 }
 
@@ -992,7 +1070,12 @@ button.shopify-payment-button__button--unbranded {
 
   .footer-block--menu.bps-open .bps-footer-toggle::after { content: "−"; }
 
-  /* Cerrada de partida; el script solo cambia la clase. */
-  .footer-block--menu ul { display: none; }
+  /* Cerrada de partida; el script solo cambia la clase.
+
+     El `:has()` es un seguro: la lista se esconde SOLO si el script de la §3e
+     está puesto y ha creado el botón. Sin ese seguro, publicar la hoja sin el
+     script dejaba los enlaces del pie invisibles en móvil y sin nada que
+     pulsar —comprobado en la tienda publicada, donde §3e aún no estaba. */
+  .footer-block--menu:has(.bps-footer-toggle) ul { display: none; }
   .footer-block--menu.bps-open ul { display: block; padding-block: 8px 16px; }
 }

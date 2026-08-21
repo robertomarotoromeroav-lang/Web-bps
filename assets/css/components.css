@@ -622,6 +622,17 @@ a:hover > .media img,
   border-radius: var(--radius-pill);
 }
 
+/* Antetítulo con la categoría, como el «quick shop» de Hyperice: pequeño, en
+   versalitas y en gris, para que no compita con el título. Se quedó sin regla y
+   heredaba los 16px negros del cuerpo, así que pesaba lo mismo que el título. */
+.card__category {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-grey-500);
+}
+
 .card__title {
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-medium);

@@ -33,6 +33,12 @@ en el titular, CSS con `!important` en una sección— y si lo dejas puesto no
 sabrás qué falla por lo viejo y qué por lo nuevo. Está inventariado, con su
 ubicación exacta, en **[`CODIGO-EXISTENTE.md`](CODIGO-EXISTENTE.md)**.
 
+> **Si ya has publicado una primera versión**, ve a
+> **[`GUIA-SHOPIFY-PARTE-2.md`](GUIA-SHOPIFY-PARTE-2.md)**. Es la comparación
+> medida con el navegador entre el prototipo y la tienda publicada: la lista
+> completa de diferencias, con los valores que faltan y las tres correcciones
+> que esa medición ha traído a esta guía.
+
 ---
 
 ## 1. Ajustes del tema
@@ -76,7 +82,7 @@ fábrica —las tres familias de tarjetas—, así que esas hay que bajarlas a m
 | Ajuste | Valor | Nota |
 |---|---|---|
 | Logo | `logo-horizontal-white.svg` | Blanco, porque la cabecera es oscura. Ver §4 |
-| Ancho | `200` | |
+| Ancho | **`160`** | Medido: en el prototipo el logotipo ocupa 160 px. Con `200` sale un 25 % más grande. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-2 |
 | Favicon | `favicon-512.png` | Recién generado. Hoy sigue el logotipo antiguo. Ver §4 |
 
 ### Colores
@@ -125,9 +131,16 @@ de Shopify, de más a menos parecida: **Inter** → **Helvetica Now** →
 | Ajuste | Valor | Nota |
 |---|---|---|
 | Ancho de página | `1500` | Ver aviso |
-| Espacio entre las secciones de la plantilla | `80` | De fábrica viene `0` |
+| Espacio entre las secciones de la plantilla | `0` | ⚠️ Aquí decía `80` y era un error: ver el aviso de abajo |
 | Cuadrícula → Espacio horizontal | `20` | |
 | Cuadrícula → Espacio vertical | `20` | |
+
+> ⚠️ **Corregido: el espaciado va en `0`, no en `80`.** Medido en el navegador,
+> el prototipo deja **160 px** entre secciones en escritorio y **120** en móvil.
+> Este control llega como máximo a `100`, así que por aquí no se alcanzan. El
+> aire va **dentro** de cada sección: «Relleno → Arriba/Abajo» a `80`, que Dawn
+> escala solo a 60 en móvil y da los 120 exactos. Detalle y excepciones en
+> **[PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1**.
 
 > **Por qué 1500 y no 1536.** El ancho de Hyperice es 1536 px, pero el control va
 > de 1000 a 1600 **de 100 en 100**: 1536 no se puede elegir. Pon 1500 y el CSS

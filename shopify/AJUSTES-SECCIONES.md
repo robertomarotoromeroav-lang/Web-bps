@@ -42,8 +42,8 @@ Leyenda de la columna «Valor»:
 | Utilidades → Selector de idioma | Activado | |
 | Utilidades → Avatar de cuenta de cliente | Activado | |
 | Espaciado → Margen inferior | `0` ⚠️ | Este hueco cae **dentro** del bloque fijo y se pinta con su fondo translúcido, sin contenido: se ve como una segunda franja colgando bajo la cabecera. La hoja lo anula por si acaso, pero déjalo en `0` |
-| Relleno → Arriba | **`12`** | De fábrica `20`. La cabecera de Hyperice es más baja |
-| Relleno → Abajo | **`12`** | |
+| Relleno → Arriba | **`16`** | De fábrica `20`. Medido: con `12` la cabecera queda en 64,5 px y el prototipo mide **73**. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-2 |
+| Relleno → Abajo | **`16`** | |
 
 > **Hoy vuestra tienda tiene «Al desplazarse hacia arriba»** (lo dice el
 > `data-sticky-type` del HTML). Con ese valor la cabecera se esconde al bajar y
@@ -92,6 +92,12 @@ Bloques:
 | Botones | Botón 1 → Estilo de contorno | Desactivado *(sólido)* |
 | Botones | Botón 2 → Etiqueta | `Conocer la tecnología` |
 | Botones | Botón 2 → Estilo de contorno | **Activado** |
+| Sección | Relleno → Arriba / Abajo | **`0`** ⚠️ **Excepción**: el hero va a sangre, pegado a la cabecera. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
+
+> **Sobre «Altura → Grande».** Son 720 px fijos, y el prototipo usa 88 % del alto
+> de la pantalla (792 px en una de 900). El editor solo ofrece cuatro alturas
+> fijas, así que la diferencia la corrige la hoja de estilos. No hay nada que
+> tocar aquí.
 
 ## Colección destacada
 
@@ -119,7 +125,7 @@ Bloques:
 | Tarjeta → Agregado rápido | **Estándar** | La hoja lo convierte en el icono redondo de la fila del precio |
 | Diseño móvil → Columnas | **`1`** | Para que la tarjeta se vea grande y la siguiente asome por el borde |
 | Diseño móvil → Carrusel | **Activado** | En móvil Hyperice pasa las tarjetas de lado, no las apila |
-| Relleno → Arriba / Abajo | **`0`** | El ritmo entre secciones ya lo pone «Espacio entre las secciones» de Configuración; si además dejas los 36 de fábrica, se suman |
+| Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 ## Lista de colecciones
 
@@ -135,7 +141,7 @@ Bloques:
 | Diseño → Botón "Ver todo" | Desactivado | |
 | Diseño móvil → Columnas | `1` | |
 | Diseño móvil → Carrusel | Desactivado | Estas se apilan |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 > ⚠️ **Esta sección no puede dar la tarjeta de categoría del prototipo.**
 > Comprobado sobre el HTML: la tarjeta de Dawn contiene **imagen, titular, la
@@ -175,7 +181,7 @@ Bloques:
 | Filtrado → Filtros | Activado | |
 | Filtrado → Diseño de filtro | Horizontal | Los filtros no los estiliza la hoja: saldrán con el aspecto de Dawn. Horizontal es el que menos canta |
 | Filtrado → Ordenación | Activado | |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 ## Resultados de búsqueda
 
@@ -199,7 +205,7 @@ forma **Predeterminado**, sin proveedor, sin calificación, sin segunda imagen.
 | Multimedia → Ampliar | Abrir Lightbox | Se llama «Abrir Lightbox». Hyperice abre un modal al pulsar |
 | Multimedia → Ocultar otros elementos multimedia de variante… | Desactivado | |
 | Multimedia → Video en bucle | Desactivado | |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 > **Ojo con «Diseño»: hay dos opciones que muestran una imagen cada vez**,
 > «Miniaturas» y «Carrusel de miniaturas». Elige la segunda: es la que añade el
@@ -230,7 +236,7 @@ Bloques que conviene repasar:
 | Multimedia → Ajustar | **Rellenar** | Aquí sí: la imagen va a sangre y debe llenar la mitad de la sección |
 | Multimedia → Posición | Izquierda | |
 | Multimedia → Ampliar | **Sin zoom** | No es una galería, es un escaparate |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 ## Imagen con texto
 
@@ -247,7 +253,7 @@ Bloques que conviene repasar:
 | Contenido → Alineación móvil | Izquierda | |
 | Colores → Esquema de colores | Esquema 1 | |
 | Colores → Esquema de color del contenedor | Esquema 1 | |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`0`** | ⚠️ **Excepción.** En el prototipo esta franja va a sangre, sin aire propio. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 En los bloques, el de **Leyenda** viene de fábrica en estilo **Mayúscula**: ese es
 el único sitio donde las versalitas son correctas, porque es el rótulo pequeño de
@@ -270,7 +276,7 @@ el único sitio donde las versalitas son correctas, porque es el rótulo pequeñ
 | Diseño → Esquema de colores | Esquema 1 | |
 | Diseño móvil → Columnas | `1` | |
 | Diseño móvil → Carrusel | Desactivado | |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`48`** | ⚠️ **Excepción.** Es la tira baja del final (envío gratis, compra segura…) y en el prototipo va más apretada: 48, no 80. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 
 ## Texto enriquecido
 
@@ -280,7 +286,7 @@ el único sitio donde las versalitas son correctas, porque es el rótulo pequeñ
 | Alineación de contenido | **Izquierda** | |
 | Esquema de colores | Esquema 1 | |
 | Ancho completo | Activado | |
-| Relleno → Arriba / Abajo | **`0`** | |
+| Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
 | **CSS personalizado** | **vaciarlo** ⚠️ | Hoy lleva un `color:#0080ff` con `!important`. Ver `CODIGO-EXISTENTE.md` §3 |
 
 ## Pie de página
@@ -297,8 +303,8 @@ el único sitio donde las versalitas son correctas, porque es el rótulo pequeñ
 | Utilidades → Íconos de forma de pago | Activado | |
 | Utilidades → Enlaces a las políticas | Activado | |
 | Espaciado → Margen superior | `0` | El hueco antes del pie lo pone la hoja (§14), que fija 80px. Si lo pones aquí también, se suman |
-| Relleno → Arriba | **`48`** | El pie del prototipo tiene más aire que el de Dawn |
-| Relleno → Abajo | `36` | |
+| Relleno → Arriba | **`80`** | Medido en el prototipo. Aquí decía `48`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-4 |
+| Relleno → Abajo | **`24`** | De fábrica `36` |
 
 En los bloques de **Menú**, el «Encabezado» de cada columna es el rótulo. Recuerda
 la jerarquía de Hyperice, que es contraintuitiva: **el rótulo es más grande que
