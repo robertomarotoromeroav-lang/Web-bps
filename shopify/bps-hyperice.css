@@ -134,11 +134,29 @@ body:not(.bps-hero) #MainContent {
   padding-top: var(--bps-header-space, 107px);
 }
 
-/* Ni la cabecera ni la barra pintan fondo: lo pone el bloque que las envuelve. */
+/* Ni la cabecera ni la barra pintan fondo: lo pone el bloque que las envuelve.
+
+   OJO con `.header-wrapper`: es el <sticky-header> que envuelve al <header>, y
+   lleva `color-scheme-3 gradient`, o sea un negro OPACO propio. Si no se anula,
+   se ve una banda negra sólida del alto de la cabecera y la translucidez solo
+   aparece en el resto del bloque, como dos franjas distintas. */
+.header-wrapper,
+.header-wrapper.gradient,
 .header {
-  padding-block: 12px;
-  background-color: transparent;
+  padding-block: 0;
+  background: transparent;
   color: var(--bps-white);
+}
+
+.header { padding-block: 12px; }
+
+/* El bloque fijo no debe tener más alto que sus dos barras. El ajuste «Margen
+   inferior» de la sección Encabezado mete su hueco DENTRO del bloque, y ese
+   hueco se pinta con el fondo translúcido y sin contenido: se ve como una
+   segunda franja colgando debajo de la cabecera. */
+.bps-header-group > .shopify-section {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .header a,

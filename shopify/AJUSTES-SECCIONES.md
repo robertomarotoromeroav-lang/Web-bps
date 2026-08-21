@@ -41,7 +41,7 @@ Leyenda de la columna «Valor»:
 | Utilidades → Selector de país o región | Activado | |
 | Utilidades → Selector de idioma | Activado | |
 | Utilidades → Avatar de cuenta de cliente | Activado | |
-| Espaciado → Margen inferior | `0` | |
+| Espaciado → Margen inferior | `0` ⚠️ | Este hueco cae **dentro** del bloque fijo y se pinta con su fondo translúcido, sin contenido: se ve como una segunda franja colgando bajo la cabecera. La hoja lo anula por si acaso, pero déjalo en `0` |
 | Relleno → Arriba | **`12`** | De fábrica `20`. La cabecera de Hyperice es más baja |
 | Relleno → Abajo | **`12`** | |
 
