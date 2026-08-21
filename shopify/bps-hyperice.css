@@ -99,6 +99,15 @@ h1, .h1, .banner__heading { font-size: clamp(45px, 4.51389vw, 65px); }
 h2, .h2, .title--primary  { font-size: clamp(38px, 3.33333vw, 48px); line-height: 1; }
 h3, .h3                   { font-size: clamp(32px, 2.77778vw, 40px); line-height: 1.15; }
 
+/* Título de las páginas del panel (Contacto, FAQ, Sobre nosotros…). Dawn lo
+   saca con la clase `h0`, que son 52px; el prototipo usa el tamaño de h2, 48.
+   Ver PARTE 2 §G. */
+.main-page-title,
+.page-title {
+  font-size: clamp(38px, 3.33333vw, 48px);
+  line-height: 1;
+}
+
 body,
 .rte,
 .banner__text {

@@ -38,7 +38,11 @@ esta parte corrige.
 | Ajustes del editor pendientes de poner (§A) | 9 |
 | Fallos de la hoja, ya corregidos en el repositorio (§B) | 8 |
 | Código de `theme.liquid` pendiente de aplicar (§C) | 2 |
-| Límites de Dawn que no se pueden igualar (§D) | 2 |
+| Límites de Dawn que no se pueden igualar (§D) | 3 |
+
+Y al final, dos apartados que no son diferencias sino respuestas a preguntas
+tuyas: **§F**, si conviene cambiar a otro tema gratuito, y **§G**, cómo montar
+una a una las ocho páginas del prototipo.
 
 ---
 
@@ -200,6 +204,11 @@ de Dawn. No son fallos de configuración: el campo no existe.
   `AJUSTES-SECCIONES.md`. La «Lista de colecciones» no ofrece ninguno de los
   dos. La alternativa sin programar es montar las cuatro categorías con cuatro
   bloques de «Imagen con texto».
+- **D-3. El desplegable «¿Qué te interesa?» del formulario de contacto.** Los
+  campos del formulario de Dawn están escritos en el Liquid, no son un ajuste:
+  son Nombre, Correo electrónico, Teléfono y Comentario. Detalle en §G-2.
+
+Sobre si conviene cambiar de tema para conseguirlas, ver **§F**.
 
 ---
 
@@ -213,6 +222,316 @@ tenía bien, en 12 px y versalitas.
 
 Corregido en `assets/css/components.css`: 12 px, versalitas, gris `#505050`. Ya
 miden igual los dos lados.
+
+---
+
+## §F · ¿Hay un tema gratuito que dé el 100 % del prototipo?
+
+Respuesta corta: **para las tres cosas que faltan (§D) sí lo hay, pero no
+merece la pena cambiar.** Y conviene entender por qué, porque los temas
+gratuitos de Shopify ya no son una lista, son **dos generaciones distintas**.
+
+### Los temas gratuitos, hoy
+
+| Generación | Temas | Qué son |
+|---|---|---|
+| **Familia Dawn** (Online Store 2.0) | Dawn, Sense, Craft, Refresh, Ride, Publisher, Origin, Colorblock, Spotlight, Studio, Taste, Trade, Crave | El mismo código base con distintos ajustes de fábrica y alguna sección extra |
+| **Familia Horizon** (verano de 2025) | Horizon, Heritage, Fabric, Ritual, Tinker, Dwell, Savor, Vessel, Atelier, Pitch | Arquitectura nueva, por bloques. Horizon es la base y los otros nueve son variantes |
+
+Todos son gratis para cualquier plan.
+
+### Cambiar dentro de la familia Dawn no sirve de nada
+
+Sense, Craft, Refresh y compañía son Dawn con otra ropa. Comparten las mismas
+secciones y las mismas plantillas de tarjeta, así que **arrastran exactamente
+los mismos tres límites** de §D: la tarjeta de producto sigue sin campo de
+descripción y la lista de colecciones sigue sin icono ni botón. Cambiar de uno a
+otro solo te obligaría a repetir toda la configuración para llegar al mismo
+sitio.
+
+### Horizon sí lo daría, pero cuesta rehacerlo todo
+
+Horizon es la generación siguiente y su diferencia importante es que **todo son
+bloques anidables, hasta ocho niveles**, y que los bloques son globales: se
+pueden poner en cualquier parte. Con eso, las tres cosas de §D dejan de ser un
+límite — se pueden meter bloques de texto y de botón dentro de una tarjeta.
+
+El coste es que **la hoja `bps-hyperice.css` habría que reescribirla entera**.
+Está escrita contra los nombres de clase de Dawn: `.card--card`,
+`.banner__heading`, `.header__heading-logo`, `.page-width`,
+`.multicolumn-card__info`… Horizon es otro código, así que esos selectores no
+apuntarían a nada. Son 15 apartados y unas 1 000 líneas de trabajo hecho y
+medido. Además habría que rehacer las plantillas de todas las páginas y volver a
+validar el resultado.
+
+> No he podido inspeccionar el HTML de Horizon directamente para medir cuánto se
+> salvaría exactamente: la demo pública está detrás de contraseña. Lo que sí es
+> seguro es que los selectores actuales no valen, porque son de Dawn.
+
+### Lo que recomiendo
+
+**Quedarse en Dawn y resolver §D con una sección a medida.** Sale más barato que
+cambiar de tema:
+
+- **D-2 (tarjeta de categoría con icono y botón)** es el que más se nota, porque
+  está en la home. Un archivo `sections/bps-categorias.liquid` con cuatro
+  bloques —imagen, icono, título, botón— resuelve exactamente lo del prototipo.
+  Es una sección nueva, no toca nada de lo que ya funciona, y la hoja de estilos
+  actual le vale.
+- **D-1 (descripción en la tarjeta)** se puede resolver sin sección nueva, con un
+  **metacampo** de producto y tres líneas en `snippets/card-product.liquid`.
+- **D-3 (el desplegable del formulario)** son cinco líneas en
+  `sections/contact-form.liquid`. Va en §G-2.
+
+Y si en algún momento se plantea un rediseño desde cero, entonces sí: empezar
+por Horizon en vez de Dawn. Pero eso es otro proyecto, no el remate de este.
+
+---
+
+## §G · Cómo montar cada página del prototipo
+
+El prototipo tiene nueve páginas. Ocho van a la tienda; `styleguide.html` es una
+referencia interna de estilos y no se publica.
+
+Antes de entrar en cada una, dos avisos que valen para todas:
+
+- **El relleno de las secciones** sigue la regla de §A-1: `80` / `80` en las de
+  contenido, y las excepciones que se indican en cada página.
+- **Las páginas de hoy están hechas con secciones generadas por la IA de
+  Shopify**, no con secciones de Dawn. La de Contacto, por ejemplo, tiene una
+  sola sección `template--…__17754325730b143d3f` que lleva el formulario dentro.
+  Hay que **quitar esas secciones** antes de montar las de abajo, o tendrás las
+  dos cosas a la vez. Están inventariadas en
+  [`CODIGO-EXISTENTE.md`](CODIGO-EXISTENTE.md).
+
+### G-1. Inicio
+
+Ya está en la [guía principal §5](GUIA-SHOPIFY.md). No se repite aquí.
+
+### G-2. Contacto → página con plantilla `page.contact`
+
+*Admin → Tienda online → Páginas → Contacto. En «Plantilla de tema» elige
+`page.contact`.*
+
+El prototipo tiene una cabecerita sobre fondo hueso y debajo dos columnas: el
+formulario a la izquierda y «Otras vías» a la derecha.
+
+**En el admin, antes de tocar el editor:**
+
+| Campo | Valor |
+|---|---|
+| Título de la página | `Hablemos de tu recuperación` |
+| Contenido | `Cuéntanos tu deporte, tu carga de entrenamiento y tu objetivo. Te respondemos con el protocolo y el equipo que encajan contigo.` |
+
+El título sale como `<h1>` y el contenido como párrafo de entrada: es la
+cabecerita del prototipo, no hay que montarla a mano.
+
+**Secciones, en este orden:**
+
+| # | Sección | Ajustes |
+|---|---|---|
+| 1 | **Página** | Esquema de colores **Esquema 2** (`#F7F5F5`) · Relleno Arriba **`56`** / Abajo **`40`** |
+| 2 | **Formulario de contacto** | Encabezado `Escríbenos` · Tamaño del título **Mediano** · Esquema 1 · Relleno `80` / `80` |
+| 3 | **Texto enriquecido** | Ver el detalle abajo |
+
+Los `56` / `40` del relleno no son arbitrarios: son los que mide la cabecerita
+del prototipo (`padding-block: 56px 40px`).
+
+**La sección 3, «Texto enriquecido»**, es la columna «Otras vías». Añade cuatro
+bloques en este orden:
+
+| Bloque | Contenido |
+|---|---|
+| Leyenda | `Otras vías` |
+| Título | `Atención 24/7` · Tamaño **Pequeño** |
+| Texto | `Atención personalizada para resolver todas tus dudas antes y después de la compra.` y debajo, en lista, los tres enlaces: formulario oficial, preguntas frecuentes y la clínica de Madrid |
+| Botones | Etiqueta `Escríbenos por Instagram` · Enlace a vuestro Instagram · **Estilo de contorno activado** |
+
+Ajustes de la sección: Posición y Alineación de contenido **Izquierda**, Ancho
+completo desactivado, Relleno `0` arriba / `80` abajo.
+
+**Dos cosas no salen igual, y conviene saberlo antes de empezar:**
+
+- 🔴 **No hay dos columnas.** Dawn apila las secciones, no las pone al lado. El
+  formulario quedará arriba y «Otras vías» debajo. Funciona y se ve limpio, pero
+  no es el reparto del prototipo. Para las dos columnas hace falta una sección a
+  medida que lleve el formulario y el bloque de texto dentro.
+- 🔴 **El desplegable «¿Qué te interesa?» no existe** (§D-3). Los campos de Dawn
+  son Nombre, Correo electrónico, **Teléfono** y Comentario: falta el
+  desplegable y sobra el teléfono. Si lo quieres, es un añadido en
+  `sections/contact-form.liquid`, justo antes del campo de comentario:
+
+  ```liquid
+  <div class="field">
+    <label class="form__label" for="ContactForm-interes">¿Qué te interesa?</label>
+    <select id="ContactForm-interes" class="select__select" name="contact[Interés]">
+      <option>Presoterapia</option>
+      <option>Terapia de luz roja</option>
+      <option>Recuperación fría</option>
+      <option>Liberación muscular</option>
+      <option>Recovery</option>
+      <option>Equipar un centro o clínica</option>
+    </select>
+  </div>
+  ```
+
+  Lo que pongas en `name="contact[…]"` es el nombre con el que llega el dato al
+  correo del pedido de contacto. Si tocas este archivo, apúntalo en
+  [`ARCHIVOS-MODIFICADOS.md`](ARCHIVOS-MODIFICADOS.md): ya es uno de los cuatro
+  que se han modificado alguna vez.
+
+### G-3. Sobre nosotros → página normal
+
+*Título de la página: `Rompe tus límites. Optimiza tu biología.`*
+
+| # | Sección | Ajustes |
+|---|---|---|
+| 1 | **Banner de imagen** | Altura **Mediano** · Contenido Abajo a la izquierda · Título = el de la página · Relleno `0` / `0` |
+| 2 | **Texto enriquecido** | Bloque Leyenda `Bio Performance System` + bloque Título `Más que productos, un sistema` · Alineación **Izquierda** · Relleno `80` / `0` |
+| 3 | **Multicolumna** | Título vacío · **3 columnas** · un bloque por pilar: `El frío`, `La luz`, `La compresión` · Relleno `0` / `80` |
+| 4 | **Texto enriquecido** | Leyenda `La promesa BPS` + Título `Tres pilares innegociables` · Relleno `80` / `0` |
+| 5 | **Multicolumna** | Título vacío · **3 columnas**: `Ciencia y evidencia`, `Rendimiento y calidad`, `Empoderamiento y educación` · Relleno `0` / `80` |
+| 6 | **Texto enriquecido** | Título `Explora el sistema. Toma el control.` · dos botones: `Ver productos` (sólido) y `Hablar con un especialista` (contorno) · Esquema **2** · Relleno `48` / `48` |
+
+⚠️ **Por qué el antetítulo va en una sección aparte.** «Multicolumna» solo tiene
+«Título»: **no tiene ningún campo de leyenda**. Los antetítulos del prototipo
+(«Bio Performance System», «La promesa BPS») no se pueden poner dentro de la
+sección, así que van en un «Texto enriquecido» justo encima, con el relleno
+partido —`80` / `0` arriba y `0` / `80` abajo— para que las dos secciones se lean
+como un bloque solo y no queden separadas.
+
+En las dos secciones de Multicolumna, cada bloque lleva su icono en el campo de
+imagen. Recuerda «Proporción → Adaptar a la imagen» y que la hoja los deja en
+28 px: si subes un PNG grande no pasa nada, se escala.
+
+No uses la sección «Página» aquí: el banner ya hace de cabecera y el título de
+la página se vería dos veces.
+
+### G-4. Preguntas frecuentes → página normal
+
+*Título de la página: `Preguntas frecuentes`. Deja el contenido vacío.*
+
+Las diez preguntas del prototipo van en **tres grupos**, y «Contenido
+desplegable» solo admite un encabezado por sección. Así que son **tres secciones
+de «Contenido desplegable»** seguidas:
+
+| # | Sección | Encabezado | Filas |
+|---|---|---|---|
+| 1 | Página | — | Esquema **2** · Relleno `56` / `40` |
+| 2 | Contenido desplegable | `Sobre nuestros productos y tecnología` | 4 |
+| 3 | Contenido desplegable | `Uso y protocolos` | 3 |
+| 4 | Contenido desplegable | `Compra y envío` | 3 |
+| 5 | Texto enriquecido | `¿No has encontrado tu respuesta?` + botón `Contáctanos` | Esquema **2** · Relleno `48` / `48` |
+
+En cada sección de «Contenido desplegable»:
+
+| Ajuste | Valor | Por qué |
+|---|---|---|
+| Alineación del encabezado | **Izquierda** | De fábrica va centrado |
+| Contenedor | **Sin contenedor** | El prototipo son filas con una línea fina, sin caja |
+| Abrir la primera fila | Desactivado | Todas cerradas de partida |
+| Tamaño del título | **Pequeño** | Los títulos de grupo del prototipo son pequeños |
+| Relleno | `80` arriba en la primera, `0` en las siguientes | Para que los tres grupos se lean como uno |
+
+Y en cada bloque «Fila desplegable»: la pregunta en Encabezado, la respuesta en
+Contenido de fila, y **Ícono → Ninguno** ⚠️. De fábrica pone una marca de
+verificación que en el prototipo no está.
+
+### G-5. Blog → blog, no página
+
+*Admin → Tienda online → Blogs. Renombra el blog a `Protocolos y ciencia`.*
+
+El título de la página lo pone el nombre del blog, así que aquí no hace falta la
+sección «Página».
+
+| Sección | Ajustes |
+|---|---|
+| **Artículos de blog** *(viene puesta)* | Diseño **Cuadrícula** · Imagen destacada activada · Altura de imagen **Mediana** · Fecha activada · Autor desactivado · Relleno `56` / `80` |
+
+De fábrica el diseño es **Collage**, que hace la primera entrada gigante. El
+prototipo usa una cuadrícula regular.
+
+### G-6. Productos → colección «Todos los productos»
+
+Las doce tarjetas de `productos.html` no son una página: son una colección.
+
+*Admin → Productos → Colecciones → crea una colección automática que incluya
+todos los productos, o usa la de «Todos» que Shopify ya trae en
+`/collections/all`.*
+
+| Sección | Ajustes |
+|---|---|
+| **Banner de colección** | Descripción activada · Imagen **desactivada** (el prototipo no lleva foto aquí) |
+| **Cuadrícula de productos** | Columnas **`4`** · Proveedor **activado** · Agregado rápido **Estándar** · Productos por página **`24`** *(de fábrica `16`)* · Filtros activado · **Diseño de filtro → Horizontal** · Ordenación activada |
+
+Los filtros del prototipo son unas pastillas de categoría en una fila. En Dawn el
+interruptor **«Filtros»** ya viene activado en esta misma sección, y
+**«Diseño de filtro»** ofrece *Horizontal*, *Vertical* y *Cajón*: la que más se
+parece al prototipo es **Horizontal**.
+
+Lo que Dawn no decide es **qué** filtros aparecen: eso se define en la app
+gratuita **Search & Discovery** de Shopify (Admin → Aplicaciones). Sin ella la
+sección enseña los filtros por defecto —disponibilidad y precio—, no las
+categorías. Aun así no queda idéntico: son desplegables, no pastillas.
+
+### G-7. Colección → plantilla de colección
+
+Vale para Presoterapia, Terapia de luz roja y las demás. Se configura **una vez**
+y sirve para todas.
+
+| # | Sección | Ajustes |
+|---|---|---|
+| 1 | **Banner de colección** | Descripción **activada** · Imagen **activada**. La foto y el texto salen de la colección en el admin |
+| 2 | **Cuadrícula de productos** | Columnas `3` · Proveedor activado · Agregado rápido Estándar |
+| 3 | **Imagen con texto** | Bloques: Leyenda `Cómo funciona`, Título `Compresión secuencial, no un masaje cualquiera`, Texto, Botón `Ver la gama` · Relleno `0` / `0` |
+
+La sección 3 es la franja «Cómo funciona» del prototipo. Dos avisos:
+
+- El bloque de botón de «Imagen con texto» **solo admite un botón**. El segundo
+  enlace del prototipo (`Resolver dudas →`) hay que meterlo como enlace dentro
+  del bloque de Texto.
+- Si la pones aquí sale en **todas** las colecciones con el mismo texto. Para
+  tener una distinta por colección hay que duplicar la plantilla
+  (`Personalizar → arriba a la izquierda → Crear plantilla`).
+
+### G-8. Ficha de producto → plantilla de producto
+
+| # | Sección | Ajustes |
+|---|---|---|
+| 1 | **Información de producto** | Multimedia → Diseño **Carrusel de miniaturas** ⚠️ · Ancho **Grande** · Contenido fijo activado · Relleno `48` / `80` |
+| 2 | **Imagen con texto** | Bloque Leyenda `Por qué el modelo PRO` + Título `Recuperación de élite, donde tú la necesites` · botón `Comparar con el PLUS` en contorno |
+| 3 | **Productos relacionados** | Encabezado `Completa tu sistema` · Columnas `4` · Proveedor **activado** *(de fábrica viene desactivado)* |
+
+El ⚠️ del carrusel es el cambio que se hizo en el prototipo para igualar la
+ficha de Hyperice: las fotos pasan de apiladas a carrusel. En Dawn está en
+**Multimedia → Diseño**, y las cuatro opciones son *Apilado*, *Dos columnas*,
+*Miniaturas* y *Carrusel de miniaturas*. **No hay una que se llame «Carrusel» a
+secas**: la que hace el carrusel es la cuarta. De fábrica viene *Apilado*, que
+es justo lo que había que cambiar. La hoja de estilos ya le pone las flechas
+redondas y los puntitos.
+
+En «Imagen con texto», la leyenda y el título son **bloques** que se añaden
+dentro de la sección, no ajustes de la sección.
+
+El antetítulo con la categoría sobre el `<h1>` sale del campo **Proveedor** del
+producto, igual que en las tarjetas.
+
+### Resumen de plantillas
+
+| Página del prototipo | En Shopify es | Plantilla |
+|---|---|---|
+| `index.html` | La portada | `index` |
+| `contacto.html` | Página | `page.contact` |
+| `sobre-nosotros.html` | Página | `page` |
+| `faq.html` | Página | `page` |
+| `blog.html` | Blog | `blog` |
+| `productos.html` | Colección con todos los productos | `collection` |
+| `coleccion.html` | Cada colección | `collection` |
+| `producto.html` | Cada producto | `product` |
+| `styleguide.html` | — | No se publica |
+
+Con esto, la hoja de estilos cubre las ocho. El único añadido que ha hecho falta
+es bajar el título de página de los 52 px de Dawn a los 48 del prototipo.
 
 ---
 
@@ -245,6 +564,10 @@ píxel entre prototipo y tienda:
 4. **Cabecera y logotipo** (§A-2) y **pie** (§A-4). Son cinco números.
 5. **Tarjeta de producto** (§A-3): Proveedor, Agregado rápido y Columnas. Y
    rellena el campo **Proveedor** de cada producto.
-6. Decide qué hacer con §D: dejarlo así o encargar la sección a medida.
+6. **Las páginas interiores** (§G), en este orden de rentabilidad: Contacto,
+   Preguntas frecuentes, Colección, Ficha de producto, Sobre nosotros, Blog. Lo
+   primero de cada una es **quitar la sección de la IA** que hay ahora.
+7. Decide qué hacer con §D: dejarlo así o encargar las secciones a medida. Lo de
+   cambiar de tema está contestado en §F: no hace falta.
 
 Después de esto vuelvo a medir y te digo si queda algo.
