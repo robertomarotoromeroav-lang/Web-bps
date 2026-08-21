@@ -122,7 +122,7 @@ Bloques:
 | Tarjeta → Mostrar segunda imagen al pasar el cursor | Desactivado | Hyperice no cambia de imagen: la amplía un 2 % |
 | Tarjeta → Proveedor | **Activado** | Es la categoría sobre el título. Pon la categoría en el campo **Proveedor** de cada producto; la hoja la sube encima del titular |
 | Tarjeta → Calificación del producto | Desactivado | |
-| Tarjeta → Agregado rápido | **Estándar** | La hoja lo convierte en el icono redondo de la fila del precio |
+| Tarjeta → Agregado rápido | **Estándar** | La hoja lo convierte en el icono de bolsa con «+» de la fila del precio. ⚠️ El botón de Dawn no trae icono: lo dibuja la hoja. Necesitas la versión con el arreglo B-9 de [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) o saldrá vacío |
 | Diseño móvil → Columnas | **`1`** | Para que la tarjeta se vea grande y la siguiente asome por el borde |
 | Diseño móvil → Carrusel | **Activado** | En móvil Hyperice pasa las tarjetas de lado, no las apila |
 | Relleno → Arriba / Abajo | **`80`** | El ritmo del prototipo son 160 px entre secciones: 80 abajo de una y 80 arriba de la siguiente. Dawn lo escala a 60 en móvil por su cuenta. Antes decía `0`: ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-1 |
@@ -177,7 +177,7 @@ Bloques:
 | Tarjeta → Mostrar segunda imagen al pasar el cursor | Desactivado | |
 | Tarjeta → Proveedor | **Activado** | Es la categoría sobre el título. Pon la categoría en el campo **Proveedor** de cada producto; la hoja la sube encima del titular |
 | Tarjeta → Calificación del producto | Desactivado | |
-| Tarjeta → Agregado rápido | **Estándar** | Igual que arriba |
+| Tarjeta → Agregado rápido | **Estándar** | Igual que arriba, incluido el aviso del arreglo B-9 |
 | Filtrado → Filtros | Activado | |
 | Filtrado → Diseño de filtro | Horizontal | Los filtros no los estiliza la hoja: saldrán con el aspecto de Dawn. Horizontal es el que menos canta |
 | Filtrado → Ordenación | Activado | |
@@ -298,8 +298,8 @@ el único sitio donde las versalitas son correctas, porque es el rótulo pequeñ
 | Encabezado | en caja baja | |
 | Utilidades → Seguir en Shop | **Desactivado** | Mete un botón con la marca Shop que rompe el monocromo |
 | Utilidades → Íconos de redes sociales | Activado | |
-| Utilidades → Selector de país o región | Activado | |
-| Utilidades → Selector de idioma | Activado | |
+| Utilidades → Selector de país o región | **Desactivado** | Mete una columna de 120px de alto en la barra inferior. Ya está en la barra de anuncios. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §A-5 |
+| Utilidades → Selector de idioma | **Desactivado** | |
 | Utilidades → Íconos de forma de pago | Activado | |
 | Utilidades → Enlaces a las políticas | Activado | |
 | Espaciado → Margen superior | `0` | El hueco antes del pie lo pone la hoja (§14), que fija 80px. Si lo pones aquí también, se suman |
@@ -345,7 +345,14 @@ al `{% schema %}` de esa sección.
 Los dos se pueden tener, con una vuelta:
 
 - **Agregado rápido → Estándar.** Dawn dibuja un botón ancho debajo del contenido;
-  la hoja lo recoloca como icono redondo en la fila del precio.
+  la hoja lo recoloca como icono de 24px en la fila del precio, a 20px de los
+  bordes del panel.
+
+  ⚠️ **El botón de Dawn no lleva ningún icono dentro**: solo el texto «Agregar al
+  carrito» y un indicador de carga. La hoja esconde ese texto, así que **el icono
+  lo dibuja ella misma** con una máscara. Si subes una versión de
+  `bps-hyperice.css` anterior al arreglo B-9 de
+  [PARTE 2](GUIA-SHOPIFY-PARTE-2.md), el botón sale como un círculo vacío.
 - **Proveedor → Activado**, y pon la categoría en el campo **Proveedor** de cada
   producto. Dawn lo pinta debajo del título; la hoja lo sube encima y lo deja en
   versalitas de 12px. No hay otra forma sin tocar `card-product.liquid`.

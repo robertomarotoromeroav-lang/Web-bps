@@ -35,8 +35,8 @@ esta parte corrige.
 
 | | Cuántas |
 |---|---|
-| Ajustes del editor pendientes de poner (§A) | 9 |
-| Fallos de la hoja, ya corregidos en el repositorio (§B) | 8 |
+| Ajustes del editor pendientes de poner (§A) | 11 |
+| Fallos de la hoja, ya corregidos en el repositorio (§B) | 13 |
 | Código de `theme.liquid` pendiente de aplicar (§C) | 2 |
 | Límites de Dawn que no se pueden igualar (§D) | 3 |
 
@@ -48,7 +48,7 @@ una a una las ocho páginas del prototipo.
 
 ## §A · Ajustes del editor que faltan
 
-Estos nueve valores explican la mayor parte de lo que se ve distinto. **Ninguno
+Estos once valores explican la mayor parte de lo que se ve distinto. **Ninguno
 necesita tocar código.**
 
 ### A-1. El espaciado entre secciones ⚠️ *(corrige la guía original)*
@@ -111,7 +111,7 @@ el HTML de la colección publicada: no hay ni un `caption-with-letter-spacing`
 | Dónde | Ajuste | Valor | Qué falta hoy |
 |---|---|---|---|
 | Colección / Colección destacada | Tarjeta → **Proveedor** | **Activado** | La categoría sobre el título no sale |
-| Colección / Colección destacada | Tarjeta → **Agregado rápido** | **Estándar** | El icono redondo de compra rápida no sale |
+| Colección / Colección destacada | Tarjeta → **Agregado rápido** | **Estándar** | El icono de compra rápida no sale. Ojo: hasta que no lo actives no se ve el fallo B-9 |
 | Colección | Diseño → **Columnas** | **`4`** | Salen 3 por fila; el prototipo pone 4 |
 
 Recuerda que la categoría se escribe en el campo **Proveedor** de cada producto
@@ -126,11 +126,22 @@ titular, en 12 px y versalitas.
 | Relleno → Abajo | **`24`** | Está en `36` |
 | Margen superior | `0` | Ya está bien; el aire lo da el relleno de la sección anterior |
 
+### A-5. Los selectores de país e idioma del pie
+
+| Ajuste | Valor | Por qué |
+|---|---|---|
+| Pie de página → Utilidades → **Selector de país o región** | **Desactivado** | Cada uno mete una columna de **120 px de alto** en la barra inferior. Ya están en la barra de anuncios, y el prototipo no los lleva aquí |
+| Pie de página → Utilidades → **Selector de idioma** | **Desactivado** | |
+
+Medido: con los dos puestos, la barra inferior del pie ocupa **189 px**; sin
+ellos, **112**. El prototipo tiene 51, y la diferencia que queda es contenido
+real, no un fallo: ver B-12.
+
 ---
 
 ## §B · Fallos de la hoja de estilos (ya corregidos)
 
-Estos ocho los ha destapado la medición y **ya están arreglados en
+Estos trece los ha destapado la medición y **ya están arreglados en
 `bps-hyperice.css`**. Hay que volver a subir la hoja (paso 3a de la guía) para
 que surtan efecto.
 
@@ -144,11 +155,38 @@ que surtan efecto.
 | **B-6. Párrafo del hero** | Blanco al 75 % | El gris `#cbcbcb` de la paleta |
 | **B-7. Rótulo de multicolumna** | Interlineado 1,2 | 1,15 |
 | **B-8. Ancho máximo del logotipo** | 200 px | 160 px, de acuerdo con el ajuste de A-2 |
+| **B-9. El botón de compra rápida salía VACÍO** 🔴 | Un círculo negro de 36 px sin nada dentro | Icono de bolsa con el «+» calado, de 24 px y sin fondo, en la fila del precio |
+| **B-10. Iconos de cabecera pegados** | Hueco `0`: las píldoras se tocaban | `4 px`, como el prototipo. Y el carrito ya no se sale del margen |
+| **B-11. Logotipo y menú pegados** | 20 px entre uno y otro (`column-gap: 2rem` de Dawn) | 56 px, los del prototipo |
+| **B-12. La barra inferior del pie, ilegible** | 242 px de alto, en dos filas apiladas, y los cuatro enlaces de políticas pegados sin separación | Una fila: legal a la izquierda, pagos a la derecha, con 16 px entre enlaces |
+| **B-13. Iconos de redes descentrados** | Sobrevivía el `padding: 1.1rem` de Dawn y el SVG medía 20×22 en un círculo de 30: se salía por la derecha | SVG de 15 px centrado, 7,5 px por los cuatro lados |
 
 Sobre B-3: no bastaba una regla para `.page-width`. Dawn tiene tres selectores
 que pesan más (`.utility-bar__grid.page-width`,
 `.header:not(.drawer-menu).page-width` y uno con `:has()` para la barra de
 anuncios) y el relleno no cambiaba. Ahora se sobreescriben los tres.
+
+**Sobre B-9, que es el más grave y explica por qué no lo habíamos visto antes.**
+El botón de compra rápida de Dawn **no lleva ningún icono**: dentro solo hay el
+texto «Agregar al carrito» y un indicador de carga. La hoja escondía ese texto
+con `font-size: 0` dando por hecho que debajo había un icono, así que el botón se
+quedaba completamente vacío. No salió en la comparación porque **el botón no
+existe hasta que se activa «Agregado rápido»** (§A-3), y en la tienda que medí
+todavía estaba apagado. Ahora el icono se dibuja en la propia hoja, con una
+máscara, para que herede el color en vez de ir clavado. De paso se ha corregido
+la geometría: era un círculo negro de 36 px sobre la imagen y el prototipo tiene
+un icono de 24 px sin fondo, a 20 px de los bordes del panel, en la misma fila
+que el precio.
+
+**Sobre B-12.** Dawn parte la barra inferior en dos envoltorios apilados, cada
+uno con `width: 100%` —por eso no se ponían uno al lado del otro—, y deja los
+enlaces de políticas en `display: inline`, sin ninguna separación. Ya está
+arreglado, pero **quedan dos filas en vez de una**, y eso no es un fallo: el
+aviso legal de la tienda mide 1 137 px porque lleva el «Tecnología de Shopify»
+que añade Shopify y **cuatro** enlaces de políticas, mientras el prototipo tiene
+tres y ningún añadido. No caben en una línea con las formas de pago al lado. Las
+dos filas quedan alineadas como en el prototipo: legal a la izquierda, pagos a
+la derecha.
 
 ---
 
@@ -563,7 +601,8 @@ píxel entre prototipo y tienda:
 2. **Arregla los dos scripts** de `theme.liquid` (§C). El del pie es urgente.
 3. **Espaciado** (§A-1): «Espacio entre las secciones» a `0` y luego el relleno
    sección por sección. Es lo que más se nota.
-4. **Cabecera y logotipo** (§A-2) y **pie** (§A-4). Son cinco números.
+4. **Cabecera y logotipo** (§A-2), **pie** (§A-4) y **apagar los dos selectores
+   del pie** (§A-5). Son cinco números y dos interruptores.
 5. **Tarjeta de producto** (§A-3): Proveedor, Agregado rápido y Columnas. Y
    rellena el campo **Proveedor** de cada producto.
 6. **Las páginas interiores** (§G), en este orden de rentabilidad: Contacto,

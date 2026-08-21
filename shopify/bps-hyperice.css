@@ -238,6 +238,29 @@ body:not(.bps-hero) #MainContent {
    los enlaces se pegan unos a otros. */
 .header__inline-menu .list-menu--inline { gap: 32px; }
 
+/* Aire entre los tres bloques de la cabecera. Dawn declara `column-gap: 2rem`
+   —20px— en `.header--middle-left`, y el prototipo separa el logotipo del menú
+   56px. El `:not(.drawer-menu)` pesa más que la clase de disposición de Dawn, y
+   la media query lo deja fuera de la cabecera móvil, que es una fila flex con su
+   propio hueco de 8px. */
+@media screen and (min-width: 990px) {
+  .header:not(.drawer-menu) { column-gap: 56px; }
+}
+
+/* Las píldoras de los iconos se tocaban: `.header__icons` es flex sin hueco, y
+   al fijarles 38px de ancho quedaban pegadas una a otra. El prototipo deja 4px.
+   Se quita también el `padding-right: 0.8rem` de Dawn para que el último icono
+   caiga en el margen de 30px, como en el prototipo. */
+.header__icons {
+  gap: 4px;
+  align-items: center;
+  padding-right: 0;
+}
+
+/* Y Dawn saca el carrito 12px fuera con `margin-right: -1.2rem`: la píldora se
+   comía el margen de 30px y quedaba a 18 del borde en vez de a 30. */
+.header__icon--cart { margin-right: 0; }
+
 .header__menu-item {
   padding: 8px 0;
   font-size: 14px;
@@ -638,31 +661,59 @@ button.shopify-payment-button__button--unbranded {
    Pendiente de mirar en la vista previa: es la regla más delicada de la hoja. */
 .card--card .card__content { position: relative; }
 
+/* Va en la esquina inferior derecha del panel, a la altura del precio: 20px de
+   cada borde, que es donde lo mide el prototipo. Antes estaba a 10px y con
+   36px de círculo negro; el prototipo es un icono de 24px sin fondo. */
 .card--card .quick-add {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 20px;
+  bottom: 20px;
   margin: 0;
   width: auto;
 }
 
+/* OJO: el botón de Dawn NO trae icono. Dentro solo hay el texto «Agregar al
+   carrito» y un indicador de carga, así que con `font-size: 0` —que es lo que
+   esconde ese texto— el botón se quedaba COMPLETAMENTE VACÍO: un círculo negro
+   sin nada. El icono se dibuja aquí, en un ::before con máscara, para que herede
+   el color con `currentColor` en vez de ir clavado.
+   `border: 0` es necesario porque Dawn le pone la clase `button--secondary`, que
+   desde el arreglo B-1 dibuja el borde en `currentColor`: sin esto se veía un
+   aro alrededor del icono. */
 .card--card .quick-add__submit {
-  width: 36px;
-  min-width: 36px;
-  height: 36px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
   padding: 0;
-  border-radius: 62.5rem;
+  border: 0;
+  border-radius: 0;
   font-size: 0;
-  background-color: var(--bps-black);
-  color: var(--bps-white);
+  background-color: transparent;
+  color: var(--bps-black);
   box-shadow: none;
 }
 
-.card--card .quick-add__submit .icon,
-.card--card .quick-add__submit svg { width: 16px; height: 16px; }
+.card--card .quick-add__submit::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  background-color: currentColor;
+  /* La bolsa con el «+» calado, en un solo trazado con `evenodd`: así el hueco
+     del signo deja ver el fondo de la tarjeta, igual que en el prototipo. */
+  --bps-icono-compra: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M2 5h20l-1 18H3L2 5Zm9.2 5.5h1.6v3.2H16v1.6h-3.2v3.2h-1.6v-3.2H8v-1.6h3.2v-3.2Z'/%3E%3C/svg%3E");
+  -webkit-mask: var(--bps-icono-compra) center / 24px 24px no-repeat;
+  mask: var(--bps-icono-compra) center / 24px 24px no-repeat;
+}
+
+/* El indicador de carga de Dawn mide 1.8rem y desbordaría el icono de 24px. */
+.card--card .quick-add__submit .loading__spinner { width: 16px; height: 16px; }
 
 .card--card .quick-add__submit:not([aria-disabled='true']):hover {
-  background-color: var(--bps-grey-500);
+  background-color: transparent;
+  color: var(--bps-grey-500);
 }
 
 /* Zoom muy contenido: Hyperice usa 1.02, nunca un salto brusco. */
@@ -943,16 +994,33 @@ button.shopify-payment-button__button--unbranded {
   line-height: 1.4;
 }
 
+/* El círculo estaba bien, pero el icono salía descentrado y desbordando por la
+   derecha: sobrevivía el `padding: 1.1rem` de Dawn y el SVG medía 20×22 dentro
+   de un círculo de 30. Medido: 11px de hueco a la izquierda y −1 a la derecha.
+   Con `place-items: center`, relleno 0 y el SVG a 15px queda centrado, como en
+   el prototipo. */
 .footer .list-social__link {
+  display: grid;
+  place-items: center;
   border: 0;
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  padding: 0;
   background-color: var(--bps-footer-bg-2);
   color: var(--bps-white);
 }
 
+.footer .list-social__link .svg-wrapper,
+.footer .list-social__link svg {
+  width: 15px;
+  height: 15px;
+}
+
 .footer .list-social__link:hover { background-color: var(--bps-white); color: var(--bps-black); }
+
+/* La lista tampoco tenía hueco: los círculos se tocaban. */
+.footer .list-social { gap: 10px; }
 
 .footer .newsletter-form__field-wrapper .field__input {
   height: 60px;
@@ -960,6 +1028,77 @@ button.shopify-payment-button__button--unbranded {
   border-color: transparent;
   background-color: var(--bps-footer-bg-2);
   color: var(--bps-white);
+}
+
+/* --------------------------------------------------------------------------
+   Barra inferior del pie
+   Medido: en la tienda ocupa 242px de alto y en el prototipo 51. Dawn la parte
+   en DOS envoltorios apilados —uno con los selectores y las formas de pago, y
+   otro con el aviso legal— y además deja `.policies` en `display: inline`, así
+   que los cuatro enlaces de políticas salían pegados unos a otros sin separación.
+
+   Aquí se juntan los dos envoltorios en una sola fila: legal a la izquierda y
+   formas de pago a la derecha, como en el prototipo. El ancho de página pasa al
+   contenedor para que la línea divisoria no vaya a sangre y para que en
+   pantallas anchas siga centrada con el resto del pie.
+
+   ⚠️ Además hay que APAGAR «Selector de país o región» y «Selector de idioma»
+   en el pie: cada uno mete una columna de 120px de alto que el prototipo no
+   tiene. Ver PARTE 2 §A-5.
+   -------------------------------------------------------------------------- */
+
+.footer__content-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-top: 24px;
+  padding-inline: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .footer__content-bottom { padding-inline: 30px; }
+}
+
+/* Los envoltorios ya no llevan el ancho: lo lleva el padre. El `width: auto` es
+   imprescindible —Dawn les pone `width: 100%`, y por eso las dos filas se
+   apilaban en vez de ponerse una al lado de la otra—. Lo mismo con las columnas
+   de dentro. */
+.footer__content-bottom > .footer__content-bottom-wrapper,
+.footer__content-bottom .footer__column {
+  width: auto;
+  margin-inline: 0;
+  padding-inline: 0;
+  max-width: 100%;
+}
+
+.footer__content-bottom .footer__column { padding-top: 0; }
+.footer__content-bottom .footer__copyright { margin-top: 0; }
+
+/* El aviso legal es el segundo en el HTML y va a la izquierda; las formas de
+   pago, a la derecha.
+
+   Las dos filas no siempre caben en una: el aviso legal de la tienda mide 1137px
+   —lleva el «Tecnología de Shopify» de Shopify y cuatro enlaces de políticas,
+   mientras el prototipo solo tiene tres—, así que normalmente se parten en dos
+   líneas. El `margin-left: auto` mantiene los pagos pegados a la derecha
+   también cuando caen en su propia línea. */
+.footer__content-bottom > .footer__content-bottom-wrapper:last-child { order: -1; }
+.footer__content-bottom > .footer__content-bottom-wrapper:first-child { margin-left: auto; }
+
+.footer__copyright,
+.footer__content-bottom .policies {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  list-style: none;
 }
 
 /* En móvil las columnas se colapsan tras un botón con +/-. Dawn ya usa
