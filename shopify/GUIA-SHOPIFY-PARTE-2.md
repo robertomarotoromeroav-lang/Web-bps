@@ -271,7 +271,9 @@ validar el resultado.
 ### Lo que recomiendo
 
 **Quedarse en Dawn y resolver §D con una sección a medida.** Sale más barato que
-cambiar de tema:
+cambiar de tema. El prompt para encargarlas, con las reglas que obligan a la IA a
+usar la configuración del tema en vez de traerse la suya, está en
+**[`PROMPT-SECCIONES.md`](PROMPT-SECCIONES.md)**:
 
 - **D-2 (tarjeta de categoría con icono y botón)** es el que más se nota, porque
   está en la home. Un archivo `sections/bps-categorias.liquid` con cuatro
@@ -567,7 +569,8 @@ píxel entre prototipo y tienda:
 6. **Las páginas interiores** (§G), en este orden de rentabilidad: Contacto,
    Preguntas frecuentes, Colección, Ficha de producto, Sobre nosotros, Blog. Lo
    primero de cada una es **quitar la sección de la IA** que hay ahora.
-7. Decide qué hacer con §D: dejarlo así o encargar las secciones a medida. Lo de
-   cambiar de tema está contestado en §F: no hace falta.
+7. Decide qué hacer con §D: dejarlo así o encargar las secciones a medida con el
+   prompt de [`PROMPT-SECCIONES.md`](PROMPT-SECCIONES.md). Lo de cambiar de tema
+   está contestado en §F: no hace falta.
 
 Después de esto vuelvo a medir y te digo si queda algo.
