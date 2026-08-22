@@ -1291,8 +1291,8 @@ Reproduciendo la página publicada en local con la hoja nueva, a 1440px:
 
 | | Prototipo | Tienda |
 |---|---|---|
-| Título de página | x=30 · 480,3 de ancho · 48px | x=30 · 480,3 · 48px |
-| Entradilla | gris `#505050` | gris `#505050` |
+| Título de página | x=30 · 1380 de ancho · 48px · una línea | x=30 · 1380 · 48px · una línea |
+| Entradilla | gris `#505050` · 1380 de ancho | gris `#505050` · 1380 |
 | Campo de texto | 520×45,6 · borde 1px `#dfdfdf` · radio 4 · sangría 16px | 520×46 · borde 1px `#dfdfdf` · radio 4 · sangría 16px |
 | Etiqueta | 14px · peso 500 · encima del campo | 14px · peso 500 · encima del campo |
 | Botón de enviar | x=30 · 160×40 · negro | x=30 · 160×40 · negro |
@@ -1399,8 +1399,8 @@ simulados:
 
 | | Prototipo | PageFly |
 |---|---|---|
-| Título | x=30 · 480,3 de ancho · 48px | x=30 · 480,3 · 48px |
-| Entradilla | gris `#505050` · 516 de ancho | gris `#505050` · 516 |
+| Título | x=30 · 1380 de ancho · 48px · una línea | x=30 · 1380 · 48px · una línea |
+| Entradilla | gris `#505050` · 1380 de ancho | gris `#505050` · 1380 |
 | Franja de la cabecerita | `#f7f5f5` | `#f7f5f5` |
 | Campo | 520 de ancho · 45,6 de alto · borde 1px `#dfdfdf` · radio 4 | 520 · 46 · 1px `#dfdfdf` · radio 4 |
 | Etiqueta | 14px · peso 500 | 14px · peso 500 |
@@ -1436,25 +1436,36 @@ cae en **x=756 con 654 de ancho** y el prototipo mide **x=756 con 654**: exacto.
 > que guardas**. Las secciones que en la primera versión eran `pf-10_` y `pf-12_`
 > ahora son `pf-31_` y `pf-33_`. Por eso §24 no las usa.
 
-### El título y la entradilla en dos líneas: es lo correcto
+### El titular y la entradilla, a ancho de página ⚠️ *(cambio de diseño)*
 
-No es un fallo. El prototipo limita el titular a **18 caracteres de ancho** y la
-entradilla a **58**, para que no se lean de lado a lado de una pantalla de 1440.
-Medido en los dos: titular 480,3px y **dos líneas**; entradilla 516,1px y **dos
-líneas**. Sale igual en la tienda y en el prototipo.
+El titular y la entradilla de las cabeceritas estaban limitados a **18 y 58
+caracteres** —la medida de lectura que usa Hyperice—, así que salían en dos
+líneas con media página vacía a la derecha. **Por decisión de diseño de BPS ahora
+van al ancho del contenedor**, con los mismos márgenes laterales que el resto del
+contenido: 30px en escritorio, 15 en móvil.
 
-Lo que sí faltaba —y ya está corregido en la hoja— es que el prototipo reparte
-las líneas de los titulares con `text-wrap: balance` y esta hoja no lo tenía. Sin
-él el corte salía «Hablemos de tu / recuperación» y con él «Hablemos de / tu
-recuperación», que es el del prototipo. Va en el apartado 6, así que **afecta a
-todos los titulares de la web**, no solo a esta página: ninguno queda con una
-sola palabra en la última línea.
+El cambio está hecho **en los tres sitios**, para que los dos lados sigan
+midiendo igual:
 
-Si aun así lo quieres en **una sola línea**, no hace falta tocar la hoja: quita
-la clase `page-head__title` del `<h1>` del bloque de HTML personalizado y déjalo
-solo con `h2`. Ocupará los 1380px de ancho. No lo recomiendo —un titular de 48px
-a lo ancho de la pantalla se lee peor y no es lo que hace ni Hyperice ni el
-prototipo—, pero es un cambio de una palabra.
+| Dónde | Qué |
+|---|---|
+| `bps-hyperice.css` §23 | `.main-page-title` y su entradilla — las páginas de Dawn (contacto, FAQ, sobre nosotros…) |
+| `bps-hyperice.css` §24 | `.page-head__title` y `.page-head__text` — el HTML pegado en PageFly |
+| `assets/css/layout.css` | Lo mismo en el prototipo, que es la referencia con la que se mide |
+
+Medido a 1440 después del cambio: titular en **x=30 con 1380 de ancho y una sola
+línea**, entradilla igual. Idéntico en la página de PageFly, en la de Dawn y en
+las cuatro páginas del prototipo que llevan cabecerita (contacto, productos,
+preguntas frecuentes y blog). A 390 no hay desbordes.
+
+Y una cosa que sí faltaba en la hoja: el prototipo reparte las líneas de los
+titulares con `text-wrap: balance` y aquí no estaba. Ahora está en el apartado 6,
+así que **afecta a todos los titulares de la web**: cuando uno ocupe dos líneas,
+no se quedará una sola palabra en la última.
+
+> Si algún titular largo te acaba resultando incómodo de leer a 1380px, el
+> término medio es limitarlo en el propio bloque de HTML personalizado con un
+> `style="max-width:900px"`, sin tocar la hoja ni el resto de las páginas.
 
 ### Contenido que aún no coincide con el prototipo
 

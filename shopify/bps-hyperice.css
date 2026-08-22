@@ -1831,12 +1831,13 @@ button.shopify-payment-button__button--unbranded {
   background-color: var(--bps-off-white);
 }
 
-/* El texto se limita con `ch`, como en el prototipo: el contenedor va a ancho
-   completo pero el titular y la entradilla no se estiran. */
-.main-page-title { max-width: 18ch; }
-
+/* Titular y entradilla al ancho del contenedor. Estuvieron limitados a 18 y 58
+   caracteres —la medida de lectura del prototipo—, pero deja el titular en dos
+   líneas y media página vacía a la derecha; por decisión de diseño van al ancho
+   de la página, con los mismos márgenes que el resto del contenido. Cambiado
+   también en el prototipo (`assets/css/layout.css`) para que los dos lados
+   sigan midiendo igual. */
 .main-page-title + .rte {
-  max-width: 58ch;
   margin-top: 20px;
   color: var(--bps-grey-500);
 }
@@ -1958,11 +1959,11 @@ button.shopify-payment-button__button--unbranded {
 .__pf h6, .__pf .h6 { font-size: 18px; }
 
 /* Cabecerita de página. La franja hueso la pone el fondo de la sección en el
-   editor (§M), aquí van las medidas del texto. */
-.__pf .page-head__title { max-width: 18ch; margin-top: 12px; }
+   editor (§M), aquí van las medidas del texto. Titular y entradilla al ancho del
+   contenedor: ver la nota del apartado 23. */
+.__pf .page-head__title { margin-top: 12px; }
 
 .__pf .page-head__text {
-  max-width: 58ch;
   margin-top: 20px;
   color: var(--bps-grey-500);
 }

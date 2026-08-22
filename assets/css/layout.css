@@ -326,14 +326,18 @@
   background-color: var(--color-off-white);
 }
 
+/* El titular y la entradilla van al ancho del contenedor, con los mismos
+   márgenes laterales que el resto del contenido de la página. Antes estaban
+   limitados a 18 y 58 caracteres —la medida de lectura de Hyperice—, que dejaba
+   el titular en dos líneas y media página en blanco a la derecha. Decisión de
+   diseño de BPS, cambiada también en la hoja de Shopify (§23 y §24) para que los
+   dos lados sigan midiendo igual. */
 .page-head__title {
   margin-top: 12px;
-  max-width: 18ch;
 }
 
 .page-head__text {
   margin-top: 20px;
-  max-width: 58ch;
   color: var(--color-foreground-secondary);
 }
 
