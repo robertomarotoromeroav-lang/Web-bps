@@ -45,7 +45,8 @@ tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar 
 una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
 y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**, sus dos remates; **§I**,
 cómo actualizar el tema sin rehacer todo el trabajo; **§J**, los iconos del
-menú del pie; y **§K**, las formas de pago en escala de grises.
+menú del pie; **§K**, las formas de pago en escala de grises; y **§L**, la página
+de contacto, que salió descolocada y ya está cuadrada.
 
 ---
 
@@ -425,8 +426,8 @@ cabecerita del prototipo, no hay que montarla a mano.
 
 | # | Sección | Ajustes |
 |---|---|---|
-| 1 | **Página** | Esquema de colores **Esquema 2** (`#F7F5F5`) · Relleno Arriba **`56`** / Abajo **`40`** |
-| 2 | **Formulario de contacto** | Encabezado `Escríbenos` · Tamaño del título **Mediano** · Esquema 1 · Relleno `80` / `80` |
+| 1 | **Página** | Relleno Arriba **`56`** / Abajo **`40`**. ⚠️ Esta sección **no tiene ajuste de esquema de color**: la franja hueso `#F7F5F5` la pone la hoja de estilos (§L) |
+| 2 | **Formulario de contacto** | Encabezado `Escríbenos` —o vacío, que es lo que hace el prototipo— · Esquema 1 · Relleno `80` / `80`. El tamaño del título da igual: la hoja lo fija a 32px (§L) |
 | 3 | **Texto enriquecido** | Ver el detalle abajo |
 
 Los `56` / `40` del relleno no son arbitrarios: son los que mide la cabecerita
@@ -458,7 +459,7 @@ completo desactivado, Relleno `0` arriba / `80` abajo.
 
   ```liquid
   <div class="field">
-    <label class="form__label" for="ContactForm-interes">¿Qué te interesa?</label>
+    <label class="field__label" for="ContactForm-interes">¿Qué te interesa?</label>
     <select id="ContactForm-interes" class="select__select" name="contact[Interés]">
       <option>Presoterapia</option>
       <option>Terapia de luz roja</option>
@@ -1248,6 +1249,70 @@ exactas, el camino es ese y está apuntado.
 > PayPal) tienen normas de marca sobre cómo mostrar sus logos, y algunas piden los
 > colores originales. En la práctica muchas tiendas los ponen en monocromo y no
 > pasa nada, pero la decisión es vuestra, no mía.
+
+---
+
+## §L · La página de contacto, ya cuadrada
+
+Montaste la página siguiendo §G-2 y salió descolocada. **No era la configuración:
+eran cinco cosas de la hoja de estilos**, y las cinco están ya corregidas. Vuelve
+a subir `bps-hyperice.css` y la página queda como el prototipo. No hay que cambiar
+ni un ajuste del editor.
+
+Esto es lo que pasaba, medido en la página publicada contra el prototipo a
+1440px:
+
+| Lo que se veía | Por qué | Arreglo |
+|---|---|---|
+| Todo el contenido centrado en una columna estrecha, sin alinearse con el resto de la web | Dawn mete la sección «Página» y la de «Formulario de contacto» en `page-width--narrow`: **726px centrados**. El titular arrancaba en x=357 y en el prototipo va en x=30 | §23: esas dos secciones pasan al ancho de página normal |
+| **Los campos no se veían**: solo la etiqueta y un hueco en blanco | Dawn no le pone borde al campo (`border: 0`); el trazo lo dibuja el pseudoelemento `.field::after`, que va pegado a los cuatro lados de `.field`. Al subir la etiqueta encima, `.field` pasó a medir 73,6px y el recuadro envolvía etiqueta **y** campo. Y encima la hoja le apagaba la sombra que lo hacía visible | Borde **real** en el campo: 1px `#dfdfdf`, radio 4. Igual que el prototipo |
+| Nombre y Correo en dos columnas | Dawn los reparte a partir de 750px | Un campo por fila |
+| Las etiquetas dentro del campo, subiendo al escribir | Etiqueta flotante de Dawn | Etiqueta fija encima, 14px, peso 500 |
+| «Escríbenos» enorme, más grande que el título de la página | El rótulo sale con la clase de tamaño del editor y con `h1` son **65px**, encima del `<h1>` de verdad | Fijado a 32px (el tamaño h4 del prototipo), sin depender del ajuste |
+| El bloque «Atención 24/7» más metido que el resto | La hoja le daba relleno al envoltorio del texto enriquecido **y** al contenedor de la sección: se sumaban. Medido: x=60 en vez de x=30 | §17 reescrito: el relleno lo pone solo quien lleva `page-width` |
+| La lista de enlaces con viñetas | Dawn saca el punto de serie | Filas con una línea fina entre ellas, como el `.checklist` del prototipo |
+
+**Dos correcciones a §G-2**, que estaba mal en dos puntos:
+
+- ❌ «Sección Página → Esquema de colores **Esquema 2**». **La sección «Página» de
+  Dawn no tiene ajuste de esquema de color**, solo relleno. La franja hueso de la
+  cabecerita se pone desde la hoja (§23) y ya está puesta: no busques ese
+  desplegable, no existe.
+- La fila «Tamaño del título **Mediano**» del formulario ya no importa: el rótulo
+  va a 32px con cualquier valor.
+
+### Comprobado
+
+Reproduciendo la página publicada en local con la hoja nueva, a 1440px:
+
+| | Prototipo | Tienda |
+|---|---|---|
+| Título de página | x=30 · 480,3 de ancho · 48px | x=30 · 480,3 · 48px |
+| Entradilla | gris `#505050` | gris `#505050` |
+| Campo de texto | 520×45,6 · borde 1px `#dfdfdf` · radio 4 · sangría 16px | 520×46 · borde 1px `#dfdfdf` · radio 4 · sangría 16px |
+| Etiqueta | 14px · peso 500 · encima del campo | 14px · peso 500 · encima del campo |
+| Botón de enviar | x=30 · 160×40 · negro | x=30 · 160×40 · negro |
+| «Atención 24/7» | x=755 (columna derecha) | x=30 (apilado) · una sola línea |
+| Filas de enlaces | raya `#dfdfdf` solo entre filas · 18px arriba y abajo | igual |
+
+A 390px no hay desbordamiento: todo a 15px del borde y el formulario a 360 de
+ancho.
+
+### Lo que sigue sin salir igual, y no es un fallo de estilos
+
+- **No hay dos columnas.** Dawn apila las secciones: el formulario arriba y
+  «Atención 24/7» debajo. Esto ya estaba avisado en §G-2 y sigue igual: para las
+  dos columnas hace falta una sección a medida
+  ([`PROMPT-SECCIONES.md`](PROMPT-SECCIONES.md)).
+- **Los iconos de las tres filas** (sobre, reloj, chincheta) no se pueden meter:
+  el texto enriquecido no admite marcado. Las filas van sin icono.
+- **El desplegable «¿Qué te interesa?»** sigue sin existir y sobra el campo de
+  teléfono (§D-3 y el fragmento de §G-2). Si añades el desplegable a mano,
+  ponle a la etiqueta la clase `field__label` y quedará colocada sola.
+- **El rótulo «Escríbenos»** no está en el prototipo, que entra directo al
+  formulario. Si lo quieres exacto, deja vacío el campo «Encabezado» de la
+  sección; si lo dejas, ahora sale al tamaño correcto.
+- **La miga de pan** («Inicio / Contacto») no la saca Dawn en las páginas.
 
 ---
 

@@ -813,6 +813,16 @@ button.shopify-payment-button__button--unbranded {
 .media,
 .global-media-settings { border-radius: 2px; }
 
+/* Los campos de Dawn NO tienen borde propio: llevan `border: 0` y el trazo que
+   se ve lo dibuja el pseudoelemento `.field::after` con un `box-shadow` de
+   difuminado cero. Ese apaño tiene dos problemas aquí: el grosor sale del ajuste
+   del tema en vez de la paleta, y —al ser un pseudoelemento absoluto pegado a los
+   cuatro lados de `.field`— si el campo cambia de forma, el trazo se estira con
+   él. Es exactamente lo que pasaba en la página de contacto: al poner la etiqueta
+   encima (§23) el `.field` medía 73,6px y el recuadro envolvía etiqueta y campo.
+
+   Así que se apaga la sombra y el borde se pone REAL, en el propio campo, con el
+   gris de la paleta: 1px, `--bps-stroke`, radio 4, como en el prototipo. */
 .field__input,
 .select__select,
 .customer .field input,
@@ -825,6 +835,32 @@ button.shopify-payment-button__button--unbranded {
 .select:after,
 .field__input:focus,
 .select__select:focus { box-shadow: none; }
+
+/* El borde va SOLO en los campos de formulario: contacto y las páginas de
+   cuenta. Se dejan fuera a propósito dos controles de Dawn que en el prototipo no
+   existen y que sin caja se ven mejor —comprobado poniéndoselo—: el buscador de
+   la cabecera, que va sobre fondo negro, y el «Ordenar por» de las colecciones,
+   que mide 23px de alto y con recuadro parece un campo roto. */
+.contact .field__input,
+.contact .select__select,
+.customer .field input,
+.customer .field__input,
+.customer select,
+.customer .select__select {
+  border: 1px solid var(--bps-stroke);
+}
+
+/* Al foco, el borde se va a negro; el prototipo hace lo mismo
+   (`.input:focus { border-color: var(--color-foreground) }`). */
+.contact .field__input:focus,
+.contact .select__select:focus,
+.customer .field input:focus,
+.customer .field__input:focus,
+.customer select:focus,
+.customer .select__select:focus {
+  border-color: rgb(var(--color-foreground));
+  outline: 0;
+}
 
 .newsletter-form__field-wrapper .field__input { border-radius: 4px; }
 
@@ -1325,15 +1361,35 @@ button.shopify-payment-button__button--unbranded {
    sección. Dawn lo maqueta con dos medidas propias que lo descuadran del resto
    de la web:
 
-   - El envoltorio no usa el ancho de página. Con «Ancho completo» activado va a
-     `width: 100%` y el titular arranca en x=0, pegado al borde; sin él, Dawn
-     deja 40px de margen en vez de los 30 de las demás secciones. Medido: los
-     titulares de sección empiezan en x=30 y este en x=0.
+   - El envoltorio no usa el ancho de página: Dawn le da
+     `width: calc(100% - 8rem / var(--font-body-scale))` y lo centra, o sea 40px de
+     margen a cada lado en vez de los 30 de las demás secciones.
    - `.rich-text__blocks` lleva `max-width: 78rem`, o sea 780px. Un titular de
      48px como «Recuperación, rendimiento y resultados» no cabe y se parte en
      tres líneas cuando en el prototipo va en una.
+
+   Hay que distinguir los dos montajes que hace Dawn según el ajuste «Ancho
+   completo», porque el contenedor de página cambia de sitio:
+
+     Ancho completo NO → <div class="isolate page-width">     ← el marco va aquí
+                           <div class="rich-text …">
+                             <div class="rich-text__wrapper">
+     Ancho completo SÍ → <div class="isolate">
+                           <div class="rich-text rich-text--full-width …">
+                             <div class="rich-text__wrapper page-width">  ← y aquí
+
+   La primera versión de este apartado le ponía el relleno al envoltorio sin
+   mirar eso, y en el caso de «Ancho completo NO» se sumaba al del padre: medido
+   en la página de contacto, el titular arrancaba en x=60 en vez de x=30.
+
+   Se resuelve en dos pasos: se le da el marco de página al envoltorio —para los
+   montajes en los que nadie se lo pone— y se le quita cuando ya lo trae de un
+   antepasado. Repartido así funciona también en Dawn 15, donde con «Ancho
+   completo» activado el envoltorio NO recibía la clase `page-width` y el titular
+   se quedaba pegado al borde. Ver PARTE 2 §I.
    -------------------------------------------------------------------------- */
 
+/* Los dos selectores repiten los de Dawn para ganarle en peso a su `calc()`. */
 .rich-text__wrapper,
 .rich-text:not(.rich-text--full-width) .rich-text__wrapper {
   width: 100%;
@@ -1349,12 +1405,38 @@ button.shopify-payment-button__button--unbranded {
   }
 }
 
+/* Y si el marco ya lo pone un antepasado, no se repite. Cuatro clases para
+   ganarle a las tres de la regla de arriba. */
+.page-width .rich-text:not(.rich-text--full-width) .rich-text__wrapper {
+  max-width: none;
+  padding-inline: 0;
+}
+
 /* El titular puede ocupar todo el ancho; el texto corrido no, que a 1380px se
    lee mal. */
 .rich-text__blocks { max-width: none; }
 
 .rich-text__blocks .rich-text__text,
 .rich-text__blocks .rich-text__caption { max-width: 58ch; }
+
+/* Las listas escritas en el editor. El prototipo no usa viñetas: en estas
+   páginas —contacto, «sobre nosotros»— las listas son filas separadas por una
+   línea fina (`.checklist`, medido: 18px arriba y abajo, raya solo ENTRE
+   elementos). Dawn deja el punto de serie y en la página de contacto quedaba una
+   lista con viñetas donde el prototipo tiene tres filas.
+
+   Los iconos de cada fila no se pueden reproducir: el texto enriquecido no deja
+   meter marcado, así que las filas van sin icono. */
+.rich-text__text ul,
+.rich-text__text ol {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rich-text__text li { padding-block: 18px; }
+
+.rich-text__text li + li { border-top: 1px solid var(--bps-stroke); }
 
 /* --------------------------------------------------------------------------
    18. Reparto del pie
@@ -1704,3 +1786,114 @@ button.shopify-payment-button__button--unbranded {
 /* Si se prefiere que la fila de pagos pese menos, añadir `opacity(0.75)` al
    filtro. No se pone de serie porque baja algo la legibilidad de las marcas:
    .footer .list-payment svg { filter: grayscale(1) opacity(0.75); } */
+
+/* --------------------------------------------------------------------------
+   23. Páginas del panel y formulario de contacto
+   Dawn mete estas dos secciones —«Página» y «Formulario de contacto»— en su
+   columna estrecha: `page-width--narrow`, que son 72,6rem centradas. Medido en
+   la página de contacto publicada: el titular arrancaba en x=357 con 726px de
+   ancho, cuando en el prototipo va en x=30 y a ancho completo. Eso es lo que hace
+   que la página se vea descolocada respecto al resto del sitio.
+
+   El apartado de márgenes de arriba deja `--narrow` fuera a propósito, porque es
+   el ancho de lectura de artículos y notas legales y ahí sí interesa. Así que se
+   corrige solo en estas dos.
+
+   El formulario de Dawn además usa ETIQUETA FLOTANTE —la etiqueta va dentro del
+   campo en posición absoluta y sube al escribir— y pone Nombre y Correo en dos
+   columnas. El prototipo apila los campos y pone la etiqueta encima, fija.
+   -------------------------------------------------------------------------- */
+
+/* Ancho completo para la cabecerita de página y para el formulario. */
+.page-width--narrow:has(> .main-page-title),
+.contact.page-width--narrow {
+  max-width: var(--page-width);
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .page-width--narrow:has(> .main-page-title),
+  .contact.page-width--narrow {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+/* La franja hueso de `.page-head`. La sección «Página» de Dawn NO tiene ajuste de
+   esquema de color —solo relleno—, así que no se puede poner desde el editor. */
+.shopify-section:has(> .page-width--narrow > .main-page-title) {
+  background-color: var(--bps-off-white);
+}
+
+/* El texto se limita con `ch`, como en el prototipo: el contenedor va a ancho
+   completo pero el titular y la entradilla no se estiran. */
+.main-page-title { max-width: 18ch; }
+
+.main-page-title + .rte {
+  max-width: 58ch;
+  margin-top: 20px;
+  color: var(--bps-grey-500);
+}
+
+/* El titular de la sección «Formulario de contacto» sale con la clase de tamaño
+   que se elija en el editor, y con la de más arriba —`h1`— son 65px: en la página
+   publicada medía eso, del tamaño de un titular de portada, encima del `<h1>` de
+   verdad de la página. En el prototipo ese rótulo va al tamaño h4, 32px. Se fija
+   aquí para que no dependa del ajuste. */
+.contact > .title {
+  margin: 0 0 24px;
+  font-size: clamp(24px, 2.22222vw, 32px);
+  line-height: 1.15;
+}
+
+/* --- El formulario ------------------------------------------------------- */
+
+.contact form { max-width: 520px; }
+
+/* Un campo por fila, como el prototipo. Dawn los pone en dos columnas a partir
+   de 750px. */
+.contact__fields { display: block; }
+
+/* Etiqueta encima y fija, en vez de flotando dentro del campo.
+
+   En el HTML de Dawn el <input> va ANTES que la <label> —así funciona la etiqueta
+   flotante—, así que hay que darle la vuelta. Se hace con `order: -1` en la
+   etiqueta y no con `column-reverse`: si algún día se añade un campo a mano con la
+   etiqueta primero (el desplegable de PARTE 2 §G-2), `column-reverse` lo pondría
+   del revés y `order` lo deja bien en los dos casos. */
+.contact .field {
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.contact .field__label,
+.contact .field .form__label {
+  order: -1;
+  position: static;
+  transform: none;
+  top: auto;
+  left: auto;
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgb(var(--color-foreground));
+}
+
+/* Tres selectores de clase para ganar a las variantes `:focus` y
+   `:not(:placeholder-shown)` de Dawn, que suben el relleno superior a 2.2rem
+   para hacerle sitio a la etiqueta flotante que aquí ya no está. */
+.contact .field .field__input {
+  height: 46px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.contact .field textarea.field__input {
+  height: 140px;
+  padding: 12px 16px;
+}
+
+.contact__button { margin-top: 28px; }
