@@ -1400,9 +1400,6 @@ button.shopify-payment-button__button--unbranded {
     /* 320px + 66% reproduce el reparto del prototipo; el hueco que sobra lo
        reparte `space-between`, que es lo que hace su flex. */
     grid-template-columns: 320px 66%;
-    grid-template-areas:
-      "lado boletin"
-      "lado menus";
     justify-content: space-between;
     row-gap: 40px;
     align-items: start;
@@ -1410,19 +1407,28 @@ button.shopify-payment-button__button--unbranded {
 
   .footer__content-top > .footer-block--newsletter { display: contents; }
 
+  /* Se colocan por fila y columna en vez de por áreas: son cuatro piezas y la
+     columna estrecha lleva dos, una debajo de la otra. Con áreas habría que
+     hacer que `lado` ocupara dos filas y las dos piezas se pisarían.
+
+     Fila 1:  caja de contacto  |  boletín
+     Fila 2:  redes sociales    |  columnas de menú */
+  .footer__content-top .bps-ayuda           { grid-column: 1; grid-row: 1; }
+  .footer__content-top .footer__list-social { grid-column: 1; grid-row: 2; }
+
   .footer__content-top .footer-block__newsletter {
-    grid-area: boletin;
+    grid-column: 2;
+    grid-row: 1;
     max-width: none;
     margin: 0;
   }
 
+  .footer__content-top > .footer__blocks-wrapper { grid-column: 2; grid-row: 2; }
+
   .footer__content-top .footer__list-social {
-    grid-area: lado;
     justify-content: flex-start;
     margin: 0;
   }
-
-  .footer__content-top > .footer__blocks-wrapper { grid-area: menus; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1471,6 +1477,33 @@ button.shopify-payment-button__button--unbranded {
   flex: 1 1 260px;
   max-width: none;
   width: auto;
+}
+
+/* OJO: el botón NO es hermano del campo. En el árbol de Dawn cuelga de `.field`,
+   junto al <input>:
+
+     form.footer__newsletter
+       div.newsletter-form__field-wrapper
+         div.field
+           input.field__input
+           label.field__label      (flotante, en absoluto)
+           button.newsletter-form__button
+
+   Así que el `gap: 8px` del formulario no cae entre el campo y el botón —el
+   formulario solo tiene un hijo—, y por eso quedaban pegados: medido 1px, que era
+   el borde del input. Y `.field` viene en `align-items: normal`, o sea estirado,
+   con lo que el botón de 40px se alineaba arriba en un campo de 60: 11px
+   descentrado. El hueco y el centrado tienen que ir aquí. */
+.footer__newsletter .field {
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__newsletter .field__input {
+  flex: 1 1 auto;
+  /* Dawn le mete `padding-right: 5rem` para dejar sitio a la flecha que iba
+     encima. Con el botón fuera, esos 50px eran hueco muerto. */
+  padding-right: 16px;
 }
 
 /* El botón sale del campo: deja de ser absoluto y pasa a píldora del sistema.
@@ -1523,4 +1556,66 @@ button.shopify-payment-button__button--unbranded {
   font-size: inherit;
   color: var(--bps-white);
   text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   20. Caja de contacto del pie
+   La del prototipo: «¿Tienes alguna otra pregunta?» con su línea de apoyo y una
+   flecha en círculo, encima de los iconos sociales y en la columna estrecha de
+   la izquierda. Enlaza a Contacto.
+
+   Dawn no tiene nada parecido, así que el marcado y los tres ajustes están en
+   `shopify/sections/footer.liquid`. Ver PARTE 2 §H-5.
+   -------------------------------------------------------------------------- */
+
+.bps-ayuda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 264px;
+  padding-block: 30px;
+  border-top: 1px solid var(--bps-footer-bg-2);
+  border-bottom: 1px solid var(--bps-footer-bg-2);
+  color: inherit;
+  text-decoration: none;
+}
+
+.bps-ayuda__titulo {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  /* Medido en el prototipo: el titular va en BLANCO y la línea de apoyo en gris.
+     Es al revés de lo que parece. */
+  color: var(--bps-white);
+}
+
+.bps-ayuda__linea {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--bps-footer-fg);
+}
+
+.bps-ayuda__icono {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--bps-footer-bg-2);
+  color: var(--bps-footer-fg);
+  transition: background-color var(--duration-default) ease,
+    color var(--duration-default) ease;
+}
+
+.bps-ayuda__icono svg { width: 14px; height: 14px; }
+
+.bps-ayuda:hover .bps-ayuda__icono {
+  background-color: var(--bps-white);
+  color: var(--bps-black);
 }

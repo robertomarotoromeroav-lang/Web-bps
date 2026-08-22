@@ -270,6 +270,27 @@
             </div>
           {%- endif -%}
 
+          {%- comment -%}
+            BPS · caja de «¿Tienes alguna otra pregunta?». Va encima de los iconos
+            sociales, en la columna estrecha de la izquierda, como en el
+            prototipo. Dawn no tiene nada parecido, así que los tres textos son
+            ajustes de esta sección: se editan en Personalizar → Pie de página.
+            Si dejas el titular vacío, la caja no se imprime.
+          {%- endcomment -%}
+          {%- if section.settings.bps_help_heading != blank -%}
+            <a class="bps-ayuda" href="{{ section.settings.bps_help_link | default: '/pages/contacto' }}">
+              <span class="bps-ayuda__texto">
+                <span class="bps-ayuda__titulo">{{ section.settings.bps_help_heading | escape }}</span>
+                {%- if section.settings.bps_help_text != blank -%}
+                  <span class="bps-ayuda__linea">{{ section.settings.bps_help_text | escape }}</span>
+                {%- endif -%}
+              </span>
+              <span class="bps-ayuda__icono" aria-hidden="true">
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            </a>
+          {%- endif -%}
+
           {%- if section.settings.show_social and has_social_icons -%}
             {%- render 'social-icons', class: 'footer__list-social' -%}
           {%- endif -%}
@@ -474,6 +495,28 @@
       "id": "newsletter_heading",
       "default": "t:sections.footer.settings.newsletter_heading.default",
       "label": "t:sections.footer.settings.newsletter_heading.label"
+    },
+    {
+      "type": "header",
+      "content": "Caja de contacto (BPS)"
+    },
+    {
+      "type": "text",
+      "id": "bps_help_heading",
+      "label": "Titular",
+      "default": "¿Tienes alguna otra pregunta?",
+      "info": "Déjalo vacío para no mostrar la caja."
+    },
+    {
+      "type": "text",
+      "id": "bps_help_text",
+      "label": "Texto",
+      "default": "Nuestro equipo está aquí para ayudarte."
+    },
+    {
+      "type": "url",
+      "id": "bps_help_link",
+      "label": "Enlace"
     },
     {
       "type": "header",

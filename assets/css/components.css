@@ -848,6 +848,9 @@ a:hover > .media img,
 /* Suscripción: campo y botón unidos en una sola píldora. */
 .subscribe {
   display: flex;
+  /* El campo mide 60px y el botón 40: sin esto el botón se alineaba arriba y
+     quedaba 10px descentrado respecto a la caja de texto. */
+  align-items: center;
   gap: 8px;
   max-width: 460px;
 }

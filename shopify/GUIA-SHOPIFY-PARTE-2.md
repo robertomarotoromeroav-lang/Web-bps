@@ -36,14 +36,14 @@ esta parte corrige.
 | | Cuántas |
 |---|---|
 | Ajustes del editor pendientes de poner (§A) | 13 |
-| Fallos de la hoja, ya corregidos en el repositorio (§B) | 21 |
+| Fallos de la hoja, ya corregidos en el repositorio (§B) | 22 |
 | Código de `theme.liquid` pendiente de aplicar (§C) | 3 |
 | Límites de Dawn que no se pueden igualar (§D) | 3 |
 
 Y al final, tres apartados que no son diferencias sino respuestas a preguntas
 tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar una a
 una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
-y la línea separadora; y **§H-4**, el bloque de suscripción del pie.
+y la línea separadora; **§H-4**, el bloque de suscripción del pie; y **§H-5**, sus dos remates.
 
 ---
 
@@ -149,7 +149,7 @@ real, no un fallo: ver B-12.
 
 ## §B · Fallos de la hoja de estilos (ya corregidos)
 
-Estos veintiuno los ha destapado la medición y **ya están arreglados en
+Estos veintidós los ha destapado la medición y **ya están arreglados en
 `bps-hyperice.css`**. Hay que volver a subir la hoja (paso 3a de la guía) para
 que surtan efecto.
 
@@ -176,6 +176,7 @@ que surtan efecto.
 | **B-19. El `+` del pie sin círculo** | Era un «+» de texto suelto | Círculo de 26 px sobre `#373737` con las dos barras de 11 px, como el prototipo |
 | **B-20. Titular del boletín en 18 px** | Dawn usa la misma clase para el rótulo de las columnas y para el titular del boletín, y la regla de 18 px se lo comía | 32 px en escritorio y 24 en móvil. Ver §H-4 |
 | **B-21. Formulario del boletín en columna** | `max-width: 36rem` y el botón dentro del campo, como una flecha de 44 px | Fila con el campo elástico y el botón de píldora al lado |
+| **B-22. Botón del boletín pegado y descentrado** | El botón cuelga de `.field`, no del formulario, así que el `gap` no caía entre ellos: 1 px de hueco y 11 de desfase | 8 px de hueco y centrado. Ver §H-5 |
 
 Sobre B-3: no bastaba una regla para `.page-width`. Dawn tiene tres selectores
 que pesan más (`.utility-bar__grid.page-width`,
@@ -889,6 +890,82 @@ Con la hoja y el pie nuevos, medido a 1440 y a 390 px contra el prototipo:
 > pie llevan icono a la izquierda, pero eso alcanza a **todos** los enlaces del
 > pie. Los de la nota legal se convertían en bloques de ancho completo y la frase
 > salía partida en cuatro líneas. Corregido con una excepción para la nota.
+
+---
+
+## §H-5 · El hueco del botón y la caja de contacto del pie
+
+Dos remates del bloque de suscripción.
+
+### El botón estaba pegado al campo y descentrado
+
+La causa no era el `gap`: era **dónde cuelga el botón en el árbol de Dawn**.
+
+```
+form.footer__newsletter          ← flex, gap: 8px
+  div.newsletter-form__field-wrapper
+    div.field                    ← flex, align-items: normal
+      input.field__input
+      label.field__label         (flotante, en absoluto)
+      button.newsletter-form__button
+```
+
+El botón **no es hermano del campo**: los dos son hijos de `.field`. El
+formulario tiene un solo hijo, así que su `gap: 8px` no caía entre ellos —medido:
+**1 px**, que era el borde del input—. Y `.field` viene en `align-items: normal`,
+o sea estirado, con lo que un botón de 40 px se alineaba arriba en un campo de
+60: **11 px descentrado**.
+
+El hueco y el centrado van en `.field`, no en el formulario. De paso se quita el
+`padding-right: 5rem` que Dawn le pone al input para dejar sitio a la flecha que
+antes iba encima: con el botón fuera, eran 50 px de hueco muerto.
+
+> **También estaba mal en el prototipo.** Su `.subscribe` no declaraba
+> `align-items`, así que el botón se alineaba arriba y quedaba 10 px descentrado
+> igual que en la tienda. Corregido en los dos, para que sigan midiendo lo mismo.
+
+### La caja de «¿Tienes alguna otra pregunta?»
+
+Va en la columna estrecha de la izquierda, **encima de los iconos sociales**, y
+enlaza a Contacto. Dawn no tiene nada parecido, así que el marcado está en
+`shopify/sections/footer.liquid` — el mismo archivo de §H-4, no hay que subir
+nada más.
+
+Los textos **son ajustes de la sección**, en *Personalizar → Pie de página →
+«Caja de contacto (BPS)»*:
+
+| Ajuste | Valor por defecto |
+|---|---|
+| Titular | `¿Tienes alguna otra pregunta?` |
+| Texto | `Nuestro equipo está aquí para ayudarte.` |
+| Enlace | la página de contacto |
+
+Si dejas el titular vacío, la caja no se imprime.
+
+En la hoja hace falta además darle su sitio en la rejilla del pie. La columna
+estrecha lleva dos piezas, una debajo de otra, así que se colocan por fila y
+columna en vez de por áreas —con áreas habría que hacer que la columna izquierda
+ocupara dos filas y las dos piezas se pisarían:
+
+```
+Fila 1:  caja de contacto  |  boletín
+Fila 2:  redes sociales    |  columnas de menú
+```
+
+### Comprobado
+
+| | Prototipo | Tienda ahora |
+|---|---|---|
+| Hueco campo–botón | 8 px | **9** *(1 px es el borde del input)* |
+| Desfase vertical del botón | 0 | **0** |
+| Caja: x, ancho, relleno | 30, 264, 30/30 | **30, 264, 30/30** |
+| Titular de la caja | 18 px **blanco** | **igual** |
+| Línea de apoyo | 14 px `#cbcbcb` | **igual** |
+| Icono | círculo de 30 px sobre `#373737` | **igual** |
+| Orden en la columna | caja encima de las redes | **igual** |
+
+> Los colores de la caja van al revés de lo que parece: **el titular en blanco y
+> la línea de apoyo en gris**. Lo tenía cambiado y salió al medir.
 
 ---
 
