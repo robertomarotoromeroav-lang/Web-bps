@@ -126,13 +126,21 @@
             {%- comment -%}
               BPS · descripción corta de la tarjeta.
               Añadido sobre Dawn 15.4.1: su tarjeta de producto no tiene ningún campo para
-              esto. El texto sale del metacampo de producto `custom.descripcion_corta`; si
-              el producto no lo tiene, no se imprime nada y la tarjeta queda igual que
-              antes. El campo tiene que ser de tipo TEXTO, no un metaobjeto:
-              ver GUIA-SHOPIFY-PARTE-2.md §H-3.
+              esto. El texto sale de un metacampo de producto de tipo texto; si el producto
+              no lo tiene, no se imprime nada y la tarjeta queda igual que antes.
+
+              Se prueban DOS claves porque Shopify genera la clave a partir del
+              nombre que le pongas a la definición: si en «Nombre» escribes
+              `custom.descripcion_corta`, la clave que sale es
+              `custom.custom_descripcion_corta`, con el `custom_` repetido. Y las
+              claves no se pueden renombrar después. Ver
+              GUIA-SHOPIFY-PARTE-2.md §H-3.
             {%- endcomment -%}
             {%- liquid
               assign bps_mf = card_product.metafields.custom.descripcion_corta
+              if bps_mf == blank
+                assign bps_mf = card_product.metafields.custom.custom_descripcion_corta
+              endif
               assign bps_desc = ''
               if bps_mf != blank
                 assign bps_desc = bps_mf.value
@@ -181,13 +189,21 @@
           {%- comment -%}
             BPS · descripción corta de la tarjeta.
             Añadido sobre Dawn 15.4.1: su tarjeta de producto no tiene ningún campo para
-            esto. El texto sale del metacampo de producto `custom.descripcion_corta`; si
-            el producto no lo tiene, no se imprime nada y la tarjeta queda igual que
-            antes. El campo tiene que ser de tipo TEXTO, no un metaobjeto:
-            ver GUIA-SHOPIFY-PARTE-2.md §H-3.
+            esto. El texto sale de un metacampo de producto de tipo texto; si el producto
+            no lo tiene, no se imprime nada y la tarjeta queda igual que antes.
+
+            Se prueban DOS claves porque Shopify genera la clave a partir del
+            nombre que le pongas a la definición: si en «Nombre» escribes
+            `custom.descripcion_corta`, la clave que sale es
+            `custom.custom_descripcion_corta`, con el `custom_` repetido. Y las
+            claves no se pueden renombrar después. Ver
+            GUIA-SHOPIFY-PARTE-2.md §H-3.
           {%- endcomment -%}
           {%- liquid
             assign bps_mf = card_product.metafields.custom.descripcion_corta
+            if bps_mf == blank
+              assign bps_mf = card_product.metafields.custom.custom_descripcion_corta
+            endif
             assign bps_desc = ''
             if bps_mf != blank
               assign bps_desc = bps_mf.value

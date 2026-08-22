@@ -9,6 +9,9 @@ tarjeta sin foto—:
 ```liquid
 {%- liquid
   assign bps_mf = card_product.metafields.custom.descripcion_corta
+  if bps_mf == blank
+    assign bps_mf = card_product.metafields.custom.custom_descripcion_corta
+  endif
   assign bps_desc = ''
   if bps_mf != blank
     assign bps_desc = bps_mf.value
@@ -19,9 +22,17 @@ tarjeta sin foto—:
 {%- endif -%}
 ```
 
-El valor se saca en dos pasos a propósito: así funciona igual con «Texto de una
-línea», «Texto multilínea» y «Texto enriquecido». La primera versión hacía
-`.value | escape` y con texto enriquecido no imprimía nada aprovechable.
+Dos detalles que no son casuales:
+
+- **Prueba dos claves.** Shopify genera la clave del metacampo a partir del
+  nombre que le das a la definición: si escribes `custom.descripcion_corta` en
+  «Nombre», la clave que sale es `custom.custom_descripcion_corta`, con el
+  `custom_` repetido. Y **las claves no se pueden renombrar** una vez creada la
+  definición, así que se adapta el código.
+- **El valor se saca en dos pasos y se imprime sin escapar**, para que funcione
+  igual con «Texto de una sola línea», «Texto multilínea» y «Texto enriquecido».
+  La primera versión hacía `.value | escape` y con texto enriquecido no imprimía
+  nada aprovechable.
 
 Van justo después del `</h3>` del titular y justo antes del
 `<div class="card-information">`, que es donde el prototipo pone la descripción:

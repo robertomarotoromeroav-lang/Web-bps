@@ -676,13 +676,28 @@ descripción. Son tres pasos.
 
 | Campo | Valor |
 |---|---|
-| Nombre | `Descripción corta` |
-| Espacio de nombres y clave | **`custom.descripcion_corta`** ⚠️ tal cual, sin acento en «descripcion» |
-| Tipo | **Texto → Texto de una línea** |
-| Validaciones | Máximo de caracteres: `90` |
+| Nombre | `Descripción corta` — **solo el nombre, sin `custom.` delante** ⚠️ |
+| Tipo | **Texto → Texto de una sola línea** |
+| Validación | Límite de caracteres → Máx. `90` |
 
-La clave tiene que ser exactamente esa, porque es la que lee el Liquid. Si pones
-otra, cambia también la línea del `assign`.
+⚠️ **Ojo con el campo «Nombre», que es la trampa de este paso.** No es la clave:
+Shopify **genera la clave a partir de él** y la enseña en gris justo debajo. Si
+escribes `custom.descripcion_corta` en «Nombre», la clave que sale es
+`custom.custom_descripcion_corta` —convierte el punto en guion bajo y le añade
+delante su propio espacio `custom.`—, y entonces el Liquid busca en un sitio y el
+dato está en otro.
+
+**Antes de guardar, lee la línea gris de debajo del nombre.** Ahí está la clave de
+verdad. El Liquid prueba las dos formas habituales:
+
+```
+custom.descripcion_corta          ← si pones «Descripción corta» en Nombre
+custom.custom_descripcion_corta   ← si pones «custom.descripcion_corta» en Nombre
+```
+
+Si te sale una tercera, cámbiala en el `assign` del snippet. **Las claves no se
+pueden renombrar después de crear la definición**, así que se adapta el código,
+no el dato.
 
 **Paso 2 · Sustituye el snippet.** En este repositorio está la copia lista:
 **`shopify/snippets/card-product.liquid`**. Es el archivo de Dawn 15.4.1 con las
@@ -728,63 +743,28 @@ orden del panel queda exactamente el del prototipo:
 Para verlo hace falta además tener puesto **«Proveedor → Activado»** (§A-3): sin
 él falta el antetítulo, aunque la descripción sale igual.
 
-### H-3. El snippet está bien y la descripción no sale
+### H-3. Si aun así no sale: la clave
 
-Con la prueba del texto fijo confirmada, el snippet **está puesto y en el tema
-publicado**. Así que lo que falla es **la ruta al dato**, y hay tres candidatos.
+**Este es el caso que se dio, y venía de un error de esta guía.** El síntoma:
+con la prueba de texto fijo la descripción aparece, o sea que el snippet está en
+el tema publicado, pero con el metacampo relleno no sale nada.
 
-**El primero, por cómo suele pasar: metaobjeto no es lo mismo que metacampo.**
-Son dos cosas distintas del admin y están una al lado de la otra:
+La causa fue la del aviso del paso 1: en el campo **Nombre** de la definición se
+escribió `custom.descripcion_corta`, y Shopify generó la clave
+**`custom.custom_descripcion_corta`**. El Liquid buscaba `custom.descripcion_corta`
+y ahí no había nada.
 
-| | Qué es | Sirve aquí |
-|---|---|---|
-| **Metacampo** *(metafield)* | Un campo extra **dentro de la ficha de un producto** | ✅ Es lo que hace falta |
-| **Metaobjeto** *(metaobject)* | Una **entidad aparte** con sus propios campos, que luego se referencia | ❌ El Liquid no lee de ahí |
-
-Si creaste un metaobjeto, o un metacampo de tipo «Referencia a metaobjeto», el
-Liquid recibe un objeto y no un texto: no imprime nada. Tiene que ser
-**Metacampo de producto, tipo Texto → Texto de una línea**.
-
-**El segundo: la clave no coincide.** El Liquid busca literalmente
-`custom.descripcion_corta`. Al crear la definición, Shopify genera la clave a
-partir del nombre y no siempre sale lo que uno espera —puede quedar con acento,
-con guiones o con un `_1` al final si ya existía—. En la definición, dentro del
-admin, se ve el «Espacio de nombres y clave» exacto: tiene que decir
-`custom.descripcion_corta`, sin acento en «descripcion».
-
-**El tercero: el valor no está guardado en el producto** que estás mirando.
-
-### Cómo saber cuál de los tres es, sin adivinar
-
-En `shopify/snippets/DIAGNOSTICO-metacampo.liquid` tienes un bloque que imprime
-todo lo que hay. Pégalo **en lugar** del bloque `bps_desc`, mira una tarjeta,
-apunta lo que sale y vuelve a poner el bloque bueno.
-
-Imprime cinco cosas y se leen así:
-
-| Lo que sale | Qué significa | Qué hacer |
-|---|---|---|
-| `TIPO[single_line_text_field]` y `VALOR[tu texto]` | Está todo bien | Vuelve al bloque bueno; si aún no sale, es caché del navegador |
-| `TIPO[]` vacío y `CLAVES-CUSTOM[{}]` | En ese producto no hay **nada** bajo `custom` | El valor no se guardó, o la definición no existe |
-| `CLAVES-CUSTOM[…]` con **otro nombre** de clave | La clave no es la que busca el Liquid | Cambia la clave en el `assign`, o renombra la definición |
-| `TIPO[metaobject_reference]` | Es un metaobjeto, el caso de arriba | Crea un metacampo de texto y pasa los textos |
-| `TIPO[rich_text_field]` | Es texto enriquecido | Ya está cubierto: ver abajo |
-| `TODOS[…]` con la clave bajo otro espacio | El espacio de nombres no es `custom` | Cambia `custom` por el que salga |
-
-`CLAVES-CUSTOM` es el más útil de los cinco: te dice **exactamente** con qué
-nombre está guardado el campo en ese producto.
-
-### Un cambio ya hecho en el snippet
-
-De paso he hecho el bloque tolerante al tipo. Antes hacía
-`.value | escape`, que con un campo de **texto enriquecido** no imprime nada
-aprovechable. Ahora el valor se saca en dos pasos y se imprime sin escapar, así
-que funciona igual con «Texto de una línea», «Texto multilínea» y «Texto
-enriquecido»:
+**Ya está resuelto en el snippet**: prueba las dos claves, primero la limpia y
+después la del `custom_` repetido. Con volver a subir
+`shopify/snippets/card-product.liquid` la descripción aparece, sin tocar ni la
+definición ni los datos ya introducidos.
 
 ```liquid
 {%- liquid
   assign bps_mf = card_product.metafields.custom.descripcion_corta
+  if bps_mf == blank
+    assign bps_mf = card_product.metafields.custom.custom_descripcion_corta
+  endif
   assign bps_desc = ''
   if bps_mf != blank
     assign bps_desc = bps_mf.value
@@ -795,9 +775,31 @@ enriquecido»:
 {%- endif -%}
 ```
 
-Está ya en `shopify/snippets/card-product.liquid`. Si tu caso era el del texto
-enriquecido, con volver a subir el snippet se arregla. Los otros dos casos son de
-datos y no los puede arreglar el código.
+No se toca la definición a propósito: **la clave de un metacampo no se puede
+renombrar**. Habría que borrar la definición y crearla otra vez, y con ella se
+van los textos ya escritos. Sale más barato que el código pruebe las dos.
+
+### Si te vuelve a pasar con otra clave
+
+En `shopify/snippets/DIAGNOSTICO-metacampo.liquid` hay un bloque que lo imprime
+todo. Se pega **en lugar** del bloque `bps_desc`, se mira una tarjeta y se quita.
+
+| Lo que sale | Qué significa | Qué hacer |
+|---|---|---|
+| `TIPO[single_line_text_field]` y `VALOR[tu texto]` | Está todo bien | Vuelve al bloque bueno; si aún no sale, es caché del navegador |
+| `CLAVES-CUSTOM[…]` con **otro nombre** de clave | Es el caso de arriba | Usa esa clave en el `assign` |
+| `TIPO[]` vacío y `CLAVES-CUSTOM[{}]` | En ese producto no hay **nada** bajo `custom` | El valor no se guardó |
+| `TIPO[metaobject_reference]` | Es un metaobjeto, no un metacampo de texto | Crea un metacampo de texto y pasa los textos |
+| `TIPO[rich_text_field]` | Es texto enriquecido | Ya está cubierto: el snippet imprime el valor sin escapar |
+| `TODOS[…]` con la clave bajo otro espacio | El espacio de nombres no es `custom` | Cambia `custom` por el que salga |
+
+`CLAVES-CUSTOM` es el más útil de los seis: dice **exactamente** con qué nombre
+está guardado el campo en ese producto.
+
+> **Metaobjeto y metacampo no son lo mismo**, y en el admin están uno al lado del
+> otro. El metacampo es un campo **dentro de la ficha del producto**; el
+> metaobjeto es una **entidad aparte** que luego se referencia, y de ahí el Liquid
+> de la tarjeta no lee. Tiene que ser metacampo de producto, tipo texto.
 
 > **Un aviso sobre los títulos.** En la tienda los productos se llaman
 > «Presoterapia BPS PLUS: Recuperación Muscular Inalámbrica» y ocupan dos líneas
