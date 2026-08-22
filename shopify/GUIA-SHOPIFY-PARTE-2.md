@@ -1410,6 +1410,52 @@ simulados:
 | Iconos de la lista | 18×18 | 18×18 |
 | Columna derecha | x=755 | x=756 |
 
+### Estado tras la primera vuelta
+
+Medido otra vez sobre la página publicada. **Cuatro de los cinco ajustes están
+puestos** y todo lo de la hoja funciona:
+
+| | Estado |
+|---|---|
+| Franja hueso de la cabecerita, `#f7f5f5` | ✅ |
+| Relleno de la cabecerita, 56 / 40 | ✅ |
+| Relleno del formulario, 80 / 80 y 30 lateral (15 en móvil) | ✅ |
+| Ancho del contenedor de la sección del formulario, 1536 | ✅ |
+| Campo 520×46, borde 1px `#dfdfdf`, radio 4 · botón negro 160×40 en x=30 | ✅ |
+| Iconos de la lista a 18×18 · «Escríbenos por Instagram» como píldora de contorno | ✅ |
+| **Ancho del contenedor de la sección de la cabecerita** | 🔴 sigue en `1100px` |
+| **Relleno lateral de la cabecerita** | 🔴 sigue en `24px`, debe ser `30` |
+| **Hueco entre las dos columnas** | 🔴 sigue en `16px`, deben ser `72` (escritorio) / `40` (móvil) |
+
+Los tres pendientes son la misma cosa que se ve a simple vista: **el título
+arranca en x=170 y el formulario de debajo en x=30**, así que la cabecerita va
+desalineada con el resto de la página. Con los tres puestos, la columna derecha
+cae en **x=756 con 654 de ancho** y el prototipo mide **x=756 con 654**: exacto.
+
+> Ojo con una cosa al editar: las clases de PageFly **cambian de número cada vez
+> que guardas**. Las secciones que en la primera versión eran `pf-10_` y `pf-12_`
+> ahora son `pf-31_` y `pf-33_`. Por eso §24 no las usa.
+
+### El título y la entradilla en dos líneas: es lo correcto
+
+No es un fallo. El prototipo limita el titular a **18 caracteres de ancho** y la
+entradilla a **58**, para que no se lean de lado a lado de una pantalla de 1440.
+Medido en los dos: titular 480,3px y **dos líneas**; entradilla 516,1px y **dos
+líneas**. Sale igual en la tienda y en el prototipo.
+
+Lo que sí faltaba —y ya está corregido en la hoja— es que el prototipo reparte
+las líneas de los titulares con `text-wrap: balance` y esta hoja no lo tenía. Sin
+él el corte salía «Hablemos de tu / recuperación» y con él «Hablemos de / tu
+recuperación», que es el del prototipo. Va en el apartado 6, así que **afecta a
+todos los titulares de la web**, no solo a esta página: ninguno queda con una
+sola palabra en la última línea.
+
+Si aun así lo quieres en **una sola línea**, no hace falta tocar la hoja: quita
+la clase `page-head__title` del `<h1>` del bloque de HTML personalizado y déjalo
+solo con `h2`. Ocupará los 1380px de ancho. No lo recomiendo —un titular de 48px
+a lo ancho de la pantalla se lee peor y no es lo que hace ni Hyperice ni el
+prototipo—, pero es un cambio de una palabra.
+
 ### Contenido que aún no coincide con el prototipo
 
 Esto no es de estilos, es lo que hay escrito en la página:

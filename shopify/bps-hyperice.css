@@ -93,6 +93,11 @@ h1, h2, h3, h4, h5, h6,
   /* Hyperice no usa versalitas en los titulares. Si el texto sigue saliendo en
      mayúsculas es porque está escrito así en el editor: ver GUIA §5. */
   text-transform: none;
+  /* Reparte las líneas de un titular a lo ancho en vez de dejar la última con
+     una sola palabra. El prototipo lo lleva en todos los titulares y aquí
+     faltaba: «Hablemos de tu / recuperación» pasa a «Hablemos de / tu
+     recuperación», que es como sale en el prototipo. */
+  text-wrap: balance;
 }
 
 h1, .h1, .banner__heading { font-size: clamp(45px, 4.51389vw, 65px); }
