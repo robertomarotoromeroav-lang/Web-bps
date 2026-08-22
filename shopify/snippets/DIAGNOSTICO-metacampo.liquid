@@ -1,0 +1,19 @@
+{%- comment -%}
+  ============================================================================
+  DIAGNÓSTICO TEMPORAL · descripción corta de la tarjeta
+  ----------------------------------------------------------------------------
+  Pega esto EN LUGAR del bloque `bps_desc` de snippets/card-product.liquid,
+  mira una tarjeta en la tienda, apunta lo que sale y vuelve a poner el bloque
+  bueno. No lo dejes publicado.
+
+  Cómo leer lo que imprime, en shopify/GUIA-SHOPIFY-PARTE-2.md §H-3.
+  ============================================================================
+{%- endcomment -%}
+
+<p class="bps-card__descripcion" style="color:#c00;font-size:11px;line-height:1.5;word-break:break-all">
+  TIPO[{{ card_product.metafields.custom.descripcion_corta.type }}]
+  DIRECTO[{{ card_product.metafields.custom.descripcion_corta }}]
+  VALOR[{{ card_product.metafields.custom.descripcion_corta.value }}]
+  CLAVES-CUSTOM[{{ card_product.metafields.custom | json }}]
+  TODOS[{{ card_product.metafields | json }}]
+</p>

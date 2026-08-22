@@ -128,11 +128,18 @@
               Añadido sobre Dawn 15.4.1: su tarjeta de producto no tiene ningún campo para
               esto. El texto sale del metacampo de producto `custom.descripcion_corta`; si
               el producto no lo tiene, no se imprime nada y la tarjeta queda igual que
-              antes. Ver GUIA-SHOPIFY-PARTE-2.md §H.
+              antes. El campo tiene que ser de tipo TEXTO, no un metaobjeto:
+              ver GUIA-SHOPIFY-PARTE-2.md §H-3.
             {%- endcomment -%}
-            {%- assign bps_desc = card_product.metafields.custom.descripcion_corta.value -%}
+            {%- liquid
+              assign bps_mf = card_product.metafields.custom.descripcion_corta
+              assign bps_desc = ''
+              if bps_mf != blank
+                assign bps_desc = bps_mf.value
+              endif
+            -%}
             {%- if bps_desc != blank -%}
-              <p class="bps-card__descripcion">{{ bps_desc | escape }}</p>
+              <p class="bps-card__descripcion">{{ bps_desc }}</p>
             {%- endif -%}
           </div>
           <div class="card__badge {{ settings.badge_position }}">
@@ -176,11 +183,18 @@
             Añadido sobre Dawn 15.4.1: su tarjeta de producto no tiene ningún campo para
             esto. El texto sale del metacampo de producto `custom.descripcion_corta`; si
             el producto no lo tiene, no se imprime nada y la tarjeta queda igual que
-            antes. Ver GUIA-SHOPIFY-PARTE-2.md §H.
+            antes. El campo tiene que ser de tipo TEXTO, no un metaobjeto:
+            ver GUIA-SHOPIFY-PARTE-2.md §H-3.
           {%- endcomment -%}
-          {%- assign bps_desc = card_product.metafields.custom.descripcion_corta.value -%}
+          {%- liquid
+            assign bps_mf = card_product.metafields.custom.descripcion_corta
+            assign bps_desc = ''
+            if bps_mf != blank
+              assign bps_desc = bps_mf.value
+            endif
+          -%}
           {%- if bps_desc != blank -%}
-            <p class="bps-card__descripcion">{{ bps_desc | escape }}</p>
+            <p class="bps-card__descripcion">{{ bps_desc }}</p>
           {%- endif -%}
           <div class="card-information">
             {%- if show_vendor -%}

@@ -728,35 +728,76 @@ orden del panel queda exactamente el del prototipo:
 Para verlo hace falta además tener puesto **«Proveedor → Activado»** (§A-3): sin
 él falta el antetítulo, aunque la descripción sale igual.
 
-### H-3. Si has puesto el snippet y la descripción no sale
+### H-3. El snippet está bien y la descripción no sale
 
-Es lo que te está pasando: he mirado el HTML de la tienda publicada y no aparece
-ni un `bps-card__descripcion` en ninguna tarjeta. Eso puede venir de dos sitios y
-**desde fuera no se distinguen**, porque cuando el metacampo está vacío el Liquid
-no imprime nada: el HTML queda exactamente igual que si el snippet no estuviera.
+Con la prueba del texto fijo confirmada, el snippet **está puesto y en el tema
+publicado**. Así que lo que falla es **la ruta al dato**, y hay tres candidatos.
 
-Hay una prueba de un minuto que lo separa. Cambia temporalmente la línea del
-snippet por esta, sin el `if`:
+**El primero, por cómo suele pasar: metaobjeto no es lo mismo que metacampo.**
+Son dos cosas distintas del admin y están una al lado de la otra:
+
+| | Qué es | Sirve aquí |
+|---|---|---|
+| **Metacampo** *(metafield)* | Un campo extra **dentro de la ficha de un producto** | ✅ Es lo que hace falta |
+| **Metaobjeto** *(metaobject)* | Una **entidad aparte** con sus propios campos, que luego se referencia | ❌ El Liquid no lee de ahí |
+
+Si creaste un metaobjeto, o un metacampo de tipo «Referencia a metaobjeto», el
+Liquid recibe un objeto y no un texto: no imprime nada. Tiene que ser
+**Metacampo de producto, tipo Texto → Texto de una línea**.
+
+**El segundo: la clave no coincide.** El Liquid busca literalmente
+`custom.descripcion_corta`. Al crear la definición, Shopify genera la clave a
+partir del nombre y no siempre sale lo que uno espera —puede quedar con acento,
+con guiones o con un `_1` al final si ya existía—. En la definición, dentro del
+admin, se ve el «Espacio de nombres y clave» exacto: tiene que decir
+`custom.descripcion_corta`, sin acento en «descripcion».
+
+**El tercero: el valor no está guardado en el producto** que estás mirando.
+
+### Cómo saber cuál de los tres es, sin adivinar
+
+En `shopify/snippets/DIAGNOSTICO-metacampo.liquid` tienes un bloque que imprime
+todo lo que hay. Pégalo **en lugar** del bloque `bps_desc`, mira una tarjeta,
+apunta lo que sale y vuelve a poner el bloque bueno.
+
+Imprime cinco cosas y se leen así:
+
+| Lo que sale | Qué significa | Qué hacer |
+|---|---|---|
+| `TIPO[single_line_text_field]` y `VALOR[tu texto]` | Está todo bien | Vuelve al bloque bueno; si aún no sale, es caché del navegador |
+| `TIPO[]` vacío y `CLAVES-CUSTOM[{}]` | En ese producto no hay **nada** bajo `custom` | El valor no se guardó, o la definición no existe |
+| `CLAVES-CUSTOM[…]` con **otro nombre** de clave | La clave no es la que busca el Liquid | Cambia la clave en el `assign`, o renombra la definición |
+| `TIPO[metaobject_reference]` | Es un metaobjeto, el caso de arriba | Crea un metacampo de texto y pasa los textos |
+| `TIPO[rich_text_field]` | Es texto enriquecido | Ya está cubierto: ver abajo |
+| `TODOS[…]` con la clave bajo otro espacio | El espacio de nombres no es `custom` | Cambia `custom` por el que salga |
+
+`CLAVES-CUSTOM` es el más útil de los cinco: te dice **exactamente** con qué
+nombre está guardado el campo en ese producto.
+
+### Un cambio ya hecho en el snippet
+
+De paso he hecho el bloque tolerante al tipo. Antes hacía
+`.value | escape`, que con un campo de **texto enriquecido** no imprime nada
+aprovechable. Ahora el valor se saca en dos pasos y se imprime sin escapar, así
+que funciona igual con «Texto de una línea», «Texto multilínea» y «Texto
+enriquecido»:
 
 ```liquid
-<p class="bps-card__descripcion">PRUEBA</p>
+{%- liquid
+  assign bps_mf = card_product.metafields.custom.descripcion_corta
+  assign bps_desc = ''
+  if bps_mf != blank
+    assign bps_desc = bps_mf.value
+  endif
+-%}
+{%- if bps_desc != blank -%}
+  <p class="bps-card__descripcion">{{ bps_desc }}</p>
+{%- endif -%}
 ```
 
-- **Si sale «PRUEBA» en todas las tarjetas** → el snippet está bien puesto y en el
-  tema publicado. Lo que falta es el **dato**: repasa el paso 1 (¿existe la
-  definición del metacampo, con la clave `custom.descripcion_corta` exacta?) y el
-  paso 3 (¿está rellenado en los productos?). Deshaz la prueba y vuelve al bloque
-  con el `if`.
-- **Si no sale nada** → el snippet no está en el tema que está publicado. Lo más
-  habitual es haberlo editado en un tema duplicado, o haber guardado sin
-  publicar. Comprueba que estás en *Tienda online → Temas → **Tema actual***.
-
-Lo que sí he podido comprobar desde fuera, y está bien: **la hoja publicada ya
-lleva la regla** de `.bps-card__descripcion`, así que en cuanto salga el texto se
-verá con su estilo. Y el «Agregado rápido» ya está activado —el icono aparece en
-26 sitios del HTML—, aunque el **«Proveedor» solo está puesto en la colección
-destacada de la portada, no en las páginas de colección**: ahí falta el
-antetítulo. Ver §A-3.
+Está ya en `shopify/snippets/card-product.liquid`. Si tu caso era el del texto
+enriquecido, con volver a subir el snippet se arregla. Los otros dos casos son de
+datos y no los puede arreglar el código.
 
 > **Un aviso sobre los títulos.** En la tienda los productos se llaman
 > «Presoterapia BPS PLUS: Recuperación Muscular Inalámbrica» y ocupan dos líneas
