@@ -1081,6 +1081,45 @@ las seis cosas que más se rompen: la cabecera translúcida, el espaciado entre
 secciones, la tarjeta de producto, el pie en escritorio, el pie en móvil con el
 `+`, y una página de colección.
 
+### ⚠️ Si actualizaste antes del 22 de agosto, vuelve a subir el `.js`
+
+Al juntar los tres scripts en un archivo se me colaron **tres punto y coma que
+faltaban**, y el resultado es de los que engañan: el primer bloque funcionaba y
+los otros dos no llegaban a ejecutarse.
+
+Cada bloque acababa así, sin punto y coma:
+
+```js
+(function () {
+  …
+})()
+```
+
+Cuando iban en `<script>` separados eso daba igual: cada uno era un programa
+aparte. En **un solo archivo**, JavaScript lee `})()(function () {…` como una
+llamada —el resultado del primer bloque, invocado con el segundo como
+argumento—, y revienta con:
+
+```
+TypeError: (intermediate value)(intermediate value)(...) is not a function
+```
+
+Los bloques 2 y 3 **no se ejecutan**. Lo que se ve: la barra de anuncios se
+esconde bien al bajar —ese es el bloque 1—, pero **la cabecera no se vuelve
+transparente sobre la imagen** y **el pie no se plega en móvil**. Justo el
+síntoma de «la cabecera sale gris al abrir y solo se pone bien al bajar»: no
+cambiaba nada al bajar, es que nunca estuvo transparente.
+
+Ya está corregido: cada bloque va como `;(function () { … })();`, con punto y coma
+delante y detrás. **Vuelve a subir `bps-hyperice.js`** y basta.
+
+Comprobado después, midiendo el estilo calculado de la cabecera en la home:
+
+| | `<body>` | Fondo de la cabecera |
+|---|---|---|
+| Al abrir | `bps-hero` | `rgba(0, 0, 0, 0)` — transparente |
+| Tras bajar | `bps-hero bps-past-hero` | `rgba(0, 0, 0, 0.8)` con desenfoque y borde |
+
 ### Cómo verificar que está todo, en diez segundos
 
 En la tienda publicada, botón derecho → **Ver código fuente de la página**, y
@@ -1097,6 +1136,12 @@ busca (Ctrl+F) estas cinco cosas. Si alguna sale a `0`, es esa la que falta:
 Así se localizó el fallo del paso a Dawn 16: `bps-hyperice.js` salía **1** y
 `bps-hyperice.css` salía **0**. Todo lo demás —el envoltorio, la caja de
 contacto, la nota legal y las ocho descripciones de tarjeta— estaba bien puesto.
+
+**Y mira la consola.** F12 → pestaña *Consola*, y recarga. Si hay un error en
+rojo que mencione `bps-hyperice.js`, el comportamiento está roto aunque el
+archivo aparezca enlazado: es lo que pasó con los punto y coma del apartado
+anterior. Los avisos de `shop-js` y `standard-events` son de Shopify y son
+normales.
 
 > **Lo importante para el futuro: cuanto menos código haya en archivos de Dawn,
 > más barata es cada actualización.** Por eso los scripts se han movido a un

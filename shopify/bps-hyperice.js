@@ -14,6 +14,16 @@
 
    No depende de jQuery ni de nada de Dawn. Si una pieza no está en la página,
    su bloque se sale sin hacer nada.
+
+   OJO CON LOS PUNTO Y COMA. Cada bloque va como `;(function () { … })();`, con el
+   punto y coma DELANTE y DETRÁS, y no es estilo: es obligatorio. Cuando los tres
+   iban en `<script>` separados cada uno era un programa aparte y daba igual. En un
+   solo archivo, sin el `;` final, JavaScript lee `})()(function () {…` como una
+   llamada —el resultado del primer bloque invocado con el segundo como
+   argumento—, revienta con «(intermediate value)(...) is not a function» y los
+   bloques 2 y 3 NO llegan a ejecutarse. Pasó: el primero funcionaba, así que la
+   barra de anuncios se escondía bien, y en cambio la cabecera no se volvía
+   transparente y el pie no se plegaba.
    ========================================================================== */
 
 /* -------------------------------------------------------------------------
@@ -21,7 +31,7 @@
    ------------------------------------------------------------------------- */
 
 // Pasados 50px, sube el bloque superior el alto de la barra de anuncios.
-(function () {
+;(function () {
   var root = document.documentElement
   var bar = document.querySelector('.announcement-bar, .utility-bar')
   if (!bar) return
@@ -37,14 +47,14 @@
       hidden = false
     }
   }, { passive: true })
-})()
+})();
 
 /* -------------------------------------------------------------------------
    2. Cabecera transparente sobre las imágenes a sangre (antes §3c)
    ------------------------------------------------------------------------- */
 
 // Marca las plantillas que abren con imagen a sangre y avisa al dejarla atrás.
-(function () {
+;(function () {
   // OJO: aquí NO va `.collection-hero`. Dawn le pone esa clase a la sección
   // «Banner de colección» en TODAS las colecciones, con imagen o sin ella, y
   // además coloca la foto AL LADO del texto, no detrás: el banner solo tiene
@@ -64,14 +74,14 @@
     // pasaba por debajo de una cabecera todavía transparente y se solapaba.
     document.body.classList.toggle('bps-past-hero', y > 40)
   }, { passive: true })
-})()
+})();
 
 /* -------------------------------------------------------------------------
    3. Columnas del pie plegables en móvil (antes §3e)
    ------------------------------------------------------------------------- */
 
 // Convierte cada columna de menú del pie en un desplegable, solo en móvil.
-(function () {
+;(function () {
   var PUNTO = 750
   var bloques = document.querySelectorAll('.footer-block--menu')
   if (!bloques.length) return
@@ -96,4 +106,4 @@
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir() }
     })
   })
-})()
+})();
