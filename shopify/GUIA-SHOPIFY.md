@@ -502,6 +502,23 @@ Comprobado en una reproducción de la tienda: antes, barra y cabecera las dos en
 `top: 0` y el clic en la hamburguesa interceptado por la barra. Después, barra en
 `0` y cabecera en `38`, sin solaparse y con el cajón abriéndose.
 
+> ⚠️ **Los tres scripts de §3b, §3c y §3e ya NO se pegan aquí.** Están juntos en
+> **[`bps-hyperice.js`](bps-hyperice.js)**, que se sube como archivo y se llama con
+> una línea antes de `</body>`:
+>
+> ```liquid
+> <script src="{{ 'bps-hyperice.js' | asset_url }}" defer="defer"></script>
+> ```
+>
+> Se hizo así porque **Shopify no conserva las ediciones de código al actualizar
+> el tema**, y volver a pegar tres bloques de 20-30 líneas en el sitio correcto era
+> la parte donde es fácil equivocarse. Con el archivo, de `theme.liquid` solo hay
+> que rehacer el envoltorio de §3d y esta línea. Ver
+> [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §I.
+>
+> El código de abajo se deja **como referencia de qué hace cada bloque**. Si ya lo
+> tenías pegado en el layout, bórralo al pasar al archivo o se ejecutará dos veces.
+
 ### 3b. Esconder la barra de anuncios al bajar
 
 Sin esto la cabecera queda fija pero la barra de anuncios no se esconde.

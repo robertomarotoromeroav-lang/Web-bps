@@ -630,8 +630,10 @@ button.shopify-payment-button__button--unbranded {
   .card__heading a { font-size: 18px; }
 }
 
-.card__caption,
-.card-information__text {
+/* Aquí había además un `.card-information__text` que no existe en Dawn —ni en
+   15.4.1 ni en 16.0.0—: salió al repasar las 149 clases que usa esta hoja contra
+   el código del tema. No hacía daño, pero no pintaba nada. */
+.card__caption {
   font-size: 14px;
   color: var(--bps-grey-500);
   line-height: 1.4;

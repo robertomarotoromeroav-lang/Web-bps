@@ -43,7 +43,8 @@ esta parte corrige.
 Y al final, tres apartados que no son diferencias sino respuestas a preguntas
 tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar una a
 una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
-y la línea separadora; **§H-4**, el bloque de suscripción del pie; y **§H-5**, sus dos remates.
+y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**, sus dos remates; y **§I**,
+cómo actualizar el tema sin rehacer todo el trabajo.
 
 ---
 
@@ -966,6 +967,105 @@ Fila 2:  redes sociales    |  columnas de menú
 
 > Los colores de la caja van al revés de lo que parece: **el titular en blanco y
 > la línea de apoyo en gris**. Lo tenía cambiado y salió al medir.
+
+---
+
+## §I · Actualizar el tema (Dawn 16.0.0 y las siguientes)
+
+«Tema añadido: no se han podido incluir las ediciones de código» **no es un
+error**: es cómo funciona el actualizador de Shopify. Migra los **ajustes** —lo
+que hayas configurado en Personalizar, que vive en `settings_data.json`— y **no
+migra ningún cambio en archivos del tema**, porque no puede fusionar tu código
+con el nuevo sin riesgo de romperlo.
+
+Así que sí: hay que volver a poner los cambios. La buena noticia es que **son
+cuatro cosas, no cuarenta**, y de ellas dos son copiar un archivo entero.
+
+### Lo que hay que rehacer, y ya está
+
+| Qué | Cómo | Riesgo de conflicto |
+|---|---|---|
+| `assets/bps-hyperice.css` | Subir el archivo | **Ninguno.** Es un archivo nuevo, no toca nada de Dawn |
+| `assets/bps-hyperice.js` | Subir el archivo | **Ninguno.** Igual |
+| `snippets/card-product.liquid` | Copiar `shopify/dawn16/card-product.liquid` | Ninguno: ya está preparado sobre v16 |
+| `sections/footer.liquid` | Copiar `shopify/dawn16/footer.liquid` | Ninguno: el original de Dawn **no cambió** en v16 |
+| `layout/theme.liquid` | **Dos líneas a mano.** Ver abajo | Bajo |
+
+Y **una cosa que la actualización arregla sola**: los tres archivos con el botón
+de borde degradado —`image-banner`, `image-with-text` y `contact-form`— vuelven a
+ser los de Dawn en el tema nuevo. Ya no hay que restaurarlos.
+
+### Los scripts ya no van en `theme.liquid`
+
+Antes había que pegar en el layout tres bloques `<script>` de 20 a 30 líneas cada
+uno, en el sitio correcto. **Eso era el 90 % del trabajo de una actualización, y
+donde es fácil equivocarse.** Ahora los tres están en un archivo,
+`shopify/bps-hyperice.js`, y en el layout solo va la llamada.
+
+De `theme.liquid` quedan **dos** ediciones:
+
+```liquid
+<!-- 1. Envolver el grupo de cabecera (GUIA §3d) -->
+<div class="bps-header-group">
+  {% sections 'header-group' %}
+</div>
+```
+
+```liquid
+<!-- 2. Antes de </body>: la hoja y el comportamiento -->
+<script src="{{ 'bps-hyperice.js' | asset_url }}" defer="defer"></script>
+```
+
+> Si ya tenías los tres scripts pegados en el layout de la versión anterior,
+> **bórralos** al pasar al archivo, o se ejecutarán dos veces.
+
+### Dawn 16.0.0 es compatible. Esto es lo que se comprobó
+
+No de oído: descargando las dos versiones del repositorio oficial de Shopify y
+comparándolas.
+
+| Comprobación | Resultado |
+|---|---|
+| Las **149 clases de Dawn** que usa la hoja, ¿siguen existiendo en v16? | **Sí, todas** |
+| ¿Cuántos CSS de Dawn cambian entre 15.4.1 y 16.0.0? | **4 de 42**: `base.css`, `component-cart-items.css`, `component-cart-notification.css` y `component-menu-drawer.css` |
+| Las reglas de `base.css` que la hoja **sobreescribe** —`.page-width`, `.field__button`, `.header__icon`, `.button--secondary`, `.header--middle-left`, `.header__icons`, `.header__inline-menu`, `.list-social__link`, `.header__heading-logo`— | **Idénticas** en las dos versiones |
+| Las reglas nuevas de `base.css` v16, ¿pisan alguna nuestra? | **No.** Son dos, y ninguna toca lo que estilizamos |
+| Las clases del cajón móvil, ¿sobreviven al recorte de `component-menu-drawer.css`? | **Sí, las siete** |
+| `sections/footer.liquid` | **Byte a byte idéntico** entre v15.4.1 y v16.0.0 |
+| Los anclajes de `theme.liquid` —`{% sections 'header-group' %}`, `#MainContent`, `content-for-layout`— | **Los tres siguen ahí.** El diff de ese archivo es solo *añadidos* de Shopify |
+| Los puntos de inserción de `card-product.liquid` | **Iguales**, dos líneas más abajo (127 y 164 en vez de 125 y 162) |
+
+De paso salió un selector muerto en la hoja: `.card-information__text`, que no
+existe en Dawn ni en 15.4.1 ni en 16.0.0. Retirado.
+
+### El procedimiento para la próxima versión
+
+No hay que revisar los archivos uno por uno. La comprobación que importa son
+**tres preguntas**, y las dos primeras se contestan con un `diff` del código de
+Shopify:
+
+1. **¿Cambian los archivos que modificamos?** Compara en
+   `github.com/Shopify/dawn` la versión nueva con la que tienes, solo para
+   `snippets/card-product.liquid`, `sections/footer.liquid` y
+   `layout/theme.liquid`. Si un archivo no cambia, tu copia modificada vale tal
+   cual.
+2. **¿Cambian las reglas de Dawn que la hoja sobreescribe?** Son las nueve de
+   `base.css` de la tabla de arriba, más `component-card.css`,
+   `section-footer.css` y `component-newsletter.css`. Si no cambian, la hoja
+   sigue valiendo.
+3. **¿Sigue existiendo cada clase que usa la hoja?** Se saca la lista de la
+   propia hoja y se busca en el código del tema nuevo.
+
+Y después, sobre la vista previa del tema nuevo y antes de publicar, mirar a ojo
+las seis cosas que más se rompen: la cabecera translúcida, el espaciado entre
+secciones, la tarjeta de producto, el pie en escritorio, el pie en móvil con el
+`+`, y una página de colección.
+
+> **Lo importante para el futuro: cuanto menos código haya en archivos de Dawn,
+> más barata es cada actualización.** Por eso los scripts se han movido a un
+> archivo propio, y por eso las tres cosas que faltan de §D conviene hacerlas
+> como **sección nueva** y no parcheando secciones de Dawn: un archivo propio se
+> copia y ya está, mientras que un parche hay que volver a encajarlo cada vez.
 
 ---
 
