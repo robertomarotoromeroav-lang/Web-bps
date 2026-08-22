@@ -44,8 +44,8 @@ Y al final, tres apartados que no son diferencias sino respuestas a preguntas
 tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar una a
 una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
 y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**, sus dos remates; **§I**,
-cómo actualizar el tema sin rehacer todo el trabajo; y **§J**, los iconos del
-menú del pie.
+cómo actualizar el tema sin rehacer todo el trabajo; **§J**, los iconos del
+menú del pie; y **§K**, las formas de pago en escala de grises.
 
 ---
 
@@ -1203,6 +1203,51 @@ alineados sin sangría.
 
 > Comprobado sobre el pie de la tienda publicada: los cuatro enlaces de
 > colección salen con su icono de 19 px y los otros seis sin ninguno.
+
+---
+
+## §K · Las formas de pago del pie, en escala de grises
+
+Shopify sirve esos iconos en los colores de marca —el azul de Visa, el rojo y
+naranja de Mastercard, el rosa de Klarna—, y **son la única mancha de color de
+toda la web**. Ya está resuelto en la hoja: vuelve a subir `bps-hyperice.css`.
+
+### No hay ajuste, y tampoco vale cambiar el color
+
+No hay ninguna opción en el editor para esto. Y la vía que uno probaría primero
+—forzar el color con CSS— **no funciona**: los iconos llegan como `<svg>` en línea
+con los colores metidos en un atributo `style` de cada trazado, así que una regla
+de `fill` no los alcanza. Con `!important` sí, pero entonces **todos** los
+trazados se van al mismo gris y cada tarjeta queda como un rectángulo liso sin
+marca legible. Lo probé antes de descartarlo.
+
+Lo que sí funciona es un filtro sobre el SVG, que actúa sobre el resultado
+pintado y le da igual de dónde venga el color:
+
+```css
+.footer .list-payment svg { filter: grayscale(1); }
+```
+
+Las tarjetas mantienen su forma y su contraste, y las marcas siguen
+reconociéndose. Si prefieres que la fila pese menos, se le añade
+`opacity(0.75)`; no va de serie porque baja algo la legibilidad.
+
+### Lo que hace Hyperice, y por qué no lo copiamos
+
+Miré cómo lo resuelven ellos y **no usan un filtro**: sirven sus **propios iconos
+monocromos**, planos en `#CBCBCB` —el mismo gris del pie— y a 36×20. Descargué
+tres de sus SVG para confirmarlo.
+
+Copiarlo exactamente obligaría a apagar los iconos de Dawn y añadir el marcado a
+mano en `sections/footer.liquid`, que es justo uno de los dos archivos que hay que
+rehacer en **cada** actualización del tema (§I). El filtro deja el pie monocromo y
+no cuesta nada, así que se queda así. Si algún día quieres las marcas planas
+exactas, el camino es ese y está apuntado.
+
+> **Un aviso que no es técnico:** las redes de pago (Visa, Mastercard, Amex,
+> PayPal) tienen normas de marca sobre cómo mostrar sus logos, y algunas piden los
+> colores originales. En la práctica muchas tiendas los ponen en monocromo y no
+> pasa nada, pero la decisión es vuestra, no mía.
 
 ---
 
