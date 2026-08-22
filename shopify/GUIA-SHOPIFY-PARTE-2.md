@@ -36,14 +36,14 @@ esta parte corrige.
 | | Cuántas |
 |---|---|
 | Ajustes del editor pendientes de poner (§A) | 13 |
-| Fallos de la hoja, ya corregidos en el repositorio (§B) | 19 |
+| Fallos de la hoja, ya corregidos en el repositorio (§B) | 21 |
 | Código de `theme.liquid` pendiente de aplicar (§C) | 3 |
 | Límites de Dawn que no se pueden igualar (§D) | 3 |
 
 Y al final, tres apartados que no son diferencias sino respuestas a preguntas
 tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar una a
-una las ocho páginas del prototipo; y **§H**, la descripción corta de la tarjeta
-y la línea separadora.
+una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
+y la línea separadora; y **§H-4**, el bloque de suscripción del pie.
 
 ---
 
@@ -149,7 +149,7 @@ real, no un fallo: ver B-12.
 
 ## §B · Fallos de la hoja de estilos (ya corregidos)
 
-Estos diecinueve los ha destapado la medición y **ya están arreglados en
+Estos veintiuno los ha destapado la medición y **ya están arreglados en
 `bps-hyperice.css`**. Hay que volver a subir la hoja (paso 3a de la guía) para
 que surtan efecto.
 
@@ -174,6 +174,8 @@ que surtan efecto.
 | **B-17. Botón del banner pegado a la foto en móvil** | Dawn deja el contenido del banner sin relleno inferior en móvil: 50 px en escritorio y **0** en móvil | 96 px por debajo del botón, los del prototipo |
 | **B-18. Reparto del pie** | Dawn apila: las tres columnas a todo lo ancho, luego el boletín a todo lo ancho y las redes colgando a su derecha | Dos columnas: redes a la izquierda en 320 px, boletín arriba a la derecha y los tres menús debajo. Medido: los mismos `x=30 / x=499` y anchos `320 / 911` del prototipo |
 | **B-19. El `+` del pie sin círculo** | Era un «+» de texto suelto | Círculo de 26 px sobre `#373737` con las dos barras de 11 px, como el prototipo |
+| **B-20. Titular del boletín en 18 px** | Dawn usa la misma clase para el rótulo de las columnas y para el titular del boletín, y la regla de 18 px se lo comía | 32 px en escritorio y 24 en móvil. Ver §H-4 |
+| **B-21. Formulario del boletín en columna** | `max-width: 36rem` y el botón dentro del campo, como una flecha de 44 px | Fila con el campo elástico y el botón de píldora al lado |
 
 Sobre B-3: no bastaba una regla para `.page-width`. Dawn tiene tres selectores
 que pesan más (`.utility-bar__grid.page-width`,
@@ -806,6 +808,87 @@ está guardado el campo en ese producto.
 > en la tarjeta. En el prototipo el título es corto —«Presoterapia BPS PLUS»— y el
 > resto va en la descripción. Si quieres el reparto del prototipo, el título largo
 > hay que acortarlo en el admin y mover la segunda mitad al metacampo.
+
+---
+
+## §H-4 · El bloque de suscripción del pie
+
+Comparado con el prototipo faltaban cinco cosas. Dos las arregla la hoja, dos
+necesitan Liquid y una es un ajuste que está en un sitio poco evidente.
+
+| | Prototipo | Tienda | Dónde se arregla |
+|---|---|---|---|
+| Titular | **32 px** (24 en móvil) | 18 px | Hoja |
+| Formulario | Fila: campo de **743 px** + botón al lado | Columna con `max-width: 36rem`, campo de 358 | Hoja |
+| Botón | Píldora de **160×40** con «Suscribirse» | Flecha de 44 px **dentro** del campo, sin texto | Hoja + Liquid |
+| Nota legal | «Al enviar tu dirección de correo aceptas la…» con enlaces | **No existe** | Liquid |
+| Texto del campo y del botón | — | No se puede editar desde la sección | Idiomas |
+
+### Por qué el titular salía en 18 px
+
+Dawn usa **la misma clase** `.footer-block__heading` para el rótulo de las
+columnas de menú y para el titular del boletín. La regla del apartado 11 de la
+hoja los pone todos en 18 px, que es lo correcto para las columnas, y se comía el
+titular del boletín. Ahora hay una regla aparte para el del boletín.
+
+### Lo que necesita Liquid, y por qué
+
+Dos cosas no se pueden hacer con CSS:
+
+- **La etiqueta del botón.** Dawn solo pinta una flecha y deja el texto en el
+  `aria-label`, así que no hay nada que enseñar. Con CSS habría que escribir
+  «Suscribirse» dentro de un `content`, y eso deja el texto fuera del archivo de
+  idioma y sin poder traducirse.
+- **La nota legal.** Lleva **enlaces** a la política de privacidad y a los
+  términos, y un enlace no se puede crear desde CSS.
+
+Están las dos en **`shopify/sections/footer.liquid`**, que es el pie de Dawn
+15.4.1 con esos dos añadidos y nada más. Cópialo entero sobre
+`sections/footer.liquid`. El original está en `shopify/dawn-original/footer.liquid`.
+
+Los enlaces de la nota **no llevan URL escrita a mano**: salen de las políticas de
+la tienda, así que si cambian en Configuración → Políticas, cambian aquí:
+
+```liquid
+<a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a>
+```
+
+Si una política no existe, ese trozo no se imprime.
+
+### El texto que «no se puede editar»
+
+Hay tres textos en ese bloque y cada uno vive en un sitio distinto. Es lo que
+hace parecer que no se pueden cambiar:
+
+| Texto | Dónde se edita |
+|---|---|
+| El titular | **Personalizar → Pie de página → «Suscriptor de correo electrónico» → Encabezado** |
+| El «Correo electrónico» del campo | **Contenido → Idiomas → Editar traducciones del tema**, clave `newsletter.label` |
+| El «Suscribirse» del botón | Igual, clave `newsletter.button_label` |
+
+Los dos últimos son cadenas del tema, no de la sección: por eso no aparecen en el
+editor de Personalizar. La frase de la nota legal sí está escrita en el Liquid
+—en español, porque la tienda es de un solo idioma—; si algún día hace falta
+traducirla, hay que pasarla al archivo de idioma.
+
+### Comprobado
+
+Con la hoja y el pie nuevos, medido a 1440 y a 390 px contra el prototipo:
+
+| | Prototipo | Tienda ahora |
+|---|---|---|
+| Titular | 32 px / margen 30 | **32 / 30** |
+| Formulario | fila, hueco 8, ancho 911 | **fila, 8, 911** |
+| Campo | 743 px | **749** |
+| Botón | 160×40, píldora blanca, «Suscribirse» | **igual** |
+| Nota | 13 px, una línea | **13 px, una línea** |
+| Móvil | titular 24, campo 192, botón 160 | **24 / 198 / 160** |
+
+> Al hacerlo salió un fallo de la hoja que llevaba tiempo ahí: el apartado 11
+> declara `.footer a { display: flex; gap: 10px }` porque los enlaces de menú del
+> pie llevan icono a la izquierda, pero eso alcanza a **todos** los enlaces del
+> pie. Los de la nota legal se convertían en bloques de ancho completo y la frase
+> salía partida en cuatro líneas. Corregido con una excepción para la nota.
 
 ---
 

@@ -1424,3 +1424,103 @@ button.shopify-payment-button__button--unbranded {
 
   .footer__content-top > .footer__blocks-wrapper { grid-area: menus; }
 }
+
+/* --------------------------------------------------------------------------
+   19. Boletín del pie
+   Dawn usa la MISMA clase `.footer-block__heading` para el rótulo de las
+   columnas de menú y para el titular del boletín, así que la regla de 18px del
+   apartado 11 se lo comía: medido 18px donde el prototipo tiene 32.
+
+   Y su formulario es una columna con `max-width: 36rem` y el botón metido
+   DENTRO del campo en posición absoluta, como una flecha de 44px sin texto. El
+   prototipo pone el campo y un botón de píldora con «Suscribirse» en una fila.
+
+   La etiqueta visible del botón y la nota legal necesitan Liquid —el texto está
+   en `aria-label` y la nota lleva enlaces a las políticas—: van en
+   `shopify/sections/footer.liquid`. Ver PARTE 2 §H-4.
+   -------------------------------------------------------------------------- */
+
+.footer-block__newsletter .footer-block__heading {
+  font-size: 24px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  max-width: 34ch;
+}
+
+@media screen and (min-width: 990px) {
+  .footer-block__newsletter .footer-block__heading {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+}
+
+/* El formulario, en fila: campo elástico y botón al lado. Dawn lo declara en
+   columna con `max-width: 36rem` en `.newsletter-form`, que es la otra clase del
+   mismo <form>. */
+.footer__newsletter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: none;
+  margin: 0;
+}
+
+.footer__newsletter .newsletter-form__field-wrapper {
+  flex: 1 1 260px;
+  max-width: none;
+  width: auto;
+}
+
+/* El botón sale del campo: deja de ser absoluto y pasa a píldora del sistema.
+
+   El selector con los dos `:not()` no es un adorno: Dawn declara
+   `.newsletter-form__button:not(:focus-visible):not(.focused) { background-color:
+   inherit }`, que pesa 0,3,0 y le ganaba a la regla simple. El fondo heredaba el
+   oscuro del pie y el botón se veía transparente. */
+.footer__newsletter .newsletter-form__button,
+.footer__newsletter .newsletter-form__button:not(:focus-visible):not(.focused) {
+  position: static;
+  flex: none;
+  width: auto;
+  min-width: 160px;
+  height: 40px;
+  padding-inline: 20px;
+  border: 0;
+  border-radius: 62.5rem;
+  background-color: var(--bps-white);
+  color: var(--bps-black);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.footer__newsletter .newsletter-form__button:hover,
+.footer__newsletter .newsletter-form__button:not(:focus-visible):not(.focused):hover {
+  background-color: var(--bps-grey-300);
+}
+
+/* Con la etiqueta a la vista, la flecha sobra. */
+.footer__newsletter .newsletter-form__button .svg-wrapper { display: none; }
+
+.bps-boletin__nota {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--bps-footer-fg);
+}
+
+/* Los enlaces van EN LÍNEA dentro del párrafo. Hay que decirlo porque el
+   apartado 11 declara `.footer a { display: flex; gap: 10px }` —lo necesitan los
+   enlaces de menú, que llevan icono a la izquierda— y eso convertía cada enlace
+   de la nota en un bloque de ancho completo: la frase salía partida en cuatro
+   líneas, con «Política de privacidad» y «Términos del servicio» cada una en la
+   suya. */
+.bps-boletin__nota a {
+  display: inline;
+  width: auto;
+  gap: 0;
+  font-size: inherit;
+  color: var(--bps-white);
+  text-decoration: underline;
+}

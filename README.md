@@ -121,6 +121,7 @@ shopify/CODIGO-EXISTENTE.md  El código a medida que ya hay en la tienda, y qué
 shopify/ARCHIVOS-MODIFICADOS.md  Los 4 archivos del tema tocados y el Liquid que debe quedar
 shopify/dawn-original/       Los 4 archivos de Dawn 15.4.1 sin modificar, para restaurar
 shopify/snippets/            card-product.liquid con la descripción corta de la tarjeta
+shopify/sections/            footer.liquid con la nota legal y la etiqueta del botón
 shopify/bloques/             Bloques generados con IA, corregidos para el sistema
 tools/build-logos.py         Regenera el logotipo vectorizando el original
 tools/build-favicon.py       Regenera el favicon a partir del isotipo
