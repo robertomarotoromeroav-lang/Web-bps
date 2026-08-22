@@ -985,11 +985,17 @@ cuatro cosas, no cuarenta**, y de ellas dos son copiar un archivo entero.
 
 | Qué | Cómo | Riesgo de conflicto |
 |---|---|---|
-| `assets/bps-hyperice.css` | Subir el archivo | **Ninguno.** Es un archivo nuevo, no toca nada de Dawn |
-| `assets/bps-hyperice.js` | Subir el archivo | **Ninguno.** Igual |
+| `assets/bps-hyperice.css` | Subir el archivo **y enlazarlo** en el layout ⚠️ | **Ninguno.** Es un archivo nuevo, no toca nada de Dawn |
+| `assets/bps-hyperice.js` | Subir el archivo **y enlazarlo** en el layout | **Ninguno.** Igual |
 | `snippets/card-product.liquid` | Copiar `shopify/dawn16/card-product.liquid` | Ninguno: ya está preparado sobre v16 |
 | `sections/footer.liquid` | Copiar `shopify/dawn16/footer.liquid` | Ninguno: el original de Dawn **no cambió** en v16 |
-| `layout/theme.liquid` | **Dos líneas a mano.** Ver abajo | Bajo |
+| `layout/theme.liquid` | **Tres líneas a mano.** Ver abajo | Bajo |
+
+> ⚠️ **Subir un archivo a `Assets` no lo activa.** Es un archivo suelto hasta que
+> el layout lo enlaza. Es el error que se dio al pasar a Dawn 16: la hoja estaba
+> subida pero sin enlazar, así que **no se aplicaba ni una regla** y la tienda se
+> veía como Dawn de fábrica —cabecera sin el efecto, pie sin el reparto, todo—.
+> Se comprueba en diez segundos: ver «Cómo verificar» al final de este apartado.
 
 Y **una cosa que la actualización arregla sola**: los tres archivos con el botón
 de borde degradado —`image-banner`, `image-with-text` y `contact-form`— vuelven a
@@ -1002,19 +1008,33 @@ uno, en el sitio correcto. **Eso era el 90 % del trabajo de una actualización, 
 donde es fácil equivocarse.** Ahora los tres están en un archivo,
 `shopify/bps-hyperice.js`, y en el layout solo va la llamada.
 
-De `theme.liquid` quedan **dos** ediciones:
+De `theme.liquid` quedan **tres** ediciones, en dos sitios.
+
+**1. Envolver el grupo de cabecera** (GUIA §3d), donde esté
+`{% sections 'header-group' %}`:
 
 ```liquid
-<!-- 1. Envolver el grupo de cabecera (GUIA §3d) -->
 <div class="bps-header-group">
   {% sections 'header-group' %}
 </div>
 ```
 
+**2 y 3. La hoja y el comportamiento, juntos justo antes de `</body>`.** Van las
+dos líneas seguidas, para que no se quede una sin poner:
+
 ```liquid
-<!-- 2. Antes de </body>: la hoja y el comportamiento -->
-<script src="{{ 'bps-hyperice.js' | asset_url }}" defer="defer"></script>
+    {{ 'bps-hyperice.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'bps-hyperice.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>
 ```
+
+⚠️ **La hoja va antes de `</body>`, NO antes de `</head>`.** No es un capricho:
+Dawn carga una veintena de hojas de componente **dentro del cuerpo**, una por
+sección. Si la nuestra se pone en el `<head>`, esas van después y le ganan en
+igualdad de peso. Esto ya estaba en la [guía §3a](GUIA-SHOPIFY.md), y **el
+apartado que tienes delante se lo saltó**: decía «dos líneas» y omitía la de la
+hoja.
 
 > Si ya tenías los tres scripts pegados en el layout de la versión anterior,
 > **bórralos** al pasar al archivo, o se ejecutarán dos veces.
@@ -1060,6 +1080,23 @@ Y después, sobre la vista previa del tema nuevo y antes de publicar, mirar a oj
 las seis cosas que más se rompen: la cabecera translúcida, el espaciado entre
 secciones, la tarjeta de producto, el pie en escritorio, el pie en móvil con el
 `+`, y una página de colección.
+
+### Cómo verificar que está todo, en diez segundos
+
+En la tienda publicada, botón derecho → **Ver código fuente de la página**, y
+busca (Ctrl+F) estas cinco cosas. Si alguna sale a `0`, es esa la que falta:
+
+| Busca | Qué significa si no aparece |
+|---|---|
+| `bps-hyperice.css` | **La hoja no está enlazada.** No se aplica ni una regla |
+| `bps-hyperice.js` | El comportamiento no está: ni barra que se esconde, ni cabecera translúcida, ni pie plegable |
+| `bps-header-group` | Falta el envoltorio de §3d: la barra de anuncios tapará la cabecera |
+| `bps-ayuda` | No has copiado `sections/footer.liquid` |
+| `bps-card__descripcion` | No has copiado `snippets/card-product.liquid`, o falta el metacampo (§H-3) |
+
+Así se localizó el fallo del paso a Dawn 16: `bps-hyperice.js` salía **1** y
+`bps-hyperice.css` salía **0**. Todo lo demás —el envoltorio, la caja de
+contacto, la nota legal y las ocho descripciones de tarjeta— estaba bien puesto.
 
 > **Lo importante para el futuro: cuanto menos código haya en archivos de Dawn,
 > más barata es cada actualización.** Por eso los scripts se han movido a un
