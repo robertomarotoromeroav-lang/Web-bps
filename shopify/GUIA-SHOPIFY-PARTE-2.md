@@ -43,8 +43,9 @@ esta parte corrige.
 Y al final, tres apartados que no son diferencias sino respuestas a preguntas
 tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar una a
 una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
-y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**, sus dos remates; y **§I**,
-cómo actualizar el tema sin rehacer todo el trabajo.
+y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**, sus dos remates; **§I**,
+cómo actualizar el tema sin rehacer todo el trabajo; y **§J**, los iconos del
+menú del pie.
 
 ---
 
@@ -1148,6 +1149,60 @@ normales.
 > archivo propio, y por eso las tres cosas que faltan de §D conviene hacerlas
 > como **sección nueva** y no parcheando secciones de Dawn: un archivo propio se
 > copia y ya está, mientras que un parche hay que volver a encajarlo cada vez.
+
+---
+
+## §J · Los iconos del menú de tecnología del pie
+
+En el prototipo, los cuatro enlaces de la primera columna del pie llevan un icono
+de línea a la izquierda. Los otros dos menús no.
+
+**No hay nada que hacer en el editor: ya está resuelto en la hoja.** Basta con
+volver a subir `bps-hyperice.css`.
+
+### Por qué no se podía hacer con un ajuste
+
+Esos enlaces salen de un **menú de navegación** (Contenido → Menús), y el Liquid
+del pie de Dawn solo imprime `{{ link.title }}`. No hay campo para un icono, ni en
+el menú ni en el bloque del pie.
+
+Se podía resolver de dos maneras y elegí la segunda:
+
+| | Cómo | Por qué no / sí |
+|---|---|---|
+| Parchear `sections/footer.liquid` | Un mapa de handle → icono dentro del bucle de enlaces | El pie ya es uno de los dos archivos que hay que rehacer en **cada** actualización del tema (§I). Añadirle más código lo encarece |
+| **Atarlo a la URL desde la hoja** ✅ | `a[href*="/collections/presoterapia"]::before` con el icono en una máscara | Se queda en la hoja, que se sube y listo. Cero código en archivos de Dawn |
+
+Es la consecuencia práctica de lo que dice §I: **cuanto menos código haya en
+archivos de Dawn, más barata es cada actualización.**
+
+### Cómo está montado
+
+Cada icono es una máscara sobre `currentColor`, así que **hereda el color del
+enlace** y se aclara con él al pasar el ratón, sin reglas extra. El mapa de hoy:
+
+| Enlace | Icono |
+|---|---|
+| `/collections/presoterapia` | Compresión: tres líneas con los extremos curvados |
+| `/collections/energia-luminica` | Luz: círculo con rayos |
+| `/collections/recuperacion-polar` | Frío: copo de nieve |
+| `/collections/liberacion-muscular` | Percusión: círculos concéntricos |
+
+La caja de 19 px **solo la reservan esos cuatro**. Los enlaces de «Sobre
+nosotros» y «Soporte» —y cualquier colección que añadas al menú sin icono— siguen
+alineados sin sangría.
+
+### Si cambias algo
+
+- **Si cambias el handle de una colección**, ese enlace se queda sin icono; los
+  otros tres siguen. Hay que actualizar su selector en el apartado 21 de la hoja.
+- **Si añades una quinta categoría**, hace falta su icono: se añade un selector
+  más a la lista de la caja y su `--bps-icono`. El apartado 21 lleva las
+  instrucciones en el propio comentario.
+- **Si reordenas el menú**, no pasa nada: los iconos van por URL, no por posición.
+
+> Comprobado sobre el pie de la tienda publicada: los cuatro enlaces de
+> colección salen con su icono de 19 px y los otros seis sin ninguno.
 
 ---
 

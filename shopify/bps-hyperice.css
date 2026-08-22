@@ -1621,3 +1621,59 @@ button.shopify-payment-button__button--unbranded {
   background-color: var(--bps-white);
   color: var(--bps-black);
 }
+/* --------------------------------------------------------------------------
+   21. Iconos del menú de tecnología del pie
+   En el prototipo los cuatro enlaces de la primera columna del pie llevan un
+   icono de línea a la izquierda. Los otros dos menús no.
+
+   Dawn no puede hacerlo: esos enlaces salen de un menú de navegación y su Liquid
+   solo imprime `{{ link.title }}`; no hay ningún sitio donde poner un icono.
+
+   Se resuelve sin tocar Liquid, atando cada icono a la URL del enlace. Es a
+   propósito: el pie ya es uno de los dos archivos que hay que rehacer en cada
+   actualización del tema (PARTE 2 §I), y esto se queda en la hoja, que se sube y
+   listo.
+
+   El icono se dibuja con una máscara sobre `currentColor`, así que hereda el
+   color del enlace y se aclara con él al pasar el ratón.
+
+   ⚠️ Van atados al «handle» de cada colección. Si cambias un handle, ese enlace
+   se queda sin icono —los otros tres siguen— y hay que actualizar su selector
+   aquí. Ver PARTE 2 §J.
+   -------------------------------------------------------------------------- */
+
+/* La caja solo la reservan los cuatro que tienen icono: así los enlaces de
+   «Sobre nosotros» y «Soporte», y cualquier colección que se añada al menú sin
+   icono, siguen alineados sin sangría. */
+.footer-block--menu a[href*="/collections/presoterapia"]::before,
+.footer-block--menu a[href*="/collections/energia-luminica"]::before,
+.footer-block--menu a[href*="/collections/recuperacion-polar"]::before,
+.footer-block--menu a[href*="/collections/liberacion-muscular"]::before {
+  content: "";
+  flex: none;
+  width: 19px;
+  height: 19px;
+  background-color: currentColor;
+  -webkit-mask: var(--bps-icono) center / 19px 19px no-repeat;
+  mask: var(--bps-icono) center / 19px 19px no-repeat;
+}
+
+/* Presoterapia */
+.footer-block--menu a[href*="/collections/presoterapia"] {
+  --bps-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19' fill='none'%3E%3Cpath d='M3 5h13M3 9.5h13M3 14h13' stroke='%23000' stroke-width='0.9' stroke-linecap='round'/%3E%3Cpath d='M6 2.5c2 1.4 5 1.4 7 0M6 16.5c2-1.4 5-1.4 7 0' stroke='%23000' stroke-width='0.9' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Luz roja */
+.footer-block--menu a[href*="/collections/energia-luminica"] {
+  --bps-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19' fill='none'%3E%3Ccircle cx='9.5' cy='9.5' r='3.6' stroke='%23000' stroke-width='0.9'/%3E%3Cpath d='M9.5 1v2.4M9.5 15.6V18M18 9.5h-2.4M3.4 9.5H1M15.5 3.5l-1.7 1.7M5.2 13.8l-1.7 1.7M15.5 15.5l-1.7-1.7M5.2 5.2 3.5 3.5' stroke='%23000' stroke-width='0.9' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Frío */
+.footer-block--menu a[href*="/collections/recuperacion-polar"] {
+  --bps-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19' fill='none'%3E%3Cpath d='M9.5 1v17M2 5.2l15 8.6M17 5.2 2 13.8' stroke='%23000' stroke-width='0.9' stroke-linecap='round'/%3E%3Cpath d='M7.2 2.9 9.5 5l2.3-2.1M7.2 16.1 9.5 14l2.3 2.1' stroke='%23000' stroke-width='0.9' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+}
+
+/* Percusión */
+.footer-block--menu a[href*="/collections/liberacion-muscular"] {
+  --bps-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19' fill='none'%3E%3Ccircle cx='9.5' cy='9.5' r='8.6' stroke='%23000' stroke-width='0.9'/%3E%3Ccircle cx='9.5' cy='9.5' r='5.9' stroke='%23000' stroke-width='0.9'/%3E%3Ccircle cx='9.5' cy='9.5' r='3.3' stroke='%23000' stroke-width='0.9'/%3E%3Ccircle cx='9.5' cy='9.5' r='1.1' fill='%23000'/%3E%3C/svg%3E");
+}
