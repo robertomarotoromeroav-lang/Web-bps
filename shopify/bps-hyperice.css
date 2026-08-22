@@ -1897,3 +1897,261 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .contact__button { margin-top: 28px; }
+
+/* --------------------------------------------------------------------------
+   24. Páginas construidas con PageFly
+   La página `/pages/contacto-bps` está hecha con PageFly para conseguir las dos
+   columnas que Dawn no puede dar (§D-1). PageFly no usa las clases de Dawn, así
+   que nada de lo de arriba le llega: monta su propio árbol con `data-pf-type` y
+   clases generadas (`sc-frWhkP`, `pf-17_`), y trae sus PROPIOS valores por
+   defecto, que no son los del prototipo.
+
+   Aquí hay dos trabajos distintos:
+
+   a) El HTML del prototipo pegado en los bloques «HTML personalizado». Ese
+      marcado usa las clases del prototipo —`page-head__title`, `text-eyebrow`,
+      `checklist`, `btn btn--secondary`…— que NO existen ni en Dawn ni en esta
+      hoja, así que salía sin estilo. Lo peor eran los iconos de la lista: sin
+      regla de tamaño, un `<svg>` sin atributos width/height se estira hasta el
+      ancho del contenedor. Medido: 502×502px cada uno.
+
+   b) Los controles del formulario de PageFly. Sus valores de fábrica son campo
+      de 32px con borde `#8a8a8a` y radio 8, etiqueta de 16px y botón en el
+      color de muestra de la aplicación, `#5d6b82`. Medido en la página
+      publicada.
+
+   Todo va colgado de `.__pf`, la raíz que PageFly pone en la página, por dos
+   razones: no toca nada del resto de la web, y gana en peso a las reglas de
+   PageFly —`.pf-field-1` y `.dzavND input` pesan 0,2,0 y 0,1,1— porque esta hoja
+   se carga después que sus estilos en línea (comprobado: nuestro `<link>` está
+   al final del documento y los de PageFly a media altura).
+
+   Lo que NO se arregla desde aquí son el ancho del contenedor, el relleno de las
+   secciones, el fondo hueso y el hueco entre columnas: eso PageFly lo genera por
+   elemento con tres clases de peso (`.__pf.__pf_xxx .pf-10_>.pf-flex-section`) y
+   pelearlo a golpe de `!important` se rompería en la siguiente edición. Son
+   cinco ajustes del editor y están en PARTE 2 §M.
+   -------------------------------------------------------------------------- */
+
+/* --- a) Clases del prototipo, para el HTML pegado a mano ------------------ */
+
+/* Enlaces: PageFly no hereda el color de Dawn y salían en el azul del
+   navegador. El prototipo usa negro y subraya solo al pasar por encima. */
+.__pf a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.__pf a:hover { text-decoration: underline; }
+
+/* Los tamaños de h4 a h6. Los de h1 a h3 ya los pone el apartado 6, pero de
+   `.h4` para abajo Dawn se queda en 1,5rem —15px— y el prototipo los usa como
+   titulares de bloque. Medido: «Atención 24/7» salía a 15px contra los 32 del
+   prototipo. Van dentro de `.__pf` para no cambiar nada de Dawn. */
+.__pf h4, .__pf .h4 { font-size: clamp(24px, 2.22222vw, 32px); line-height: 1.15; }
+.__pf h5, .__pf .h5 { font-size: 24px; }
+.__pf h6, .__pf .h6 { font-size: 18px; }
+
+/* Cabecerita de página. La franja hueso la pone el fondo de la sección en el
+   editor (§M), aquí van las medidas del texto. */
+.__pf .page-head__title { max-width: 18ch; margin-top: 12px; }
+
+.__pf .page-head__text {
+  max-width: 58ch;
+  margin-top: 20px;
+  color: var(--bps-grey-500);
+}
+
+.__pf .breadcrumb {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--bps-grey-500);
+}
+
+/* Antetítulo: 12px en versalitas espaciadas. */
+.__pf .text-eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bps-grey-500);
+}
+
+.__pf .text-muted { color: var(--bps-grey-500); }
+.__pf .measure { max-width: 58ch; }
+
+/* Columna de texto: 20px entre elementos, como el prototipo. */
+.__pf .split__body > * + * { margin-top: 20px; }
+
+.__pf .split__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+/* La lista con icono. La raya va solo ENTRE filas: cerrándola por arriba y por
+   abajo, lo de después queda encajonado y se lee como un componente con marco. */
+.__pf .checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.__pf .checklist li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-block: 18px;
+  font-size: 16px;
+}
+
+.__pf .checklist li + li { border-top: 1px solid var(--bps-stroke); }
+
+/* Sin esto los iconos se estiran hasta el ancho del contenedor: los `<svg>` del
+   prototipo no traen width ni height. */
+.__pf .checklist svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+/* Botones del prototipo. Dawn los llama `.button`, el prototipo `.btn`, así que
+   no chocan. */
+.__pf .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.__pf .btn--primary,
+.__pf .btn--secondary {
+  min-width: 160px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 62.5rem;
+}
+
+.__pf .btn--primary {
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+}
+
+.__pf .btn--primary:hover { background-color: var(--bps-off-white); color: var(--bps-black); }
+
+.__pf .btn--secondary {
+  background-color: transparent;
+  color: currentColor;
+  border: 1px solid currentColor;
+}
+
+.__pf .btn--secondary:hover { background-color: var(--bps-black); color: var(--bps-white); }
+
+.__pf .btn--tertiary {
+  padding: 0 0 2px;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+}
+
+.__pf .btn--full { width: 100%; }
+
+.__pf .btn:hover { text-decoration: none; }
+
+/* --- b) Los controles del formulario de PageFly --------------------------- */
+
+/* PageFly le mete 8px de relleno al bloque del formulario, así que los campos
+   salían 8px por dentro de la columna. Y el formulario del prototipo tiene 520px
+   de ancho máximo, no el de la columna entera. */
+.__pf [data-pf-type="Form2"] { padding: 0; }
+
+.__pf [data-pf-type="Form2"] > form { max-width: 520px; }
+
+/* Etiqueta: 14px, peso 500, con 8px de aire hasta el campo. PageFly la deja en
+   16px normal y a 4px. Los selectores por `data-pf-type` son los estables: las
+   otras clases del elemento las genera la aplicación y cambian al editar. */
+.__pf [data-pf-type="FormLabel"] {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgb(var(--color-foreground));
+}
+
+.__pf [data-pf-type="FormLabel"]:not(:last-child) { margin-bottom: 8px; }
+
+/* El asterisco de obligatorio lo pone PageFly en rojo. En la paleta del
+   prototipo no hay rojo; se deja en el gris del texto secundario. Si prefieres
+   el rojo de aviso, borra esta regla. */
+.__pf [data-pf-type="FormLabel"] sup { color: var(--bps-grey-500); }
+
+/* Campo: 46px de alto, borde de 1px en el gris de la paleta, radio 4 y 16px de
+   sangría. PageFly trae 32px de alto, borde `#8a8a8a` de 0,66px y radio 8. */
+.__pf [data-pf-type="FormInput"] {
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--bps-stroke);
+  border-radius: 4px;
+  background-color: var(--bps-white);
+  color: rgb(var(--color-foreground));
+  font-size: 14px;
+}
+
+.__pf textarea[data-pf-type="FormInput"] {
+  height: auto;
+  min-height: 140px;
+  padding: 12px 16px;
+}
+
+.__pf [data-pf-type="FormInput"]:focus {
+  border-color: rgb(var(--color-foreground));
+  outline: 0;
+}
+
+.__pf [data-pf-type="FormInput"]::placeholder { color: var(--bps-grey-500); }
+
+/* Botón de enviar: la píldora negra del sistema. PageFly lo deja en su color de
+   muestra, un azul grisáceo (`#5d6b82`) con radio 4 y 16px de letra. */
+.__pf [data-pf-type="Form2.Button2"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  /* `min-height` y no solo `height`: PageFly le pone `height: fit-content` con
+     tres clases de peso y el botón se quedaba en 16px de alto. El mínimo se
+     aplica igual. */
+  height: 40px;
+  min-height: 40px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 62.5rem;
+  background-color: var(--bps-black);
+  color: var(--bps-white);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.__pf [data-pf-type="Form2.Button2"]:hover {
+  background-color: var(--bps-off-white);
+  color: var(--bps-black);
+}
+
+/* PageFly centra el bloque del botón. El prototipo lo alinea a la izquierda con
+   el resto del formulario. Cuatro clases y un elemento para ganarle a la regla
+   generada, que pesa 0,3,0. */
+.__pf form [data-pf-type="FlexBlock"]:has(> [data-pf-type^="Form2.Button"]) {
+  place-content: start;
+}

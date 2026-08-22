@@ -45,8 +45,9 @@ tuyas: **§F**, si conviene cambiar a otro tema gratuito; **§G**, cómo montar 
 una las ocho páginas del prototipo; **§H**, la descripción corta de la tarjeta
 y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**, sus dos remates; **§I**,
 cómo actualizar el tema sin rehacer todo el trabajo; **§J**, los iconos del
-menú del pie; **§K**, las formas de pago en escala de grises; y **§L**, la página
-de contacto, que salió descolocada y ya está cuadrada.
+menú del pie; **§K**, las formas de pago en escala de grises; **§L**, la página
+de contacto de Dawn, que salió descolocada y ya está cuadrada; y **§M**, la
+versión de esa misma página hecha con PageFly, con las dos columnas.
 
 ---
 
@@ -301,6 +302,8 @@ de Dawn. No son fallos de configuración: el campo no existe.
 - **D-3. El desplegable «¿Qué te interesa?» del formulario de contacto.** Los
   campos del formulario de Dawn están escritos en el Liquid, no son un ajuste:
   son Nombre, Correo electrónico, Teléfono y Comentario. Detalle en §G-2.
+  **Con PageFly esto se resuelve sin tocar código**, porque su formulario deja
+  añadir y quitar campos: ver §M.
 
 Sobre si conviene cambiar de tema para conseguirlas, ver **§F**.
 
@@ -451,7 +454,8 @@ completo desactivado, Relleno `0` arriba / `80` abajo.
 - 🔴 **No hay dos columnas.** Dawn apila las secciones, no las pone al lado. El
   formulario quedará arriba y «Otras vías» debajo. Funciona y se ve limpio, pero
   no es el reparto del prototipo. Para las dos columnas hace falta una sección a
-  medida que lleve el formulario y el bloque de texto dentro.
+  medida que lleve el formulario y el bloque de texto dentro —o un constructor de
+  páginas, que es el camino que se ha seguido al final: **ver §M**.
 - 🔴 **El desplegable «¿Qué te interesa?» no existe** (§D-3). Los campos de Dawn
   son Nombre, Correo electrónico, **Teléfono** y Comentario: falta el
   desplegable y sobra el teléfono. Si lo quieres, es un añadido en
@@ -1313,6 +1317,135 @@ ancho.
   formulario. Si lo quieres exacto, deja vacío el campo «Encabezado» de la
   sección; si lo dejas, ahora sale al tamaño correcto.
 - **La miga de pan** («Inicio / Contacto») no la saca Dawn en las páginas.
+
+---
+
+## §M · La página hecha con PageFly (`/pages/contacto-bps`)
+
+Montaste la página con PageFly para tener las dos columnas que Dawn no da, y
+pegaste el HTML del prototipo en bloques de «HTML personalizado». **La idea es
+buena** y no hay que deshacerla: es la forma más directa de tener el marcado
+exacto del prototipo dentro de Shopify. Lo que fallaba es que ese marcado
+**usaba clases que no existen en la tienda**, y que PageFly trae sus propios
+valores por defecto para el formulario.
+
+Medido en la página publicada, a 1440px:
+
+| Lo que se veía | Medida real | Debería ser |
+|---|---|---|
+| Los iconos de la lista, gigantes | **502 × 502 px** cada `<svg>` | 18 × 18 |
+| «Atención 24/7» pequeño, como un párrafo en negrita | 15px | 32px |
+| «OTRAS VÍAS» igual que el texto normal | 16px, sin versalitas, negro | 12px, versalitas, gris `#505050` |
+| Los párrafos secundarios en negro | negro pleno | gris `#505050` |
+| «Escríbenos por Instagram» como enlace azul subrayado | `#0000EE`, 17px de alto | píldora de contorno, 40px de alto |
+| La lista con viñetas y sin rayas | `list-style: disc` | filas con línea fina entre ellas |
+| Etiquetas del formulario | 16px, peso 400 | 14px, peso 500 |
+| Campos | 32px de alto, borde `#8a8a8a` de 0,66px, radio 8, letra 16px | 46px, borde `#dfdfdf` de 1px, radio 4, letra 14px |
+| Botón «Enviar» | azul grisáceo `#5d6b82`, radio 4, 85×38, centrado | píldora negra 160×40, a la izquierda |
+
+Los iconos de 502px son el motivo de que la página se viera «desordenada y
+rara»: los `<svg>` del prototipo no llevan `width` ni `height` —el tamaño se lo
+da el CSS— así que sin regla se estiran hasta el ancho de la columna.
+
+### Lo que se arregla solo con volver a subir la hoja
+
+Todo lo de la tabla. Es el apartado **§24** nuevo de `bps-hyperice.css`, con dos
+partes: las clases del prototipo (`page-head__title`, `text-eyebrow`,
+`text-muted`, `measure`, `checklist`, `split__body`, `btn btn--primary`,
+`btn--secondary`, y los tamaños de `h4` a `h6`) y los controles del formulario de
+PageFly.
+
+Dos decisiones que conviene conocer:
+
+- **Todo cuelga de `.__pf`**, la raíz que PageFly pone en la página. Así no toca
+  nada del resto de la web y, a la vez, le gana en peso a las reglas de PageFly.
+  Si algún día pegas ese mismo HTML en una sección «Liquid personalizado» de
+  Dawn —fuera de PageFly— estas reglas **no** le llegarán; dímelo y lo amplío.
+- Los campos se apuntan por `data-pf-type` (`FormInput`, `FormLabel`,
+  `Form2.Button2`) y no por sus clases. Las clases que ves en el HTML
+  (`sc-frWhkP`, `pf-17_`, `pf-field-1`) **las genera la aplicación y cambian al
+  editar la página**; los `data-pf-type` no.
+
+### Lo que hay que cambiar en el editor de PageFly: cinco cosas
+
+Estas cuatro medidas y un color **no se pueden arreglar desde la hoja**, porque
+PageFly las escribe elemento a elemento con selectores de más peso y volvería a
+ganarlas en la siguiente edición. Son ajustes del editor:
+
+| # | Dónde | Está | Debe estar |
+|---|---|---|---|
+| 1 | Ancho del contenedor, en las **dos** secciones | `1100px` | `1536px` (el ancho de página del sitio) |
+| 2 | Relleno de la sección de la cabecerita | `20px` arriba y abajo | `56` arriba / `40` abajo |
+| 3 | Relleno de la sección del formulario | `20px` arriba y abajo | `80` / `80` |
+| 4 | Relleno lateral de las dos secciones | `15px` móvil / `24px` escritorio | `15` móvil / `30` escritorio |
+| 5 | Fondo de la sección de la cabecerita | transparente | `#F7F5F5` |
+
+Y una más, de aire: el **hueco entre las dos columnas** está en `16px` y en el
+prototipo son `72px` en escritorio y `40px` en móvil.
+
+Con el ancho a 1536 y el hueco a 72, la columna derecha cae en **x=756** y en el
+prototipo está en **x=755**. Es la misma página.
+
+> Los nombres exactos de estos ajustes pueden variar según la versión de PageFly
+> —esto lo he deducido del CSS que genera la página, no de su editor—, pero son
+> los cuatro rellenos, el ancho del contenedor, el fondo de sección y el hueco
+> entre columnas. Si alguno no lo encuentras, dime cómo se llama en tu panel y lo
+> concretamos.
+
+### Comprobado
+
+Reproduciendo la página publicada en local con la hoja nueva y esos ajustes
+simulados:
+
+| | Prototipo | PageFly |
+|---|---|---|
+| Título | x=30 · 480,3 de ancho · 48px | x=30 · 480,3 · 48px |
+| Entradilla | gris `#505050` · 516 de ancho | gris `#505050` · 516 |
+| Franja de la cabecerita | `#f7f5f5` | `#f7f5f5` |
+| Campo | 520 de ancho · 45,6 de alto · borde 1px `#dfdfdf` · radio 4 | 520 · 46 · 1px `#dfdfdf` · radio 4 |
+| Etiqueta | 14px · peso 500 | 14px · peso 500 |
+| Botón | x=30 · 160×40 · negro | x=30 · 160×40 · negro |
+| Antetítulo | 12px · versalitas · `#505050` | 12px · versalitas · `#505050` |
+| «Atención 24/7» | 32px | 32px |
+| Iconos de la lista | 18×18 | 18×18 |
+| Columna derecha | x=755 | x=756 |
+
+### Contenido que aún no coincide con el prototipo
+
+Esto no es de estilos, es lo que hay escrito en la página:
+
+- La etiqueta del segundo campo dice `Email`; en el prototipo es
+  `Correo electrónico`.
+- El botón dice `Enviar`; en el prototipo, `Enviar mensaje`.
+- **Falta el desplegable «¿Qué te interesa?»**, que es justo lo que Dawn no
+  podía dar (§D-3). El formulario de PageFly deja añadir un campo de tipo
+  desplegable: ponle las seis opciones del prototipo (Presoterapia, Terapia de
+  luz roja, Recuperación fría, Liberación muscular, Recovery, Equipar un centro
+  o clínica) y quedará resuelto sin tocar código.
+- Falta la miga de pan «Inicio / Contacto». Si la quieres, va en el mismo bloque
+  de HTML personalizado, antes del `<h1>`, y ya tiene estilo en §24:
+  ```html
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <a href="/">Inicio</a> <span>/</span> <span>Contacto</span>
+  </nav>
+  ```
+- El asterisco de campo obligatorio lo pinta PageFly en rojo. La paleta del
+  prototipo no tiene rojo, así que §24 lo deja en el gris del texto secundario.
+  Si prefieres el rojo de aviso, se borra una regla.
+
+### Dos cosas de fondo, antes de dejarla fija
+
+1. **Decide cuál es la página de contacto.** Ahora hay dos: la de Dawn en
+   `/pages/contacto` (la del §L) y esta en `/pages/contacto-bps`. El menú y el
+   bloque «¿Tienes alguna otra pregunta?» del pie apuntan a la primera. Si esta
+   se queda, hay que repuntar esos enlaces —o mejor, asignarle la plantilla de
+   PageFly a la página `contacto` de siempre y borrar la copia, para no partir el
+   SEO ni dejar dos URLs con lo mismo.
+2. **PageFly y las actualizaciones del tema (§I).** PageFly se instala sobre el
+   tema publicado; cuando actualices Dawn, revisa en su panel que la página
+   sigue conectada al tema nuevo, igual que hay que volver a subir nuestros
+   cuatro archivos. Y ojo con el peso: PageFly añade su propio CSS y JS a esa
+   página.
 
 ---
 
