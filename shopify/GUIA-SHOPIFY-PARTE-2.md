@@ -47,7 +47,9 @@ y la línea separadora; **§H-4**, el bloque de suscripción del pie; **§H-5**,
 cómo actualizar el tema sin rehacer todo el trabajo; **§J**, los iconos del
 menú del pie; **§K**, las formas de pago en escala de grises; **§L**, la página
 de contacto de Dawn, que salió descolocada y ya está cuadrada; y **§M**, la
-versión de esa misma página hecha con PageFly, con las dos columnas.
+versión de esa misma página hecha con PageFly, con las dos columnas; y **§N**,
+las tarjetas de producto todas del mismo alto y la compra rápida de los
+productos relacionados.
 
 ---
 
@@ -1503,6 +1505,115 @@ Esto no es de estilos, es lo que hay escrito en la página:
    sigue conectada al tema nuevo, igual que hay que volver a subir nuestros
    cuatro archivos. Y ojo con el peso: PageFly añade su propio CSS y JS a esa
    página.
+
+---
+
+## §N · Tarjetas del mismo alto y compra rápida en los relacionados
+
+Dos cosas distintas. La primera se arregla sola volviendo a subir la hoja; la
+segunda necesita cinco líneas en un archivo del tema.
+
+### N-1. Todas las tarjetas del mismo alto ✅ *(ya en la hoja)*
+
+Salían desparejas por **dos** motivos, no uno:
+
+**a) Dawn 16 metió un envoltorio nuevo y rompió su propia cadena de alturas.**
+Entre el hueco de la rejilla y la tarjeta hay ahora un `<product-component>`.
+Dawn ya trae `.card-wrapper { height: 100% }` y `.card--card { height: 100% }`,
+pero ese 100 % es de un padre que mide lo que su contenido. Medido en la
+colección: el hueco de la rejilla **610,6px** y la caja gris de las tarjetas sin
+descripción **565,4**. Solo la tarjeta más alta de cada fila llegaba abajo.
+
+**b) El texto es de largo variable.** Los títulos ocupan de **2 a 4 líneas**
+según el ancho de la tarjeta, y de los doce productos de la colección **solo
+cuatro tienen descripción corta**. Con las alturas ya igualadas, el precio de
+unas quedaba a 32px del borde inferior y el de otras a 77.
+
+Lo que hace ahora la hoja:
+
+| | |
+|---|---|
+| Cierra la cadena de alturas | `product-component:has(> .card-wrapper) { height: 100% }` |
+| Quita el relleno doble del panel | Dawn le daba 1,3/1,7rem propios **además** del de la hoja: el título caía a 32px de la línea divisoria en vez de a 15 |
+| Fija las líneas de título y descripción | **2 y 2** en escritorio, **3 y 3** por debajo de 990px, donde la tarjeta baja a 175px de ancho. Lo que sobra se corta con puntos suspensivos |
+| Reserva el hueco de la descripción | Cuando el producto no la tiene rellena, para que la tarjeta mida igual |
+| Ancla el precio abajo | A la misma altura que el icono de compra rápida: los dos a 32px del borde (a 22 en móvil) |
+| Le reserva al icono su sitio | El icono va encima, en posición absoluta. Sin reserva, un precio rebajado de cuatro cifras se le metía debajo: medido a 390px, «1.250,00 € 999,00 €» llegaba a 345,2 y el icono empieza en 341 |
+
+**Comprobado** con la colección «Todos los productos» y la portada, a 1440 y a
+390px: **un solo valor de altura** en toda la rejilla —572,6px en la colección,
+499,8 en la portada— y el centro del precio y el del icono en el mismo píxel. El
+panel mide **160,4px** contra los **167,6** del prototipo. Y el enlace que cubre
+la tarjeta entera sigue funcionando: se comprobó con y sin el recorte de líneas,
+porque `overflow: hidden` podía haberlo recortado.
+
+**Un matiz del móvil, para que no te sorprenda.** A 390px la tarjeta mide 175 de
+ancho y ahí un precio rebajado no cabe en una línea junto al hueco del icono, así
+que el precio tachado se pone encima y el rebajado debajo, con el icono al lado
+del que se paga. Los productos rebajados quedan por tanto 18px más altos que los
+que no lo están. **Dentro de cada fila siguen midiendo lo mismo** —eso lo iguala
+la rejilla—, así que lo que se ve son filas de dos alturas, no tarjetas
+descuadradas. En escritorio no pasa: ahí caben en una línea y todas las tarjetas
+de la página miden exactamente igual.
+
+> **Dos cosas que dependen de ti, no de la hoja:**
+> - Rellenar la **descripción corta** (§H-2) en los productos que no la tienen.
+>   El hueco reservado evita el desparejo, pero se ve vacío.
+> - El **antetítulo de categoría** no sale en la colección: la sección tiene
+>   «Proveedor» desactivado (§A-3). Si lo activas, ponlo en **todos** los
+>   productos, porque si unos lo tienen y otros no vuelven a descuadrarse 18px.
+
+### N-2. Compra rápida en los productos relacionados 🔴 *(cinco líneas)*
+
+No es un ajuste que se te haya olvidado: **Dawn no ofrece compra rápida en esa
+sección**. Lo comprobé en el esquema de `sections/related-products.liquid` —sus
+ajustes son encabezado, número de productos, columnas, esquema de color, forma y
+proporción de la imagen, segunda imagen, proveedor, valoración y relleno— y en el
+HTML que devuelve la propia sección: **cero botones de compra rápida**. La
+llamada a la tarjeta no le pasa el parámetro.
+
+Se arregla con cinco líneas. **Al principio del archivo**, junto a las otras
+hojas de estilo:
+
+```liquid
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+```
+
+Y en la llamada `{% render 'card-product' %}` —búscala, está a media altura del
+archivo— dos parámetros más antes de `skip_styles`:
+
+```liquid
+{% render 'card-product',
+  card_product: recommendation,
+  media_aspect_ratio: section.settings.image_ratio,
+  image_shape: section.settings.image_shape,
+  show_secondary_image: section.settings.show_secondary_image,
+  show_vendor: section.settings.show_vendor,
+  show_rating: section.settings.show_rating,
+  quick_add: 'standard',
+  section_id: section.id,
+  skip_styles: skip_card_product_styles
+%}
+```
+
+Los tres primeros son lo mismo que hace `featured-collection.liquid` cuando
+activas «Agregado rápido», copiado de ahí. `quick_add: 'standard'` es lo que
+dibuja el botón —el icono ya lo estiliza la hoja, no hay que tocar nada más— y
+`section_id` es para que los identificadores de los formularios salgan bien:
+hoy la sección no lo pasa y quedan con un guion doble (`StandardCardNoMediaLink--10424116805979`).
+
+**Por qué las tres líneas van arriba y no dentro del elemento:** la sección se
+carga por AJAX, y el JavaScript de Dawn se queda **solo con el interior** de
+`<product-recommendations>`. Los `<script>` que estén dentro no se ejecutarían
+nunca. Arriba del archivo sí se sirven con la página, y cuando llegan las
+tarjetas los elementos personalizados ya están definidos.
+
+**El coste, para que lo decidas con el dato delante:** con esto pasan a ser
+**cinco** los archivos del tema que hay que rehacer en cada actualización (§I),
+en vez de cuatro. Si prefieres no añadir otro, la sección se queda sin compra
+rápida y no pasa nada más: el resto de la tarjeta ya está bien.
 
 ---
 

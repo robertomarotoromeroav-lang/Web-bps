@@ -710,6 +710,16 @@ button.shopify-payment-button__button--unbranded {
   width: auto;
 }
 
+/* Por debajo de 990 el panel baja su relleno a 15/10/10 —lo mismo que hace el
+   prototipo—, así que el icono también. Sin esto el precio quedaba a 22px del
+   borde inferior y el icono a 32: diez píxeles descolocado. */
+@media screen and (max-width: 989px) {
+  .card--card .quick-add {
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
 /* OJO: el botón de Dawn NO trae icono. Dentro solo hay el texto «Agregar al
    carrito» y un indicador de carga, así que con `font-size: 0` —que es lo que
    esconde ese texto— el botón se quedaba COMPLETAMENTE VACÍO: un círculo negro
@@ -752,6 +762,108 @@ button.shopify-payment-button__button--unbranded {
 .card--card .quick-add__submit:not([aria-disabled='true']):hover {
   background-color: transparent;
   color: var(--bps-grey-500);
+}
+
+/* --------------------------------------------------------------------------
+   Todas las tarjetas del mismo alto
+   El prototipo lo consigue con tres cosas: la tarjeta ocupa toda la altura de la
+   fila (`.card { height: 100% }`), el panel reparte el espacio con
+   `justify-content: space-between` —texto arriba, precio abajo— y el título y la
+   descripción son cortos y uniformes.
+
+   En la tienda salían desparejas por dos motivos distintos:
+
+   a) Dawn 16 metió un envoltorio nuevo, `<product-component>`, entre el hueco de
+      la rejilla y la tarjeta. Dawn ya trae `.card-wrapper { height: 100% }` y
+      `.card--card { height: 100% }`, pero ese 100% es de un padre que ahora mide
+      lo que su contenido. Medido en la colección: el hueco de la rejilla 610,6px
+      y la caja gris de las tarjetas sin descripción 565,4. Solo la más alta de
+      cada fila llegaba abajo.
+
+   b) El texto es de largo variable: los títulos ocupan de 2 a 4 líneas según el
+      ancho, y de doce productos solo cuatro tienen descripción corta. Con el
+      alto igualado, el precio de unas quedaba a 32px del borde inferior y el de
+      otras a 77.
+
+   Así que: se cierra la cadena de alturas, se fija el número de líneas de título
+   y descripción, se reserva el hueco de la descripción cuando el producto no la
+   tiene, y el precio se ancla abajo a la altura del icono de compra.
+   -------------------------------------------------------------------------- */
+
+/* a) La cadena de alturas. `:has` en vez de una clase para no tocar el
+   `<product-component>` que envuelve la ficha de producto entera. */
+product-component:has(> .card-wrapper) { height: 100%; }
+
+/* Dawn le da al panel 1,3rem/1,7rem de relleno propio ADEMÁS del que le pone
+   este apartado, así que el título caía a 32px de la línea divisoria en vez de a
+   15. Medido después: panel de 167,4px contra los 167,6 del prototipo. */
+.product-card-wrapper .card__information { padding-block: 0; }
+
+/* b) Número de líneas fijo. Dos en escritorio y tres por debajo de 990, que es
+   donde la tarjeta baja a 175px de ancho y un título entra en cuatro líneas. Lo
+   que sobra se corta con puntos suspensivos. */
+.product-card-wrapper .card__information {
+  --bps-tarjeta-lineas-titulo: 3;
+  --bps-tarjeta-lineas-desc: 3;
+}
+
+@media screen and (min-width: 990px) {
+  .product-card-wrapper .card__information {
+    --bps-tarjeta-lineas-titulo: 2;
+    --bps-tarjeta-lineas-desc: 2;
+  }
+}
+
+.product-card-wrapper .card__heading,
+.product-card-wrapper .bps-card__descripcion {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-card-wrapper .card__heading {
+  -webkit-line-clamp: var(--bps-tarjeta-lineas-titulo);
+}
+
+.product-card-wrapper .bps-card__descripcion {
+  -webkit-line-clamp: var(--bps-tarjeta-lineas-desc);
+}
+
+/* El hueco de la descripción, cuando el producto no la tiene rellena. Sin esto
+   esas tarjetas medirían 45px menos y volvería el desparejo. El `order: 1` es el
+   mismo que lleva la descripción, para que el hueco quede en su sitio. */
+.product-card-wrapper .card__information:not(:has(.bps-card__descripcion))::after {
+  content: "";
+  order: 1;
+  height: calc(var(--bps-tarjeta-lineas-desc) * 1.4 * 14px);
+}
+
+/* El precio, pegado abajo y centrado con el icono de compra rápida: los dos a
+   32px del borde inferior de la tarjeta, como en el prototipo.
+
+   Los seis selectores de clase no son un adorno: Dawn ancla el precio con
+   `.card-information > *:not(.visually-hidden:first-child)+*:not(.rating):not(.card__information-volume-pricing-note)`,
+   que pesa 0,5,0. Con cinco clases era un empate que se resolvía por orden de
+   carga, y la hoja de Dawn se sirve DESPUÉS de la nuestra en algunas plantillas.
+   Con seis gana siempre. */
+.product-card-wrapper .card--card > .card__content > .card__information > .card-information > .price {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  /* 24px es el alto del icono: así los dos centros coinciden. */
+  min-height: 24px;
+  /* Y se le reserva el sitio del icono, que va encima en posición absoluta:
+     24 de icono + 10 de margen + 8 de hueco. Sin esto, un precio rebajado de
+     cuatro cifras se metía debajo del icono: medido a 390px, «1.250,00 €
+     999,00 €» llegaba a 345,2 y el icono empieza en 341. */
+  padding-right: 42px;
+}
+
+@media screen and (min-width: 990px) {
+  .product-card-wrapper .card--card > .card__content > .card__information > .card-information > .price {
+    padding-right: 52px;
+  }
 }
 
 /* Zoom muy contenido: Hyperice usa 1.02, nunca un salto brusco. */
