@@ -115,6 +115,7 @@ assets/img/                  Logotipo en 4 variantes y favicon en 3 tamaños
 shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/GUIA-SHOPIFY-PARTE-2.md  Diferencias medidas entre el prototipo y lo publicado
 shopify/PROMPT-SECCIONES.md  El prompt para encargar las secciones a medida que faltan
+shopify/GUIA-BLOG.md         Qué publicar en el blog y cómo configurarlo para SEO
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1 / 16.0.0
 shopify/bps-hyperice.js      Los 3 scripts, en un archivo (antes iban en theme.liquid)
 shopify/AJUSTES-SECCIONES.md Ajustes de cada sección de Dawn, opción por opción

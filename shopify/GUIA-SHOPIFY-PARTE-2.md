@@ -553,6 +553,11 @@ sección «Página».
 De fábrica el diseño es **Collage**, que hace la primera entrada gigante. El
 prototipo usa una cuadrícula regular.
 
+> El blog tiene guía propia: **[`GUIA-BLOG.md`](GUIA-BLOG.md)** — qué publicar,
+> las categorías por etiquetas, la plantilla de artículo con sus secciones de
+> debajo, los datos estructurados y los estilos de los apartados 25 y 26 de la
+> hoja.
+
 ### G-6. Productos → colección «Todos los productos»
 
 Las doce tarjetas de `productos.html` no son una página: son una colección.
