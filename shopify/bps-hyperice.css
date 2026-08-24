@@ -2354,8 +2354,11 @@ product-component:has(> .card-wrapper) { height: 100%; }
   text-wrap: balance;
 }
 
-/* La fecha y el autor debajo del titular. */
-.article-template__title + .caption-with-letter-spacing,
+/* La fecha y el autor debajo del titular. Dawn los saca en DOS `<span>` con la
+   misma clase, y la primera versión de esta regla solo cogía el primero: la fecha
+   quedaba en 14px normales y el autor seguía en versalitas espaciadas. Se apunta
+   al contenedor para coger los dos. */
+.article-template header .caption-with-letter-spacing,
 .article-template .circle-divider {
   font-size: 14px;
   letter-spacing: 0;
@@ -2441,15 +2444,17 @@ product-component:has(> .card-wrapper) { height: 100%; }
   font-size: 16px;
 }
 
-.article-template__content th,
-.article-template__content td {
+/* Con `table` en el selector: Dawn sujeta el relleno con `.rte table td`, que
+   pesa una etiqueta más y ganaba. */
+.article-template__content table th,
+.article-template__content table td {
   padding: 12px 14px;
   border-bottom: 1px solid var(--bps-stroke);
   text-align: left;
   vertical-align: top;
 }
 
-.article-template__content th {
+.article-template__content table th {
   font-weight: 500;
   background-color: var(--bps-off-white);
 }
@@ -2480,16 +2485,21 @@ product-component:has(> .card-wrapper) { height: 100%; }
 .article-template__back a {
   font-size: 14px;
   font-weight: 500;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Si se dejan los comentarios abiertos, sus campos necesitan el mismo borde que
    los del formulario de contacto (apartado 8, que va acotado a `.contact`). */
 .article-template__comment-fields .field__input,
-.article-template__comment-fields .text-area {
+.article-template__comment-fields .text-area,
+.share-button__fallback .field__input {
   border: 1px solid var(--bps-stroke);
 }
 
-.article-template__comment-fields .field__input:focus {
+.article-template__comment-fields .field__input:focus,
+.share-button__fallback .field__input:focus {
   border-color: rgb(var(--color-foreground));
 }
 
@@ -2602,6 +2612,7 @@ body:has(.bps-blog-cabecera) .main-blog > .title--primary { display: none; }
   margin: 0 0 6px;
   font-size: 14px;
   font-weight: 500;
+  color: rgb(var(--color-foreground));
 }
 
 .bps-articulo-autor__nota {
@@ -2625,3 +2636,168 @@ body:has(.bps-blog-cabecera) .main-blog > .title--primary { display: none; }
 
 .bps-miga a { color: inherit; text-decoration: none; }
 .bps-miga a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   27. El artículo, a dos columnas
+   Medido en el artículo publicado, a 1440: el titular, el texto, el botón de
+   compartir y el bloque de autor iban en **x=357 con 726px de ancho** —la columna
+   estrecha de Dawn, centrada—, la foto de cabecera en x=70 con 1300 (Dawn la
+   limita a 130rem, 40px por dentro del marco del sitio), la miga de pan también
+   centrada en 726 y «Regresar al blog» centrado sobre los 1440. Cinco anchos
+   distintos en una sola página, y ninguno alineado con el resto de la web, que va
+   a x=30 con 1380.
+
+   Ahora el marco lo pone el propio `<article>`, como en cualquier otra página, y
+   dentro:
+
+   - La foto de cabecera ocupa el ancho de página: x=30, 1380.
+   - El texto se queda en 740px —unos 82 caracteres por línea a 18px, que es la
+     medida de lectura cómoda—, pero **alineado a la izquierda**, no centrado.
+   - A partir de 1100px, el índice que construye `bps-hyperice.js` sale a una
+     columna propia de 260px pegada al margen derecho, y se queda fijo al
+     desplazarse. Por debajo de ese ancho no hay sitio para las dos columnas y el
+     índice pasa a ser una caja encima del texto.
+   -------------------------------------------------------------------------- */
+
+.article-template {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .article-template { padding-inline: 30px; }
+}
+
+/* Los hijos sueltan el ancho estrecho centrado de Dawn. Dos clases para ganarle
+   a `.page-width--narrow`. */
+.article-template > header,
+.article-template > .article-template__content,
+.article-template > .article-template__social-sharing,
+.article-template > .article-template__back {
+  width: 100%;
+  max-width: 740px;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+/* La foto de cabecera, al ancho de página. */
+.article-template > .article-template__hero-container {
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* «Regresar al blog» iba centrado sobre todo el ancho de la ventana. */
+.article-template__back { text-align: left; }
+
+/* Con la cabecera fija delante, un salto a un `#ancla` dejaba el titular debajo
+   de ella. */
+.article-template__content h2,
+.article-template__content h3 { scroll-margin-top: 120px; }
+
+@media screen and (min-width: 1100px) {
+  .article-template {
+    display: grid;
+    grid-template-columns: minmax(0, 740px) 260px;
+    justify-content: space-between;
+    align-items: start;
+  }
+
+  /* Todo a la columna del texto, menos la foto —que cruza las dos— y el índice. */
+  .article-template > * { grid-column: 1; }
+  .article-template > .article-template__hero-container { grid-column: 1 / -1; }
+
+  /* El índice arranca a la altura del titular y su celda abarca el resto de las
+     filas: `position: sticky` solo se mueve dentro de su propia celda, así que si
+     ocupara una sola fila no se quedaría fijo. Las filas de más que crea el
+     `span` van vacías y miden cero. */
+  .article-template > .bps-indice {
+    grid-column: 2;
+    grid-row: 2 / span 30;
+    position: sticky;
+    top: 100px;
+    max-height: calc(100svh - 140px);
+    overflow-y: auto;
+  }
+}
+
+/* --- El índice ----------------------------------------------------------- */
+
+/* Hasta 1100px es una caja encima del texto. */
+.bps-indice {
+  margin: 0 0 32px;
+  padding: 20px;
+  border: 1px solid var(--bps-stroke);
+  border-radius: 4px;
+}
+
+@media screen and (min-width: 1100px) {
+  .bps-indice {
+    margin: 0;
+    padding: 0 0 0 20px;
+    border: 0;
+    border-left: 1px solid var(--bps-stroke);
+    border-radius: 0;
+  }
+}
+
+.bps-indice__titulo {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bps-grey-500);
+}
+
+.bps-indice__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bps-indice__lista li { margin: 0 0 10px; }
+.bps-indice__lista li:last-child { margin-bottom: 0; }
+
+.bps-indice__enlace {
+  display: block;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--bps-grey-500);
+  text-decoration: none;
+  transition: color var(--duration-default) ease;
+}
+
+.bps-indice__enlace:hover { color: rgb(var(--color-foreground)); }
+
+.bps-indice__enlace--activo {
+  color: rgb(var(--color-foreground));
+  font-weight: 500;
+}
+
+/* --- Los bloques de «Liquid personalizado» del artículo ------------------- */
+
+/* La sección «Liquid personalizado» de Dawn NO envuelve en `page-width`
+   —comprobado en el HTML del artículo publicado—, así que la miga de pan y el
+   bloque de autor llevaban el ancho de lectura centrado y salían en x=357. Van al
+   marco de página, alineados con la foto y el titular. */
+.bps-miga,
+.bps-articulo-autor {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .bps-miga,
+  .bps-articulo-autor { padding-inline: 30px; }
+}
+
+/* Y si algún día la sección sí trae `page-width`, no se suman los dos rellenos. */
+.page-width .bps-miga,
+.page-width .bps-articulo-autor {
+  max-width: none;
+  padding-inline: 0;
+}

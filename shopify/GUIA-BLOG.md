@@ -501,16 +501,32 @@ resultado de búsqueda:
 sale bien en las tres páginas comprobadas, y las etiquetas Open Graph y de Twitter
 ya están.
 
-### El índice del artículo
+### El índice del artículo ✅ *(ya hecho)*
 
-Shopify no lo genera. Dos caminos:
+Shopify no lo genera, así que lo construye `bps-hyperice.js` —apartado 4 del
+archivo—. **No hay que tocar nada en el editor ni en los artículos**: basta con
+volver a subir el `.js`. Funciona en todos los artículos, presentes y futuros.
 
-- **A mano**, en el propio contenido: una lista con enlaces `#ancla`. Hay que
-  añadir los `id` a los `<h2>` desde el editor de código del artículo. Es
-  aburrido pero no rompe nada.
-- **Con JavaScript**, en `bps-hyperice.js`: unas quince líneas que recorren los
-  `<h2>` del artículo, les ponen un `id` y construyen la lista. Se hace una vez y
-  funciona en todos los artículos. Si lo quieres, dime y lo añado.
+Qué hace, y las decisiones que lleva dentro:
+
+| | |
+|---|---|
+| Recorre | Los `<h2>` del cuerpo del artículo, y les pone un `id` derivado del texto sin acentos (`#que-es-la-presoterapia`) |
+| Solo `<h2>` | El artículo de presoterapia tiene 10 `<h2>` y **21 `<h3>`**: con los dos niveles el índice tendría 31 líneas, más largo que el propio artículo en pantalla |
+| Mínimo tres | Con menos, no se pinta: un índice de dos líneas no ayuda a nadie |
+| Se salta los vacíos | El artículo publicado tiene un `<h2>` vacío (§7) |
+| Respeta los `id` que ya existan | Si alguna vez pones anclas a mano, los enlaces compartidos siguen funcionando |
+| Marca por dónde vas | El apartado en pantalla se resalta en negro mientras lees, y lleva `aria-current` para los lectores de pantalla |
+| Desplazamiento suave | Salvo que el sistema tenga desactivadas las animaciones, que se respeta |
+
+**Dónde sale:** a partir de 1100px, en una columna propia de 260px pegada al
+margen derecho, fija mientras se lee. Por debajo de ese ancho pasa a ser una caja
+con borde encima del texto. Medido: en el artículo publicado salen **9 entradas**
+—las diez menos la vacía— y a 1440px la columna del índice va de x=1150 a 1410,
+alineada con el margen derecho de la página.
+
+Si algún artículo tiene un titular que no quieres en el índice, ponle `<h3>` en
+vez de `<h2>` y no aparecerá.
 
 ---
 
@@ -533,6 +549,34 @@ hoja:
 | Rejilla del listado | Hueco de 20px | 56/48, como el resto de rejillas grandes |
 
 Y el apartado 26 añade las pastillas de categoría del §4.2.
+
+### Segunda vuelta: el ancho y la alineación (apartado 27)
+
+Con el artículo ya publicado se vio el problema de fondo: **la página tenía cinco
+anchos distintos y ninguno era el del sitio**. Medido a 1440px:
+
+| Elemento | Estaba | Ahora |
+|---|---|---|
+| Miga de pan | x=357, 726 de ancho: **centrada** | x=30, alineada con todo |
+| Foto de cabecera | x=70, 1300 (Dawn la limita a 130rem, 40px por dentro del marco del sitio) | **x=30, 1380**: el ancho de página |
+| Titular, texto, compartir | x=357, 726 **centrado** | x=30, **740 alineado a la izquierda** |
+| Bloque de autor | x=357, 726 centrado | x=30 |
+| «Regresar al blog» | **centrado** sobre los 1440 de la ventana | a la izquierda, con el texto |
+| Índice | no existía | columna de 260 pegada al margen derecho, fija |
+
+El texto se queda en **740px** —unos 82 caracteres por línea a 18px, que es la
+medida de lectura cómoda— pero **alineado a la izquierda**, no centrado: así el
+artículo empieza en la misma línea vertical que la cabecera, el pie y el resto de
+las páginas. Y el hueco de la derecha ya no está vacío: lo ocupa el índice.
+
+Cuatro remates más de la misma vuelta:
+
+| | Estaba | Ahora |
+|---|---|---|
+| Fecha y autor debajo del titular | La fecha en 14px normales y **el autor en versalitas espaciadas**: Dawn los saca en dos `<span>` con la misma clase y la regla anterior solo cogía el primero | Los dos en 14px grises |
+| Relleno de las celdas de tabla | 12px: Dawn lo sujeta con `.rte table td`, que pesa más que la regla que le habíamos puesto | 12/14, como estaba previsto |
+| Campo de «copiar enlace» de Compartir | **Sin borde visible**, el mismo fallo que tuvo el formulario de contacto | Borde de 1px en el gris de la paleta |
+| Nombre del autor | En el negro al 75 % de Dawn | Negro pleno |
 
 ---
 
@@ -559,7 +603,8 @@ de autor con firma de persona.
    Queda la meta descripción del blog (§1).
 2. Configurar el listado y la plantilla de artículo, con las tres secciones de
    debajo (§4.2 y §4.3).
-3. Subir `bps-hyperice.css` para los estilos del apartado 25 y 26.
+3. Subir `bps-hyperice.css` (apartados 25, 26 y 27) **y `bps-hyperice.js`**
+   (apartado 4: el índice del artículo). Los dos archivos, no solo la hoja.
 4. Pegar las dos secciones de «Liquid personalizado»: cabecera con titular y
    pastillas —encima de la lista, con relleno `56`/`0`— y bloque de autor
    (§4.2 y §4.3).

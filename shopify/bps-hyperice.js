@@ -107,3 +107,109 @@
     })
   })
 })();
+
+/* ---------------------------------------------------------------------------
+   4. Índice del artículo del blog
+   Shopify no genera índices. Este bloque recorre los `<h2>` del cuerpo del
+   artículo, les pone un `id` y construye la lista de enlaces. Se coloca entre el
+   titular y el texto; a partir de 1100px la hoja lo saca a una columna propia a
+   la derecha, pegada al margen de la página, y lo deja fijo al desplazarse.
+
+   Decisiones, para que no sorprendan:
+   - Solo `<h2>`. El artículo de presoterapia tiene 10 `<h2>` y 21 `<h3>`: con
+     los dos niveles saldría un índice de 31 líneas, más largo que el artículo en
+     pantalla.
+   - Si hay menos de tres, no se pinta: un índice de dos líneas no ayuda.
+   - Los encabezados vacíos se saltan. El artículo publicado tiene uno.
+   - Si un encabezado ya trae `id` puesto a mano, se respeta: así los enlaces que
+     alguien haya compartido siguen funcionando.
+   ------------------------------------------------------------------------- */
+
+;(function () {
+  var MINIMO = 3
+  var cuerpo = document.querySelector('.article-template__content')
+  if (!cuerpo) return
+
+  var titulos = [].filter.call(cuerpo.querySelectorAll('h2'), function (h) {
+    return h.textContent.trim().length > 0
+  })
+  if (titulos.length < MINIMO) return
+
+  // Acentos fuera, espacios a guiones, y sin repetidos.
+  var usados = {}
+  var slug = function (texto) {
+    var s = texto.normalize ? texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : texto
+    s = s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    if (!s) s = 'apartado'
+    if (usados[s]) { usados[s] += 1; s = s + '-' + usados[s] } else { usados[s] = 1 }
+    return s
+  }
+
+  var indice = document.createElement('nav')
+  indice.className = 'bps-indice'
+  indice.setAttribute('aria-labelledby', 'bps-indice-titulo')
+
+  var rotulo = document.createElement('p')
+  rotulo.className = 'bps-indice__titulo'
+  rotulo.id = 'bps-indice-titulo'
+  rotulo.textContent = 'En este artículo'
+  indice.appendChild(rotulo)
+
+  var lista = document.createElement('ol')
+  lista.className = 'bps-indice__lista'
+
+  var enlaces = []
+  titulos.forEach(function (h) {
+    if (!h.id) h.id = slug(h.textContent.trim())
+    var li = document.createElement('li')
+    var a = document.createElement('a')
+    a.className = 'bps-indice__enlace'
+    a.href = '#' + h.id
+    a.textContent = h.textContent.trim()
+    li.appendChild(a)
+    lista.appendChild(li)
+    enlaces.push({ enlace: a, titulo: h })
+  })
+
+  indice.appendChild(lista)
+  cuerpo.parentNode.insertBefore(indice, cuerpo)
+
+  // Desplazamiento suave, respetando quien lo tenga desactivado en el sistema.
+  var suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  indice.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('.bps-indice__enlace') : null
+    if (!a) return
+    var destino = document.getElementById(a.getAttribute('href').slice(1))
+    if (!destino) return
+    e.preventDefault()
+    destino.scrollIntoView({ behavior: suave ? 'smooth' : 'auto', block: 'start' })
+    if (window.history && history.replaceState) history.replaceState(null, '', a.getAttribute('href'))
+  })
+
+  /* Marca el apartado en el que está el lector. Se calcula con el margen de la
+     cabecera fija (111px) más un poco de aire, y se limita con rAF para no
+     encadenar cálculos en cada píxel de scroll. */
+  var pendiente = false
+  var marcar = function () {
+    pendiente = false
+    var actual = null
+    for (var i = 0; i < enlaces.length; i++) {
+      if (enlaces[i].titulo.getBoundingClientRect().top <= 140) actual = enlaces[i]
+      else break
+    }
+    enlaces.forEach(function (par) {
+      var activo = par === actual
+      par.enlace.classList.toggle('bps-indice__enlace--activo', activo)
+      if (activo) par.enlace.setAttribute('aria-current', 'true')
+      else par.enlace.removeAttribute('aria-current')
+    })
+  }
+
+  window.addEventListener('scroll', function () {
+    if (pendiente) return
+    pendiente = true
+    window.requestAnimationFrame(marcar)
+  }, { passive: true })
+
+  marcar()
+})();
