@@ -10,20 +10,21 @@ ajustes de la sección.
 
 ## Lo que hay hoy, medido
 
-Descargado de la tienda publicada el 23 de agosto:
+Comprobado sobre la tienda publicada. La primera columna es lo que había cuando
+se escribió esta guía; la segunda, cómo está ahora.
 
-| | |
-|---|---|
-| Blogs creados | **Dos**: `noticias` (título «Blog») y `consejos-de-fisioterapia` |
-| Artículos | **Uno en total**, en `noticias`: «Presoterapia en Casa…». El segundo blog está **vacío** |
-| Longitud del artículo | 2.770 palabras · 10 `<h2>` · 21 `<h3>` |
-| Imágenes | **Una**, la de cabecera (110 KB en WebP: el CDN ya la convierte, eso está bien) |
-| Enlaces internos | **6, a tres productos**. Ninguno a colecciones ni a otros artículos |
-| Datos estructurados | `Article`, `WebPage`, `Person`, `Organization` — los pone el tema |
-| Comentarios | **Abiertos** |
-| Meta descripción del blog | `consejos-de-fisioterapia` la tiene; **`noticias` no** |
-| Etiquetas / categorías | **Ninguna**, y el tema no las muestra (Dawn no las pinta) |
-| Paginación | Dawn parte la lista **cada 6 artículos** |
+| | Al empezar | Ahora |
+|---|---|---|
+| Blogs | **Dos**: `noticias` («Blog») y `consejos-de-fisioterapia`, vacío | ✅ **Uno**: `rendimiento`, «Recuperación y rendimiento». El vacío borrado y `/blogs/noticias` redirigiendo con 301 |
+| Artículos | Uno | Uno: «Presoterapia en Casa…» |
+| Longitud del artículo | 2.770 palabras · 10 `<h2>` · 21 `<h3>` | igual |
+| Imágenes | **Una**, la de cabecera (110 KB en WebP: el CDN ya la convierte) | igual |
+| Enlaces internos | **6, a tres productos**. Ninguno a colecciones ni a otros artículos | igual |
+| Datos estructurados | `Article`, `WebPage`, `Person`, `Organization` — los pone el tema | igual |
+| Comentarios | **Abiertos** | pendiente |
+| Meta descripción del blog | No la tenía | 🔴 **sigue sin ponerse** |
+| Etiquetas / categorías | Ninguna, y el tema no las pinta | pendiente (§4.2) |
+| Paginación | Dawn parte la lista **cada 6 artículos** | igual |
 
 **El artículo que hay está bien planteado** —estructura clara, preguntas
 frecuentes, contraindicaciones, comparativa por perfil— y sirve de base. Lo que
@@ -44,18 +45,14 @@ convierte en URLs propias:
 
 Esas URLs funcionan solas, se indexan y no hay que programar nada.
 
-**Qué hacer ahora, que solo hay un artículo y sale gratis:**
+**Esto ya está hecho** ✅ — comprobado en la tienda: el blog vacío borrado, el que
+queda con handle `rendimiento` y título «Recuperación y rendimiento», y
+`/blogs/noticias` devolviendo un 301 al nuevo. El sitemap de blogs ya solo tiene
+dos URLs, las buenas.
 
-1. Borra `consejos-de-fisioterapia` (está vacío).
-2. Decide el nombre y el handle del blog que se queda. El handle sale en **todas**
-   las URLs de artículo, así que este es el momento: con un artículo, cambiarlo
-   cuesta una redirección; con treinta, treinta.
-   - Recomendación: **título** `Recuperación y rendimiento` (es lo que se ve como
-     `<h1>` y en la pestaña), **handle** `recuperacion`.
-   - Hoy el título es literalmente «Blog» y el handle `noticias`. «Blog» no
-     aporta nada en el `<title>` ni en el `<h1>`.
-3. Si cambias el handle, crea la redirección: *Tienda online → Navegación →
-   Redirecciones de URL*, de `/blogs/noticias/presoterapia-en-casa` al nuevo.
+Queda una cosa de este apartado: **la meta descripción del blog**, que sigue sin
+poner. En *Administrar blogs → Editar la vista previa del motor de búsqueda*, 150
+caracteres diciendo de qué va.
 
 > ⚠️ El admin de Shopify **no deja mover un artículo de un blog a otro**. Si
 > algún día hay que consolidar, se copia el contenido al blog bueno, se despublica
@@ -230,10 +227,10 @@ ser más honesta que la competencia, y eso se nota en enlaces y en confianza.
 
 | Campo | Valor |
 |---|---|
-| Título | `Recuperación y rendimiento` |
-| Handle | `recuperacion` (ver §1 antes de cambiarlo) |
+| Título | `Recuperación y rendimiento` ✅ ya puesto |
+| Handle | `rendimiento` ✅ ya puesto, con la redirección del anterior |
 | Comentarios | **Deshabilitados**. Hoy están abiertos y solo traen spam y trabajo de moderación; si algún día interesan, «moderados» pero nunca «autopublicados» |
-| Meta descripción del blog | Ponerla: hoy `noticias` no tiene. 150 caracteres diciendo de qué va el blog |
+| Meta descripción del blog | 🔴 **Pendiente.** 150 caracteres diciendo de qué va el blog |
 
 ### 4.2. La plantilla del listado
 
@@ -246,29 +243,79 @@ ser más honesta que la competencia, y eso se nota en enlaces y en confianza.
 | Altura de imagen | **Mediana** | |
 | Fecha | Activada | |
 | Autor | Activado | Con firma de persona sí interesa (§3) |
-| Relleno arriba / abajo | `56` / `80` | Lo mismo que el resto de páginas interiores |
+| Relleno arriba / abajo | **`0`** / `80` | El `56` de arriba se lo queda la sección de la cabecera: ver justo debajo |
 
 **Las pastillas de categoría**, que Dawn no trae, se añaden con una sección
 **«Liquid personalizado»** encima de la lista. Tiene una ventaja importante: el
 código vive en los ajustes del tema, no en un archivo, así que **una actualización
-del tema no se lo lleva** (PARTE 2 §I). Pega esto en esa sección:
+del tema no se lo lleva** (PARTE 2 §I).
 
-```liquid
-{%- if blog.all_tags.size > 0 -%}
-  <nav class="bps-blog-categorias" aria-label="Categorías del blog">
-    <a href="{{ blog.url }}"
-       class="bps-blog-categoria{% unless current_tags %} bps-blog-categoria--activa{% endunless %}">Todo</a>
-    {%- for tag in blog.all_tags -%}
-      <a href="{{ blog.url }}/tagged/{{ tag | handle }}"
-         class="bps-blog-categoria{% if current_tags contains tag %} bps-blog-categoria--activa{% endif %}">{{ tag }}</a>
-    {%- endfor -%}
-  </nav>
-{%- endif -%}
+#### Por qué el bloque tiene que llevar también el titular
+
+Las pastillas van **debajo del título del blog**, no encima. Pero eso no se
+arregla moviendo la sección, y conviene entender por qué antes de intentarlo:
+Dawn mete el `<h1>` y la lista **dentro de la misma sección**:
+
+```html
+<div class="main-blog page-width …">
+  <h1 class="title--primary">Recuperación y rendimiento</h1>
+  <div class="blog-articles">…</div>
+</div>
 ```
 
-Las pastillas ya tienen estilo en la hoja (apartado 26): 36px de alto, borde de
-1px, píldora, y la activa en negro con letra blanca, igual que los filtros del
-catálogo del prototipo.
+En el editor las secciones solo se pueden mover **enteras**, así que la de Liquid
+personalizado únicamente puede quedar encima del titular o debajo de la lista. No
+hay hueco entre los dos.
+
+La solución, sin tocar ningún archivo del tema: **el bloque lleva el titular
+dentro**, y el `<h1>` de Dawn se esconde desde la hoja. Deja la sección de Liquid
+personalizado **encima** de «Artículos de blog» y pega esto:
+
+```liquid
+<div class="bps-blog-cabecera">
+  <h1 class="bps-blog-titulo">{{ blog.title }}</h1>
+  {%- if blog.all_tags.size > 0 -%}
+    <nav class="bps-blog-categorias" aria-label="Categorías del blog">
+      <a href="{{ blog.url }}"
+         class="bps-blog-categoria{% unless current_tags %} bps-blog-categoria--activa{% endunless %}">Todo</a>
+      {%- for tag in blog.all_tags -%}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}"
+           class="bps-blog-categoria{% if current_tags contains tag %} bps-blog-categoria--activa{% endif %}">{{ tag }}</a>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+</div>
+```
+
+Y en los ajustes de **esa** sección: relleno arriba **`56`**, abajo **`0`**. Es el
+`56` que le has quitado a «Artículos de blog» en la tabla de arriba; si no se
+mueve, el titular queda pegado a la cabecera.
+
+El titular sale del propio blog (`{{ blog.title }}`), así que sigue bastando con
+cambiarlo en el admin. La hoja hace tres cosas por su cuenta (apartado 26):
+
+- Esconde el `<h1>` de Dawn en cuanto detecta la cabecera propia.
+- Le da al titular los 48px de los títulos de página.
+- Da a las pastillas el estilo de los filtros del catálogo del prototipo: 36px de
+  alto, borde de 1px, píldora, la activa en negro con letra blanca, y en móvil
+  deslizables de lado a lado sin cortarse.
+
+**Comprobado** sobre la página publicada, a 1440 y a 390px: titular en x=30 a
+48px, pastillas debajo también en x=30, y la lista debajo. Funciona igual en los
+dos montajes que puede hacer la sección de Liquid personalizado —con `page-width`
+en su envoltorio o sin él—, así que no hay que averiguar cuál usa tu versión.
+
+> **Sobre los dos `<h1>`:** el de Dawn se queda en el HTML pero oculto con
+> `display: none`, así que ni se ve ni lo lee un lector de pantalla, y el visible
+> es un `<h1>` de verdad con el mismo texto. Varios `<h1>` son válidos en HTML5 y
+> Google lo dice explícitamente; no penaliza.
+>
+> **Si prefieres el HTML perfectamente limpio**, la alternativa es añadir el
+> bloque de pastillas a `sections/main-blog.liquid` justo después del `<h1>`, sin
+> el `<div class="bps-blog-cabecera">` ni el titular. Son diez líneas, el
+> resultado es idéntico y no hay `<h1>` oculto — pero pasa a ser otro archivo del
+> tema que rehacer en cada actualización (PARTE 2 §I). Con las pastillas en el
+> bloque de ajustes no hay nada que rehacer.
 
 ### 4.3. La plantilla del artículo
 
@@ -439,12 +486,14 @@ de autor con firma de persona.
 
 ## Orden para ponerse
 
-1. Borrar el blog vacío y decidir título y handle del que se queda (§1).
+1. ~~Borrar el blog vacío y decidir título y handle del que se queda~~ ✅ hecho.
+   Queda la meta descripción del blog (§1).
 2. Configurar el listado y la plantilla de artículo, con las tres secciones de
    debajo (§4.2 y §4.3).
 3. Subir `bps-hyperice.css` para los estilos del apartado 25 y 26.
-4. Pegar las dos secciones de «Liquid personalizado»: pastillas de categoría y
-   bloque de autor (§4.2 y §4.3).
+4. Pegar las dos secciones de «Liquid personalizado»: cabecera con titular y
+   pastillas —encima de la lista, con relleno `56`/`0`— y bloque de autor
+   (§4.2 y §4.3).
 5. Arreglar el artículo que hay y ponerle etiqueta, resumen y SEO (§7 y §4.4).
 6. Escribir los tres pilares que faltan (§2). Es el trabajo de verdad.
 7. Cuando haya seis u ocho artículos, la miga de pan y el `FAQPage` (§5).

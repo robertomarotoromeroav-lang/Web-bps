@@ -2503,7 +2503,45 @@ product-component:has(> .card-wrapper) { height: 100%; }
 
    Va en la hoja y no en el propio bloque para que el código que se pega en el
    editor sea solo marcado. Ver GUIA-BLOG.md §4.2.
+
+   ⚠️ Las pastillas NO se pueden colocar entre el titular del blog y la lista
+   moviendo la sección: el `<h1>` y la lista están DENTRO de la misma sección de
+   Dawn —`<div class="main-blog"><h1>…</h1><div class="blog-articles">`—, y las
+   secciones solo pueden ir enteras por encima o por debajo de esa. Así que el
+   bloque de «Liquid personalizado» va arriba y lleva el titular dentro; el `<h1>`
+   de Dawn se esconde. Es la única forma sin tocar un archivo del tema.
    -------------------------------------------------------------------------- */
+
+/* La cabecera propia: titular + pastillas. Se le da el marco de página y se le
+   quita si un antepasado ya lo trae, igual que en el apartado 17: según la
+   versión de Dawn, la sección de Liquid personalizado envuelve o no en
+   `page-width`, y sumar los dos rellenos dejaría el titular en x=60. */
+.bps-blog-cabecera {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: 15px;
+}
+
+@media screen and (min-width: 750px) {
+  .bps-blog-cabecera { padding-inline: 30px; }
+}
+
+.page-width .bps-blog-cabecera {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.bps-blog-titulo {
+  margin: 0 0 24px;
+  font-size: clamp(38px, 3.33333vw, 48px);
+  line-height: 1;
+}
+
+/* El titular de Dawn, fuera: el visible es el de la cabecera. Van los dos en el
+   HTML —uno oculto—, que es válido y no penaliza; lo que no vale es que se vean
+   dos. Con `display: none` el oculto tampoco lo lee un lector de pantalla. */
+body:has(.bps-blog-cabecera) .main-blog > .title--primary { display: none; }
 
 .bps-blog-categorias {
   display: flex;
