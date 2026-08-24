@@ -2675,11 +2675,20 @@ body:has(.bps-blog-cabecera) .main-blog > .title--primary { display: none; }
 .article-template > header,
 .article-template > .article-template__content,
 .article-template > .article-template__social-sharing,
-.article-template > .article-template__back {
+.article-template > .article-template__back,
+.article-template > .bps-indice {
   width: 100%;
   max-width: 740px;
   margin-inline: 0;
   padding-inline: 0;
+}
+
+/* En dos columnas el ancho lo marca la rejilla, no este tope. */
+@media screen and (min-width: 1100px) {
+  .article-template > header,
+  .article-template > .article-template__content,
+  .article-template > .article-template__social-sharing,
+  .article-template > .article-template__back { max-width: none; }
 }
 
 /* La foto de cabecera, al ancho de página. */
@@ -2697,10 +2706,14 @@ body:has(.bps-blog-cabecera) .main-blog > .title--primary { display: none; }
 .article-template__content h3 { scroll-margin-top: 120px; }
 
 @media screen and (min-width: 1100px) {
+  /* El texto ocupa lo que queda: 1.048px a 1440. La primera versión lo dejaba en
+     740 y el índice pegado al margen derecho, y entre los dos quedaban 380px de
+     hueco —medido— que hacían que el titular y los párrafos se partieran en más
+     líneas de las necesarias. */
   .article-template {
     display: grid;
-    grid-template-columns: minmax(0, 740px) 260px;
-    justify-content: space-between;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    column-gap: 72px;
     align-items: start;
   }
 
@@ -2715,11 +2728,47 @@ body:has(.bps-blog-cabecera) .main-blog > .title--primary { display: none; }
   .article-template > .bps-indice {
     grid-column: 2;
     grid-row: 2 / span 30;
+    /* Dawn deja 50px entre la foto de cabecera y el titular; sin este margen el
+       índice arrancaba pegado a la foto, 50px por encima del titular. */
+    margin-top: 50px;
     position: sticky;
     top: 100px;
     max-height: calc(100svh - 140px);
     overflow-y: auto;
   }
+}
+
+/* Texto justificado, que es como se lee un artículo largo en columna ancha.
+   `hyphens: auto` no es opcional aquí: sin partir palabras, justificar en español
+   —que tiene palabras largas— abre ríos de espacio entre palabras. Funciona
+   porque el documento va en `lang="es"`, comprobado en el HTML de la tienda.
+   Los titulares y los pies de tabla se quedan alineados a la izquierda. */
+.article-template__content > p,
+.article-template__content li {
+  hyphens: auto;
+}
+
+/* Solo a partir de 750px. En móvil la columna baja a 360px y ahí justificar abre
+   huecos enormes entre palabras —comprobado en una captura a 390—, así que el
+   texto se queda alineado a la izquierda, que es lo que hacen los periódicos
+   digitales en pantalla estrecha. */
+@media screen and (min-width: 750px) {
+  .article-template__content > p,
+  .article-template__content li {
+    text-align: justify;
+  }
+}
+
+/* Los titulares de las secciones que van DEBAJO del artículo —«Colección
+   destacada», «Sigue leyendo»— salen con la clase de tamaño que se elija en el
+   editor, y con `h1` son 65px: más grandes que el titular del propio artículo,
+   que está en 48. Se limitan aquí para que no dependa del ajuste, igual que se
+   hizo con «Escríbenos» en la página de contacto. */
+main[data-template='article'] .title,
+main[data-template='article'] .blog__title,
+main[data-template='article'] .collection__title .title {
+  font-size: clamp(24px, 2.22222vw, 32px);
+  line-height: 1.2;
 }
 
 /* --- El índice ----------------------------------------------------------- */

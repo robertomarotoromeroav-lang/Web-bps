@@ -25,6 +25,7 @@ se escribió esta guía; la segunda, cómo está ahora.
 | Meta descripción del blog | No la tenía | 🔴 **sigue sin ponerse** |
 | Etiquetas / categorías | Ninguna, y el tema no las pinta | pendiente (§4.2) |
 | Paginación | Dawn parte la lista **cada 6 artículos** | igual |
+| Secciones bajo el artículo | No había | ✅ **Colección destacada** y **Sigue leyendo** ya puestas. Ojo: con un solo artículo, «Sigue leyendo» muestra el que estás leyendo; tiene sentido a partir de tres |
 
 **El artículo que hay está bien planteado** —estructura clara, preguntas
 frecuentes, contraindicaciones, comparativa por perfil— y sirve de base. Lo que
@@ -564,10 +565,33 @@ anchos distintos y ninguno era el del sitio**. Medido a 1440px:
 | «Regresar al blog» | **centrado** sobre los 1440 de la ventana | a la izquierda, con el texto |
 | Índice | no existía | columna de 260 pegada al margen derecho, fija |
 
-El texto se queda en **740px** —unos 82 caracteres por línea a 18px, que es la
-medida de lectura cómoda— pero **alineado a la izquierda**, no centrado: así el
-artículo empieza en la misma línea vertical que la cabecera, el pie y el resto de
-las páginas. Y el hueco de la derecha ya no está vacío: lo ocupa el índice.
+El texto va **alineado a la izquierda**, no centrado: así el artículo empieza en
+la misma línea vertical que la cabecera, el pie y el resto de las páginas. Y el
+hueco de la derecha lo ocupa el índice.
+
+### Tercera vuelta: ancho real, aire del índice y texto justificado
+
+La primera versión de esta columna dejaba el texto en 740px y el índice pegado al
+margen derecho: entre los dos quedaban **380px de hueco medidos**, y con el texto
+tan estrecho el titular y los párrafos se partían en más líneas de las necesarias.
+Corregido:
+
+| | Estaba | Ahora |
+|---|---|---|
+| Ancho del texto | 740px, con 380 de hueco muerto a la derecha | **1.048px** a 1440: ocupa lo que queda hasta el índice, con 72 de separación |
+| Índice | Arrancaba **pegado a la foto de cabecera**, 50px por encima del titular | Alineado con el titular. Dawn deja 50px entre la foto y el titular y el índice ahora los respeta |
+| Texto | Alineado a la izquierda | **Justificado** a partir de 750px, con partición de palabras (`hyphens: auto`, que funciona porque el documento va en `lang="es"`) |
+| Titulares de las secciones de debajo | **65px** —la clase `h1`—, más grandes que el titular del artículo | 32px |
+
+En móvil el texto **no** se justifica: con la columna en 360px, justificar abre
+huecos enormes entre palabras. Es la misma decisión que toman los periódicos
+digitales.
+
+> Un apunte honesto sobre el ancho: 1.048px a 18px son unos 116 caracteres por
+> línea, por encima de los 70-85 que se consideran cómodos para leer. La
+> justificación y la partición de palabras lo compensan bastante, pero si en algún
+> momento lo veis cansado, el ancho se cambia en una línea del apartado 27
+> (`grid-template-columns`), poniendo un tope al texto en vez de `1fr`.
 
 Cuatro remates más de la misma vuelta:
 
