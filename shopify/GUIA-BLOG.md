@@ -381,18 +381,64 @@ conseguir que Google muestre las preguntas desplegables debajo del resultado.
 Solo vale si esas preguntas están **visibles en el artículo**; inventarlas es
 motivo de penalización.
 
+#### Cómo se llaman exactamente el metacampo y sus campos
+
+Aquí es donde nos equivocamos con la descripción corta de las tarjetas (PARTE 2
+§H-3), así que lo dejo cerrado: **Shopify saca la clave del campo «Nombre»**, y la
+clave es lo único que ve el Liquid. Si escribes «Preguntas frecuentes», la clave
+sale con espacios convertidos, y si escribes la clave entera en el nombre, la
+duplica. La forma de no fallar es poner de nombre exactamente la clave que quieres,
+en minúsculas y sin espacios ni acentos.
+
+**Paso 1 · El metaobjeto de una pregunta.** *Configuración → Metacampos y
+metaobjetos → Metaobjetos → Añadir definición.*
+
+| Campo del formulario | Qué escribir |
+|---|---|
+| Nombre | `Pregunta frecuente` |
+| Campo 1 → Nombre | `pregunta` · tipo **Texto de una línea** |
+| Campo 2 → Nombre | `respuesta` · tipo **Varias líneas de texto** |
+| Acceso | Deja activado el acceso desde la **tienda online** (si no, el Liquid no lo ve y sale vacío) |
+
+Las claves de esos dos campos tienen que quedar **`pregunta`** y **`respuesta`**,
+tal cual. El panel te las muestra debajo del nombre: míralas antes de guardar.
+
+**Paso 2 · El metacampo del artículo.** *Configuración → Metacampos y metaobjetos
+→ **Artículos de blog** → Añadir definición.*
+
+| Campo del formulario | Qué escribir |
+|---|---|
+| **Nombre** | `faq` — así, tres letras en minúscula. Es solo la etiqueta que verás en el artículo, y es lo que garantiza que la clave salga limpia |
+| **Clave / espacio de nombres** | No lo escribas tú: se genera. Tiene que quedar **`custom.faq`**. Compruébalo en la pantalla antes de guardar |
+| Tipo | **Referencia de metaobjeto** → `Pregunta frecuente` → y marca **lista** (varias entradas) |
+| Descripción | «Las preguntas frecuentes que ya están escritas en el artículo, para los datos estructurados» |
+
+Con eso, en cada artículo aparece un apartado `faq` donde vas añadiendo entradas,
+cada una con su pregunta y su respuesta. **Copia y pega las que ya están escritas
+en el cuerpo del artículo**: si no coinciden, Google lo considera contenido
+engañoso.
+
+Y este es el código de la sección «Liquid personalizado», ya con `.value` en cada
+campo —un campo de metaobjeto no es una cadena, es un objeto, y sin `.value` el
+`json` saldría vacío—:
+
 ```liquid
-{%- if article.metafields.custom.faq != blank -%}
+{%- assign bps_faq = article.metafields.custom.faq.value -%}
+{%- if bps_faq != blank -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {%- for par in article.metafields.custom.faq.value -%}
+        {%- for entrada in bps_faq -%}
+          {%- assign p = entrada.pregunta -%}
+          {%- assign r = entrada.respuesta -%}
+          {%- if p.value -%}{%- assign p = p.value -%}{%- endif -%}
+          {%- if r.value -%}{%- assign r = r.value -%}{%- endif -%}
           {
             "@type": "Question",
-            "name": {{ par.pregunta | json }},
-            "acceptedAnswer": { "@type": "Answer", "text": {{ par.respuesta | json }} }
+            "name": {{ p | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ r | json }} }
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ]
@@ -401,10 +447,33 @@ motivo de penalización.
 {%- endif -%}
 ```
 
-Requiere un metacampo de artículo de tipo lista —igual que el de la descripción
-corta de las tarjetas, PARTE 2 §H-2—. Si no queréis metacampos, se puede escribir
-el JSON a mano por artículo en esa misma sección, pero entonces hay que recordar
-cambiarlo.
+Las dos líneas con `{% if p.value %}` son a propósito: así el mismo bloque funciona
+tanto con el metaobjeto del paso 1 como si algún día prefieres un metacampo de
+tipo **JSON** con esta forma, que es la alternativa si no quieres montar
+metaobjetos:
+
+```json
+[
+  { "pregunta": "¿La presoterapia duele?", "respuesta": "No…" },
+  { "pregunta": "¿Cuántas sesiones?", "respuesta": "Entre…" }
+]
+```
+
+Con JSON son dos pasos menos, pero hay que escribir las comillas y las comas a
+mano en cada artículo. Con el metaobjeto son dos cajas de texto.
+
+**Si sale vacío**, el orden de comprobación es este —los tres fallos que hemos
+tenido ya—: que la clave sea exactamente `custom.faq`, que las claves de los
+campos sean `pregunta` y `respuesta`, y que el metaobjeto tenga permitido el
+acceso desde la tienda online. Para verlo de un tirón, pega esto un momento en la
+misma sección:
+
+```liquid
+CLAVE[{{ article.metafields.custom.faq }}]
+ENTRADAS[{{ article.metafields.custom.faq.value.size }}]
+PRIMERA[{{ article.metafields.custom.faq.value[0].pregunta }}]
+TODAS[{{ article.metafields.custom | json }}]
+```
 
 **b) La miga de pan.** Ayuda a que Google entienda la jerarquía y sale en el
 resultado de búsqueda:
@@ -496,4 +565,7 @@ de autor con firma de persona.
    (§4.2 y §4.3).
 5. Arreglar el artículo que hay y ponerle etiqueta, resumen y SEO (§7 y §4.4).
 6. Escribir los tres pilares que faltan (§2). Es el trabajo de verdad.
-7. Cuando haya seis u ocho artículos, la miga de pan y el `FAQPage` (§5).
+7. Cuando haya seis u ocho artículos, la miga de pan y el `FAQPage` (§5). El
+   metacampo se llama **`faq`** y sus dos campos **`pregunta`** y **`respuesta`**:
+   la clave tiene que quedar en `custom.faq`, y eso se comprueba en la pantalla
+   antes de guardar.
