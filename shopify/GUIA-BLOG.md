@@ -541,13 +541,37 @@ que hacer.
 
 Dos pasos y queda cerrado:
 
-1. **Arregla el tipo de `respuesta`**: en la definición del metaobjeto, cambia el
-   selector de «Lista» a «Uno» y el tipo a «Varias líneas de texto». Si el panel
-   no deja cambiarlo, borra el campo y créalo otra vez con el mismo nombre,
-   `respuesta` —no hay entradas todavía, así que no se pierde nada—.
+1. **Arregla el campo `respuesta`** (ver justo debajo: hay que rehacerlo).
 2. **Mete las preguntas en el artículo**: al editarlo, abajo del todo, en
    «Metacampos» → `faq` → añadir entradas. Cada una con su pregunta y su
    respuesta.
+
+### El error «Value no existe entre las opciones proporcionadas: []»
+
+Al escribir la primera respuesta, el panel no deja guardar y saca ese aviso en el
+campo `respuesta`. **No es un problema del texto**: el campo se creó con una
+**validación de opciones cerradas** —una lista de valores permitidos— y esa lista
+está **vacía**, que es lo que dicen los corchetes del final. Con la lista vacía,
+ningún texto es válido: ni ese ni ninguno.
+
+Como además el campo hay que pasarlo de «Lista» a «Uno», lo más rápido es
+**rehacerlo**. En *Configuración → Metacampos y metaobjetos → Metaobjetos →
+Pregunta frecuente*:
+
+1. Borra el campo `respuesta`. No se pierde nada: todavía no hay ninguna entrada
+   guardada —la que da el error no ha llegado a guardarse—.
+2. Añádelo otra vez con estos tres valores, y **sin tocar nada más**:
+
+   | | |
+   |---|---|
+   | Nombre | `respuesta` |
+   | Selector de la izquierda | **Uno** (no «Lista») |
+   | Tipo | **Varias líneas de texto** |
+
+3. Guarda y comprueba que debajo del nombre la clave sigue siendo `respuesta`.
+
+Lo importante es no activar ninguna validación: las opciones cerradas sirven para
+campos con valores fijos —una talla, un color—, no para texto libre.
 
 ### Las siete preguntas del artículo de presoterapia, listas para copiar
 
