@@ -397,8 +397,8 @@ metaobjetos → Metaobjetos → Añadir definición.*
 | Campo del formulario | Qué escribir |
 |---|---|
 | Nombre | `Pregunta frecuente` |
-| Campo 1 → Nombre | `pregunta` · tipo **Texto de una línea** |
-| Campo 2 → Nombre | `respuesta` · tipo **Varias líneas de texto** |
+| Campo 1 → Nombre | `pregunta` · tipo **Texto de una sola línea**, y en el selector de la izquierda **«Uno»**, no «Lista» |
+| Campo 2 → Nombre | `respuesta` · tipo **Varias líneas de texto**, y también **«Uno»** |
 | Acceso | Deja activado el acceso desde la **tienda online** (si no, el Liquid no lo ve y sale vacío) |
 
 Las claves de esos dos campos tienen que quedar **`pregunta`** y **`respuesta`**,
@@ -438,6 +438,7 @@ campo —un campo de metaobjeto no es una cadena, es un objeto, y sin `.value` e
           {%- assign r = entrada.respuesta -%}
           {%- if p.value -%}{%- assign p = p.value -%}{%- endif -%}
           {%- if r.value -%}{%- assign r = r.value -%}{%- endif -%}
+          {%- if r.first -%}{%- assign r = r | join: ' ' -%}{%- endif -%}
           {
             "@type": "Question",
             "name": {{ p | json }},
@@ -454,6 +455,11 @@ El comentario HTML de la primera rama no es decorativo: una sección que no pint
 nada es indistinguible de una sección que no está, y con él **se ve desde el
 código fuente de la página** si el bloque se está ejecutando y simplemente no
 tiene datos. Cuesta cero y ahorra media hora de dudas.
+
+La línea del `join` es una red de seguridad: si el campo `respuesta` se dejó como
+**lista** de textos en vez de un texto suelto, une los trozos en una sola cadena
+en lugar de escribir `["…"]`, que no es válido en `FAQPage`. Lo correcto es
+arreglar el tipo del campo (§ más abajo), pero así no se rompe mientras tanto.
 
 Las dos líneas con `{% if p.value %}` son a propósito: así el mismo bloque funciona
 tanto con el metaobjeto del paso 1 como si algún día prefieres un metacampo de
@@ -515,6 +521,52 @@ Cómo se lee el resultado:
   acceso desde la tienda: causa 4.
 
 Cuando salga, se quita el bloque de diagnóstico y se deja solo el `FAQPage`.
+
+### Verificado el 24 de agosto: qué estaba bien y qué faltaba
+
+Revisadas las dos definiciones del panel:
+
+| | Estado |
+|---|---|
+| Metacampo `faq`, clave **`custom.faq`**, tipo **Lista · Pregunta frecuente** | ✅ correcto |
+| Metacampo con **acceso a la API Storefront** activado | ✅ correcto |
+| Metaobjeto `Pregunta frecuente` (`pregunta_frecuente`) con **acceso a la API de tiendas online** activado | ✅ correcto |
+| Campo `pregunta` · «Uno» · Texto de una sola línea | ✅ correcto |
+| Campo `respuesta` · **«Lista»** · Texto de una sola línea | 🔴 **tiene que ser «Uno»**, y mejor «Varias líneas de texto». Siendo lista, la respuesta saldría como `["…"]` en el JSON, que no es válido |
+| Entradas creadas | 🔴 **ninguna**: el contador de la definición marca `0` |
+
+O sea: **la instalación está bien, lo que falta es el contenido**. El bloque no
+emite nada porque no hay ninguna pregunta que emitir, que es justo lo que tiene
+que hacer.
+
+Dos pasos y queda cerrado:
+
+1. **Arregla el tipo de `respuesta`**: en la definición del metaobjeto, cambia el
+   selector de «Lista» a «Uno» y el tipo a «Varias líneas de texto». Si el panel
+   no deja cambiarlo, borra el campo y créalo otra vez con el mismo nombre,
+   `respuesta` —no hay entradas todavía, así que no se pierde nada—.
+2. **Mete las preguntas en el artículo**: al editarlo, abajo del todo, en
+   «Metacampos» → `faq` → añadir entradas. Cada una con su pregunta y su
+   respuesta.
+
+### Las siete preguntas del artículo de presoterapia, listas para copiar
+
+Son **las que ya están escritas y visibles en el artículo**, que es el requisito
+de Google: el `FAQPage` solo vale si coincide con lo que se ve.
+
+| # | pregunta | respuesta |
+|---|---|---|
+| 1 | ¿La presoterapia duele? | No. La gran mayoría de usuarios la describen como agradable, similar a un masaje. La presión es ajustable, por lo que puedes adaptarla a tu comodidad en todo momento. |
+| 2 | ¿Cuántas sesiones son necesarias para ver resultados? | Generalmente, los resultados empiezan a percibirse a partir de la tercera o cuarta sesión. Para un tratamiento completo, se recomiendan entre 8 y 12 sesiones. Para mantenimiento, una o dos sesiones semanales suelen ser suficientes. |
+| 3 | ¿Cuánto dura cada sesión? | Una sesión estándar dura entre 30 y 45 minutos, aunque puede variar según los objetivos. |
+| 4 | ¿Con qué frecuencia puedo usarla? | Lo habitual es entre 1 y 3 veces por semana, dejando al menos 24-48 horas entre sesiones para que el cuerpo procese los cambios. Los deportistas en período de recuperación intensa pueden usarla con mayor frecuencia bajo criterio personal. |
+| 5 | ¿La presoterapia adelgaza? | No elimina grasa directamente. Sin embargo, al reducir la retención de líquidos y mejorar la circulación, puede contribuir a una reducción de volumen visible, especialmente cuando se combina con ejercicio y una alimentación equilibrada. |
+| 6 | ¿Puedo usar la presoterapia en casa de forma segura? | Sí. Los equipos domésticos actuales están diseñados para ser seguros y fáciles de usar sin supervisión profesional, siempre que no existan contraindicaciones médicas. |
+| 7 | ¿Qué diferencia hay entre una máquina doméstica y una profesional? | Las máquinas profesionales suelen tener mayor número de cámaras, más niveles de presión regulable y programas más específicos. Las domésticas ofrecen resultados excelentes para uso personal regular y son más compactas y accesibles. |
+
+Cuando estén metidas, la página emitirá un cuarto bloque de datos estructurados,
+`FAQPage`, y se puede comprobar en la prueba de resultados enriquecidos de Google
+o buscando `FAQPage` en el código fuente.
 
 **b) La miga de pan.** Ayuda a que Google entienda la jerarquía y sale en el
 resultado de búsqueda:
