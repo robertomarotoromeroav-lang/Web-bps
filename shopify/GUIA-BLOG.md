@@ -425,7 +425,9 @@ campo —un campo de metaobjeto no es una cadena, es un objeto, y sin `.value` e
 
 ```liquid
 {%- assign bps_faq = article.metafields.custom.faq.value -%}
-{%- if bps_faq != blank -%}
+{%- if bps_faq == blank -%}
+  <!-- bps-faq: sin preguntas en este artículo -->
+{%- else -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -448,6 +450,11 @@ campo —un campo de metaobjeto no es una cadena, es un objeto, y sin `.value` e
 {%- endif -%}
 ```
 
+El comentario HTML de la primera rama no es decorativo: una sección que no pinta
+nada es indistinguible de una sección que no está, y con él **se ve desde el
+código fuente de la página** si el bloque se está ejecutando y simplemente no
+tiene datos. Cuesta cero y ahorra media hora de dudas.
+
 Las dos líneas con `{% if p.value %}` son a propósito: así el mismo bloque funciona
 tanto con el metaobjeto del paso 1 como si algún día prefieres un metacampo de
 tipo **JSON** con esta forma, que es la alternativa si no quieres montar
@@ -463,18 +470,51 @@ metaobjetos:
 Con JSON son dos pasos menos, pero hay que escribir las comillas y las comas a
 mano en cada artículo. Con el metaobjeto son dos cajas de texto.
 
-**Si sale vacío**, el orden de comprobación es este —los tres fallos que hemos
-tenido ya—: que la clave sea exactamente `custom.faq`, que las claves de los
-campos sean `pregunta` y `respuesta`, y que el metaobjeto tenga permitido el
-acceso desde la tienda online. Para verlo de un tirón, pega esto un momento en la
-misma sección:
+### Si no sale nada: cómo averiguar por qué
+
+Comprobado el 24 de agosto sobre el artículo publicado: la sección está puesta
+—es la tercera de «Liquid personalizado» de la plantilla— pero **no emite el
+`FAQPage`**. En el HTML de la página hay tres bloques de datos estructurados
+(`Organization`, `BreadcrumbList` y `Article`) y ninguno de preguntas, y la
+sección se renderiza vacía. O sea: el Liquid se ejecuta, pero
+`article.metafields.custom.faq.value` llega en blanco.
+
+Las cuatro causas posibles, **por orden de probabilidad**:
+
+| # | Qué mirar | Dónde |
+|---|---|---|
+| 1 | Que el metacampo esté **relleno en este artículo**. La definición se crea una vez, pero las preguntas se meten artículo a artículo | Al editar el artículo, abajo del todo, apartado «Metacampos» |
+| 2 | Que la definición sea de **«Artículos de blog»** y no de «Blogs», que es otro tipo distinto y no se ve desde un artículo | Configuración → Metacampos y metaobjetos |
+| 3 | Que la clave sea exactamente **`custom.faq`**. Si el nombre llevaba espacios o acentos, la clave habrá salido con guiones bajos | En la definición, debajo del nombre |
+| 4 | Que el **metaobjeto** «Pregunta frecuente» tenga permitido el **acceso desde la tienda online**, y que sus campos sean `pregunta` y `respuesta`. Sin ese acceso, el Liquid lo ve como vacío | En la definición del metaobjeto, en sus opciones |
+
+Para saber cuál de las cuatro es sin abrir nada, **pega esto un momento al
+principio de esa misma sección**, guarda, y mira el código fuente de la página
+publicada buscando `bps-diagnostico`:
 
 ```liquid
-CLAVE[{{ article.metafields.custom.faq }}]
-ENTRADAS[{{ article.metafields.custom.faq.value.size }}]
-PRIMERA[{{ article.metafields.custom.faq.value[0].pregunta }}]
-TODAS[{{ article.metafields.custom | json }}]
+<!-- bps-diagnostico
+  clave-directa: [{{ article.metafields.custom.faq }}]
+  entradas: [{{ article.metafields.custom.faq.value.size }}]
+  primera-pregunta: [{{ article.metafields.custom.faq.value[0].pregunta }}]
+  todo-el-espacio-custom: {{ article.metafields.custom | json }}
+-->
 ```
+
+Cómo se lee el resultado:
+
+- **`todo-el-espacio-custom` sale como `{}` o vacío** → el artículo no tiene
+  ningún metacampo visible: es la causa 1, 2 o 4.
+- **Aparece una clave parecida pero distinta** (`custom_faq`, `faq_preguntas`…)
+  → es la causa 3: cambia el Liquid a esa clave, o borra la definición y créala
+  con el nombre `faq`.
+- **La clave sale bien pero `entradas` está en blanco** → la definición está
+  bien y el artículo no tiene preguntas metidas: causa 1.
+- **`entradas` trae un número pero `primera-pregunta` sale vacía** → los campos
+  del metaobjeto no se llaman `pregunta` y `respuesta`, o el metaobjeto no tiene
+  acceso desde la tienda: causa 4.
+
+Cuando salga, se quita el bloque de diagnóstico y se deja solo el `FAQPage`.
 
 **b) La miga de pan.** Ayuda a que Google entienda la jerarquía y sale en el
 resultado de búsqueda:
