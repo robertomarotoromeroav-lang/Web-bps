@@ -588,9 +588,31 @@ de Google: el `FAQPage` solo vale si coincide con lo que se ve.
 | 6 | ¿Puedo usar la presoterapia en casa de forma segura? | Sí. Los equipos domésticos actuales están diseñados para ser seguros y fáciles de usar sin supervisión profesional, siempre que no existan contraindicaciones médicas. |
 | 7 | ¿Qué diferencia hay entre una máquina doméstica y una profesional? | Las máquinas profesionales suelen tener mayor número de cámaras, más niveles de presión regulable y programas más específicos. Las domésticas ofrecen resultados excelentes para uso personal regular y son más compactas y accesibles. |
 
-Cuando estén metidas, la página emitirá un cuarto bloque de datos estructurados,
-`FAQPage`, y se puede comprobar en la prueba de resultados enriquecidos de Google
-o buscando `FAQPage` en el código fuente.
+### Comprobado: funcionando ✅
+
+Verificado sobre la página publicada después de rellenarlas:
+
+| | |
+|---|---|
+| Bloques de datos estructurados | **Cuatro**: `Organization`, `BreadcrumbList`, `Article` y el `FAQPage` nuevo |
+| Preguntas en el `FAQPage` | **7** |
+| JSON válido | Sí, los cuatro bloques parsean sin error |
+| Respuestas como texto, no como lista | Sí — el arreglo del campo funcionó |
+| Preguntas que no estén visibles en el artículo | **Ninguna**: las siete coinciden con los `<h3>` del cuerpo |
+| Respuestas que no coincidan con el texto visible | Ninguna |
+| Preguntas duplicadas | Ninguna |
+
+> **Una nota honesta sobre lo que hace Google con esto.** Desde agosto de 2023
+> Google **dejó de mostrar el desplegable de preguntas frecuentes** en los
+> resultados salvo para webs oficiales de salud y administración pública. O sea:
+> el marcado es correcto y sirve —Google lo usa para entender de qué va la
+> página, y otros buscadores y asistentes sí lo leen—, pero **no esperes ver las
+> preguntas desplegadas** debajo de tu resultado. Lo que sí sigue funcionando es
+> el `BreadcrumbList`, que sale como ruta encima del título.
+>
+> Sigue mereciendo la pena por dos razones: no cuesta nada mantenerlo una vez
+> montado, y las respuestas cortas y directas son justo lo que citan los
+> asistentes de IA cuando resumen una web.
 
 **b) La miga de pan.** Ayuda a que Google entienda la jerarquía y sale en el
 resultado de búsqueda:
