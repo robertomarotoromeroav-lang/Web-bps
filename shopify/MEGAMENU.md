@@ -87,29 +87,7 @@ Detalles de cómo se haría:
 
 ### Lo que hay que preparar en el admin antes
 
-1. **Montar el menú de verdad** en *Navegación*, con dos niveles:
-
-   ```
-   Comprar
-     ├─ Presoterapia            → /collections/presoterapia
-     ├─ Terapia de luz roja     → /collections/energia-luminica
-     ├─ Recuperación fría       → /collections/recuperacion-polar
-     ├─ Liberación muscular     → /collections/liberacion-muscular
-     └─ Ver todos los productos → /collections/all
-   Terapia
-     ├─ Presoterapia            → /blogs/rendimiento/tagged/presoterapia
-     ├─ Luz roja                → /blogs/rendimiento/tagged/luz-roja
-     ├─ Frío                    → /blogs/rendimiento/tagged/frio
-     └─ Liberación muscular     → /blogs/rendimiento/tagged/liberacion-muscular
-   Nosotros
-     ├─ Quiénes somos           → /pages/sobre-nosotros
-     ├─ Preguntas frecuentes    → /pages/preguntas-frecuentes
-     └─ Contacto                → /pages/contacto
-   ```
-
-2. **Rellenar la colección vacía** y ponerle imagen a las cuatro.
-3. **Publicar al menos dos artículos**, o el panel de «Terapia» enseñará el mismo
-   artículo dos veces.
+Está detallado paso a paso en el apartado 5, al final.
 
 ---
 
@@ -128,10 +106,96 @@ código. Lo que se construya después se apoya en ese mismo menú.
 
 ---
 
-## 5. Para cuando toque hacerlo
+## 5. Los pasos, en orden
 
-Cuando el menú esté montado en *Navegación* y las colecciones tengan producto e
-imagen, se puede construir y —esto es lo importante— **verificar midiendo**: se
-descarga la cabecera publicada, se reproduce en local con la hoja y se comprueban
-las medidas de cada panel contra el prototipo, igual que se ha hecho con la ficha,
-el pie, el contacto y el artículo del blog.
+Nada de lo que se hace aquí se tira después: el megamenú a medida lee **este
+mismo menú**. Los pasos 1 a 3 no tocan código y se hacen en una tarde.
+
+### Paso 1 · Arreglar la colección vacía
+
+*Admin → Productos → Colecciones → Liberación muscular.*
+
+1. Añade el producto **Pistola de Masaje Muscular de Percusión Profesional BPS**.
+   Hoy la colección tiene **cero productos**, así que en la web está vacía.
+2. En «Imagen», sube una foto. Las otras tres colecciones ya tienen.
+
+Sin esto, en el desplegable de «Comprar» esa tarjeta saldría sin foto y llevaría a
+una página vacía.
+
+### Paso 2 · Montar el menú
+
+*Admin → Tienda online → Navegación → Menú principal.*
+
+Ahora mismo es plano: Inicio · Productos · Blog · Contacto. Hay que dejarlo así:
+
+| Nivel | Nombre | Enlace |
+|---|---|---|
+| 1 | Comprar | `/collections/all` |
+| 2 | · Presoterapia | `/collections/presoterapia` |
+| 2 | · Terapia de luz roja | `/collections/energia-luminica` |
+| 2 | · Recuperación fría | `/collections/recuperacion-polar` |
+| 2 | · Liberación muscular | `/collections/liberacion-muscular` |
+| 2 | · Ver todos los productos | `/collections/all` |
+| 1 | Blog | `/blogs/rendimiento` |
+| 1 | Nosotros | `/pages/sobre-nosotros` |
+| 2 | · Quiénes somos | `/pages/sobre-nosotros` |
+| 2 | · Preguntas frecuentes | `/pages/preguntas-frecuentes` |
+| 2 | · Contacto | la página de contacto que dejéis publicada |
+| 1 | Inicio | `/` |
+
+Cómo se hace un elemento de segundo nivel: se crea normal con «Agregar elemento»
+y después **se arrastra por el punteado de la izquierda hasta dejarlo debajo y
+ligeramente a la derecha** del que va a ser su padre. Shopify lo marca con una
+sangría.
+
+Dos avisos:
+
+- El enlace de «Blog» hoy apunta a `/blogs/noticias`, que es una **redirección**.
+  Cámbialo a `/blogs/rendimiento`.
+- «Terapia» todavía **no**: ese desplegable vive de las etiquetas del blog, y las
+  etiquetas solo existen cuando hay artículos publicados. Va en el paso 4.
+
+### Paso 3 · Encender el megamenú que ya trae el tema
+
+*Personalizar → Cabecera → «Tipo de menú de escritorio» → **Megamenú** → Guardar.*
+
+Desde ese momento «Comprar» y «Nosotros» abren un panel a todo lo ancho con sus
+enlaces en columnas. **«Nosotros» ya queda terminado**: es exactamente el tercer
+desplegable de enlaces sueltos que pedía el cliente. «Comprar» funciona, pero de
+momento sin fotos.
+
+### Paso 4 · Cuando haya dos o tres artículos publicados
+
+Añade en el menú, al mismo nivel que «Comprar»:
+
+| Nivel | Nombre | Enlace |
+|---|---|---|
+| 1 | Terapia | `/blogs/rendimiento` |
+| 2 | · Presoterapia | `/blogs/rendimiento/tagged/presoterapia` |
+| 2 | · Luz roja | `/blogs/rendimiento/tagged/luz-roja` |
+| 2 | · Frío | `/blogs/rendimiento/tagged/frio` |
+| 2 | · Liberación muscular | `/blogs/rendimiento/tagged/liberacion-muscular` |
+
+Cada enlace tiene que llevar la etiqueta **tal como se escribió**, en minúsculas y
+sin acentos: `frio`, no `frío`.
+
+### Paso 5 · Las fotos y los artículos destacados
+
+Este es el único paso con código, y lo hago yo. Cuando los pasos 1 a 3 estén
+hechos, avísame: descargo la cabecera publicada, construyo el *snippet*, lo
+verifico midiendo contra el prototipo y te paso **un archivo para subir y tres
+líneas para pegar** en `sections/header.liquid`, con las capturas del antes y el
+después.
+
+A partir de ahí, «Comprar» pasa a enseñar las cuatro colecciones con su foto y
+«Terapia» las etiquetas con los dos últimos artículos.
+
+### En qué se nota cada paso
+
+| Después del paso | Qué se ve en la web |
+|---|---|
+| 1 | La colección de liberación muscular deja de estar vacía |
+| 2 | Nada todavía: el menú tiene estructura, pero el tipo «Desplegable» solo muestra el primer nivel |
+| 3 | «Comprar» y «Nosotros» abren panel a todo lo ancho con sus enlaces. El tercer desplegable, terminado |
+| 4 | «Terapia» abre con las categorías del blog |
+| 5 | Fotos en «Comprar» y artículos destacados en «Terapia» |
