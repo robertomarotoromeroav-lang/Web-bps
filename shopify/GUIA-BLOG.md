@@ -51,9 +51,27 @@ queda con handle `rendimiento` y título «Recuperación y rendimiento», y
 `/blogs/noticias` devolviendo un 301 al nuevo. El sitemap de blogs ya solo tiene
 dos URLs, las buenas.
 
-Queda una cosa de este apartado: **la meta descripción del blog**, que sigue sin
-poner. En *Administrar blogs → Editar la vista previa del motor de búsqueda*, 150
-caracteres diciendo de qué va.
+Queda una cosa de este apartado: **la meta descripción del blog**. En
+*Administrar blogs → Editar la vista previa del motor de búsqueda*.
+
+**La recomendada** (153 caracteres, dentro de lo que Google muestra sin cortar):
+
+> Guías y protocolos de recuperación deportiva: presoterapia, terapia de luz
+> roja, baños de hielo y masaje de percusión. Cómo usarlos y con qué frecuencia.
+
+Empieza por lo que aporta, nombra las cuatro tecnologías —que son los cuatro
+pilares y las cuatro colecciones— y cierra con las dos preguntas que de verdad se
+buscan: cómo y cada cuánto. Tres alternativas, por si encaja mejor otro tono:
+
+| | Texto | Car. |
+|---|---|---|
+| Sin promesas | Cómo recuperar mejor entre entrenamientos: presoterapia, luz roja, frío y liberación muscular explicados con lo que dice la evidencia, sin atajos. | 146 |
+| Con marca y público | El blog de BPS Performance: guías prácticas de presoterapia, terapia de luz roja, baños de hielo y percusión para deportistas, clínicas y uso en casa. | 150 |
+| En forma de pregunta | ¿Cuánto tiempo, con qué frecuencia y para qué sirve cada tecnología de recuperación? Guías de presoterapia, luz roja, frío y percusión, paso a paso. | 148 |
+
+Y si en esa misma pantalla quieres tocar el **título de la página**, `Blog de
+recuperación deportiva | BPS Performance` (48 car.) dice más que el nombre del
+blog a secas.
 
 > ⚠️ El admin de Shopify **no deja mover un artículo de un blog a otro**. Si
 > algún día hay que consolidar, se copia el contenido al blog bueno, se despublica
@@ -73,6 +91,17 @@ seis, y ninguna más, cada artículo con **una principal y hasta dos secundarias
 | `Liberación muscular` | `/collections/liberacion-muscular` |
 | `Entrenamiento` | transversal: cargas, calendario, deportes |
 | `Clínicas` | contenido para fisios y centros (B2B) |
+
+> **Las pastillas solo enseñan las etiquetas de artículos publicados.**
+> `blog.all_tags` no cuenta los borradores, así que una etiqueta que solo esté en
+> un borrador no aparece hasta que se publique. No hay que hacer nada más: según
+> se publiquen, van saliendo solas. Comprobado en la tienda: hoy salen «Todo» y
+> «Presoterapia», que es la etiqueta del único artículo publicado, y
+> `/blogs/rendimiento/tagged/presoterapia` ya funciona.
+>
+> El orden de las pastillas es el alfabético que devuelve Shopify. Si algún día
+> queréis otro —por ejemplo, las cuatro tecnologías primero y «Clínicas» al
+> final—, se escriben a mano en el bloque en vez de recorrer `blog.all_tags`.
 
 ---
 
