@@ -2858,19 +2858,46 @@ main[data-template='article'] .collection__title .title {
    El panel solo existe de 990px para arriba: por debajo, Dawn esconde
    `.header__inline-menu` y usa el cajón lateral, que se queda como está.
 
-   Los colores salen del esquema que se elija en Personalizar → Cabecera →
-   «Color del menú», así que aquí no se fija ninguno a mano: los fondos suaves
-   van en `rgba(var(--color-foreground), .06)`, que funciona igual sobre claro y
-   sobre oscuro. Para el aspecto de Hyperice, ese ajuste va en Esquema 1.
+   LA SUPERFICIE. En Hyperice la cabecera y el panel son **la misma superficie
+   translúcida**, no dos cajas de colores distintos. Está en las clases de su
+   propio marcado, que se descargó para comprobarlo:
+
+     [.header-bg-transparent_&_]:bg-black/80
+     [.header-bg-transparent_&_]:text-white
+     [.header-bg-transparent_&_]:backdrop-blur-[10px]
+
+   O sea: cuando su cabecera va transparente —que es como va la nuestra en todo
+   el sitio—, el panel se pinta de negro al 80 % con 10px de desenfoque y letra
+   blanca. Exactamente el mismo tratamiento que el apartado 2 le da a
+   `.header-wrapper`. Así que aquí no se usa el esquema de color del menú: se
+   copia la cabecera, y el conjunto se lee como un solo bloque.
    -------------------------------------------------------------------------- */
 
 @media screen and (min-width: 990px) {
-  /* El panel arranca justo debajo de la cabecera y ocupa todo el ancho. Dawn ya
-     lo posiciona; aquí solo se le da el aire. */
   .bps-mega__panel {
     padding-top: 40px;
     padding-bottom: 48px;
-    border-top: 1px solid rgba(var(--color-foreground), 0.12);
+    background-color: rgb(0 0 0 / 0.8);
+    backdrop-filter: blur(10px);
+    color: var(--bps-white);
+    border: 0;
+  }
+
+  /* Los enlaces del panel van en blanco, como los de la cabecera; el apartado 2
+     ya lo hace con `.header a`, pero se repite aquí para que no dependa de él. */
+  .header .bps-mega__panel a { color: var(--bps-white); }
+
+  /* Mientras hay un panel abierto no debe verse la raya de la cabecera: es lo
+     que partía la superficie en dos. */
+  .header-wrapper:has(.mega-menu[open]) { border-bottom-color: transparent; }
+
+  /* Y sobre el hero, donde la cabecera va transparente hasta que se baja, al
+     abrir un panel toma el mismo fondo: si no, el panel salía oscuro colgando de
+     una cabecera invisible. */
+  .bps-hero .header-wrapper:has(.mega-menu[open]),
+  .bps-hero .header-wrapper.gradient:has(.mega-menu[open]) {
+    background-color: rgb(0 0 0 / 0.8);
+    backdrop-filter: blur(10px);
   }
 
   .bps-mega__inner {
@@ -2879,23 +2906,15 @@ main[data-template='article'] .collection__title .title {
     align-items: flex-start;
   }
 
-  /* El apartado 2 pinta de blanco TODOS los enlaces de la cabecera —`.header a`—
-     porque la barra es negra. Dentro del panel eso deja el texto invisible sobre
-     el fondo claro, así que aquí se devuelve al color del esquema del panel.
-     Medido antes de esto: los nombres de las tarjetas salían en
-     `rgb(255,255,255)` sobre blanco. */
-  .header .bps-mega__panel,
-  .header .bps-mega__panel a {
-    color: rgb(var(--color-foreground));
-  }
+  /* --- Panel de colecciones ---------------------------------------------- */
 
-  /* --- Panel de colecciones: tarjetas con foto ---------------------------- */
-
+  /* Cuatro tarjetas de 200px como mucho. Antes se repartían los 1380px del ancho
+     de página entre cinco y salían fotos de 256: demasiado grandes al lado del
+     texto de la cabecera. */
   .bps-mega__rejilla {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 24px;
-    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 200px));
+    gap: 32px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -2903,16 +2922,15 @@ main[data-template='article'] .collection__title .title {
 
   .bps-mega__tarjeta {
     display: block;
-    color: inherit;
     text-decoration: none;
   }
 
   .bps-mega__foto {
     display: block;
     overflow: hidden;
-    aspect-ratio: 13 / 12;
+    aspect-ratio: 1 / 1;
     border-radius: 4px;
-    background-color: rgba(var(--color-foreground), 0.06);
+    background-color: rgb(255 255 255 / 0.08);
   }
 
   .bps-mega__foto img {
@@ -2924,19 +2942,6 @@ main[data-template='article'] .collection__title .title {
 
   .bps-mega__tarjeta:hover .bps-mega__foto img { transform: scale(1.03); }
 
-  /* «Ver todos los productos» no es una colección y no tiene foto: en vez de
-     dejar un hueco, la tarjeta se convierte en una caja con una flecha. */
-  .bps-mega__foto:empty {
-    display: grid;
-    place-items: center;
-  }
-
-  .bps-mega__foto:empty::after {
-    content: "→";
-    font-size: 24px;
-    color: rgba(var(--color-foreground), 0.55);
-  }
-
   .bps-mega__nombre {
     display: block;
     margin-top: 12px;
@@ -2945,9 +2950,42 @@ main[data-template='article'] .collection__title .title {
     line-height: 1.3;
   }
 
+  /* La descripción corta debajo del nombre, como en Hyperice —«Normatec ·
+     Masaje de compresión de aire dinámico»—. Sale de la descripción de la
+     colección, que en esta tienda ya está escrita y es de una línea. */
+  .bps-mega__descripcion {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--bps-grey-300);
+  }
+
   .bps-mega__tarjeta:hover .bps-mega__nombre { text-decoration: underline; }
 
-  /* --- Panel de blog: temas a la izquierda, artículos a la derecha -------- */
+  /* La columna de la derecha: lo que no es una colección con foto —«Ver todos
+     los productos», ofertas…— va aquí como lista de texto, no como tarjeta con
+     un hueco gris. */
+  .bps-mega__extras {
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+    min-width: 180px;
+  }
+
+  .bps-mega__extras:empty { display: none; }
+
+  .bps-mega__extras li + li { margin-top: 12px; }
+
+  .bps-mega__extra {
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .bps-mega__extra:hover { text-decoration: underline; }
+
+  /* --- Panel de blog ------------------------------------------------------ */
 
   .bps-mega__temas { flex: 0 0 240px; }
 
@@ -2959,7 +2997,7 @@ main[data-template='article'] .collection__title .title {
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgba(var(--color-foreground), 0.55);
+    color: var(--bps-grey-300);
   }
 
   .bps-mega__temas ul {
@@ -2972,7 +3010,6 @@ main[data-template='article'] .collection__title .title {
 
   .bps-mega__tema {
     font-size: 16px;
-    color: inherit;
     text-decoration: none;
   }
 
@@ -2986,16 +3023,11 @@ main[data-template='article'] .collection__title .title {
 
   .bps-mega__articulos {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 260px));
     gap: 32px;
-    max-width: 640px;
   }
 
-  .bps-mega__articulo {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-  }
+  .bps-mega__articulo { display: block; text-decoration: none; }
 
   .bps-mega__articulo .bps-mega__foto { aspect-ratio: 16 / 10; }
 
@@ -3006,7 +3038,7 @@ main[data-template='article'] .collection__title .title {
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgba(var(--color-foreground), 0.55);
+    color: var(--bps-grey-300);
   }
 
   .bps-mega__articulo-titulo {
@@ -3022,16 +3054,26 @@ main[data-template='article'] .collection__title .title {
 
   .bps-mega__articulo:hover .bps-mega__articulo-titulo { text-decoration: underline; }
 
-  /* --- Panel de enlaces: columnas, como el megamenú de Dawn --------------- */
+  /* --- Panel de enlaces --------------------------------------------------- */
 
+  /* En columna, uno debajo de otro. La primera versión los repartía en una
+     rejilla de cuatro y los tres enlaces de «Conócenos» salían en fila, con el
+     primero descolocado respecto a los otros dos. */
   .bps-mega__columnas {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px 48px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     margin: 0;
     padding: 0;
     list-style: none;
+    min-width: 240px;
+  }
+
+  /* Si alguna entrada tiene un tercer nivel, esa sí se convierte en columna con
+     encabezado, y el panel pasa a repartirse en horizontal. */
+  .bps-mega__columnas:has(ul) {
+    flex-direction: row;
+    gap: 48px;
   }
 
   .bps-mega__columnas ul {
@@ -3040,18 +3082,19 @@ main[data-template='article'] .collection__title .title {
     list-style: none;
   }
 
-  .bps-mega__columnas li + li { margin-top: 10px; }
+  .bps-mega__columnas ul li + li { margin-top: 10px; }
 
   .bps-mega__enlace {
     font-size: 16px;
-    color: inherit;
     text-decoration: none;
   }
 
   .bps-mega__enlace:hover { text-decoration: underline; }
 
-  .bps-mega__enlace--nivel-2 {
-    font-weight: 500;
+  .bps-mega__enlace--nivel-2 { font-weight: 500; }
+
+  .bps-mega__columnas:has(ul) .bps-mega__enlace--nivel-2 {
     font-size: 18px;
+    color: var(--bps-grey-300);
   }
 }

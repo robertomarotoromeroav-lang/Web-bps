@@ -76,13 +76,21 @@
 
               <div
                 id="MegaMenu-Content-{{ forloop.index }}"
-                class="mega-menu__content bps-mega__panel color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                class="mega-menu__content bps-mega__panel motion-reduce global-settings-popup"
                 tabindex="-1"
               >
                 <div class="bps-mega__inner page-width">
                   {%- case bps_tipo -%}
 
                     {%- when 'colecciones' -%}
+                      {%- comment -%}
+                        Dos grupos, como en Hyperice: las colecciones con foto van
+                        de tarjeta, y todo lo demás —«Ver todos los productos», una
+                        página de ofertas…— cae en la columna de texto de la
+                        derecha. El criterio es tener foto, no el tipo de enlace:
+                        `/collections/all` también es una colección, pero no tiene
+                        imagen y como tarjeta quedaba un hueco vacío.
+                      {%- endcomment -%}
                       <ul class="bps-mega__rejilla" role="list">
                         {%- for hijo in link.links -%}
                           {%- liquid
@@ -96,14 +104,14 @@
                               endif
                             endif
                           -%}
-                          <li>
-                            <a
-                              href="{{ hijo.url }}"
-                              class="bps-mega__tarjeta{% if hijo.current %} bps-mega__tarjeta--activa{% endif %}"
-                              {% if hijo.current %}aria-current="page"{% endif %}
-                            >
-                              <span class="bps-mega__foto">
-                                {%- if bps_img != blank -%}
+                          {%- if bps_img != blank -%}
+                            <li>
+                              <a
+                                href="{{ hijo.url }}"
+                                class="bps-mega__tarjeta{% if hijo.current %} bps-mega__tarjeta--activa{% endif %}"
+                                {% if hijo.current %}aria-current="page"{% endif %}
+                              >
+                                <span class="bps-mega__foto">
                                   {{
                                     bps_img
                                     | image_url: width: 500
@@ -113,11 +121,44 @@
                                       sizes: '200px',
                                       alt: ''
                                   }}
+                                </span>
+                                <span class="bps-mega__nombre">{{ hijo.title | escape }}</span>
+                                {%- assign bps_desc = bps_col.description | strip_html | strip -%}
+                                {%- if bps_desc != blank -%}
+                                  <span class="bps-mega__descripcion">
+                                    {{- bps_desc | truncate: 70 -}}
+                                  </span>
                                 {%- endif -%}
-                              </span>
-                              <span class="bps-mega__nombre">{{ hijo.title | escape }}</span>
-                            </a>
-                          </li>
+                              </a>
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+
+                      <ul class="bps-mega__extras" role="list">
+                        {%- for hijo in link.links -%}
+                          {%- liquid
+                            assign bps_col = hijo.object
+                            assign bps_img = ''
+                            if hijo.type == 'collection_link'
+                              if bps_col.image != blank
+                                assign bps_img = bps_col.image
+                              elsif bps_col.products.first.featured_image != blank
+                                assign bps_img = bps_col.products.first.featured_image
+                              endif
+                            endif
+                          -%}
+                          {%- if bps_img == blank -%}
+                            <li>
+                              <a
+                                href="{{ hijo.url }}"
+                                class="bps-mega__extra"
+                                {% if hijo.current %}aria-current="page"{% endif %}
+                              >
+                                {{- hijo.title | escape -}}
+                              </a>
+                            </li>
+                          {%- endif -%}
                         {%- endfor -%}
                       </ul>
 

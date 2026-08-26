@@ -210,23 +210,49 @@ Y dos ajustes en *Personalizar → Cabecera*:
 | Ajuste | Valor | Por qué |
 |---|---|---|
 | Tipo de menú de escritorio | **Megamenú** | Con «Desplegable», Dawn ni siquiera llama a este archivo |
-| Color del menú | **Esquema 1** | El panel de Hyperice es blanco. Con el esquema oscuro el panel sale negro; funciona igual, pero no es el aspecto que pidió el cliente |
+| Color del menú | *(da igual)* | El panel se pinta como la cabecera, no con el esquema. Ver «la superficie», más abajo |
 
-**Comprobado** reproduciendo la cabecera publicada en local, con los tres paneles
-abiertos a 1440px:
+**Segunda vuelta.** La primera versión no se comportaba como Hyperice en cuatro
+cosas, y las cuatro están corregidas:
 
-| | |
-|---|---|
-| Panel | Arranca en y=107, justo debajo de la cabecera, a todo el ancho y en blanco |
-| "Comprar" | Cinco tarjetas de 256,8px, foto en 13/12 con radio 4 y nombre de 16px debajo |
-| «Ver todos los productos» | Al no ser una colección no tiene foto: sale como caja con una flecha, no como hueco vacío |
-| "Terapia" | Temas en columna de 240px y los dos artículos al lado, con foto en 16/10, fecha en versalitas y titular a dos líneas |
-| "Conócenos" | Columnas de enlaces |
+| Lo que fallaba | Por qué | Ahora |
+|---|---|---|
+| Fotos demasiado grandes | Cinco tarjetas repartiéndose los 1.380px del ancho de página: **256px cada foto** | Cuatro tarjetas de **200px** con la foto en cuadrado |
+| Sin descripción | No se pintaba | Debajo del nombre, la **descripción de la colección** —«Drenaje linfático, recuperación muscular y piernas ligeras»—, que en esta tienda ya está escrita y es de una línea |
+| «Ver todos los productos» salía como tarjeta con un hueco gris | Se trataba igual que una colección | Va a la **columna de texto de la derecha**, como en Hyperice. El criterio no es el tipo de enlace sino tener foto: `/collections/all` también es una colección, pero no tiene imagen |
+| «Conócenos» con los enlaces en fila y el primero descolocado | Era una rejilla de cuatro columnas | En **columna**, uno debajo de otro |
 
-Un detalle que hubo que corregir por el camino: el apartado 2 de la hoja pinta de
-blanco **todos** los enlaces de la cabecera, porque la barra es negra. Dentro de
-un panel blanco eso dejaba los nombres invisibles —medido: `rgb(255,255,255)`
-sobre blanco—. El apartado 28 los devuelve al color del esquema del panel.
+**Y la superficie.** Esto es lo que hacía que se vieran como dos cosas distintas.
+En Hyperice, cuando la cabecera va transparente —que es como va la nuestra en todo
+el sitio— el panel **no es blanco**: es la misma superficie que la cabecera. Está
+en las clases de su propio marcado, descargado para comprobarlo:
+
+```
+[.header-bg-transparent_&_]:bg-black/80
+[.header-bg-transparent_&_]:text-white
+[.header-bg-transparent_&_]:backdrop-blur-[10px]
+```
+
+Negro al 80 % con 10px de desenfoque y letra blanca: exactamente lo que el
+apartado 2 le da a la cabecera. Así que el panel ya no usa el esquema de color del
+menú, sino ese mismo tratamiento, y además:
+
+- **la raya inferior de la cabecera desaparece** mientras hay un panel abierto,
+  que era lo que partía el bloque en dos;
+- **sobre el hero**, donde la cabecera va transparente hasta que se baja, al abrir
+  un panel toma el fondo: si no, el panel salía oscuro colgando de una cabecera
+  invisible.
+
+Las dos cosas se hacen con `:has()`, sin JavaScript.
+
+Con esto, el ajuste «Color del menú» ya **no** hay que tocarlo: el panel se pinta
+solo, igual que la cabecera.
+
+**Comprobado** reproduciendo la cabecera publicada en local, a 1440px: panel en
+negro al 80 % con desenfoque de 10px y letra blanca, la cabecera con el mismo
+fondo y sin raya, tarjetas de 200×274,6 con foto de 200×200, descripción en 14px
+gris `#cbcbcb`, «Ver todos los productos» en x=1230 pegado al margen derecho, y
+los tres enlaces de «Conócenos» en columna a 36px uno de otro.
 
 ### En qué se nota cada paso
 
