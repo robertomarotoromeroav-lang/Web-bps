@@ -2850,3 +2850,208 @@ main[data-template='article'] .collection__title .title {
   max-width: none;
   padding-inline: 0;
 }
+
+/* --------------------------------------------------------------------------
+   28. El desplegable de la cabecera, tipo Hyperice
+   Acompaña a `snippets/bps-megamenu.liquid`. Ver MEGAMENU.md.
+
+   El panel solo existe de 990px para arriba: por debajo, Dawn esconde
+   `.header__inline-menu` y usa el cajón lateral, que se queda como está.
+
+   Los colores salen del esquema que se elija en Personalizar → Cabecera →
+   «Color del menú», así que aquí no se fija ninguno a mano: los fondos suaves
+   van en `rgba(var(--color-foreground), .06)`, que funciona igual sobre claro y
+   sobre oscuro. Para el aspecto de Hyperice, ese ajuste va en Esquema 1.
+   -------------------------------------------------------------------------- */
+
+@media screen and (min-width: 990px) {
+  /* El panel arranca justo debajo de la cabecera y ocupa todo el ancho. Dawn ya
+     lo posiciona; aquí solo se le da el aire. */
+  .bps-mega__panel {
+    padding-top: 40px;
+    padding-bottom: 48px;
+    border-top: 1px solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .bps-mega__inner {
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
+  }
+
+  /* El apartado 2 pinta de blanco TODOS los enlaces de la cabecera —`.header a`—
+     porque la barra es negra. Dentro del panel eso deja el texto invisible sobre
+     el fondo claro, así que aquí se devuelve al color del esquema del panel.
+     Medido antes de esto: los nombres de las tarjetas salían en
+     `rgb(255,255,255)` sobre blanco. */
+  .header .bps-mega__panel,
+  .header .bps-mega__panel a {
+    color: rgb(var(--color-foreground));
+  }
+
+  /* --- Panel de colecciones: tarjetas con foto ---------------------------- */
+
+  .bps-mega__rejilla {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bps-mega__tarjeta {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .bps-mega__foto {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 13 / 12;
+    border-radius: 4px;
+    background-color: rgba(var(--color-foreground), 0.06);
+  }
+
+  .bps-mega__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bps-mega__tarjeta:hover .bps-mega__foto img { transform: scale(1.03); }
+
+  /* «Ver todos los productos» no es una colección y no tiene foto: en vez de
+     dejar un hueco, la tarjeta se convierte en una caja con una flecha. */
+  .bps-mega__foto:empty {
+    display: grid;
+    place-items: center;
+  }
+
+  .bps-mega__foto:empty::after {
+    content: "→";
+    font-size: 24px;
+    color: rgba(var(--color-foreground), 0.55);
+  }
+
+  .bps-mega__nombre {
+    display: block;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .bps-mega__tarjeta:hover .bps-mega__nombre { text-decoration: underline; }
+
+  /* --- Panel de blog: temas a la izquierda, artículos a la derecha -------- */
+
+  .bps-mega__temas { flex: 0 0 240px; }
+
+  .bps-mega__destacados { flex: 1 1 auto; min-width: 0; }
+
+  .bps-mega__rotulo {
+    margin: 0 0 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.55);
+  }
+
+  .bps-mega__temas ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bps-mega__temas li + li { margin-top: 12px; }
+
+  .bps-mega__tema {
+    font-size: 16px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .bps-mega__tema:hover { text-decoration: underline; }
+
+  .bps-mega__tema--todos {
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .bps-mega__articulos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    max-width: 640px;
+  }
+
+  .bps-mega__articulo {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .bps-mega__articulo .bps-mega__foto { aspect-ratio: 16 / 10; }
+
+  .bps-mega__articulo-fecha {
+    display: block;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.55);
+  }
+
+  .bps-mega__articulo-titulo {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .bps-mega__articulo:hover .bps-mega__articulo-titulo { text-decoration: underline; }
+
+  /* --- Panel de enlaces: columnas, como el megamenú de Dawn --------------- */
+
+  .bps-mega__columnas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px 48px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bps-mega__columnas ul {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bps-mega__columnas li + li { margin-top: 10px; }
+
+  .bps-mega__enlace {
+    font-size: 16px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .bps-mega__enlace:hover { text-decoration: underline; }
+
+  .bps-mega__enlace--nivel-2 {
+    font-weight: 500;
+    font-size: 18px;
+  }
+}

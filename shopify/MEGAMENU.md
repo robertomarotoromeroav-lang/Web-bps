@@ -179,16 +179,54 @@ Añade en el menú, al mismo nivel que «Comprar»:
 Cada enlace tiene que llevar la etiqueta **tal como se escribió**, en minúsculas y
 sin acentos: `frio`, no `frío`.
 
-### Paso 5 · Las fotos y los artículos destacados
+### Paso 5 · Las fotos y los artículos destacados ✅ *(ya hecho, listo para instalar)*
 
-Este es el único paso con código, y lo hago yo. Cuando los pasos 1 a 3 estén
-hechos, avísame: descargo la cabecera publicada, construyo el *snippet*, lo
-verifico midiendo contra el prototipo y te paso **un archivo para subir y tres
-líneas para pegar** en `sections/header.liquid`, con las capturas del antes y el
-después.
+El código está escrito y verificado. Son **tres cosas**:
 
-A partir de ahí, «Comprar» pasa a enseñar las cuatro colecciones con su foto y
-«Terapia» las etiquetas con los dos últimos artículos.
+1. **Sube el archivo nuevo** `shopify/snippets/bps-megamenu.liquid` a
+   *Editar código → Snippets → Agregar un nuevo snippet*, con el nombre
+   `bps-megamenu`, y pega el contenido.
+2. **Cambia una palabra** en `sections/header.liquid`. Busca esto —está sobre la
+   línea 175—:
+
+   ```liquid
+   if section.settings.menu_type_desktop == 'dropdown'
+     render 'header-dropdown-menu'
+   elsif section.settings.menu_type_desktop != 'drawer'
+     render 'header-mega-menu'
+   endif
+   ```
+
+   y deja la penúltima línea así:
+
+   ```liquid
+     render 'bps-megamenu'
+   ```
+
+3. **Sube `bps-hyperice.css`** otra vez: los estilos son el apartado 28.
+
+Y dos ajustes en *Personalizar → Cabecera*:
+
+| Ajuste | Valor | Por qué |
+|---|---|---|
+| Tipo de menú de escritorio | **Megamenú** | Con «Desplegable», Dawn ni siquiera llama a este archivo |
+| Color del menú | **Esquema 1** | El panel de Hyperice es blanco. Con el esquema oscuro el panel sale negro; funciona igual, pero no es el aspecto que pidió el cliente |
+
+**Comprobado** reproduciendo la cabecera publicada en local, con los tres paneles
+abiertos a 1440px:
+
+| | |
+|---|---|
+| Panel | Arranca en y=107, justo debajo de la cabecera, a todo el ancho y en blanco |
+| "Comprar" | Cinco tarjetas de 256,8px, foto en 13/12 con radio 4 y nombre de 16px debajo |
+| «Ver todos los productos» | Al no ser una colección no tiene foto: sale como caja con una flecha, no como hueco vacío |
+| "Terapia" | Temas en columna de 240px y los dos artículos al lado, con foto en 16/10, fecha en versalitas y titular a dos líneas |
+| "Conócenos" | Columnas de enlaces |
+
+Un detalle que hubo que corregir por el camino: el apartado 2 de la hoja pinta de
+blanco **todos** los enlaces de la cabecera, porque la barra es negra. Dentro de
+un panel blanco eso dejaba los nombres invisibles —medido: `rgb(255,255,255)`
+sobre blanco—. El apartado 28 los devuelve al color del esquema del panel.
 
 ### En qué se nota cada paso
 

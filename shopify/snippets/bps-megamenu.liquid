@@ -1,0 +1,227 @@
+{% comment %}
+  bps-megamenu.liquid — el desplegable de la cabecera, tipo Hyperice.
+  BPS Performance. Ver shopify/MEGAMENU.md.
+
+  Sustituye a `header-mega-menu` de Dawn. Se activa cambiando UNA palabra en
+  `sections/header.liquid`:
+
+      elsif section.settings.menu_type_desktop != 'drawer'
+        render 'bps-megamenu'          ← antes decía 'header-mega-menu'
+      endif
+
+  Requiere además que en Personalizar → Cabecera, «Tipo de menú de escritorio»
+  esté en **Megamenú**; con «Desplegable» Dawn ni siquiera llama a este archivo.
+
+  QUÉ PINTA CADA PANEL. No hay ajustes nuevos: el tipo se deduce de a dónde
+  apunta cada entrada del menú, que se gobierna desde Tienda online → Navegación.
+
+    · Si alguno de los hijos es una COLECCIÓN  → rejilla de tarjetas con foto.
+      La foto es la de la colección y, si no tiene, la del primer producto.
+    · Si la entrada apunta a un BLOG           → las entradas hijas como lista de
+      temas y, al lado, los dos artículos más recientes con su foto.
+    · En cualquier otro caso                   → columnas de enlaces, como el
+      megamenú de Dawn.
+
+  Se mantiene el envoltorio de Dawn —`<header-menu>` con `<details>` y el panel
+  como hermano inmediato del `<summary>`— porque su `details-disclosure.js` busca
+  exactamente eso: `this.querySelector('details')` y
+  `details.querySelector('summary').nextElementSibling`. Cambiar esa estructura
+  rompería la apertura, el cierre al perder el foco y el cálculo de
+  `--header-bottom-position-desktop`. Por eso este archivo no trae JavaScript.
+
+  El icono del desplegable va escrito aquí en vez de con `inline_asset_content`
+  para que el archivo funcione igual en Dawn 15 y en 16.
+{% endcomment %}
+
+{%- liquid
+  assign caret = '<svg class="icon icon-caret" viewBox="0 0 10 6" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"/></svg>'
+-%}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          {%- liquid
+            # ¿de qué tipo es el panel? se decide mirando los enlaces, no un ajuste
+            assign bps_tipo = 'enlaces'
+            assign bps_colecciones = 0
+            for hijo in link.links
+              if hijo.type == 'collection_link'
+                assign bps_colecciones = bps_colecciones | plus: 1
+              endif
+            endfor
+            if bps_colecciones > 0
+              assign bps_tipo = 'colecciones'
+            endif
+            if link.type == 'blog_link'
+              assign bps_tipo = 'blog'
+            endif
+          -%}
+
+          <header-menu>
+            <details
+              id="Details-HeaderMenu-{{ forloop.index }}"
+              class="mega-menu bps-mega bps-mega--{{ bps_tipo }}"
+            >
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span{% if link.current %} class="header__active-menu-item"{% endif %}>
+                  {{- link.title | escape -}}
+                </span>
+                {{ caret }}
+              </summary>
+
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content bps-mega__panel color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                <div class="bps-mega__inner page-width">
+                  {%- case bps_tipo -%}
+
+                    {%- when 'colecciones' -%}
+                      <ul class="bps-mega__rejilla" role="list">
+                        {%- for hijo in link.links -%}
+                          {%- liquid
+                            assign bps_col = hijo.object
+                            assign bps_img = ''
+                            if hijo.type == 'collection_link'
+                              if bps_col.image != blank
+                                assign bps_img = bps_col.image
+                              elsif bps_col.products.first.featured_image != blank
+                                assign bps_img = bps_col.products.first.featured_image
+                              endif
+                            endif
+                          -%}
+                          <li>
+                            <a
+                              href="{{ hijo.url }}"
+                              class="bps-mega__tarjeta{% if hijo.current %} bps-mega__tarjeta--activa{% endif %}"
+                              {% if hijo.current %}aria-current="page"{% endif %}
+                            >
+                              <span class="bps-mega__foto">
+                                {%- if bps_img != blank -%}
+                                  {{
+                                    bps_img
+                                    | image_url: width: 500
+                                    | image_tag:
+                                      loading: 'lazy',
+                                      widths: '200, 300, 400, 500',
+                                      sizes: '200px',
+                                      alt: ''
+                                  }}
+                                {%- endif -%}
+                              </span>
+                              <span class="bps-mega__nombre">{{ hijo.title | escape }}</span>
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+
+                    {%- when 'blog' -%}
+                      {%- assign bps_blog = link.object -%}
+                      <div class="bps-mega__temas">
+                        <p class="bps-mega__rotulo">Temas</p>
+                        <ul role="list">
+                          {%- for hijo in link.links -%}
+                            <li>
+                              <a
+                                href="{{ hijo.url }}"
+                                class="bps-mega__tema"
+                                {% if hijo.current %}aria-current="page"{% endif %}
+                              >
+                                {{- hijo.title | escape -}}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                          <li>
+                            <a href="{{ link.url }}" class="bps-mega__tema bps-mega__tema--todos">
+                              {{- 'Ver todo el blog' -}}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {%- if bps_blog.articles.size > 0 -%}
+                        <div class="bps-mega__destacados">
+                          <p class="bps-mega__rotulo">Lo último</p>
+                          <div class="bps-mega__articulos">
+                            {%- for articulo in bps_blog.articles limit: 2 -%}
+                              <a href="{{ articulo.url }}" class="bps-mega__articulo">
+                                <span class="bps-mega__foto">
+                                  {%- if articulo.image != blank -%}
+                                    {{
+                                      articulo.image
+                                      | image_url: width: 600
+                                      | image_tag:
+                                        loading: 'lazy',
+                                        widths: '300, 450, 600',
+                                        sizes: '300px',
+                                        alt: ''
+                                    }}
+                                  {%- endif -%}
+                                </span>
+                                <span class="bps-mega__articulo-fecha">
+                                  {{- articulo.published_at | date: '%-d %b %Y' -}}
+                                </span>
+                                <span class="bps-mega__articulo-titulo">{{ articulo.title | escape }}</span>
+                              </a>
+                            {%- endfor -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+
+                    {%- else -%}
+                      <ul class="bps-mega__columnas" role="list">
+                        {%- for hijo in link.links -%}
+                          <li>
+                            <a
+                              href="{{ hijo.url }}"
+                              class="bps-mega__enlace bps-mega__enlace--nivel-2"
+                              {% if hijo.current %}aria-current="page"{% endif %}
+                            >
+                              {{- hijo.title | escape -}}
+                            </a>
+                            {%- if hijo.links != blank -%}
+                              <ul role="list">
+                                {%- for nieto in hijo.links -%}
+                                  <li>
+                                    <a
+                                      href="{{ nieto.url }}"
+                                      class="bps-mega__enlace"
+                                      {% if nieto.current %}aria-current="page"{% endif %}
+                                    >
+                                      {{- nieto.title | escape -}}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+
+                  {%- endcase -%}
+                </div>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}aria-current="page"{% endif %}
+          >
+            <span{% if link.current %} class="header__active-menu-item"{% endif %}>
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
