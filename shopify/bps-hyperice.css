@@ -197,9 +197,15 @@ body {
    contenido se metería debajo. En las plantillas con imagen a sangre eso es lo
    que se busca; en las demás hay que devolver el hueco. */
 body:not(.bps-hero) #MainContent {
-  /* 111px = 38 de la barra de anuncios + 73 de la cabecera, medidos en el
-     prototipo. Antes ponía 107, que era el alto de la tienda con el relleno de
-     cabecera a 12; con el relleno a 16 (PARTE 2 §A-1) el bloque mide 111. */
+  /* El valor de verdad lo escribe el bloque 5 de `bps-hyperice.js`, que MIDE el
+     bloque de cabecera. Este 111 es solo el respaldo por si el script no está.
+
+     No se deja un número fijo porque el alto de la cabecera depende del tamaño
+     del logotipo, que es un ajuste del tema. Los 111 se midieron con la
+     cabecera a 73px de alto; en la tienda publicada el bloque mide 171,3 (38 de
+     barra de anuncios + 133,3 de cabecera) y el titular de cualquier página sin
+     imagen a sangre subía hasta tocarla: «Recuperación y rendimiento» empezaba
+     en y=167 con la cabecera acabando en 171,3. */
   padding-top: var(--bps-header-space, 111px);
 }
 

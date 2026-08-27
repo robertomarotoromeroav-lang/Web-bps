@@ -213,3 +213,52 @@
 
   marcar()
 })();
+
+/* -------------------------------------------------------------------------
+   5. El hueco que reserva la cabecera fija
+
+   El apartado 3d saca el bloque de cabecera del flujo con `position: fixed`, así
+   que deja de reservar su espacio, y el apartado 2 lo devuelve a mano con
+   `#MainContent { padding-top: var(--bps-header-space, 111px) }`.
+
+   Ese 111 se midió cuando la cabecera tenía 73px de alto. El alto real depende
+   del **tamaño del logotipo**, que es un ajuste del tema, y en cuanto se sube
+   deja de cuadrar: medido en la tienda publicada, el bloque mide 171,3 (38 de la
+   barra de anuncios más 133,3 de cabecera), o sea 60px más de lo reservado. El
+   efecto se ve en cualquier página sin imagen a sangre: el titular sube hasta
+   tocar la cabecera —«Recuperación y rendimiento» empezaba en y=167 con la
+   cabecera acabando en 171,3, así que la parte de arriba de las letras quedaba
+   por detrás—.
+
+   Aquí se mide el bloque y se escribe el valor, así que se corrige solo cada vez
+   que se cambie el logotipo, el relleno de la cabecera o la barra de anuncios.
+   Se vuelve a medir al cargar del todo (el logotipo es una imagen: hasta que no
+   llega, el alto es otro) y al cambiar el tamaño de la ventana.
+   ------------------------------------------------------------------------- */
+
+;(function () {
+  var grupo = document.querySelector('.bps-header-group')
+  if (!grupo) return
+  var root = document.documentElement
+
+  var medir = function () {
+    /* `offsetHeight` del bloque fijo, no `getBoundingClientRect().bottom`: al
+       bajar, el apartado 1 lo sube para esconder la barra de anuncios y el
+       `bottom` saldría más pequeño de lo que hay que reservar. */
+    var alto = grupo.offsetHeight
+    if (alto > 0) root.style.setProperty('--bps-header-space', alto + 'px')
+  }
+
+  medir()
+  window.addEventListener('load', medir)
+
+  var pendiente = null
+  window.addEventListener('resize', function () {
+    if (pendiente) clearTimeout(pendiente)
+    pendiente = setTimeout(medir, 150)
+  })
+
+  /* Si el navegador lo soporta, se vigila el bloque: el logotipo puede llegar
+     tarde y la barra de anuncios puede tener un carrusel que cambie de alto. */
+  if (window.ResizeObserver) new ResizeObserver(medir).observe(grupo)
+})();
