@@ -290,6 +290,51 @@ mismo fondo que la cabecera.
 
 En esta vuelta **solo cambia `bps-hyperice.css`**; el snippet se queda como está.
 
+**Cuarta vuelta: medido en su web, no en una captura.** La pregunta era si en
+Hyperice todos los enlaces directos del menú son del mismo tamaño. Sí lo son, y
+comprobarlo obligó a montar un método mejor: en vez de mirar una captura, se
+reprodujo **la propia página de Hyperice en local** con su hoja de estilos y se
+midió el panel a 1440px. Su desplegable se abre sin JavaScript —les basta con
+`aria-expanded="true"` en el enlace—, así que se puede medir de verdad.
+
+Lo de los enlaces, primero:
+
+| | Hyperice | Lo que teníamos |
+|---|---|---|
+| Columna de la derecha de «Comprar» —«Ver todos los productos»— | `h5`, **24px** | 24px ✅ |
+| Panel entero de enlaces —«Conócenos»— | `h5`, **24px**, el mismo bloque y la misma clase | 16px ❌ |
+
+O sea: usan **el mismo bloque de tema** para los dos sitios, así que salen
+idénticos. Los 18px de Hyperice son solo para el **nombre de una colección** que
+va al lado de su miniatura, y para los títulos de las tarjetas de artículo. Ahora
+`.bps-mega__enlace` y `.bps-mega__extra` comparten una sola regla.
+
+Y de paso, la medición destapó **seis números de la tercera vuelta que estaban
+mal**, porque salían de interpretar una captura:
+
+| | Hyperice (medido) | Teníamos | Ahora |
+|---|---|---|---|
+| Ancho de columna de colecciones | **360** | 440 | 360 |
+| Hueco entre columnas | **35** | 48 | 35 |
+| Miniatura | **72×80**, radio 2 | 80×80, radio 4 | 72×80, radio 2 |
+| Hueco entre foto y texto | **30** | 20 | 30 |
+| Relleno vertical de la fila | **15** | 16 | 15 |
+| Columna de la derecha | **360** de ancho, 40 de relleno | 220 y 48 | 360 y 40 |
+| Hueco entre enlaces de esa columna | **15** | 28 | 15 |
+| Opacidad de las rayas | **20 %** | 15 % | 20 % |
+
+Con eso, la fila de colección mide **111px de alto, exactamente lo mismo que la
+suya**, y las dos columnas caen en x=30 y x=425 con la columna de la derecha
+pegada al margen en x=1050.
+
+**Queda una diferencia que no he tocado**, porque afecta a la cabecera de todas
+las páginas y es decisión de diseño: en Hyperice **el menú entero es una barra en
+píldora**, de 30px de alto, con fondo blanco al 20 % y 6px de desenfoque, y cada
+entrada dentro lleva `5px 15px` de relleno; la abierta se pone blanca. En el
+nuestro no hay barra —fondo transparente, sin radio— y solo la abierta es una
+píldora, con `8px 16px`. Si interesa igualarlo, es un cambio pequeño en el
+apartado 2, pero conviene decidirlo aparte.
+
 ## 6. El móvil ✅ *(escrito y verificado, listo para instalar)*
 
 En Hyperice el menú de móvil **no es el desplegable de escritorio en pequeño ni

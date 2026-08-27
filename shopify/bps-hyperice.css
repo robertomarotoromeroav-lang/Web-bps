@@ -2966,14 +2966,15 @@ main[data-template='article'] .collection__title .title {
 
   /* Hyperice NO usa tarjetas verticales con la foto grande arriba: usa filas
      horizontales —miniatura pequeña a la izquierda, nombre y descripción a la
-     derecha—, repartidas en DOS columnas y separadas por una raya fina. Medido
-     sobre su captura: miniatura de unos 85px, fila de unos 117 de alto, dos
-     columnas de unos 460 y raya encima de cada fila. La primera versión de aquí
-     ponía cuatro fotos de 200 en fila, que es otra cosa. */
+     derecha—, repartidas en DOS columnas y separadas por una raya fina.
+
+     Los números de aquí abajo NO salen de mirar una captura: se reprodujo su
+     propia página en local con su hoja de estilos y se midió el panel a 1440px.
+     Columnas de 360 —el `w-[360px]` que ellos declaran— con 35 de hueco. */
   .bps-mega__rejilla {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 440px));
-    column-gap: 48px;
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    column-gap: 35px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -2985,12 +2986,12 @@ main[data-template='article'] .collection__title .title {
      debajo de la foto y la fila medía 250px en vez de 117. */
   .bps-mega__tarjeta {
     display: grid;
-    grid-template-columns: 80px minmax(0, 1fr);
-    column-gap: 20px;
-    row-gap: 4px;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 30px;
+    row-gap: 5px;
     align-content: center;
-    padding: 16px 0;
-    border-top: 1px solid rgb(255 255 255 / 0.15);
+    padding: 15px 0;
+    border-top: 1px solid rgb(255 255 255 / 0.2);
     text-decoration: none;
   }
 
@@ -3004,12 +3005,13 @@ main[data-template='article'] .collection__title .title {
   .bps-mega__tarjeta > .bps-mega__nombre { grid-column: 2; grid-row: 1; align-self: end; }
   .bps-mega__tarjeta > .bps-mega__descripcion { grid-column: 2; grid-row: 2; align-self: start; }
 
+  /* 72 de ancho por 80 de alto, no cuadrada, y radio de 2px. Medido en su web. */
   .bps-mega__foto {
     display: block;
     overflow: hidden;
-    width: 80px;
-    aspect-ratio: 1 / 1;
-    border-radius: 4px;
+    width: 72px;
+    aspect-ratio: 72 / 80;
+    border-radius: 2px;
     background-color: rgb(255 255 255 / 0.08);
   }
 
@@ -3026,7 +3028,8 @@ main[data-template='article'] .collection__title .title {
     display: block;
     font-size: 18px;
     font-weight: 500;
-    line-height: 1.25;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
 
   /* La descripción corta debajo del nombre, como en Hyperice —«Normatec ·
@@ -3034,38 +3037,28 @@ main[data-template='article'] .collection__title .title {
      colección, que en esta tienda ya está escrita y es de una línea. */
   .bps-mega__descripcion {
     display: block;
-    margin-top: 4px;
     font-size: 14px;
-    line-height: 1.35;
+    line-height: 1.4;
     color: var(--bps-grey-300);
   }
 
   .bps-mega__tarjeta:hover .bps-mega__nombre { text-decoration: underline; }
 
-  /* La columna de la derecha, pegada al margen y **separada por una raya
-     vertical**. Su texto es bastante más grande que el de las filas: en la
-     captura de Hyperice son unos 26px contra los 19 del nombre de cada fila. */
+  /* La columna de la derecha, pegada al margen y separada por una raya vertical.
+     Medido en su web: 360px de ancho, 40 de relleno a la izquierda de la raya,
+     35 de separación con la rejilla y 15 entre enlace y enlace. */
   .bps-mega__extras {
     margin: 0 0 0 auto;
-    padding: 0 0 0 48px;
-    border-left: 1px solid rgb(255 255 255 / 0.15);
+    padding: 0 0 0 40px;
+    border-left: 1px solid rgb(255 255 255 / 0.2);
     align-self: stretch;
     list-style: none;
-    min-width: 220px;
+    min-width: 360px;
   }
 
   .bps-mega__extras:empty { display: none; }
 
-  .bps-mega__extras li + li { margin-top: 28px; }
-
-  .bps-mega__extra {
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 1.2;
-    text-decoration: none;
-  }
-
-  .bps-mega__extra:hover { text-decoration: underline; }
+  .bps-mega__extras li + li { margin-top: 15px; }
 
   /* --- Panel de blog ------------------------------------------------------ */
 
@@ -3143,47 +3136,65 @@ main[data-template='article'] .collection__title .title {
 
   /* --- Panel de enlaces --------------------------------------------------- */
 
-  /* En columna, uno debajo de otro. La primera versión los repartía en una
+  /* En columna, uno debajo de otro, con los mismos 15px que la columna de la
+     derecha del panel de colecciones. La primera versión los repartía en una
      rejilla de cuatro y los tres enlaces de «Conócenos» salían en fila, con el
      primero descolocado respecto a los otros dos. */
   .bps-mega__columnas {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 15px;
     margin: 0;
     padding: 0;
     list-style: none;
-    min-width: 240px;
+    min-width: 360px;
   }
 
   /* Si alguna entrada tiene un tercer nivel, esa sí se convierte en columna con
      encabezado, y el panel pasa a repartirse en horizontal. */
   .bps-mega__columnas:has(ul) {
     flex-direction: row;
-    gap: 48px;
+    gap: 35px;
   }
 
   .bps-mega__columnas ul {
-    margin: 12px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 15px 0 0;
     padding: 0;
     list-style: none;
   }
 
-  .bps-mega__columnas ul li + li { margin-top: 10px; }
-
-  .bps-mega__enlace {
-    font-size: 16px;
+  /* TODOS LOS ENLACES DIRECTOS, DEL MISMO TAMAÑO: 24px. Es lo que hace Hyperice
+     —la clase `h5`, medida en 24px a 1440— y lo hace igual en los dos sitios
+     donde aparecen enlaces sueltos: la columna de la derecha de «Comprar» («Gift
+     Cards», «Shop all»…) y el panel entero de enlaces de «Therapy». Aquí estaban
+     a 24 los de la columna y a 16 los del panel, y no cuadraban entre sí. */
+  .bps-mega__enlace,
+  .bps-mega__extra {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     text-decoration: none;
   }
 
-  .bps-mega__enlace:hover { text-decoration: underline; }
+  .bps-mega__enlace:hover,
+  .bps-mega__extra:hover { text-decoration: underline; }
 
-  .bps-mega__enlace--nivel-2 { font-weight: 500; }
-
+  /* Con un tercer nivel, el segundo pasa a ser el rótulo de su columna y los
+     enlaces son los de dentro. Hyperice no tiene este caso —sus listas son de un
+     solo nivel—, así que este reparto es criterio nuestro. */
   .bps-mega__columnas:has(ul) .bps-mega__enlace--nivel-2 {
-    font-size: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--bps-grey-300);
   }
+
+  .bps-mega__columnas:has(ul) ul .bps-mega__enlace { font-size: 18px; }
 }
 
 /* --------------------------------------------------------------------------
