@@ -290,7 +290,85 @@ mismo fondo que la cabecera.
 
 En esta vuelta **solo cambia `bps-hyperice.css`**; el snippet se queda como está.
 
-### En qué se nota cada paso
+## 6. El móvil ✅ *(escrito y verificado, listo para instalar)*
+
+En Hyperice el menú de móvil **no es el desplegable de escritorio en pequeño ni
+el acordeón de siempre**: es lo mismo que en escritorio, reorganizado. Y el de
+Dawn no se le parece en nada.
+
+| | Dawn (lo que hay hoy) | Hyperice |
+|---|---|---|
+| **Cómo se navega** | Tocas «Comprar» y **una segunda pantalla tapa la primera**, con un «‹ Comprar» para volver | **Pestañas**: una fila de píldoras arriba y el contenido debajo, en la misma pantalla. No se cambia de pantalla nunca |
+| **Qué se ve de cada colección** | Solo el nombre, en una lista de texto | **Miniatura, nombre y descripción**, igual que en escritorio |
+| **Ancho** | 88 % de la pantalla | Toda la pantalla |
+| **Al abrirlo** | Lista del primer nivel | La **primera pestaña ya puesta** |
+| **Detrás** | La página, nítida | La página **oscurecida y desenfocada** |
+
+Medido sobre el marcado y la hoja de estilos de Hyperice, a 390px: barra de
+píldoras con fondo blanco al 20 %, 5px de relleno y 5px entre pestañas, letra de
+14px y la activa en píldora blanca con letra negra; el panel 5px por debajo;
+cada grupo entre rayas con 30px de margen y 30px de relleno; y cada colección en
+una fila de **miniatura de 72×80 con radio 2px**, 25px de hueco, nombre de 18px y
+descripción de 14px, con 20px arriba y abajo y una raya entre filas.
+
+### Cómo se instala
+
+1. **Sube el archivo nuevo** `shopify/snippets/bps-cajon.liquid` a
+   *Editar código → Snippets → Agregar un nuevo snippet*, con el nombre
+   `bps-cajon`, y pega el contenido.
+2. **Cambia una palabra** en `sections/header.liquid`. Busca esto —está sobre la
+   línea 175, dentro de un bloque `{%- liquid ... -%}`—:
+
+   ```liquid
+   if section.settings.menu != blank
+     render 'header-drawer', show_country_selector: country_selector, show_language_selector: language_selector, show_social_links: social_links
+   endif
+   ```
+
+   y deja la segunda línea así, **sin tocar el resto**:
+
+   ```liquid
+     render 'bps-cajon', show_country_selector: country_selector, show_language_selector: language_selector, show_social_links: social_links
+   ```
+
+3. **Sube `bps-hyperice.css`** otra vez: los estilos son el apartado 29.
+
+No hay ningún ajuste que tocar y **no hace falta JavaScript nuevo**.
+
+### Dos decisiones que conviene conocer
+
+**Las pestañas son botones de radio, no `<details>`.** El panel se enseña con
+`:checked + label + panel`, sin una línea de JavaScript, y el primero lleva
+`checked`, así que el cajón se abre con la primera pestaña puesta como en
+Hyperice. Con `<details>` no salía: la barra tiene que ser una rejilla de dos
+filas —botones arriba, panel abajo— porque el panel va **en flujo**; si fuera
+absoluto, como en Hyperice, un panel más alto que la pantalla no crearía scroll y
+las últimas colecciones quedarían inalcanzables. Medido: el panel de «Comprar»
+mide 834px de alto en una pantalla de 731. Y Chromium mete el contenido de un
+`<details>` en una caja propia, `::details-content`, que se coloca sola en la
+rejilla: el panel acababa en la columna de al lado y con 116,7px de ancho en vez
+de 360.
+
+**Tres pestañas por fila como mucho.** Es lo que hace Hyperice, que llega a
+`grid-cols-3` y para. Con las cuatro entradas que tendrá el menú después del paso
+4, en una pantalla de 390px «Conócenos» no cabe en 86px y salía «Conóce…»; con el
+tope de tres, la cuarta baja a una segunda fila dentro de la misma píldora.
+
+**Y un arreglo de propina.** `.header__icon:hover` invierte la píldora del icono
+—fondo blanco, letra negra—, pero en un móvil no hay puntero y iOS deja el
+`:hover` pegado después de tocar. Como el icono del cajón va siempre en blanco
+por la regla del apartado 2, al abrir el menú **el aspa de cerrar se quedaba
+blanca sobre una píldora blanca**. La inversión pasa a estar dentro de
+`@media (hover: hover)`.
+
+**Comprobado** en la reproducción local a 390 y a 768px: cajón a 390 de ancho con
+fondo negro al 80 % y desenfoque de 20, píldoras de 116,7×29,6 con la activa en
+blanco y letra negra, panel de 360 de ancho, filas de 100 y 121px con miniatura
+de 72×80, nombre de 18px y descripción de 14px en `#cbcbcb`, rayas de 1px en
+blanco al 20 %, velo de la página en negro al 50 % con 6px de desenfoque, y el
+contenido creando scroll (834 contra 731 visibles) en lugar de quedar cortado.
+
+## 7. En qué se nota cada paso
 
 | Después del paso | Qué se ve en la web |
 |---|---|
@@ -299,3 +377,4 @@ En esta vuelta **solo cambia `bps-hyperice.css`**; el snippet se queda como est�
 | 3 | «Comprar» y «Nosotros» abren panel a todo lo ancho con sus enlaces. El tercer desplegable, terminado |
 | 4 | «Terapia» abre con las categorías del blog |
 | 5 | Fotos en «Comprar» y artículos destacados en «Terapia» |
+| 6 | En el móvil, el menú pasa a ser de pestañas y enseña lo mismo que en escritorio |

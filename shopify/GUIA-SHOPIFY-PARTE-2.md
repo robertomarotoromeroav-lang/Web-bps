@@ -1004,7 +1004,8 @@ cuatro cosas, no cuarenta**, y de ellas dos son copiar un archivo entero.
 | `sections/footer.liquid` | Copiar `shopify/dawn16/footer.liquid` | Ninguno: el original de Dawn **no cambió** en v16 |
 | `layout/theme.liquid` | **Tres líneas a mano.** Ver abajo | Bajo |
 | `snippets/bps-megamenu.liquid` | Subir el archivo | **Ninguno.** Es un archivo nuevo, no toca nada de Dawn |
-| `sections/header.liquid` | **Una palabra a mano**: `render 'bps-megamenu'` en vez de `render 'header-mega-menu'`. Ver [MEGAMENU.md](MEGAMENU.md) | Bajo |
+| `snippets/bps-cajon.liquid` | Subir el archivo | **Ninguno.** Igual |
+| `sections/header.liquid` | **Dos palabras a mano**: `render 'bps-megamenu'` en vez de `render 'header-mega-menu'`, y `render 'bps-cajon'` en vez de `render 'header-drawer'`. Ver [MEGAMENU.md](MEGAMENU.md) | Bajo |
 
 > ⚠️ **Subir un archivo a `Assets` no lo activa.** Es un archivo suelto hasta que
 > el layout lo enlaza. Es el error que se dio al pasar a Dawn 16: la hoja estaba

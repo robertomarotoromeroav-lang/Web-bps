@@ -311,10 +311,17 @@ body:not(.bps-hero) #MainContent {
     color var(--duration-default) ease;
 }
 
-.header__icon:hover,
-.header localization-form button:hover {
-  background-color: var(--bps-white);
-  color: var(--bps-black);
+/* La inversión, solo donde hay puntero. En un móvil no lo hay, y iOS deja el
+   `:hover` pegado después de tocar: como el icono del cajón va siempre en blanco
+   —la regla del apartado 2, `header-drawer svg { color: var(--bps-white) }`, que
+   gana a este `color`—, al abrir el menú el aspa se quedaba blanca sobre una
+   píldora blanca y no se veía. */
+@media (hover: hover) {
+  .header__icon:hover,
+  .header localization-form button:hover {
+    background-color: var(--bps-white);
+    color: var(--bps-black);
+  }
 }
 
 /* Barra de anuncios: negra opaca, la de su esquema de color. No es una superficie
@@ -2856,7 +2863,8 @@ main[data-template='article'] .collection__title .title {
    Acompaña a `snippets/bps-megamenu.liquid`. Ver MEGAMENU.md.
 
    El panel solo existe de 990px para arriba: por debajo, Dawn esconde
-   `.header__inline-menu` y usa el cajón lateral, que se queda como está.
+   `.header__inline-menu` y abre el cajón lateral, que tiene su propio apartado
+   —el 29— porque en Hyperice enseña lo mismo pero con pestañas.
 
    LA SUPERFICIE. En Hyperice la cabecera y el panel son **la misma superficie
    translúcida**, no dos cajas de colores distintos. Está en las clases de su
@@ -3176,4 +3184,302 @@ main[data-template='article'] .collection__title .title {
     font-size: 18px;
     color: var(--bps-grey-300);
   }
+}
+
+/* --------------------------------------------------------------------------
+   29. El menú de móvil, tipo Hyperice
+   Acompaña a `snippets/bps-cajon.liquid`. Ver MEGAMENU.md.
+
+   QUÉ CAMBIA. El cajón de Dawn es un acordeón de pantallas que se deslizan:
+   tocas «Comprar» y un segundo panel tapa el primero, con un «‹ Comprar» para
+   volver, y solo enlaces de texto. Hyperice no cambia de pantalla: abre el cajón
+   con una FILA DE PESTAÑAS en píldora y debajo, en la misma pantalla, el mismo
+   contenido que el desplegable de escritorio. Medido sobre su propio marcado y
+   su hoja de estilos, a 390px:
+
+     · barra:      fondo blanco al 20 %, radio completo, 5px de relleno y 5px
+                   entre pestañas; la activa, píldora blanca con letra negra
+     · pestaña:    14px, relleno 5px / 15px
+     · panel:      5px por debajo de la barra
+     · grupo:      raya arriba y abajo, 30px de margen y 30px de relleno
+     · fila:       miniatura de 72×80 con radio 2px, 25px de hueco, nombre de
+                   18px y descripción de 14px, 20px de relleno arriba y abajo,
+                   y raya entre filas
+     · enlaces:    18px, 20px entre uno y otro
+
+   El apartado 3 ya deja el cajón con la superficie buena —negro al 80 % con
+   desenfoque y letra blanca—; aquí solo va lo de las pestañas. Todo dentro de
+   `max-width: 989px`, que es donde Dawn enseña el cajón.
+
+   LAS PESTAÑAS SON BOTONES DE RADIO. El panel se enseña con
+   `:checked + label + panel`, sin JavaScript. Con `<details>` no salía: Chromium
+   envuelve su contenido en una caja propia, `::details-content`, que se coloca
+   sola en la rejilla y dejaba el panel en la columna de al lado y con el ancho de
+   una pestaña —116,7px en vez de 360—. Ver el comentario de `bps-cajon.liquid`.
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 989px) {
+  /* A toda la pantalla, como en Hyperice. El apartado 3 lo dejaba en 88vw. El
+     `max-width` es un seguro: el cajón va en posición absoluta, así que ese 100 %
+     es el del bloque que lo contiene, y si alguna sección se sale a lo ancho
+     —una tabla, un carrusel— el cajón se iría con ella. */
+  .menu-drawer.bps-cajon {
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  /* Y el resto de la página se oscurece detrás, igual que en escritorio. Dawn
+     trae un velo parecido, pero su regla apunta a la etiqueta `menu-drawer` y la
+     cabecera usa `header-drawer`, así que nunca llega a pintarse. */
+  .bps-header-group:has(#Details-menu-drawer-container[open])::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+
+  .bps-cajon__nav { padding: 30px 15px; }
+
+  /* --- La barra de pestañas ----------------------------------------------- */
+
+  /* Los botones arriba —tres por fila como mucho, igual que Hyperice, que llega
+     a `grid-cols-3` y para— y el panel elegido ocupando entera la fila de
+     después. Cuántas columnas y cuántas filas lo dice el snippet en tres
+     variables, porque el número de entradas del menú solo se sabe en Liquid.
+     Las columnas son iguales, `minmax(0, 1fr)`; si una etiqueta larga aun así no
+     cabe se recorta con puntos suspensivos en vez de romper la barra. */
+  .bps-cajon__pestanas {
+    position: relative;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--bps-cajon-columnas, 3), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--bps-cajon-filas, 1), auto) auto;
+    gap: 5px;
+  }
+
+  /* El fondo de la barra, limitado a las filas de los botones: si fuera el fondo
+     del contenedor taparía también el panel. Los -5px son el relleno que en
+     Hyperice lleva el propio contenedor. */
+  .bps-cajon__pestanas::before {
+    content: "";
+    grid-column: 1 / -1;
+    grid-row: 1 / span var(--bps-cajon-filas, 1);
+    margin: -5px;
+    border-radius: 62.5rem;
+    background-color: rgb(255 255 255 / 0.2);
+    z-index: -1;
+  }
+
+  .bps-cajon__boton {
+    grid-column: var(--bps-cajon-i, 1);
+    grid-row: var(--bps-cajon-f, 1);
+    padding: 5px 10px;
+    border-radius: 62.5rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    color: var(--bps-white);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bps-cajon__radio:checked + .bps-cajon__boton {
+    background-color: var(--bps-white);
+    color: var(--bps-black);
+  }
+
+  /* El botón de radio está escondido, así que el foco del teclado hay que
+     enseñarlo sobre su etiqueta o no se ve en qué pestaña se está. */
+  .bps-cajon__radio:focus-visible + .bps-cajon__boton {
+    outline: 2px solid var(--bps-white);
+    outline-offset: 2px;
+  }
+
+  .bps-cajon__panel {
+    display: none;
+    grid-column: 1 / -1;
+    grid-row: var(--bps-cajon-panel, 2);
+    /* el hueco de la rejilla ya deja 5px, que son los del relleno de la barra;
+       estos otros 5 son los que Hyperice deja por debajo */
+    padding-top: 5px;
+  }
+
+  .bps-cajon__radio:checked + .bps-cajon__boton + .bps-cajon__panel { display: block; }
+
+  /* --- Los grupos de dentro del panel ------------------------------------- */
+
+  /* Cada grupo va entre rayas. Cuando hay dos —las colecciones con foto y la
+     lista de «Ver todos los productos» y compañía—, el segundo no repite la raya
+     de arriba ni el margen: sigue al primero sin costura, como en Hyperice. */
+  .bps-cajon__grupo {
+    margin: 30px 0;
+    padding: 30px 0;
+    border-block: 1px solid rgb(255 255 255 / 0.2);
+    list-style: none;
+  }
+
+  .bps-cajon__grupo:last-child {
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .bps-cajon__grupo + .bps-cajon__grupo {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* Si todas las entradas tienen foto, la lista de texto se queda vacía. */
+  .bps-cajon__grupo:empty { display: none; }
+
+  /* --- Filas de colección -------------------------------------------------- */
+
+  /* Rejilla de dos columnas y dos filas: la miniatura ocupa las dos y a su
+     derecha van el nombre y la descripción. Sin colocarlos a mano la descripción
+     —que es hermana del nombre, no hija— caería debajo de la foto. */
+  .bps-cajon__fila {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 25px;
+    row-gap: 5px;
+    align-content: center;
+    padding-block: 20px;
+    text-decoration: none;
+    color: var(--bps-white);
+  }
+
+  .bps-cajon__grupo--fotos li + li .bps-cajon__fila {
+    border-top: 1px solid rgb(255 255 255 / 0.2);
+  }
+
+  .bps-cajon__grupo--fotos li:first-child .bps-cajon__fila { padding-top: 0; }
+  .bps-cajon__grupo--fotos li:last-child .bps-cajon__fila { padding-bottom: 0; }
+
+  .bps-cajon__fila > .bps-cajon__foto { grid-column: 1; grid-row: 1; }
+
+  .bps-cajon__fila:has(.bps-cajon__descripcion) > .bps-cajon__foto {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .bps-cajon__fila > .bps-cajon__nombre { grid-column: 2; grid-row: 1; align-self: end; }
+  .bps-cajon__fila > .bps-cajon__descripcion { grid-column: 2; grid-row: 2; align-self: start; }
+
+  .bps-cajon__foto {
+    display: block;
+    overflow: hidden;
+    width: 72px;
+    aspect-ratio: 72 / 80;
+    border-radius: 2px;
+    background-color: rgb(255 255 255 / 0.08);
+  }
+
+  .bps-cajon__foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bps-cajon__nombre {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .bps-cajon__descripcion {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--bps-grey-300);
+  }
+
+  /* --- Listas de enlaces --------------------------------------------------- */
+
+  .bps-cajon__grupo--enlaces {
+    display: grid;
+    gap: 20px;
+    padding-inline: 0;
+  }
+
+  .bps-cajon__enlace {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    color: var(--bps-white);
+  }
+
+  .bps-cajon__subenlaces {
+    display: grid;
+    gap: 12px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bps-cajon__subenlace {
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--bps-grey-300);
+  }
+
+  /* --- Artículos destacados ------------------------------------------------ */
+
+  .bps-cajon__grupo--articulos {
+    display: grid;
+    gap: 24px;
+  }
+
+  .bps-cajon__rotulo {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bps-grey-300);
+  }
+
+  .bps-cajon__articulo {
+    display: grid;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--bps-white);
+  }
+
+  .bps-cajon__articulo .bps-cajon__foto {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 4px;
+  }
+
+  .bps-cajon__fecha {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bps-grey-300);
+  }
+
+  .bps-cajon__titulo {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  /* En tableta el cajón sigue ocupando toda la pantalla, pero el contenido se
+     queda en una columna: estirar una fila de 72px de foto a 900px de ancho deja
+     el nombre perdido en medio de la nada. */
+  .bps-cajon__nav { padding: 30px; }
+  .bps-cajon__pestanas { max-width: 620px; }
 }

@@ -116,7 +116,7 @@ shopify/GUIA-SHOPIFY.md      Cómo llevarlo a la tienda real, paso a paso
 shopify/GUIA-SHOPIFY-PARTE-2.md  Diferencias medidas entre el prototipo y lo publicado
 shopify/PROMPT-SECCIONES.md  El prompt para encargar las secciones a medida que faltan
 shopify/GUIA-BLOG.md         Qué publicar en el blog y cómo configurarlo para SEO
-shopify/MEGAMENU.md          El menú desplegable con fotos, tipo Hyperice: qué hace falta
+shopify/MEGAMENU.md          El menú tipo Hyperice: desplegable con fotos y móvil con pestañas
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1 / 16.0.0
 shopify/bps-hyperice.js      Los 3 scripts, en un archivo (antes iban en theme.liquid)
 shopify/AJUSTES-SECCIONES.md Ajustes de cada sección de Dawn, opción por opción
@@ -124,7 +124,7 @@ shopify/CODIGO-EXISTENTE.md  El código a medida que ya hay en la tienda, y qué
 shopify/ARCHIVOS-MODIFICADOS.md  Los 4 archivos del tema tocados y el Liquid que debe quedar
 shopify/dawn-original/       Los 4 archivos de Dawn 15.4.1 sin modificar, para restaurar
 shopify/dawn16/              Los 2 archivos de tema ya preparados sobre Dawn 16.0.0
-shopify/snippets/            card-product.liquid con la descripción corta de la tarjeta
+shopify/snippets/            card-product.liquid, bps-megamenu.liquid y bps-cajon.liquid
 shopify/sections/            footer.liquid con la nota legal y la etiqueta del botón
 shopify/bloques/             Bloques generados con IA, corregidos para el sistema
 tools/build-logos.py         Regenera el logotipo vectorizando el original

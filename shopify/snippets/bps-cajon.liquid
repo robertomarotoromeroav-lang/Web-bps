@@ -1,0 +1,466 @@
+{% comment %}
+  bps-cajon.liquid — el menú de móvil, tipo Hyperice.
+  BPS Performance. Ver shopify/MEGAMENU.md.
+
+  Sustituye a `header-drawer` de Dawn. Se activa cambiando UNA palabra en
+  `sections/header.liquid` (está sobre la línea 175):
+
+      render 'bps-cajon', show_country_selector: country_selector, ...
+             ↑ antes decía 'header-drawer'
+
+  QUÉ CAMBIA RESPECTO A DAWN. El cajón de Dawn es un acordeón de paneles que se
+  deslizan: tocas «Comprar» y una segunda pantalla tapa la primera, con un botón
+  «‹ Comprar» para volver. Solo enlaces de texto. Hyperice no hace eso: el cajón
+  se abre con una FILA DE PESTAÑAS en forma de píldora —una por cada entrada del
+  menú— y debajo, sin cambiar de pantalla, el mismo contenido que el desplegable
+  de escritorio: las colecciones con su foto y su descripción, los temas del blog
+  con los últimos artículos, o la lista de enlaces.
+
+  Igual que en escritorio, el tipo de panel NO es un ajuste: se deduce de a dónde
+  apunta cada entrada del menú (Tienda online → Navegación), con el mismo criterio
+  que `bps-megamenu.liquid`.
+
+  LAS PESTAÑAS SON BOTONES DE RADIO, NO `<details>`. Cero JavaScript: un `<input
+  type="radio" name="bps-cajon">` oculto por cada pestaña, su `<label>` —que es la
+  píldora— y el panel justo detrás; el CSS lo enseña con
+  `:checked + label + panel`. El primero lleva `checked`, así que el cajón se abre
+  con la primera pestaña puesta, igual que Hyperice.
+
+  Con `<details>` no sale. La barra tiene que ser una rejilla de dos filas —los
+  botones arriba, el panel abierto ocupando entera la de abajo— porque los paneles
+  van EN FLUJO: si fueran absolutos, como en Hyperice, un panel más alto que la
+  pantalla no crearía scroll y las últimas colecciones quedarían inalcanzables.
+  Pero Chromium mete el contenido de un `<details>` dentro de una caja propia
+  —`::details-content`— que se coloca sola en la rejilla, así que el panel acababa
+  en la columna de al lado y con el ancho de una pestaña. Medido: 116,7px en vez de
+  360. Con radios el panel es un hijo más de la rejilla y se coloca donde se le
+  dice, igual en todos los navegadores.
+
+  Y de paso el teclado sale gratis: las flechas cambian de pestaña, que es
+  justo lo que se espera de unas pestañas.
+
+  SE MANTIENE EL ENVOLTORIO DE DAWN: `<header-drawer>` con
+  `<details id="Details-menu-drawer-container">` y `#menu-drawer` dentro. Su
+  `MenuDrawer` de `global.js` busca eso —`this.querySelector('details')`— para
+  abrir el cajón, bloquear el scroll del cuerpo y calcular
+  `--header-bottom-position`. Cambiarlo rompería la apertura.
+
+  OJO SI SE AÑADE UN `<button>` AQUÍ DENTRO. `MenuDrawer` engancha todos los
+  botones del cajón a «cierra el `<details>` que te contenga», y el único
+  `<details>` que queda es el del cajón entero: cualquier botón que se ponga en un
+  panel cerraría el menú al tocarlo.
+
+  El icono del cajón va escrito aquí en vez de con `inline_asset_content` para
+  que el archivo funcione igual en Dawn 15 y en 16.
+{% endcomment %}
+
+{%- liquid
+  assign bps_hamburguesa = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-hamburger" viewBox="0 0 18 16"><path fill="currentColor" d="M1 .5a.5.5 0 1 0 0 1h15.71a.5.5 0 0 0 0-1zM.5 8a.5.5 0 0 1 .5-.5h15.71a.5.5 0 0 1 0 1H1A.5.5 0 0 1 .5 8m0 7a.5.5 0 0 1 .5-.5h15.71a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5"/></svg>'
+  assign bps_aspa = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-close" viewBox="0 0 18 17"><path fill="currentColor" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z"/></svg>'
+-%}
+
+<header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container">
+    <summary
+      class="header__icon header__icon--menu header__icon--summary link focus-inset"
+      aria-label="{{ 'sections.header.menu' | t }}"
+    >
+      <span>
+        {{ bps_hamburguesa }}
+        {{ bps_aspa }}
+      </span>
+    </summary>
+    <div
+      id="menu-drawer"
+      class="gradient menu-drawer motion-reduce bps-cajon color-{{ section.settings.menu_color_scheme }}"
+    >
+      <div class="menu-drawer__inner-container">
+        <div class="menu-drawer__navigation-container">
+          <nav class="menu-drawer__navigation bps-cajon__nav">
+            {%- comment -%}
+              LA BARRA DE PESTAÑAS NO ES UNA LISTA. Es una rejilla: los botones
+              arriba —`--bps-cajon-i` y `--bps-cajon-f` dicen en qué columna y en
+              qué fila va cada uno— y el panel elegido ocupando entera la fila de
+              después.
+
+              TRES COLUMNAS COMO MUCHO, y a partir de ahí se baja de fila. Es lo
+              mismo que hace Hyperice, que llega hasta `grid-cols-3` y para. Y
+              hace falta: con cuatro entradas en una pantalla de 390px, «Conócenos»
+              no cabe en 86px y salía cortado, «Conóce…».
+
+              El fondo gris de la barra lo pinta un `::before` limitado a las filas
+              de los botones: si fuera el fondo del contenedor, taparía el panel.
+            {%- endcomment -%}
+            {%- liquid
+              assign bps_marcada = false
+              assign bps_total = section.settings.menu.links.size
+              assign bps_columnas = bps_total
+              if bps_columnas > 3
+                assign bps_columnas = 3
+              endif
+              if bps_columnas < 1
+                assign bps_columnas = 1
+              endif
+              assign bps_filas = bps_total | minus: 1 | divided_by: bps_columnas | plus: 1
+              assign bps_fila_panel = bps_filas | plus: 1
+            -%}
+            <div
+              class="bps-cajon__pestanas"
+              role="group"
+              aria-label="{{ 'sections.header.menu' | t }}"
+              style="--bps-cajon-columnas: {{ bps_columnas }}; --bps-cajon-filas: {{ bps_filas }}; --bps-cajon-panel: {{ bps_fila_panel }}"
+            >
+              {%- for link in section.settings.menu.links -%}
+                {%- if link.links != blank -%}
+                    {%- liquid
+                      # mismo criterio que el desplegable de escritorio
+                      assign bps_tipo = 'enlaces'
+                      assign bps_colecciones = 0
+                      for hijo in link.links
+                        if hijo.type == 'collection_link'
+                          assign bps_colecciones = bps_colecciones | plus: 1
+                        endif
+                      endfor
+                      if bps_colecciones > 0
+                        assign bps_tipo = 'colecciones'
+                      endif
+                      if link.type == 'blog_link'
+                        assign bps_tipo = 'blog'
+                      endif
+
+                      # la primera entrada con panel es la que sale puesta
+                      assign bps_marca = ''
+                      unless bps_marcada
+                        assign bps_marca = 'checked'
+                        assign bps_marcada = true
+                      endunless
+
+                      assign bps_columna = forloop.index0 | modulo: bps_columnas | plus: 1
+                      assign bps_fila = forloop.index0 | divided_by: bps_columnas | plus: 1
+                    -%}
+
+                    <input
+                      type="radio"
+                      class="bps-cajon__radio visually-hidden"
+                      name="bps-cajon"
+                      id="bps-pestana-{{ forloop.index }}"
+                      {{ bps_marca }}
+                    >
+                    <label
+                      class="bps-cajon__boton"
+                      for="bps-pestana-{{ forloop.index }}"
+                      style="--bps-cajon-i: {{ bps_columna }}; --bps-cajon-f: {{ bps_fila }}"
+                    >
+                      <span>{{ link.title | escape }}</span>
+                    </label>
+
+                    <div id="link-{{ link.handle | escape }}" class="bps-cajon__panel">
+                        {%- case bps_tipo -%}
+
+                          {%- when 'colecciones' -%}
+                            {%- comment -%}
+                              Dos grupos, como en escritorio: las colecciones con
+                              foto van de fila con miniatura, y lo que no tiene
+                              foto —«Ver todos los productos», una página de
+                              ofertas…— cae en la lista de texto de debajo. El
+                              criterio es tener foto, no el tipo de enlace.
+                            {%- endcomment -%}
+                            <ul class="bps-cajon__grupo bps-cajon__grupo--fotos" role="list">
+                              {%- for hijo in link.links -%}
+                                {%- liquid
+                                  assign bps_col = hijo.object
+                                  assign bps_img = ''
+                                  if hijo.type == 'collection_link'
+                                    if bps_col.image != blank
+                                      assign bps_img = bps_col.image
+                                    elsif bps_col.products.first.featured_image != blank
+                                      assign bps_img = bps_col.products.first.featured_image
+                                    endif
+                                  endif
+                                -%}
+                                {%- if bps_img != blank -%}
+                                  <li>
+                                    <a
+                                      href="{{ hijo.url }}"
+                                      class="bps-cajon__fila"
+                                      {% if hijo.current %}aria-current="page"{% endif %}
+                                    >
+                                      <span class="bps-cajon__foto">
+                                        {{
+                                          bps_img
+                                          | image_url: width: 300
+                                          | image_tag:
+                                            loading: 'lazy',
+                                            widths: '150, 220, 300',
+                                            sizes: '72px',
+                                            alt: ''
+                                        }}
+                                      </span>
+                                      <span class="bps-cajon__nombre">{{ hijo.title | escape }}</span>
+                                      {%- assign bps_desc = bps_col.description | strip_html | strip -%}
+                                      {%- if bps_desc != blank -%}
+                                        <span class="bps-cajon__descripcion">
+                                          {{- bps_desc | truncate: 70 -}}
+                                        </span>
+                                      {%- endif -%}
+                                    </a>
+                                  </li>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </ul>
+
+                            <ul class="bps-cajon__grupo bps-cajon__grupo--enlaces" role="list">
+                              {%- for hijo in link.links -%}
+                                {%- liquid
+                                  assign bps_col = hijo.object
+                                  assign bps_img = ''
+                                  if hijo.type == 'collection_link'
+                                    if bps_col.image != blank
+                                      assign bps_img = bps_col.image
+                                    elsif bps_col.products.first.featured_image != blank
+                                      assign bps_img = bps_col.products.first.featured_image
+                                    endif
+                                  endif
+                                -%}
+                                {%- if bps_img == blank -%}
+                                  <li>
+                                    <a
+                                      href="{{ hijo.url }}"
+                                      class="bps-cajon__enlace"
+                                      {% if hijo.current %}aria-current="page"{% endif %}
+                                    >
+                                      {{- hijo.title | escape -}}
+                                    </a>
+                                  </li>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </ul>
+
+                          {%- when 'blog' -%}
+                            {%- assign bps_blog = link.object -%}
+                            <ul class="bps-cajon__grupo bps-cajon__grupo--enlaces" role="list">
+                              {%- for hijo in link.links -%}
+                                <li>
+                                  <a
+                                    href="{{ hijo.url }}"
+                                    class="bps-cajon__enlace"
+                                    {% if hijo.current %}aria-current="page"{% endif %}
+                                  >
+                                    {{- hijo.title | escape -}}
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                              <li>
+                                <a href="{{ link.url }}" class="bps-cajon__enlace bps-cajon__enlace--todos">
+                                  {{- 'Ver todo el blog' -}}
+                                </a>
+                              </li>
+                            </ul>
+
+                            {%- if bps_blog.articles.size > 0 -%}
+                              <div class="bps-cajon__grupo bps-cajon__grupo--articulos">
+                                <p class="bps-cajon__rotulo">Lo último</p>
+                                {%- for articulo in bps_blog.articles limit: 2 -%}
+                                  <a href="{{ articulo.url }}" class="bps-cajon__articulo">
+                                    <span class="bps-cajon__foto">
+                                      {%- if articulo.image != blank -%}
+                                        {{
+                                          articulo.image
+                                          | image_url: width: 800
+                                          | image_tag:
+                                            loading: 'lazy',
+                                            widths: '400, 600, 800',
+                                            sizes: '(max-width: 749px) 100vw, 600px',
+                                            alt: ''
+                                        }}
+                                      {%- endif -%}
+                                    </span>
+                                    <span class="bps-cajon__fecha">
+                                      {{- articulo.published_at | date: '%-d %b %Y' -}}
+                                    </span>
+                                    <span class="bps-cajon__titulo">{{ articulo.title | escape }}</span>
+                                  </a>
+                                {%- endfor -%}
+                              </div>
+                            {%- endif -%}
+
+                          {%- else -%}
+                            <ul class="bps-cajon__grupo bps-cajon__grupo--enlaces" role="list">
+                              {%- for hijo in link.links -%}
+                                <li>
+                                  <a
+                                    href="{{ hijo.url }}"
+                                    class="bps-cajon__enlace"
+                                    {% if hijo.current %}aria-current="page"{% endif %}
+                                  >
+                                    {{- hijo.title | escape -}}
+                                  </a>
+                                  {%- if hijo.links != blank -%}
+                                    <ul class="bps-cajon__subenlaces" role="list">
+                                      {%- for nieto in hijo.links -%}
+                                        <li>
+                                          <a
+                                            href="{{ nieto.url }}"
+                                            class="bps-cajon__subenlace"
+                                            {% if nieto.current %}aria-current="page"{% endif %}
+                                          >
+                                            {{- nieto.title | escape -}}
+                                          </a>
+                                        </li>
+                                      {%- endfor -%}
+                                    </ul>
+                                  {%- endif -%}
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+
+                        {%- endcase -%}
+                    </div>
+                {%- else -%}
+                  {%- liquid
+                    assign bps_columna = forloop.index0 | modulo: bps_columnas | plus: 1
+                    assign bps_fila = forloop.index0 | divided_by: bps_columnas | plus: 1
+                  -%}
+                  <a
+                    id="HeaderDrawer-{{ link.handle }}"
+                    href="{{ link.url }}"
+                    class="bps-cajon__boton bps-cajon__boton--suelto link focus-inset"
+                    style="--bps-cajon-i: {{ bps_columna }}; --bps-cajon-f: {{ bps_fila }}"
+                    {% if link.current %}aria-current="page"{% endif %}
+                  >
+                    <span>{{ link.title | escape }}</span>
+                  </a>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </nav>
+          <div class="menu-drawer__utility-links">
+            {%- if show_country_selector or show_language_selector -%}
+              <div class="menu-drawer__localization header-localization">
+                {%- if show_country_selector -%}
+                  <localization-form>
+                    {%- form 'localization', id: 'HeaderCountryMobileForm', class: 'localization-form' -%}
+                      <div>
+                        <h2 class="visually-hidden" id="HeaderCountryMobileLabel">
+                          {{ 'localization.country_label' | t }}
+                        </h2>
+                        {%- render 'country-localization', localPosition: 'HeaderCountryMobile' -%}
+                      </div>
+                    {%- endform -%}
+                  </localization-form>
+                {% endif %}
+
+                {%- if show_language_selector -%}
+                  <localization-form>
+                    {%- form 'localization', id: 'HeaderLanguageMobileForm', class: 'localization-form' -%}
+                      <div>
+                        <h2 class="visually-hidden" id="HeaderLanguageMobileLabel">
+                          {{ 'localization.language_label' | t }}
+                        </h2>
+                        {%- render 'language-localization', localPosition: 'HeaderLanguageMobile' -%}
+                      </div>
+                    {%- endform -%}
+                  </localization-form>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+            {% if show_social_links %}
+              <ul class="list list-social list-unstyled" role="list">
+                {%- if settings.social_twitter_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_twitter_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-twitter.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_facebook_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_facebook_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-facebook.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_pinterest_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_pinterest_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-pinterest.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_instagram_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_instagram_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-instagram.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_tiktok_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_tiktok_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-tiktok.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_tumblr_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_tumblr_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-tumblr.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_snapchat_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_snapchat_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-snapchat.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_youtube_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_youtube_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-youtube.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_vimeo_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_vimeo_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-vimeo.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+</header-drawer>
