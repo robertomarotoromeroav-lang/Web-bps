@@ -254,6 +254,42 @@ fondo y sin raya, tarjetas de 200×274,6 con foto de 200×200, descripción en 1
 gris `#cbcbcb`, «Ver todos los productos» en x=1230 pegado al margen derecho, y
 los tres enlaces de «Conócenos» en columna a 36px uno de otro.
 
+**Tercera vuelta: las diferencias de estilo.** Puestos los dos menús uno al lado
+del otro, seguían sin parecerse. Estas son las seis diferencias, medidas sobre la
+captura de Hyperice, y cómo quedan:
+
+| Detalle | Hyperice | Lo que teníamos | Ahora |
+|---|---|---|---|
+| **La forma de cada colección** | Una **fila horizontal**: miniatura pequeña a la izquierda, nombre y descripción a la derecha | Una tarjeta vertical con la foto grande arriba y el texto debajo | Fila horizontal |
+| **Tamaño de la miniatura** | ~85px | 200px | **80×80** |
+| **Reparto** | **Dos columnas** de filas | Cuatro tarjetas en fila | Dos columnas de 440px con 48 de separación |
+| **Rayas** | Una **raya fina encima de cada fila**, blanca al 15 % | Ninguna | `border-top: 1px solid rgb(255 255 255 / .15)` |
+| **La columna de la derecha** | Separada por una **raya vertical** y con la letra bastante más grande —unos 26px contra los 19 del nombre de cada fila— | Pegada al margen, sin raya y con la misma letra de 16px | Raya vertical a 48px, texto de **24px** |
+| **El elemento abierto** | **Píldora blanca** con la letra en negro | El subrayado normal de la cabecera | Píldora blanca de radio 62,5rem |
+| **El resto de la página** | Se **oscurece y desenfoca** detrás del panel | Se veía nítida | Velo negro al 50 % con 6px de desenfoque |
+
+Cambiar el marcado obligó a arreglar cuatro cosas más, todas encontradas midiendo:
+
+- **La descripción se iba a una tercera fila** debajo de la foto —la fila medía
+  250px en vez de 113—, porque es hermana del nombre, no hija. Colocadas foto,
+  nombre y descripción a mano en la rejilla, con `:has()` para que la foto ocupe
+  las dos filas solo cuando hay descripción.
+- **La flechita se montaba encima del texto** de la píldora: Dawn la pone en
+  posición absoluta a 8px del borde. Pasa a ser un elemento más de la fila.
+- **El menú se movía 27px al abrirse**: Dawn reserva `padding-right: 2.7rem` para
+  esa flecha absoluta. Con la flecha ya en la fila, ese hueco sobra. Comprobado:
+  las tres entradas caen en x = 253,5 / 356 / 449,9 con el panel abierto y cerrado.
+- **La miniatura del artículo se quedaba en 80px**, heredando el ancho nuevo.
+  Vuelve a ocupar el ancho de su tarjeta: 260×162,5.
+
+**Comprobado** en la reproducción local a 1440px: filas de 440×113 en x=30 y
+x=518, foto de 80×80, nombre en 18px, columna derecha en x=1110 con su raya de
+1px y texto de 24px, píldora con fondo `rgb(255, 255, 255)`, letra negra, radio
+625px y sin subrayado, y el panel en `rgba(0, 0, 0, 0.8)` con `blur(10px)`, el
+mismo fondo que la cabecera.
+
+En esta vuelta **solo cambia `bps-hyperice.css`**; el snippet se queda como está.
+
 ### En qué se nota cada paso
 
 | Después del paso | Qué se ve en la web |
