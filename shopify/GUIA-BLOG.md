@@ -107,6 +107,11 @@ seis, y ninguna más, cada artículo con **una principal y hasta dos secundarias
 
 ## 2. El contenido: cuatro pilares y sus racimos
 
+> Los **tres primeros artículos** —los pilares de luz roja, frío y percusión— van
+> desarrollados enteros en [ARTICULOS-1-3.md](ARTICULOS-1-3.md): palabra clave,
+> título, extracto, meta descripción, esquema apartado por apartado, tabla,
+> preguntas frecuentes, enlaces internos y externos, imágenes y calendario.
+
 La estructura que funciona en una tienda como esta es **pilar + racimo**: un
 artículo largo por tecnología que responde a la búsqueda genérica, y alrededor
 seis u ocho artículos cortos que responden a dudas concretas y enlazan al pilar.
