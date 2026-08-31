@@ -117,6 +117,7 @@ shopify/GUIA-SHOPIFY-PARTE-2.md  Diferencias medidas entre el prototipo y lo pub
 shopify/PROMPT-SECCIONES.md  El prompt para encargar las secciones a medida que faltan
 shopify/GUIA-BLOG.md         Qué publicar en el blog y cómo configurarlo para SEO
 shopify/ARTICULOS-1-3.md     Los 3 primeros artículos: palabra clave, esquema, enlaces y campos
+shopify/SEO.md               Auditoría de las 25 URL publicadas y plan de SEO del sitio
 shopify/MEGAMENU.md          El menú tipo Hyperice: desplegable con fotos y móvil con pestañas
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1 / 16.0.0
 shopify/bps-hyperice.js      Los 3 scripts, en un archivo (antes iban en theme.liquid)

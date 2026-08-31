@@ -20,6 +20,14 @@ cortos no tienen a dónde apuntar y Google no entiende que la tienda va de eso.
 
 ---
 
+> **Actualización tras auditar el sitio publicado** (ver [SEO.md](SEO.md)): ya hay
+> **tres artículos publicados**, no uno. Se publicaron `banera-crioterapia` y
+> `led-boots-recuperacion`. Eso cambia el artículo 2 de esta propuesta: el pilar
+> de frío **ya existe**, así que «Baños de hielo» se pisaría con él y hay que
+> escribir en su lugar un artículo de racimo —«a cuántos grados y cuántos
+> minutos»— que enlace al pilar. Los artículos 1 y 3 siguen igual: no hay nada
+> publicado sobre la tecnología de luz roja en general ni sobre percusión.
+
 ## Antes de escribir: cuatro cosas de la tienda
 
 No son opinables: los tres artículos enlazan a estas páginas y a estos productos.
