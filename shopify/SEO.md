@@ -95,8 +95,8 @@ Ordenado por lo que más mueve la aguja. Cada número es una ficha de este manua
 
 | # | Pendiente | Dónde | Esfuerzo |
 |---|---|---|---|
-| **1** | `BPS Ice Bath` sigue publicado a **0,00 €** | Productos | 2 min |
-| **2** | La **marca de 5 productos** es el nombre de la categoría, no «BPS Performance» | Productos | 10 min |
+| **1** | `BPS Ice Bath` sigue publicado a **0,00 €**. Sin stock y con plantilla de reservas: **hay tres formas válidas de hacerlo**, y la de hoy no es una | Productos | 10 min |
+| **2** | La **marca de 5 productos** es la categoría, porque la tarjeta de la home enseña ese campo. **Se cubren las dos cosas** con «Tipo de producto» | Productos + un archivo del tema | 20 min |
 | **3** | **Tres títulos cortados a mitad de palabra** («…Integr», «…Sopor», «…Infr») y 10 de 12 por encima de 60 caracteres | Productos | 40 min |
 | **4** | Las **4 colecciones principales** tienen títulos de 30-37 caracteres y descripciones de 58-69 | Colecciones | 25 min |
 | **5** | `los-mas-buscados` tiene ahora un título de **88 caracteres** | Colecciones | 3 min |
@@ -121,102 +121,213 @@ Ordenado por lo que más mueve la aguja. Cada número es una ficha de este manua
 
 ## 1 · El BPS Ice Bath está a 0,00 €
 
+### El caso, tal y como es
+
+No hay stock, y el cliente quiere promocionarlo con una plantilla propia que
+permita contactar para hacer reservas. Eso es perfectamente legítimo y hay
+maneras de hacerlo sin penalización. Lo que hay hoy **no es una de ellas**.
+
 ### Cómo está ahora
 
-La ficha `/products/banera-crioterapia-bps-ice-bath` está **publicada y visible**,
-y su única variante tiene el precio en `0.00`. El marcado que lee Google dice
-literalmente:
+Medido en la ficha publicada:
 
-```json
-"offers": { "price": "0.00", "availability": "http://schema.org/InStock" }
-```
+| | Valor |
+|---|---|
+| Precio del producto | `0.00` |
+| Seguimiento de inventario | **desactivado** (`inventory_management: null`) |
+| Lo que Shopify le dice a Google | `"price": "0.00"`, `"availability": "InStock"` |
+| Lo que se ve en la página | **ni precio ni botón**: la plantilla no lleva esos bloques |
 
-Consecuencias reales: en Google puede aparecer «0,00 €», Google Merchant Center
-rechaza el producto, y quien entre desde el blog de crioterapia verá una bañera
-gratis.
+**Y aquí está el malentendido que hay que deshacer:** quitar el bloque del precio
+de la plantilla **no quita el precio de la página**. Los datos estructurados —lo
+que Google lee de verdad— se generan a partir de **la ficha del producto**, no de
+los bloques que decidas enseñar. Puedes ocultar el precio a los humanos y seguir
+diciéndole a Google que la bañera cuesta cero euros y está disponible. Eso es
+exactamente lo que pasa hoy.
 
-### Cómo debe quedar
+Tres consecuencias reales:
 
-Con su precio real, o **en borrador** si todavía no se vende.
+- Google puede enseñar **«0,00 €»** en el resultado.
+- **Google Merchant Center rechaza** cualquier producto con precio 0. Ese producto
+  no puede aparecer ni en anuncios ni en fichas gratuitas.
+- Como el inventario **no se sigue**, Shopify lo da por disponible siempre: cuando
+  de verdad se agote otro producto, Google tampoco se enterará.
 
-### Paso a paso
+### Las tres formas válidas de hacerlo
 
-1. Columna izquierda → **Productos**.
-2. Clic en **BPS Ice Bath: Bañera de Crioterapia Portátil para Recuperación
-   Total**.
-3. Baja hasta el bloque **«Precios»**.
-4. En el campo **«Precio»**, escribe el importe (por ejemplo `1450`). Shopify ya
-   añade el euro.
-   - Si quieres enseñar un descuento, rellena también **«Precio de
-     comparación»** con el precio anterior, más alto.
-5. **Guardar**.
+Elige una. Las tres permiten la plantilla de reservas.
 
-**Si todavía no se vende:** en vez de lo anterior, en la columna de la derecha
-busca el bloque **«Estado»** y cambia **«Activo»** por **«Borrador»**. Deja de
-estar visible al momento. Avisa, porque el artículo de crioterapia enlaza a esta
-ficha.
+#### Opción A · Precio real + agotado de verdad  ← **la recomendada**
+
+Es la que Google espera y la que menos mantenimiento tiene.
+
+- La ficha lleva **su precio real** aunque no se pueda comprar todavía.
+- El inventario se **sigue**, con 0 unidades y **sin** permitir venta sin stock.
+- Shopify pasa a decir `"availability": "OutOfStock"` con el precio correcto, que
+  es **marcado válido**.
+- La plantilla sigue siendo la vuestra, con el formulario de reserva.
+
+Un producto agotado **no pierde posiciones**: Google lo mantiene indexado y con su
+autoridad, y en Merchant Center queda «pendiente de stock» en vez de rechazado.
+Despublicarlo o dejarlo a cero es mucho peor.
+
+#### Opción B · Reserva o preventa
+
+Si de verdad vais a aceptar reservas con compromiso:
+
+- Precio real.
+- Inventario seguido, 0 unidades, pero **sí** permitir venta sin stock.
+- Cambiar el texto del botón a «Reservar» y avisar del plazo en la ficha.
+- Shopify dirá `InStock` con precio real: coherente, porque se puede comprar.
+
+#### Opción C · Si es imposible poner precio
+
+Si el cliente no quiere enseñar precio de ninguna manera, entonces **esa página no
+debe ser un producto**:
+
+- El producto pasa a **Borrador**.
+- Se crea una **Página** (`/pages/bps-ice-bath`) con el mismo contenido, las fotos
+  y el formulario.
+- Una página no genera marcado de producto, así que no hay precio que declarar y
+  no hay nada inválido.
+- Contrapartida: pierdes la URL de producto y no puedes anunciarlo en Shopping.
+  Por eso es la última opción.
+
+Lo que **no** vale es lo de hoy: precio 0 con el bloque escondido. Es la única
+combinación que es inválida a la vez para Google Search y para Merchant Center.
+
+### Paso a paso de la opción A
+
+1. **Productos** → clic en **BPS Ice Bath: Bañera de Crioterapia Portátil para
+   Recuperación Total**.
+2. Bloque **«Precios»** → campo **«Precio»**: escribe el precio real (por ejemplo
+   `1450`).
+3. Bloque **«Inventario»**:
+   - Marca la casilla **«Hacer seguimiento de la cantidad»**.
+   - En **«Cantidad»** deja **0**.
+   - Asegúrate de que **«Continuar vendiendo cuando esté agotado» esté
+     DESMARCADO**. Esta casilla es la que decide si Google lo ve disponible o no.
+4. **Guardar**.
+5. La plantilla de reservas se queda como está. Si quieres, añade una nota visible
+   del tipo «Próxima entrega: [fecha]. Reserva la tuya sin compromiso».
 
 ### Cómo comprobarlo
 
-Abre `https://bpsperformance.com/products/banera-crioterapia-bps-ice-bath` en una
-ventana de incógnito y mira que el precio sea el correcto. Si lo pusiste en
-borrador, debe dar **página no encontrada**.
+1. Abre la ficha en incógnito: debe verse el precio o el texto de reserva, y el
+   formulario.
+2. Ve a **`search.google.com/test/rich-results`**, pega la URL de la ficha y pulsa
+   **«Probar URL»**.
+3. Despliega el bloque **Product** y mira `offers`. Tiene que decir el precio real
+   y `OutOfStock`. **Si sigue diciendo `0.00`, es que no se guardó el precio.**
 
 ---
 
-## 2 · La marca de cinco productos está mal
+## 2 · La marca de cinco productos está mal — y cómo cubrir las dos cosas
 
-### Cómo está ahora
+### Por qué está así, y por qué es un problema
 
-Google lee la marca del producto de un campo de Shopify que se llama
-**«Proveedor»**. En cinco fichas ese campo tiene el nombre de la categoría en vez
-del de la marca:
+Está así por una buena razón: en la sección **«Los más buscados»** de la home, las
+tarjetas enseñan una etiqueta pequeña encima del precio, y querías que dijera la
+categoría. Dawn pinta ahí `card_product.vendor`, o sea el campo **«Proveedor»**,
+así que la manera rápida de conseguirlo fue escribir la categoría en ese campo.
+Funcionó: hoy las cuatro tarjetas dicen «Presoterapia», «Terapia de luz roja»,
+«Recuperación Fría» y «Liberación muscular».
 
-| Producto | «Proveedor» hoy | Debe decir |
+El problema es que **ese mismo campo es de donde sale el `brand` de los datos
+estructurados**. Comprobado en las 12 fichas:
+
+| Producto | «Proveedor» hoy | `brand` que lee Google |
 |---|---|---|
-| Presoterapia BPS PLUS | `Presoterapia` ❌ | `BPS Performance` |
-| Presoterapia BPS PRO | `Presoterapia` ❌ | `BPS Performance` |
-| BPS Pro-Panel | `Terapia de luz roja` ❌ | `BPS Performance` |
-| BPS Recovery Pod | `Recuperación Fría` ❌ | `BPS Performance` |
-| Pistola de Masaje | `Liberación muscular` ❌ | `BPS Performance` |
-| *(los otros 7)* | `BPS Performance` ✅ | — |
+| Presoterapia BPS PLUS | `Presoterapia` | `Presoterapia` ❌ |
+| Presoterapia BPS PRO | `Presoterapia` | `Presoterapia` ❌ |
+| BPS Pro-Panel | `Terapia de luz roja` | `Terapia de luz roja` ❌ |
+| BPS Recovery Pod | `Recuperación Fría` | `Recuperación Fría` ❌ |
+| Pistola de Masaje | `Liberación muscular` | `Liberación muscular` ❌ |
+| *(los otros 7)* | `BPS Performance` | `BPS Performance` ✅ |
 
-Por qué importa: es la señal con la que Google entiende que **los 12 productos
-son de la misma marca**. Con la mitad diciendo «Presoterapia», está viendo cinco
-marcas distintas, y eso es justo lo contrario de lo que necesitas para posicionar
-por «BPS».
+O sea: Google está viendo **cinco marcas distintas** donde hay una sola. Y eso es
+justo lo contrario de lo que hace falta para que «BPS Performance» se posicione
+como marca. En Google Shopping, además, el campo `brand` es de los que se usan
+para agrupar y comparar productos.
+
+### La solución: cada campo a lo suyo
+
+Shopify **ya tiene un campo para la categoría**, y no es «Proveedor»: es
+**«Tipo de producto»**. No aparece en el marcado de marca, y además alimenta la
+categoría en Google Shopping, así que rellenarlo es una mejora en sí misma.
+
+| Campo de Shopify | Para qué sirve | Qué debe decir |
+|---|---|---|
+| **Proveedor** | La **marca**. Va a `brand` en el marcado y a Google Shopping | `BPS Performance` en los 12 |
+| **Tipo de producto** | La **categoría**. No toca el marcado de marca | `Presoterapia`, `Terapia de luz roja`, `Recuperación fría`, `Liberación muscular` |
+
+Y para que la tarjeta enseñe el tipo en vez del proveedor, **ya está hecho**: el
+archivo `shopify/dawn16/card-product.liquid` de este repositorio pasa a pintar
+`card_product.type`. Es el mismo archivo que ya mantenéis por la descripción corta
+de la tarjeta, así que **no añade ninguna pieza nueva que rehacer** en las
+actualizaciones del tema.
+
+> El ajuste de la sección se sigue llamando **«Mostrar el proveedor»** en
+> *Personalizar*; ese nombre lo pone Dawn y no se puede cambiar sin tocar más
+> archivos. Lo que enseña, desde ahora, es el tipo de producto. Déjalo activado.
+
+### Cómo está el «Tipo de producto» hoy
+
+Ya está relleno, pero sin criterio: **8 productos ponen `Recovery`**, 3 ponen
+`Presoterapia` y 1 `Fisioterapia Avanzada`. Si no se arregla, las tarjetas dirán
+«Recovery».
 
 ### Cómo debe quedar
 
-Los 12 productos con **«Proveedor» = `BPS Performance`**, escrito igual en todos:
-con mayúscula inicial en las dos palabras y sin espacios de más.
+| Producto | Proveedor | Tipo de producto |
+|---|---|---|
+| Presoterapia BPS PLUS | `BPS Performance` | `Presoterapia` |
+| Presoterapia BPS PRO | `BPS Performance` | `Presoterapia` |
+| BPS Fusion Boots | `BPS Performance` | `Presoterapia` |
+| BPS Pro-Panel | `BPS Performance` | `Terapia de luz roja` |
+| BPS Clinic-Stand | `BPS Performance` | `Terapia de luz roja` |
+| BPS Red Light Mini | `BPS Performance` | `Terapia de luz roja` |
+| Gafas NIGHT MAX / NIGHT FLOW / DAILY LIGHT | `BPS Performance` | `Terapia de luz roja` |
+| BPS Ice Bath | `BPS Performance` | `Recuperación fría` |
+| BPS Recovery Pod | `BPS Performance` | `Recuperación fría` |
+| Pistola de Masaje | `BPS Performance` | `Liberación muscular` |
+
+Escritos **exactamente igual** en todos: mismas mayúsculas y mismos acentos. Si en
+uno pone «Recuperación Fría» y en otro «Recuperación fría», Shopify los trata como
+dos categorías distintas.
 
 ### Paso a paso
 
-Hazlo uno por uno; son cinco:
+**Primero, el archivo del tema** (una sola vez):
 
-1. **Productos** → clic en **Presoterapia BPS PLUS**.
-2. En la **columna de la derecha**, busca el bloque
-   **«Organización del producto»**.
-3. Dentro hay un campo **«Proveedor»**. Borra lo que tenga y escribe
-   `BPS Performance`.
-   - Al escribir, Shopify sugiere los proveedores que ya existen. **Elige el que
-     dice `BPS Performance`** de la lista, así te aseguras de que se escribe
-     exactamente igual que en los demás.
-4. **Guardar**.
-5. Repite con BPS PRO, BPS Pro-Panel, BPS Recovery Pod y la Pistola de Masaje.
+1. **Tienda online** → **Temas** → botón **···** → **«Editar código»**.
+2. Columna izquierda, carpeta **`snippets`** → **`card-product.liquid`**.
+3. Selecciona todo el contenido y bórralo.
+4. Pega el contenido de `shopify/dawn16/card-product.liquid` de este repositorio.
+5. **Guardar**.
 
-> **Truco para ir más rápido:** en la lista de **Productos**, marca las casillas
-> de los cinco productos → arriba aparece **«Acciones»** → **«Editar
-> productos»**. Se abre una tabla; pulsa **«Columnas»** y activa **«Proveedor»**.
-> Ahora puedes escribir `BPS Performance` en la primera fila, copiarla y pegarla
-> en las otras cuatro. Un solo **Guardar** para todas.
+**Después, los 12 productos.** Con la edición masiva se hace en cinco minutos:
+
+1. **Productos**. Marca la casilla de arriba del todo para seleccionar los 12.
+2. Pulsa **«Acciones»** → **«Editar productos»**.
+3. Se abre una tabla. Pulsa **«Columnas»** (arriba a la derecha) y activa
+   **«Proveedor»** y **«Tipo de producto»**. Desactiva las que no uses, para ver
+   mejor.
+4. En la columna **«Proveedor»**, escribe `BPS Performance` en la primera fila.
+   Cópiala (`Ctrl+C` / `Cmd+C`) y pégala en las otras once.
+5. En la columna **«Tipo de producto»**, escribe la categoría de cada uno según la
+   tabla de arriba.
+6. **Guardar**.
 
 ### Cómo comprobarlo
 
-En **Productos**, arriba hay filtros. Pulsa **«Filtrar»** → **«Proveedor»** y
-comprueba que **solo aparece `BPS Performance`** y que tiene **12 productos**. Si
-salen otros valores en la lista, alguno se quedó sin cambiar.
+- **Que la tarjeta sigue bien:** abre la home y mira la sección «Los más
+  buscados». La etiqueta pequeña encima del precio debe seguir diciendo
+  «Presoterapia», «Terapia de luz roja»… igual que antes.
+- **Que la marca ya está bien:** abre una ficha, clic derecho → **«Ver código
+  fuente»**, busca `"brand"`. Debe decir `BPS Performance` en las 12.
+- **De un vistazo:** en **Productos** → **«Filtrar»** → **«Proveedor»**, debe
+  aparecer **solo `BPS Performance`, con 12 productos**.
 
 ---
 
@@ -1080,7 +1191,7 @@ están enseñando y en qué posición.
 
 | Cuándo | Qué | Fichas |
 |---|---|---|
-| **Día 1, media hora** | Precio del Ice Bath y las cinco marcas | 1, 2 |
+| **Día 1, una hora** | Subir el `card-product.liquid` nuevo, poner precio y stock al Ice Bath, y arreglar «Proveedor» y «Tipo de producto» de los 12 | 1, 2 |
 | **Día 1, media hora** | Texto alternativo del logotipo y del banner | 8, 10 |
 | **Día 2, una hora** | Los 12 títulos de producto y las 5 colecciones | 3, 4, 5 |
 | **Día 3, una hora** | SKU de los 12, y `noindex` en `theme.liquid` | 6, 13 |
@@ -1101,7 +1212,7 @@ están enseñando y en qué posición.
 
 Lo técnico está sorprendentemente bien —canónicos, sitemap, marcado de producto y
 de artículo, WebP, y la ficha de empresa que ya añadisteis—, y lo que falta es de
-tienda: **un precio a cero, cinco marcas mal escritas, títulos que se cortan a
-mitad de palabra, cero reseñas y colecciones sin texto**. Nada de eso necesita
-programar: 19 tareas, la mayoría de minutos, y las cuatro primeras se hacen en una
-hora.
+tienda: **un precio a cero, cinco marcas que llevan el nombre de la categoría, títulos que
+se cortan a mitad de palabra, cero reseñas y colecciones sin texto**. Solo una de las 19 tareas toca
+código —y es pegar un archivo que ya está escrito—; el resto son minutos en el
+panel.

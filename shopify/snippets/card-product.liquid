@@ -213,9 +213,16 @@
             <p class="bps-card__descripcion">{{ bps_desc }}</p>
           {%- endif -%}
           <div class="card-information">
-            {%- if show_vendor -%}
-              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
-              <div class="caption-with-letter-spacing light">{{ card_product.vendor }}</div>
+            {%- comment -%}
+              LA ETIQUETA DE LA TARJETA ES EL «TIPO DE PRODUCTO», NO EL «PROVEEDOR».
+              Ver el comentario largo en `shopify/dawn16/card-product.liquid`: el
+              campo «Proveedor» es de donde sale el `brand` del marcado y tiene que
+              decir «BPS Performance»; la categoría que se ve en la tarjeta sale de
+              «Tipo de producto», que no toca el marcado.
+            {%- endcomment -%}
+            {%- if show_vendor and card_product.type != blank -%}
+              <span class="visually-hidden">Categoría:</span>
+              <div class="caption-with-letter-spacing light">{{ card_product.type }}</div>
             {%- endif -%}
 
             <span class="caption-large light">{{ block.settings.description | escape }}</span>

@@ -23,7 +23,7 @@ Y uno más que **hay que modificar a propósito**, no porque esté mal:
 
 | Archivo | Qué hay que hacerle |
 |---|---|
-| `snippets/card-product.liquid` | Añadirle la descripción corta de la tarjeta, que Dawn no tiene. Copia lista en `shopify/snippets/card-product.liquid`. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §H |
+| `snippets/card-product.liquid` | **Dos cosas**: la descripción corta de la tarjeta, que Dawn no tiene, y que la etiqueta pequeña de encima del precio enseñe el **«Tipo de producto»** en vez del **«Proveedor»** —ese campo es el `brand` del marcado y tiene que decir «BPS Performance»—. Copia lista en `shopify/dawn16/card-product.liquid`. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §H y [SEO.md](SEO.md) §2 |
 | `sections/footer.liquid` | Tres añadidos: la etiqueta visible del botón del boletín, la nota legal con los enlaces a las políticas y la caja de «¿Tienes alguna otra pregunta?» con sus tres ajustes. Copia lista en `shopify/sections/footer.liquid`. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §H-4 y §H-5 |
 | `sections/related-products.liquid` | Cinco líneas para que los productos relacionados tengan compra rápida, que Dawn no ofrece en esa sección. **Opcional**, y con eso pasan a ser cinco los archivos que hay que rehacer en cada actualización del tema. Ver [PARTE 2](GUIA-SHOPIFY-PARTE-2.md) §N |
 | `sections/header.liquid` | **Dos palabras**: la llamada a `header-mega-menu` pasa a `bps-megamenu` —el desplegable de escritorio, con fotos— y la de `header-drawer` a `bps-cajon` —el menú de móvil, con pestañas—. Los dos *snippets* son archivos nuevos y las actualizaciones no los tocan; estas dos palabras sí hay que rehacerlas. Ver [MEGAMENU.md](MEGAMENU.md) |

@@ -213,9 +213,31 @@
             <p class="bps-card__descripcion">{{ bps_desc }}</p>
           {%- endif -%}
             <div class="card-information">
-              {%- if show_vendor -%}
-                <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
-                <div class="caption-with-letter-spacing light">{{ card_product.vendor }}</div>
+              {%- comment -%}
+                LA ETIQUETA DE LA TARJETA ES EL «TIPO DE PRODUCTO», NO EL «PROVEEDOR».
+
+                Dawn enseña aquí `card_product.vendor`, y para que la tarjeta
+                dijera «Presoterapia» hubo que escribir la categoría en el campo
+                «Proveedor» del producto. El problema es que ese campo es de donde
+                sale el `brand` de los datos estructurados: con la categoría
+                dentro, Google veía cinco marcas distintas —«Presoterapia»,
+                «Terapia de luz roja», «Recuperación Fría»…— en vez de una sola.
+
+                Shopify ya tiene un campo para esto, «Tipo de producto», que no
+                toca el marcado y además alimenta la categoría en Google Shopping.
+                Así los dos campos hacen lo suyo:
+
+                  · Proveedor        → «BPS Performance». Es la marca.
+                  · Tipo de producto → «Presoterapia», «Luz roja»… Es lo que se
+                                       ve en la tarjeta.
+
+                El ajuste de la sección se sigue llamando «Mostrar el proveedor»
+                en Personalizar; es el nombre de Dawn y no se puede cambiar sin
+                tocar el esquema. Lo que enseña, desde aquí, es el tipo.
+              {%- endcomment -%}
+              {%- if show_vendor and card_product.type != blank -%}
+                <span class="visually-hidden">Categoría:</span>
+                <div class="caption-with-letter-spacing light">{{ card_product.type }}</div>
               {%- endif -%}
 
               <span class="caption-large light">{{ block.settings.description | escape }}</span>
