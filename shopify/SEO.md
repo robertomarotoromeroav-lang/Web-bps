@@ -111,7 +111,7 @@ Ordenado por lo que más mueve la aguja. Cada número es una ficha de este manua
 | **14** | El **correo del `Organization` está en otro dominio** y el teléfono sin prefijo | Editar código | 5 min |
 | **15** | El **logotipo del `Organization` es un SVG** y Google no acepta ese formato ahí | Contenido → Archivos | 15 min |
 | **16** | La **página de contacto no muestra dirección, teléfono ni correo** | Contenido → Páginas | 10 min |
-| **17** | Las 4 colecciones tienen **poco texto propio** | Colecciones | 3 h |
+| **17** | Las 4 colecciones tienen **poco texto propio**. Presoterapia ya lo tiene: se corrige el ancho en la hoja y hay que **cambiar su `h1` por H2** | Colecciones | 3 h |
 | **18** | El blog tiene **dos `<h1>` iguales** | Editar código *(opcional)* | 5 min |
 | **19** | Fuera de Shopify: **perfil de empresa en Google, LinkedIn, Trustpilot** | — | 2 h |
 
@@ -634,6 +634,59 @@ largo no va ahí. Va en una sección de la plantilla:
 > **Personalizar** → selector de plantilla → **«Colecciones»** → **«Crear
 > plantilla»**, y luego en la colección asignársela desde
 > **Productos → Colecciones → la colección → «Plantilla de tema»**.
+
+### Los ajustes de la sección, y por qué salía estrecho
+
+En `/collections/presoterapia` el texto salía en una **columna de 516px dentro de
+un marco de 1380**, pegada a la izquierda y con un hueco enorme a la derecha.
+**No era un ajuste mal puesto: era nuestra hoja de estilos.** El apartado 17 de
+`bps-hyperice.css` limitaba el texto de esta sección a `58ch`, porque estaba
+pensada para una frase de marca de dos líneas encima de otra sección, no para un
+texto largo.
+
+**Ya está corregido:** cuando la sección está en «Ancho completo», el texto usa
+el ancho de la página. Medido después: el texto arranca en x=30 con 1.380 de
+ancho, **exactamente el mismo marco que la rejilla de productos**, y en tableta y
+móvil también coincide (708 y 360). Los encabezados escritos en el editor pasan a
+la escala del artículo —32px los `h2`, 20px los `h3`— porque un `h1` del editor
+salía a **72px**, más grande que el título de la colección, que mide 48.
+
+**Hay que volver a subir `bps-hyperice.css`.**
+
+Con la hoja nueva, estos son los ajustes de la sección que hay que dejar puestos:
+
+| Ajuste | Valor | Por qué |
+|---|---|---|
+| **Ancho completo** | **Activado** | Es lo que le dice a la hoja que esto es un texto largo y no un titular |
+| **Alineación del contenido** | **Izquierda** | Un texto largo se lee alineado a la izquierda |
+| **Esquema de color** | El claro | El texto va sobre fondo blanco, como el resto de la página |
+| Relleno superior / inferior | 60 y 60 | Lo que ya tienes |
+
+> **Si prefieres líneas más cortas**, desactiva «Ancho completo»: la hoja vuelve
+> a limitar el texto a unos 58 caracteres por línea y lo centra. A 1440px el
+> texto a todo el ancho da líneas de unos 160 caracteres, que es largo; a cambio,
+> las filas de «término: explicación» —que es la mayor parte de tu texto— se leen
+> mejor porque cada una cabe en una o dos líneas. Con el contenido que has
+> escrito, **el ancho completo queda mejor**.
+
+### ⚠️ Y una cosa que sí es de SEO: el `h1` del texto
+
+El texto que has escrito empieza con un **encabezado H1**: «Botas de Presoterapia
+Deportiva y Recuperación Muscular Avanzada». La página ya tiene su propio `h1`,
+que es el título de la colección, así que ahora **hay dos `h1`** y Google no sabe
+cuál manda.
+
+Cámbialo a **H2**:
+
+1. **Tienda online** → **Temas** → **Personalizar** → plantilla de la colección.
+2. Clic en la sección de texto enriquecido → clic en el bloque de texto.
+3. Selecciona esa primera línea. En la barra de herramientas del editor, en el
+   desplegable de formato, cambia **«Encabezado 1»** por **«Encabezado 2»**.
+4. **Guardar**.
+
+Y al escribir las otras tres colecciones, **empieza directamente por H2**: el H1
+de la página es siempre el título de la colección. La jerarquía correcta es
+H1 (título) → H2 (apartados) → H3 (dentro de un apartado).
 
 ---
 

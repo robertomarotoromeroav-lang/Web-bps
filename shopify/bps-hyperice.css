@@ -1549,6 +1549,60 @@ product-component:has(> .card-wrapper) { height: 100%; }
 .rich-text__blocks .rich-text__text,
 .rich-text__blocks .rich-text__caption { max-width: 58ch; }
 
+/* --- Y CUANDO EL BLOQUE ES UN TEXTO LARGO ------------------------------------
+
+   El tope de 58ch de ahí arriba está pensado para una frase de marca: dos
+   líneas encima de otra sección. Pero la misma sección de Dawn se usa también
+   para el texto largo de SEO que va debajo de la rejilla de productos de una
+   colección, y ahí ese tope deja una columna de 516px dentro de un marco de
+   1380 —medido en /collections/presoterapia— con un hueco enorme a la derecha,
+   porque además la alineación va a la izquierda.
+
+   El criterio para distinguirlos es el propio ajuste del tema: si el editor ha
+   marcado «Ancho completo», lo que quiere es que el texto use el ancho. Antes no
+   pasaba porque este tope ganaba al ajuste.
+
+   NO se reparte en dos columnas. Se probó con `columns: 2` y `column-span: all`
+   en los encabezados, y el problema es que el texto corrido salta de columna a
+   mitad de frase: los párrafos cortos llenan media columna izquierda y siguen
+   arriba en la derecha, así que hay que leer subiendo. La multicolumna solo
+   funciona con texto uniforme y largo, no con encabezados, listas y preguntas
+   mezclados.
+   -------------------------------------------------------------------------- */
+
+.rich-text--full-width .rich-text__blocks .rich-text__text,
+.rich-text--full-width .rich-text__blocks .rich-text__caption { max-width: none; }
+
+/* Los encabezados que se escriben EN EL EDITOR se quedan en la escala del
+   artículo —32 y 20—, no en la de un titular de sección. Un `h1` escrito en el
+   editor salía a 72px, o sea más grande que el título de la colección, que mide
+   48: en la captura tapaba media pantalla.
+
+   Ojo: que el `h1` se vea del tamaño correcto no arregla el problema de SEO de
+   tener dos `h1` en la página. Eso se corrige en el editor, poniendo el
+   encabezado como H2. Ver SEO.md. */
+.rich-text__text h1,
+.rich-text__text h2 {
+  font-size: clamp(24px, 2.22222vw, 32px);
+  line-height: 1.15;
+  margin-top: 48px;
+}
+
+.rich-text__text h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin-top: 32px;
+}
+
+/* El primero no necesita el aire de arriba: ya lo pone el relleno de la sección. */
+.rich-text__text > :first-child { margin-top: 0; }
+
+/* Y el cuerpo, el mismo del artículo. */
+.rich-text__text p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
 /* Las listas escritas en el editor. El prototipo no usa viñetas: en estas
    páginas —contacto, «sobre nosotros»— las listas son filas separadas por una
    línea fina (`.checklist`, medido: 18px arriba y abajo, raya solo ENTRE
