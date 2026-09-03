@@ -1,957 +1,148 @@
-# Manual de SEO de bpsperformance.com
+# Manual de SEO de bpsperformance.com · lo que queda
 
-Auditoría de la tienda publicada y **manual de corrección paso a paso**, escrito
-para hacerlo sin haber usado nunca el panel de Shopify: cada tarea dice cómo está
-hoy, cómo tiene que quedar, dónde se hace clic y cómo comprobar que salió bien.
+**Revisión: 3 de septiembre de 2026.** Tercer rastreo completo de las 25
+direcciones indexables del sitio publicado.
 
-**Revisión: 2 de septiembre de 2026.** Todo lo que hay aquí está medido
-rastreando las **25 direcciones indexables** una por una, no es una lista genérica
-de buenas prácticas.
+Esta versión contiene **solo lo que queda por hacer**. Lo ya corregido está
+listado al principio para dejar constancia, pero sin instrucciones: no hay que
+volver a tocarlo.
 
 Documentos hermanos: [ARTICULOS-1-3.md](ARTICULOS-1-3.md) (contenido del blog) y
 [GUIA-BLOG.md](GUIA-BLOG.md) (arquitectura del blog).
 
 ---
 
-## Cómo moverse por el panel de Shopify
+## Lo que ya está hecho ✅
 
-Antes de nada, el mapa. Todo lo de este manual está en cuatro sitios, y siempre
-se llega igual: **columna izquierda del panel**.
+De las 19 tareas de la revisión anterior, **están cerradas 15**. Comprobado una a
+una en el sitio publicado:
 
-| Lo que quieras cambiar | Ruta |
+| Lo que estaba mal | Cómo está hoy |
 |---|---|
-| Un producto | **Productos** → clic en el nombre del producto |
-| Una colección | **Productos** → **Colecciones** → clic en la colección |
-| Una página (Sobre nosotros, Contacto…) | **Contenido** → **Páginas** |
-| Un artículo del blog | **Contenido** → **Publicaciones de blog** |
-| El texto alternativo de una imagen suelta (el logotipo, el banner) | **Contenido** → **Archivos** |
-| El código del tema | **Canales de venta → Tienda online** → **Temas** → botón **···** junto al tema activo → **Editar código** |
-| Los textos fijos del tema (traducciones) | mismo sitio → **···** → **Editar contenido predeterminado del tema** |
-| Lo que se ve y en qué orden en cada página | **Tienda online** → **Temas** → **Personalizar** |
+| `BPS Ice Bath` a **0,00 €** con `InStock` | **1.999,00 € y `OutOfStock`**. Es exactamente la opción A que propusimos: precio real, inventario a cero, y la plantilla de reservas intacta |
+| **5 productos con la categoría en «Proveedor»** | **Los 12 con `BPS Performance`**. Y la tarjeta de la home sigue enseñando la categoría, ahora desde «Tipo de producto» |
+| «Tipo de producto» con `Recovery` en 8 fichas | Las cuatro categorías reales, bien escritas |
+| **Ningún SKU** | **Los 12 con SKU**, con la nomenclatura propuesta |
+| Títulos de producto de **67 a 90 caracteres**, tres cortados a mitad de palabra | **61 a 74**, reescritos empezando por lo que se busca, y **coinciden con el H1** |
+| Colecciones con títulos de 30-37 y descripciones de 58-69 | **Títulos de 60-70 y descripciones de 127-154** |
+| Colecciones **sin texto propio** | Las cuatro con texto largo, **8 apartados H2 cada una** |
+| El `h1` del texto de la colección duplicaba el de la página | Corregido: **un solo `h1` por colección** |
+| El **H1 de la home** decía «logo BPS horizontal blanco» | «BPS Performance, tecnología de recuperación deportiva» |
+| El **banner de la home** sin texto alternativo | Con descripción |
+| **Textos alternativos de galería repetidos** | Descriptivos y distintos en cada foto |
+| `FAQPage` solo en un artículo | **En la página de preguntas y en los tres artículos** |
+| El correo del marcado en **otro dominio** | `info@bpsperformance.com`, y el teléfono con `+34` |
+| El logotipo del marcado en **SVG** | En **PNG**, que es lo que Google acepta |
+| La página de contacto **sin dirección, teléfono ni correo** | Los tres visibles |
+| Los tres artículos **sueltos** | Enlazan entre sí, y cada uno a 4 productos y 5 colecciones |
 
-Dos cosas que conviene saber de entrada:
-
-**1. Guardar.** En Shopify nada se aplica hasta que pulsas **Guardar** arriba a la
-derecha. Si sales sin guardar, se pierde.
-
-**2. La caja de SEO está siempre abajo.** En productos, colecciones, páginas y
-artículos, si bajas hasta el final encontrarás un bloque llamado
-**«Optimización para motores de búsqueda»** con un enlace **Editar**. Al pulsarlo
-se abren tres campos, y son estos tres los que salen en Google:
-
-| Campo | Qué es | Cuánto debe medir |
-|---|---|---|
-| **Título de la página** | El texto azul del resultado de Google | **50-60 caracteres** |
-| **Meta descripción** | El párrafo gris de debajo | **140-155 caracteres** |
-| **Identificador de URL** | La dirección de la página | Corto, con la palabra clave |
-
-> ⚠️ **Ojo al cambiar el «Identificador de URL».** Si la página ya está indexada,
-> cambiarla la hace empezar de cero. Shopify crea una redirección automática, pero
-> aun así se pierde algo. **En este manual no se cambia ninguna URL**, solo
-> títulos y descripciones, que se pueden cambiar sin miedo.
-
-### La regla del título que hay que entender una sola vez
-
-Esto explica por qué hoy hay títulos cortados a mitad de palabra.
-
-El tema construye la etiqueta del navegador así: **coge el «Título de la página»
-y, si ese texto NO contiene «BPS Performance», le pega ` – BPS Performance` al
-final.** Eso son 18 caracteres extra.
-
-Por tanto hay dos maneras de hacerlo bien:
-
-- Escribir un título de **40 caracteres o menos** y dejar que el tema añada la
-  marca. Total: 58. ✅
-- Escribir un título de **hasta 60 caracteres que ya incluya «BPS Performance»**.
-  El tema no añade nada. ✅
-
-Lo que no funciona es lo de hoy: títulos de 70 caracteres + los 18 de la marca =
-88, que Google corta.
+Y un cambio que hicisteis por vuestra cuenta y está bien resuelto: **dos
+colecciones cambiaron de dirección** —`energia-luminica` → `terapia-luz-roja` y
+`recuperacion-polar` → `recuperacion-fria`—. Comprobado: **las antiguas redirigen
+con 301** a las nuevas, y **ningún enlace interno del sitio apunta ya a las
+viejas**, así que no hay cadenas de redirección. Está limpio.
 
 ---
 
-## Estado a 2 de septiembre
+## Lo que queda: 8 tareas
 
-### Ya corregido desde la revisión anterior ✅
+Ordenadas por urgencia. Las tres primeras son de hoy.
 
-Buen trabajo, esto ya está hecho y no hay que volver a tocarlo:
-
-| Lo que estaba mal | Cómo está ahora |
-|---|---|
-| `/collections/los-mas-buscados` sin descripción | Descripción de 154 caracteres ✅ |
-| `/pages/contacto` sin título ni descripción | Título y descripción de 156 ✅ |
-| Descripción de la pistola con 320 caracteres | **145** ✅ |
-| Las tres gafas con 222-257 caracteres | **128-140** ✅ |
-| El título SEO del BPS PRO decía «Fisiosport 3.0» | Ahora dice «Presoterapia BPS PRO» y coincide con el H1 ✅ |
-| `Organization` sin descripción ni contacto | Añadido con descripción, correo, teléfono y **dirección postal en Madrid** ✅ |
-| `sameAs` con siete cadenas vacías | Limpio, con las tres redes reales ✅ |
-
-Y los estilos: nuestra hoja y nuestro script publicados ya llevan el arreglo del
-hueco de la cabecera, el menú de móvil y los enlaces del desplegable a 24px.
-
-### Lo que sigue pendiente ❌
-
-Ordenado por lo que más mueve la aguja. Cada número es una ficha de este manual.
-
-| # | Pendiente | Dónde | Esfuerzo |
+| # | Qué | Dónde | Esfuerzo |
 |---|---|---|---|
-| **1** | `BPS Ice Bath` sigue publicado a **0,00 €**. Sin stock y con plantilla de reservas: **hay tres formas válidas de hacerlo**, y la de hoy no es una | Productos | 10 min |
-| **2** | La **marca de 5 productos** es la categoría, porque la tarjeta de la home enseña ese campo. **Se cubren las dos cosas** con «Tipo de producto» | Productos + un archivo del tema | 20 min |
-| **3** | **Tres títulos cortados a mitad de palabra** («…Integr», «…Sopor», «…Infr») y 10 de 12 por encima de 60 caracteres | Productos | 40 min |
-| **4** | Las **4 colecciones principales** tienen títulos de 30-37 caracteres y descripciones de 58-69 | Colecciones | 25 min |
-| **5** | `los-mas-buscados` tiene ahora un título de **88 caracteres** | Colecciones | 3 min |
-| **6** | **Ninguna ficha tiene SKU ni código de barras** | Productos | 20 min |
-| **7** | **Cero reseñas**: no hay aplicación instalada, así que no hay estrellas en Google | Aplicaciones | 30 min |
-| **8** | El **H1 de la home es el logotipo**, y su texto es «logo BPS horizontal blanco» | Contenido → Archivos | 3 min |
-| **9** | Los **textos alternativos de las galerías están repetidos** | Productos → Multimedia | 1 h |
-| **10** | El **banner de la home** no tiene texto alternativo | Contenido → Archivos | 2 min |
-| **11** | `/pages/preguntas-frecuentes` tiene 955 palabras de preguntas y **ningún marcado `FAQPage`** | Editar código | 15 min |
-| **12** | Los **dos artículos nuevos no tienen el metacampo de preguntas** rellenado | Contenido → Publicaciones | 20 min |
-| **13** | `/search`, `/collections/all` y las páginas de etiqueta **se pueden indexar** | Editar código | 10 min |
-| **14** | El **correo del `Organization` está en otro dominio** y el teléfono sin prefijo | Editar código | 5 min |
-| **15** | El **logotipo del `Organization` es un SVG** y Google no acepta ese formato ahí | Contenido → Archivos | 15 min |
-| **16** | La **página de contacto no muestra dirección, teléfono ni correo** | Contenido → Páginas | 10 min |
-| **17** | Las 4 colecciones tienen **poco texto propio**. Presoterapia ya lo tiene: se corrige el ancho en la hoja y hay que **cambiar su `h1` por H2** | Colecciones | 3 h |
-| **18** | El blog tiene **dos `<h1>` iguales** | Editar código *(opcional)* | 5 min |
-| **19** | Fuera de Shopify: **perfil de empresa en Google, LinkedIn, Trustpilot** | — | 2 h |
+| **1** | **Subir `bps-hyperice.css`.** Sin esto, el texto que acabáis de escribir en las cuatro colecciones se ve en una columna de 516px | Editar código | 5 min |
+| **2** | Tres tipos de página **se pueden indexar** y no deberían | Editar código | 10 min |
+| **3** | **Los tres títulos de artículo se cortan a mitad de palabra** | Contenido → Publicaciones | 10 min |
+| **4** | **Cero reseñas**: ninguna aplicación instalada, así que no hay estrellas en Google | Aplicaciones | 30 min |
+| **5** | `Los más buscados` **no tiene texto propio** y duplica a las otras cuatro | Colecciones | 20 min |
+| **6** | El blog tiene **dos `<h1>` iguales** | Editar código *(opcional)* | 5 min |
+| **7** | **Marca fuera de Shopify**: perfil de empresa en Google, LinkedIn, Trustpilot | Fuera de Shopify | 2 h |
+| **8** | **Faltan dos pilares del blog** y un artículo de racimo | Contenido | Continuo |
 
 ---
 
-# A. Productos
-
-## 1 · El BPS Ice Bath está a 0,00 €
-
-### El caso, tal y como es
-
-No hay stock, y el cliente quiere promocionarlo con una plantilla propia que
-permita contactar para hacer reservas. Eso es perfectamente legítimo y hay
-maneras de hacerlo sin penalización. Lo que hay hoy **no es una de ellas**.
+# 1 · Subir `bps-hyperice.css` ⚠️ *lo más urgente*
 
 ### Cómo está ahora
 
-Medido en la ficha publicada:
+Habéis escrito el texto de las cuatro colecciones, y está bien escrito: entre
+1.036 y 1.268 palabras cada una, con ocho apartados. Pero **la hoja de estilos
+publicada es la anterior**, así que ese texto se está viendo mal.
 
-| | Valor |
-|---|---|
-| Precio del producto | `0.00` |
-| Seguimiento de inventario | **desactivado** (`inventory_management: null`) |
-| Lo que Shopify le dice a Google | `"price": "0.00"`, `"availability": "InStock"` |
-| Lo que se ve en la página | **ni precio ni botón**: la plantilla no lleva esos bloques |
+Medido hoy en `/collections/presoterapia` con la hoja que hay publicada:
 
-**Y aquí está el malentendido que hay que deshacer:** quitar el bloque del precio
-de la plantilla **no quita el precio de la página**. Los datos estructurados —lo
-que Google lee de verdad— se generan a partir de **la ficha del producto**, no de
-los bloques que decidas enseñar. Puedes ocultar el precio a los humanos y seguir
-diciéndole a Google que la bañera cuesta cero euros y está disponible. Eso es
-exactamente lo que pasa hoy.
-
-Tres consecuencias reales:
-
-- Google puede enseñar **«0,00 €»** en el resultado.
-- **Google Merchant Center rechaza** cualquier producto con precio 0. Ese producto
-  no puede aparecer ni en anuncios ni en fichas gratuitas.
-- Como el inventario **no se sigue**, Shopify lo da por disponible siempre: cuando
-  de verdad se agote otro producto, Google tampoco se enterará.
-
-### Las tres formas válidas de hacerlo
-
-Elige una. Las tres permiten la plantilla de reservas.
-
-#### Opción A · Precio real + agotado de verdad  ← **la recomendada**
-
-Es la que Google espera y la que menos mantenimiento tiene.
-
-- La ficha lleva **su precio real** aunque no se pueda comprar todavía.
-- El inventario se **sigue**, con 0 unidades y **sin** permitir venta sin stock.
-- Shopify pasa a decir `"availability": "OutOfStock"` con el precio correcto, que
-  es **marcado válido**.
-- La plantilla sigue siendo la vuestra, con el formulario de reserva.
-
-Un producto agotado **no pierde posiciones**: Google lo mantiene indexado y con su
-autoridad, y en Merchant Center queda «pendiente de stock» en vez de rechazado.
-Despublicarlo o dejarlo a cero es mucho peor.
-
-#### Opción B · Reserva o preventa
-
-Si de verdad vais a aceptar reservas con compromiso:
-
-- Precio real.
-- Inventario seguido, 0 unidades, pero **sí** permitir venta sin stock.
-- Cambiar el texto del botón a «Reservar» y avisar del plazo en la ficha.
-- Shopify dirá `InStock` con precio real: coherente, porque se puede comprar.
-
-#### Opción C · Si es imposible poner precio
-
-Si el cliente no quiere enseñar precio de ninguna manera, entonces **esa página no
-debe ser un producto**:
-
-- El producto pasa a **Borrador**.
-- Se crea una **Página** (`/pages/bps-ice-bath`) con el mismo contenido, las fotos
-  y el formulario.
-- Una página no genera marcado de producto, así que no hay precio que declarar y
-  no hay nada inválido.
-- Contrapartida: pierdes la URL de producto y no puedes anunciarlo en Shopping.
-  Por eso es la última opción.
-
-Lo que **no** vale es lo de hoy: precio 0 con el bloque escondido. Es la única
-combinación que es inválida a la vez para Google Search y para Merchant Center.
-
-### Paso a paso de la opción A
-
-1. **Productos** → clic en **BPS Ice Bath: Bañera de Crioterapia Portátil para
-   Recuperación Total**.
-2. Bloque **«Precios»** → campo **«Precio»**: escribe el precio real (por ejemplo
-   `1450`).
-3. Bloque **«Inventario»**:
-   - Marca la casilla **«Hacer seguimiento de la cantidad»**.
-   - En **«Cantidad»** deja **0**.
-   - Asegúrate de que **«Continuar vendiendo cuando esté agotado» esté
-     DESMARCADO**. Esta casilla es la que decide si Google lo ve disponible o no.
-4. **Guardar**.
-5. La plantilla de reservas se queda como está. Si quieres, añade una nota visible
-   del tipo «Próxima entrega: [fecha]. Reserva la tuya sin compromiso».
-
-### Cómo comprobarlo
-
-1. Abre la ficha en incógnito: debe verse el precio o el texto de reserva, y el
-   formulario.
-2. Ve a **`search.google.com/test/rich-results`**, pega la URL de la ficha y pulsa
-   **«Probar URL»**.
-3. Despliega el bloque **Product** y mira `offers`. Tiene que decir el precio real
-   y `OutOfStock`. **Si sigue diciendo `0.00`, es que no se guardó el precio.**
-
----
-
-## 2 · La marca de cinco productos está mal — y cómo cubrir las dos cosas
-
-### Por qué está así, y por qué es un problema
-
-Está así por una buena razón: en la sección **«Los más buscados»** de la home, las
-tarjetas enseñan una etiqueta pequeña encima del precio, y querías que dijera la
-categoría. Dawn pinta ahí `card_product.vendor`, o sea el campo **«Proveedor»**,
-así que la manera rápida de conseguirlo fue escribir la categoría en ese campo.
-Funcionó: hoy las cuatro tarjetas dicen «Presoterapia», «Terapia de luz roja»,
-«Recuperación Fría» y «Liberación muscular».
-
-El problema es que **ese mismo campo es de donde sale el `brand` de los datos
-estructurados**. Comprobado en las 12 fichas:
-
-| Producto | «Proveedor» hoy | `brand` que lee Google |
+| | Hoy | Debería |
 |---|---|---|
-| Presoterapia BPS PLUS | `Presoterapia` | `Presoterapia` ❌ |
-| Presoterapia BPS PRO | `Presoterapia` | `Presoterapia` ❌ |
-| BPS Pro-Panel | `Terapia de luz roja` | `Terapia de luz roja` ❌ |
-| BPS Recovery Pod | `Recuperación Fría` | `Recuperación Fría` ❌ |
-| Pistola de Masaje | `Liberación muscular` | `Liberación muscular` ❌ |
-| *(los otros 7)* | `BPS Performance` | `BPS Performance` ✅ |
+| Ancho del texto | **516,1 px** | 1.380 px |
+| Ancho de la rejilla de productos | 1.380 px | 1.380 px |
+| Tamaño de los `h2` del texto | **48 px** | 32 px |
 
-O sea: Google está viendo **cinco marcas distintas** donde hay una sola. Y eso es
-justo lo contrario de lo que hace falta para que «BPS Performance» se posicione
-como marca. En Google Shopping, además, el campo `brand` es de los que se usan
-para agrupar y comparar productos.
+O sea: una columna estrecha pegada a la izquierda, con 860px vacíos al lado, y
+unos encabezados del mismo tamaño que el título de la colección. Es el problema
+que ya diagnosticamos —el tope de `58ch` de nuestra propia hoja le ganaba al
+ajuste «Ancho completo»— y **está arreglado en el repositorio, pero sin subir**.
 
-### La solución: cada campo a lo suyo
-
-Shopify **ya tiene un campo para la categoría**, y no es «Proveedor»: es
-**«Tipo de producto»**. No aparece en el marcado de marca, y además alimenta la
-categoría en Google Shopping, así que rellenarlo es una mejora en sí misma.
-
-| Campo de Shopify | Para qué sirve | Qué debe decir |
-|---|---|---|
-| **Proveedor** | La **marca**. Va a `brand` en el marcado y a Google Shopping | `BPS Performance` en los 12 |
-| **Tipo de producto** | La **categoría**. No toca el marcado de marca | `Presoterapia`, `Terapia de luz roja`, `Recuperación fría`, `Liberación muscular` |
-
-Y para que la tarjeta enseñe el tipo en vez del proveedor, **ya está hecho**: el
-archivo `shopify/dawn16/card-product.liquid` de este repositorio pasa a pintar
-`card_product.type`. Es el mismo archivo que ya mantenéis por la descripción corta
-de la tarjeta, así que **no añade ninguna pieza nueva que rehacer** en las
-actualizaciones del tema.
-
-> El ajuste de la sección se sigue llamando **«Mostrar el proveedor»** en
-> *Personalizar*; ese nombre lo pone Dawn y no se puede cambiar sin tocar más
-> archivos. Lo que enseña, desde ahora, es el tipo de producto. Déjalo activado.
-
-### Cómo está el «Tipo de producto» hoy
-
-Ya está relleno, pero sin criterio: **8 productos ponen `Recovery`**, 3 ponen
-`Presoterapia` y 1 `Fisioterapia Avanzada`. Si no se arregla, las tarjetas dirán
-«Recovery».
+La hoja publicada pesa **45.699 bytes**; la del repositorio, **124.341** con los
+comentarios.
 
 ### Cómo debe quedar
 
-| Producto | Proveedor | Tipo de producto |
-|---|---|---|
-| Presoterapia BPS PLUS | `BPS Performance` | `Presoterapia` |
-| Presoterapia BPS PRO | `BPS Performance` | `Presoterapia` |
-| BPS Fusion Boots | `BPS Performance` | `Presoterapia` |
-| BPS Pro-Panel | `BPS Performance` | `Terapia de luz roja` |
-| BPS Clinic-Stand | `BPS Performance` | `Terapia de luz roja` |
-| BPS Red Light Mini | `BPS Performance` | `Terapia de luz roja` |
-| Gafas NIGHT MAX / NIGHT FLOW / DAILY LIGHT | `BPS Performance` | `Terapia de luz roja` |
-| BPS Ice Bath | `BPS Performance` | `Recuperación fría` |
-| BPS Recovery Pod | `BPS Performance` | `Recuperación fría` |
-| Pistola de Masaje | `BPS Performance` | `Liberación muscular` |
-
-Escritos **exactamente igual** en todos: mismas mayúsculas y mismos acentos. Si en
-uno pone «Recuperación Fría» y en otro «Recuperación fría», Shopify los trata como
-dos categorías distintas.
+Con la hoja nueva, medido: el texto arranca en **x=30 con 1.380 de ancho**, el
+mismo marco exacto que la rejilla de productos, y también coincide en tableta
+(708) y en móvil (360). Los `h2` bajan a 32 px y los `h3` a 20, que es la escala
+del artículo.
 
 ### Paso a paso
 
-**Primero, el archivo del tema** (una sola vez):
-
-1. **Tienda online** → **Temas** → botón **···** → **«Editar código»**.
-2. Columna izquierda, carpeta **`snippets`** → **`card-product.liquid`**.
-3. Selecciona todo el contenido y bórralo.
-4. Pega el contenido de `shopify/dawn16/card-product.liquid` de este repositorio.
-5. **Guardar**.
-
-**Después, los 12 productos.** Con la edición masiva se hace en cinco minutos:
-
-1. **Productos**. Marca la casilla de arriba del todo para seleccionar los 12.
-2. Pulsa **«Acciones»** → **«Editar productos»**.
-3. Se abre una tabla. Pulsa **«Columnas»** (arriba a la derecha) y activa
-   **«Proveedor»** y **«Tipo de producto»**. Desactiva las que no uses, para ver
-   mejor.
-4. En la columna **«Proveedor»**, escribe `BPS Performance` en la primera fila.
-   Cópiala (`Ctrl+C` / `Cmd+C`) y pégala en las otras once.
-5. En la columna **«Tipo de producto»**, escribe la categoría de cada uno según la
-   tabla de arriba.
+1. **Canales de venta → Tienda online** → **Temas**.
+2. Junto al tema activo, botón **···** → **«Editar código»**.
+3. En la columna izquierda, carpeta **`assets`** → clic en **`bps-hyperice.css`**.
+4. Clic dentro del editor, selecciona todo (`Ctrl+A` / `Cmd+A`) y bórralo.
+5. Abre `shopify/bps-hyperice.css` de este repositorio, cópialo entero y pégalo.
 6. **Guardar**.
 
 ### Cómo comprobarlo
 
-- **Que la tarjeta sigue bien:** abre la home y mira la sección «Los más
-  buscados». La etiqueta pequeña encima del precio debe seguir diciendo
-  «Presoterapia», «Terapia de luz roja»… igual que antes.
-- **Que la marca ya está bien:** abre una ficha, clic derecho → **«Ver código
-  fuente»**, busca `"brand"`. Debe decir `BPS Performance` en las 12.
-- **De un vistazo:** en **Productos** → **«Filtrar»** → **«Proveedor»**, debe
-  aparecer **solo `BPS Performance`, con 12 productos**.
+Abre `https://bpsperformance.com/collections/presoterapia` en una ventana de
+incógnito, para saltarte la caché. **El texto de debajo de los productos tiene
+que ocupar el mismo ancho que la fila de productos de arriba**, y los títulos de
+apartado tienen que verse claramente más pequeños que «Colección: Presoterapia».
+
+> Aprovecha y sube también **`bps-hyperice.js`** si no lo has hecho: lleva el
+> arreglo del hueco de la cabecera, que evita que el titular de las páginas suba
+> hasta tocar el menú.
 
 ---
 
-## 3 · Los títulos de producto se cortan
+# 2 · Tres tipos de página no deberían indexarse
 
 ### Cómo está ahora
 
-Esto es lo más visible de todo el manual, porque **se ve en Google y en la
-pestaña del navegador**. Tres títulos están cortados a mitad de palabra:
-
-| Producto | Etiqueta actual | Nº |
-|---|---|---|
-| BPS Fusion Boots | `BPS Fusion Boots: Botas de Presoterapia con Terapia de Luz Roja Integr – BPS Performance` | 88 ✂️ |
-| BPS Clinic-Stand | `BPS Clinic-Stand: Lámpara Profesional de Terapia de Luz Roja con Sopor – BPS Performance` | 88 ✂️ |
-| BPS Red Light Mini | `BPS Red Light Mini: Dispositivo Portátil de Terapia de Luz Roja e Infr – BPS Performance` | 88 ✂️ |
-| BPS Ice Bath | `BPS Ice Bath: Bañera de Crioterapia Portátil para Recuperación Total – BPS Performance` | 86 |
-| BPS Recovery Pod | `BPS Recovery Pod: Bañera de Hielo Portátil para Inmersión en Frío – BPS Performance` | 83 |
-| BPS Pro-Panel | `BPS Pro-Panel: Panel de Terapia de Luz Roja de Cuerpo Completo – BPS Performance` | 80 |
-| Presoterapia BPS PRO | `Presoterapia BPS PRO | Recuperación Muscular Profesional en 2026 – BPS Performance` | 82 |
-| Presoterapia BPS Plus | `Presoterapia BPS Plus | Recuperación Muscular Profesional – BPS Performance` | 75 |
-| Pistola de Masaje | `Pistola de Masaje Muscular de Percusión Profesional BPS – BPS Performance` | 73 |
-| Gafas NIGHT MAX / FLOW / DAILY | `BPS Recovery Glasses - Gafas con filtro NIGHT MAX – BPS Performance` | 67-69 |
-
-Google enseña unos **55-60 caracteres**. Todo lo que pase de ahí no existe.
-
-Y hay un segundo problema, más de fondo: **empiezan por el nombre del modelo**.
-Nadie busca «BPS Pro-Panel»; buscan «panel de luz roja». Lo que va delante es lo
-que Google más pesa, así que la palabra que la gente teclea tiene que ir primero
-y el nombre de la gama después.
-
-### Cómo debe quedar
-
-Títulos de **50-60 caracteres** que **empiecen por lo que se busca** y lleven
-«BPS» dentro, para que el tema no añada nada:
-
-| Producto | «Título de la página» propuesto | Nº |
-|---|---|---|
-| Presoterapia BPS Plus | `Botas de presoterapia inalámbricas — BPS Plus` | 45 |
-| Presoterapia BPS PRO | `Presoterapia profesional 4 cámaras — BPS Pro` | 44 |
-| BPS Fusion Boots | `Botas de presoterapia con luz roja — BPS Fusion` | 47 |
-| BPS Pro-Panel | `Panel de luz roja cuerpo completo — BPS Pro-Panel` | 49 |
-| BPS Clinic-Stand | `Lámpara de luz roja con soporte — BPS Clinic-Stand` | 50 |
-| BPS Red Light Mini | `Luz roja portátil 660 y 850 nm — BPS Red Light Mini` | 51 |
-| BPS Ice Bath | `Bañera de crioterapia portátil — BPS Ice Bath` | 45 |
-| BPS Recovery Pod | `Bañera de hielo portátil — BPS Recovery Pod` | 43 |
-| Pistola de Masaje | `Pistola de masaje de percusión profesional — BPS` | 48 |
-| Gafas NIGHT MAX | `Gafas de filtro de luz azul para dormir — NIGHT MAX` | 51 |
-| Gafas NIGHT FLOW | `Gafas de filtro de luz azul para la noche — NIGHT FLOW` | 54 |
-| Gafas DAILY LIGHT | `Gafas de filtro de luz azul para pantallas — DAILY LIGHT` | 56 |
-
-> Estos títulos llevan «BPS» pero **no la cadena exacta «BPS Performance»**, así
-> que el tema sí les añadirá ` – BPS Performance`. Con 45-56 caracteres el total
-> queda en 63-74, y Google enseñará los primeros 60, que son los que importan.
-> Si prefieres control total, escribe el título terminando en `| BPS Performance`
-> y no pasarte de 60 en total.
-
-### Paso a paso
-
-Para cada producto:
-
-1. **Productos** → clic en el producto.
-2. **Baja hasta el final de la página**, hasta el bloque
-   **«Optimización para motores de búsqueda»**. Verás una vista previa de cómo
-   sale en Google.
-3. Pulsa **«Editar»** a la derecha de ese bloque.
-4. Se abren tres campos. En **«Título de la página»**, borra lo que haya y pega
-   el título de la tabla.
-   - Debajo del campo, Shopify pone un contador tipo `45 de 70 caracteres
-     usados`. **Que no pase de 60.**
-   - Si el campo está vacío, Shopify usa el nombre del producto. Al escribir algo
-     aquí, dejas de depender de ese nombre: **puedes tener un nombre de producto
-     largo y bonito en la web y un título corto en Google.** Eso es justo lo que
-     buscamos.
-5. **No toques «Identificador de URL».**
-6. **Guardar**.
-
-### Cómo comprobarlo
-
-Dos maneras:
-
-- **Rápida:** abre la ficha en el navegador y mira **el texto de la pestaña**. Es
-  exactamente lo que verá Google.
-- **Buena:** en Search Console, cuando pasen unos días, mira que el título nuevo
-  aparece en los resultados. Google tarda de días a semanas en refrescarlo, y a
-  veces decide reescribirlo él; eso es normal y no se puede evitar.
-
----
-
-## 6 · Ninguna ficha tiene SKU ni código de barras
-
-### Cómo está ahora
-
-Las 12 fichas están **sin SKU y sin código de barras**. Para la web no es grave.
-Para **Google Shopping y el Merchant Center sí**: sin identificador, tus productos
-se enseñan menos que los de la competencia, tanto en los anuncios como en las
-fichas gratuitas.
-
-### Cómo debe quedar
-
-- **SKU**: siempre. Es tu código interno; te lo inventas tú. Sirve para el
-  inventario y para los informes.
-- **Código de barras (EAN/GTIN)**: si el fabricante te da uno, se pone. Si son
-  productos de marca propia sin EAN, se deja vacío y en el Merchant Center se
-  declara que no existe.
-
-Una nomenclatura sencilla y consistente:
-
-| Producto | SKU propuesto |
-|---|---|
-| Presoterapia BPS Plus | `BPS-PRES-PLUS` |
-| Presoterapia BPS PRO | `BPS-PRES-PRO` |
-| BPS Fusion Boots | `BPS-PRES-FUSION` |
-| BPS Pro-Panel | `BPS-LUZ-PANEL` |
-| BPS Clinic-Stand | `BPS-LUZ-STAND` |
-| BPS Red Light Mini | `BPS-LUZ-MINI` |
-| BPS Ice Bath | `BPS-FRIO-ICEBATH` |
-| BPS Recovery Pod | `BPS-FRIO-POD` |
-| Pistola de Masaje | `BPS-MUSC-PISTOLA` |
-| Gafas NIGHT MAX | `BPS-GAFAS-NMAX` |
-| Gafas NIGHT FLOW | `BPS-GAFAS-NFLOW` |
-| Gafas DAILY LIGHT | `BPS-GAFAS-DAILY` |
-
-### Paso a paso
-
-1. **Productos** → clic en el producto.
-2. Baja al bloque **«Inventario»**.
-3. En **«SKU (unidad de mantenimiento de existencias)»**, escribe el código.
-4. Si tienes EAN, en **«Código de barras (ISBN, UPC, GTIN, etc.)»**.
-5. **Guardar**.
-
-> Con la edición masiva va mucho más rápido: **Productos** → marca los 12 →
-> **«Acciones»** → **«Editar productos»** → **«Columnas»** → activa **«SKU»**.
-> Rellenas la tabla y guardas una vez.
-
-### Cómo comprobarlo
-
-**Productos** → **«Acciones»** → **«Editar productos»** con la columna SKU
-activa: los 12 deben tener valor y **ninguno repetido**.
-
----
-
-## 9 · Los textos alternativos de las galerías están repetidos
-
-### Cómo está ahora
-
-En cada ficha, **las cinco o seis fotos de la galería llevan el mismo texto
-alternativo**. En la pistola de masaje, por ejemplo, las cinco dicen «Pistola de
-Masaje Muscular de Percusión Profesional BPS».
-
-El texto alternativo es la descripción de la imagen que leen Google y los lectores
-de pantalla. Repetido, no aporta nada. Y en este sector **Google Imágenes trae
-tráfico real**: la gente busca «botas de presoterapia» y compra por la foto.
-
-### Cómo debe quedar
-
-Cada foto describe **lo que se ve en esa foto**, en 8-15 palabras, con la palabra
-clave metida de forma natural. Ejemplo con la pistola:
-
-| Foto | Texto alternativo |
-|---|---|
-| 1, la principal | `Pistola de masaje de percusión BPS sobre fondo blanco` |
-| 2, los cabezales | `Los cuatro cabezales de la pistola de masaje BPS: bola, plano, bala y horquilla` |
-| 3, la pantalla | `Pantalla de la pistola de masaje BPS con los niveles de intensidad` |
-| 4, en uso | `Pistola de masaje BPS aplicada sobre el cuádriceps de un corredor` |
-| 5, el maletín | `Maletín de transporte de la pistola de masaje BPS con los accesorios` |
-
-Reglas: **sin empezar por «foto de» o «imagen de»** (ya se sabe que es una
-imagen), sin repetir el nombre completo del producto en todas, y describiendo el
-detalle que aporta cada una.
-
-### Paso a paso
-
-1. **Productos** → clic en el producto.
-2. En el bloque **«Multimedia»**, pasa el ratón por encima de una foto: aparecen
-   unos iconos. Pulsa la foto para abrirla a tamaño grande.
-3. Arriba, en la vista de la foto, hay un botón **«Agregar texto alternativo»**
-   (o **«Editar texto alternativo»** si ya tiene). Púlsalo.
-4. Escribe la descripción y pulsa **«Guardar texto alternativo»**.
-5. Cierra la foto con la **X** y repite con las demás.
-
-Son unas 60 fotos entre las 12 fichas. **Una hora bien invertida**, pero se puede
-repartir: haz primero los productos que más vendes.
-
-### Cómo comprobarlo
-
-Abre la ficha en el navegador, clic derecho sobre una foto de la galería →
-**«Inspeccionar»**, y busca `alt="..."` en la línea marcada. Debe salir tu texto.
-
----
-
-# B. Colecciones
-
-## 4 · Las cuatro colecciones desaprovechan el título y la descripción
-
-### Cómo está ahora
-
-Las cuatro colecciones **no tienen nada escrito en la caja de SEO**, así que
-Shopify se inventa el título con el nombre de la colección y usa la descripción
-corta como meta descripción. Resultado:
-
-| Colección | Etiqueta actual | Nº | Descripción actual | Nº |
-|---|---|---|---|---|
-| `presoterapia` | `Presoterapia – BPS Performance` | 30 | `Drenaje linfático, recuperación muscular y piernas ligeras` | 58 |
-| `energia-luminica` | `Terapia de luz roja – BPS Performance` | 37 | `Regenera tejidos, reduce la inflamación y acelera la recuperación` | 65 |
-| `recuperacion-polar` | `Recuperación fría – BPS Performance` | 35 | `Reduce la inflamación, acelera la recuperación y fortalece el cuerpo.` | 69 |
-| `liberacion-muscular` | `Liberación muscular – BPS Performance` | 37 | `Alivia tensiones, mejora la movilidad y previene lesiones.` | 58 |
-
-Con 30 caracteres de 60 y 58 de 155, estás **regalando la mitad del espacio** que
-Google te da en la página de resultados. Y las colecciones son las páginas que
-mejor pueden competir por las búsquedas de compra («botas de presoterapia»,
-«panel de luz roja»), porque en ellas hay producto.
-
-### Cómo debe quedar
-
-| Colección | «Título de la página» | «Meta descripción» |
-|---|---|---|
-| `presoterapia` | `Botas de presoterapia para recuperación muscular` (48) | `Botas de presoterapia BPS para recuperar antes: 4 y 8 cámaras, inalámbricas y con luz roja. Envío gratis y asesoramiento antes de comprar.` (137) |
-| `energia-luminica` | `Terapia de luz roja: paneles, lámparas y portátiles` (51) | `Equipos de terapia de luz roja e infrarroja de 660 y 850 nm: panel de cuerpo completo, lámpara con soporte y dispositivo portátil.` (130) |
-| `recuperacion-polar` | `Bañeras de hielo y crioterapia para recuperación` (48) | `Bañeras de hielo y crioterapia portátiles para inmersión en frío en casa o en clínica. Montaje sencillo y asesoramiento incluido.` (129) |
-| `liberacion-muscular` | `Pistolas de masaje y liberación miofascial` (42) | `Pistola de masaje de percusión profesional BPS para liberar tensión y mejorar la movilidad. Cuatro cabezales y varios niveles.` (126) |
-
-> **La descripción corta de la colección se sigue usando en el menú.** El
-> desplegable de la cabecera enseña esa descripción debajo del nombre, así que
-> **no la borres**: lo que se rellena aquí es la caja de SEO, que es otra cosa.
-
-### Paso a paso
-
-1. **Productos** → **Colecciones** → clic en **Presoterapia**.
-2. Baja hasta **«Optimización para motores de búsqueda»** → **«Editar»**.
-3. Rellena **«Título de la página»** y **«Meta descripción»** con los textos de
-   la tabla.
-4. **No toques «Identificador de URL».**
-5. **Guardar**.
-6. Repite con las otras tres.
-
-### Cómo comprobarlo
-
-Abre la colección y mira **el texto de la pestaña del navegador**: debe ser el
-título nuevo. Para la descripción, clic derecho → **«Ver código fuente»** y busca
-`name="description"`.
-
----
-
-## 5 · El título de «Los más buscados» se ha ido de largo
-
-### Cómo está ahora
-
-`Los más buscados BPS | Productos de Recuperación y Rendimiento en 2026 – BPS
-Performance` = **88 caracteres**. Se corrigió la descripción pero el título se
-pasó al otro extremo. Además repite «BPS» dos veces.
-
-### Cómo debe quedar
-
-`Los más vendidos en recuperación deportiva — BPS` (47).
-
-Y un consejo: el «en 2026» de los títulos **conviene quitarlo de las colecciones
-y de los productos**. En un artículo tiene sentido —da frescura y se actualiza
-cada enero—, pero en una colección obliga a cambiarlo todos los años y no aporta.
-
-### Paso a paso
-
-Igual que la ficha 4: **Productos** → **Colecciones** → **Los más buscados** →
-abajo **«Editar»** → cambia **«Título de la página»** → **Guardar**.
-
----
-
-## 17 · Las colecciones no tienen texto propio
-
-### Cómo está ahora
-
-Contando el menú y el pie, las cuatro colecciones tienen entre **493 y 742
-palabras**; de texto propio, la descripción de una línea y nada más. Una página
-así compite mal contra una tienda que explica cómo elegir.
-
-### Cómo debe quedar
-
-**300-500 palabras propias** en cada colección, colocadas **debajo de la rejilla
-de productos** para no empujar el producto hacia abajo. Estructura que funciona:
-
-1. Un párrafo de qué es y para quién (3-4 líneas).
-2. **Cómo elegir**: 3 o 4 criterios con sus opciones. Esto es lo que más se lee.
-3. Una tabla comparando los productos de la colección.
-4. Un enlace al artículo del blog de esa tecnología, con texto descriptivo.
-
-### Paso a paso
-
-El campo de descripción de la colección se enseña **arriba**, así que el texto
-largo no va ahí. Va en una sección de la plantilla:
-
-1. **Tienda online** → **Temas** → **Personalizar**.
-2. Arriba, en el selector de plantilla, elige
-   **«Colecciones» → «Presoterapia»** (o «Predeterminada» si quieres el mismo
-   bloque en todas).
-3. En la columna izquierda pulsa **«Agregar sección»**.
-4. Elige **«Texto enriquecido»**.
-5. **Arrástrala por debajo** de la sección «Cuadrícula de productos».
-6. Pega el texto en el bloque de texto de la sección. Puedes usar negritas,
-   listas y enlaces con la barra de herramientas.
-7. **Guardar**.
-
-> Si eliges «Predeterminada», el mismo texto sale en las cinco colecciones, lo
-> cual es peor que no tenerlo (contenido duplicado). **Hazlo colección por
-> colección**: cada una necesita su plantilla propia. Para crearla:
-> **Personalizar** → selector de plantilla → **«Colecciones»** → **«Crear
-> plantilla»**, y luego en la colección asignársela desde
-> **Productos → Colecciones → la colección → «Plantilla de tema»**.
-
-### Los ajustes de la sección, y por qué salía estrecho
-
-En `/collections/presoterapia` el texto salía en una **columna de 516px dentro de
-un marco de 1380**, pegada a la izquierda y con un hueco enorme a la derecha.
-**No era un ajuste mal puesto: era nuestra hoja de estilos.** El apartado 17 de
-`bps-hyperice.css` limitaba el texto de esta sección a `58ch`, porque estaba
-pensada para una frase de marca de dos líneas encima de otra sección, no para un
-texto largo.
-
-**Ya está corregido:** cuando la sección está en «Ancho completo», el texto usa
-el ancho de la página. Medido después: el texto arranca en x=30 con 1.380 de
-ancho, **exactamente el mismo marco que la rejilla de productos**, y en tableta y
-móvil también coincide (708 y 360). Los encabezados escritos en el editor pasan a
-la escala del artículo —32px los `h2`, 20px los `h3`— porque un `h1` del editor
-salía a **72px**, más grande que el título de la colección, que mide 48.
-
-**Hay que volver a subir `bps-hyperice.css`.**
-
-Con la hoja nueva, estos son los ajustes de la sección que hay que dejar puestos:
-
-| Ajuste | Valor | Por qué |
-|---|---|---|
-| **Ancho completo** | **Activado** | Es lo que le dice a la hoja que esto es un texto largo y no un titular |
-| **Alineación del contenido** | **Izquierda** | Un texto largo se lee alineado a la izquierda |
-| **Esquema de color** | El claro | El texto va sobre fondo blanco, como el resto de la página |
-| Relleno superior / inferior | 60 y 60 | Lo que ya tienes |
-
-> **Si prefieres líneas más cortas**, desactiva «Ancho completo»: la hoja vuelve
-> a limitar el texto a unos 58 caracteres por línea y lo centra. A 1440px el
-> texto a todo el ancho da líneas de unos 160 caracteres, que es largo; a cambio,
-> las filas de «término: explicación» —que es la mayor parte de tu texto— se leen
-> mejor porque cada una cabe en una o dos líneas. Con el contenido que has
-> escrito, **el ancho completo queda mejor**.
-
-### ⚠️ Y una cosa que sí es de SEO: el `h1` del texto
-
-El texto que has escrito empieza con un **encabezado H1**: «Botas de Presoterapia
-Deportiva y Recuperación Muscular Avanzada». La página ya tiene su propio `h1`,
-que es el título de la colección, así que ahora **hay dos `h1`** y Google no sabe
-cuál manda.
-
-Cámbialo a **H2**:
-
-1. **Tienda online** → **Temas** → **Personalizar** → plantilla de la colección.
-2. Clic en la sección de texto enriquecido → clic en el bloque de texto.
-3. Selecciona esa primera línea. En la barra de herramientas del editor, en el
-   desplegable de formato, cambia **«Encabezado 1»** por **«Encabezado 2»**.
-4. **Guardar**.
-
-Y al escribir las otras tres colecciones, **empieza directamente por H2**: el H1
-de la página es siempre el título de la colección. La jerarquía correcta es
-H1 (título) → H2 (apartados) → H3 (dentro de un apartado).
-
----
-
-# C. Páginas, blog e imágenes
-
-## 8 · El H1 de la home no dice nada
-
-### Cómo está ahora
-
-Un `H1` es el titular principal de una página y es de las señales más fuertes que
-lee Google. En la home hay **un solo H1 y es el logotipo**, cuyo texto es el texto
-alternativo de la imagen: **«logo BPS horizontal blanco»**.
-
-El titular de verdad —«BPS Performance: Recupera. Rinde. Repite.»— es un `h2`.
-
-O sea: el encabezado más importante de la página más importante dice «logo BPS
-horizontal blanco».
-
-### Cómo debe quedar
-
-Cambiando el texto alternativo del logotipo, el H1 de la home pasa a decir algo
-útil. Y de paso mejora en todas las páginas, porque es la misma imagen.
-
-Texto propuesto: **`BPS Performance, tecnología de recuperación deportiva`**
-
-### Paso a paso
-
-1. Columna izquierda → **Contenido** → **Archivos**.
-2. En el buscador de arriba escribe `bps-logo`.
-3. Clic en **`bps-logo-horizontal-white.svg`**.
-4. Se abre un panel a la derecha con la vista previa. Busca el campo
-   **«Texto alternativo»** y pulsa el lápiz o **«Editar»**.
-5. Borra `logo BPS horizontal blanco` y escribe
-   `BPS Performance, tecnología de recuperación deportiva`.
-6. **Guardar**.
-
-### Cómo comprobarlo
-
-Abre la home, clic derecho → **«Ver código fuente de la página»**, y busca
-`<h1`. Dentro tiene que estar el texto nuevo.
-
-> **¿Y no sería mejor un H1 de verdad en el banner?** Sí, pero el titular del
-> banner está fijado como `h2` en el código del tema y cambiarlo obliga a editar
-> `sections/image-banner.liquid`, o sea otro archivo que rehacer en cada
-> actualización. El texto alternativo del logotipo consigue el 80 % del beneficio
-> sin tocar código, y es como está diseñado el tema. Si algún día queréis el H1
-> en el banner, avisad y son dos líneas.
-
----
-
-## 10 · El banner de la home no tiene texto alternativo
-
-### Cómo está ahora
-
-`Banner_BPS.png` sale con `alt=""`, es decir, marcado como decorativo. Es la
-imagen más grande y más vista del sitio.
-
-*(Dato aparte: pesa 1,9 MB como PNG, pero el navegador recibe 285 KB porque
-Shopify lo convierte a WebP solo. Aun así, **súbelo como JPG** la próxima vez: un
-PNG de una fotografía es el formato equivocado.)*
-
-### Paso a paso
-
-1. **Contenido** → **Archivos** → busca `Banner_BPS`.
-2. Clic en el archivo → campo **«Texto alternativo»** → **«Editar»**.
-3. Escribe algo como
-   `Deportista usando botas de presoterapia BPS en un centro de recuperación`.
-4. **Guardar**.
-
----
-
-## 11 · La página de preguntas frecuentes no tiene su marcado
-
-### Cómo está ahora
-
-`/pages/preguntas-frecuentes` tiene **955 palabras de preguntas y respuestas** y
-**ningún marcado `FAQPage`**. Ese marcado es lo que hace que Google enseñe las
-preguntas desplegables debajo de tu resultado, que ocupan mucho más espacio.
-
-El artículo de presoterapia sí lo tiene, así que el mecanismo ya funciona en la
-tienda: solo hay que aplicarlo aquí.
-
-### Cómo debe quedar
-
-Con un bloque de datos estructurados en esa página, con las mismas preguntas que
-ya están escritas.
-
-### Paso a paso
-
-1. **Tienda online** → **Temas** → **Personalizar**.
-2. En el selector de plantilla de arriba, elige **«Páginas»** →
-   **«Preguntas frecuentes»**.
-3. Columna izquierda → **«Agregar sección»** → **«Liquid personalizado»**.
-4. En el cuadro de código pega esto, **cambiando las preguntas por las de tu
-   página** (copia y pega el bloque `{ "@type": "Question" ... }` tantas veces
-   como preguntas tengas):
-
-```liquid
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "AQUÍ LA PREGUNTA, IGUAL QUE EN LA PÁGINA",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "AQUÍ LA RESPUESTA, IGUAL QUE EN LA PÁGINA"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "SEGUNDA PREGUNTA",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "SEGUNDA RESPUESTA"
-      }
-    }
-  ]
-}
-</script>
-```
-
-5. **Guardar**.
-
-Tres reglas para que Google no lo rechace:
-
-- **El texto tiene que ser el mismo** que se ve en la página. Si inventas
-  preguntas que no están escritas, es motivo de sanción.
-- **Sin comillas dobles dentro del texto.** Si una respuesta lleva comillas, usa
-  las españolas «así» o quítalas.
-- **Cuidado con las comas**: la última pregunta **no** lleva coma después de su
-  llave de cierre.
-
-### Cómo comprobarlo
-
-Ve a **`search.google.com/test/rich-results`**, pega
-`https://bpsperformance.com/pages/preguntas-frecuentes` y pulsa **«Probar
-URL»**. Debe salir **«Preguntas frecuentes»** entre los resultados detectados y
-sin errores.
-
----
-
-## 12 · Los dos artículos nuevos no tienen preguntas frecuentes
-
-### Cómo está ahora
-
-De los tres artículos publicados, **solo `presoterapia-en-casa` tiene el marcado
-`FAQPage`**. A `banera-crioterapia` y `led-boots-recuperacion` les falta.
-
-El mecanismo ya está montado en la tienda: hay un metacampo donde se escriben las
-preguntas y el tema las convierte en marcado. Solo hay que rellenarlo.
-
-### Paso a paso
-
-1. **Contenido** → **Publicaciones de blog** → clic en
-   **«Bañera de crioterapia: la guía definitiva…»**.
-2. Baja hasta el final. Hay un bloque de **«Metacampos»** con el campo de
-   preguntas frecuentes.
-3. Añade de 4 a 6 preguntas con su respuesta, **copiando el texto del propio
-   artículo**.
-4. **Guardar**.
-5. Repite con **«LED Boots para recuperación»**.
-
-> Si el campo da el error **«Value no existe entre las opciones proporcionadas:
-> []»**, es que el metacampo se creó con el tipo equivocado. Está explicado en
-> [GUIA-BLOG.md](GUIA-BLOG.md) §5: hay que borrarlo y volver a crearlo como
-> **«Uno · Varias líneas de texto»**.
-
-### Cómo comprobarlo
-
-El mismo test de resultados enriquecidos con la URL del artículo.
-
----
-
-## 16 · La página de contacto no muestra los datos de la empresa
-
-### Cómo está ahora
-
-El marcado `Organization` declara dirección en **Paseo de la Reina Cristina, 11,
-28014 Madrid**, un teléfono y un correo. Pero **`/pages/contacto` no muestra
-ninguno de los tres**: solo un formulario, un enlace de WhatsApp y las redes.
-
-Google compara lo que dice el marcado con lo que se ve en la página. Si no lo
-puede corroborar, no se lo cree. Y para posicionar por marca, que Google se crea
-que eres una empresa con dirección física es de las señales que más pesan.
-
-### Cómo debe quedar
-
-Con un bloque visible, al lado del formulario, que diga exactamente lo mismo que
-el marcado:
-
-```
-BPS Performance
-Paseo de la Reina Cristina, 11
-28014 Madrid, España
-Teléfono: +34 619 06 51 66
-Correo: [el correo de la tienda]
-Horario: [el que sea]
-```
-
-**Idéntico** al del marcado y al de Google Business Profile: misma calle, mismo
-número, mismo formato de teléfono. Eso se llama coherencia NAP (nombre, dirección,
-teléfono) y es literalmente lo que se comprueba.
-
-### Paso a paso
-
-1. **Contenido** → **Páginas** → clic en **Contacto**.
-2. En el editor de **«Contenido»**, sitúa el cursor donde quieras el bloque.
-3. Escribe los datos. Para que el teléfono se pueda pulsar en el móvil: selecciona
-   el número, pulsa el icono de **enlace** (una cadena) y en la dirección escribe
-   `tel:+34619065166`.
-4. **Guardar**.
-
----
-
-## 18 · El blog tiene dos H1 iguales *(opcional)*
-
-### Cómo está ahora
-
-`/blogs/rendimiento` tiene **dos `<h1>` con el texto «Recuperación y
-rendimiento»**: el de nuestro bloque de cabecera y el de Dawn, que se esconde con
-CSS. Esconder no es quitar: en el código siguen los dos.
-
-### Las dos opciones
-
-- **Dejarlo.** Google ignora en gran medida el contenido oculto con
-  `display: none`, así que el daño es pequeño. **Es la opción razonable.**
-- **Quitarlo de verdad**: **Tienda online** → **Temas** → **···** →
-  **Editar código** → `sections/main-blog.liquid`, y borrar la línea del título.
-  Queda limpio, pero pasa a ser un archivo más que rehacer en cada actualización
-  del tema (serían seis).
-
----
-
-# D. Datos estructurados y código del tema
-
-Estas tres tareas se hacen en el mismo sitio, así que se pueden hacer del tirón.
-
-## 13 · Tres tipos de página no deberían indexarse
-
-### Cómo está ahora
-
-Estas direcciones se pueden indexar y no interesa:
+Comprobado hoy: las tres responden **sin ninguna instrucción para buscadores**,
+o sea que Google las puede indexar.
 
 | Dirección | Por qué molesta |
 |---|---|
-| `/search?q=...` | Páginas de búsqueda interna. Google las trata como contenido de baja calidad, y una vez indexadas arrastran a todo el dominio |
-| `/collections/all` | Duplica el contenido de las cuatro colecciones: los mismos 12 productos otra vez |
-| `/blogs/rendimiento/tagged/...` | Con 3 artículos, cada etiqueta es una página con un solo artículo. Es un duplicado del listado |
+| `/search?q=...` | Páginas de búsqueda interna. Google las trata como contenido de baja calidad y, una vez indexadas, arrastran a todo el dominio |
+| `/collections/all` | Duplica el contenido de las cinco colecciones: los mismos 12 productos otra vez |
+| `/blogs/rendimiento/tagged/...` | Con 3 artículos, cada etiqueta es una página con un solo artículo: un duplicado del listado |
 
 ### Cómo debe quedar
 
-Las tres con la instrucción `noindex, follow`: **que no se indexen, pero que
-Google siga los enlaces que hay dentro** (esa segunda parte importa: sin ella se
-perdería el enlace interno hacia los productos).
+Las tres con `noindex, follow`: **que no se indexen, pero que Google siga los
+enlaces de dentro**. Esa segunda parte importa, porque si no se perdería el
+enlace interno hacia los productos.
 
 ### Paso a paso
 
-1. **Tienda online** → **Temas**.
-2. Junto al tema activo, botón **···** → **«Editar código»**.
-3. En la columna izquierda, carpeta **`layout`** → clic en **`theme.liquid`**.
-4. Busca la etiqueta `</head>` (con `Ctrl+F` / `Cmd+F` dentro del editor).
-5. **Justo encima** de `</head>`, pega:
+> ⚠️ **Antes de tocar `theme.liquid`, duplica el tema**: en **Temas**, botón
+> **···** del tema activo → **«Duplicar»**. Si algo se rompe, publicas el
+> duplicado y vuelves atrás en un clic.
+
+1. **Tienda online** → **Temas** → **···** → **«Editar código»**.
+2. Columna izquierda, carpeta **`layout`** → clic en **`theme.liquid`**.
+3. Busca `</head>` con `Ctrl+F` / `Cmd+F` **dentro del editor**.
+4. **Justo encima** de `</head>`, pega esto:
 
 ```liquid
 {%- if request.path contains '/search'
@@ -961,205 +152,222 @@ perdería el enlace interno hacia los productos).
 {%- endif -%}
 ```
 
-6. Pulsa **«Guardar»** arriba a la derecha.
-
-> ⚠️ **Antes de tocar `theme.liquid`, haz una copia del tema**: en **Temas**,
-> botón **···** del tema activo → **«Duplicar»**. Si algo se rompe, publicas el
-> duplicado y vuelves atrás en un clic.
+5. **Guardar**.
 
 ### Cómo comprobarlo
 
-Abre `https://bpsperformance.com/search?q=prueba`, clic derecho → **«Ver código
-fuente»** y busca `robots`. Debe aparecer
-`<meta name="robots" content="noindex, follow">`. Y **muy importante**:
-comprueba que en la home y en una ficha de producto **NO** aparece.
+1. Abre `https://bpsperformance.com/search?q=prueba`, clic derecho →
+   **«Ver código fuente de la página»** y busca `robots`. Debe salir
+   `<meta name="robots" content="noindex, follow">`.
+2. **Y muy importante:** abre la home y una ficha de producto y comprueba que ahí
+   **NO** aparece. Si apareciera, habrías desindexado la tienda entera.
 
 ---
 
-## 14 · El correo del marcado está en otro dominio
+# 3 · Los títulos de los tres artículos se cortan
 
 ### Cómo está ahora
 
-El bloque `Organization` que añadisteis dice:
+Es el mismo problema que ya arreglasteis en los productos, pero en el blog:
 
-```json
-"email": "info@fisioterapiabackpackretiro.es",
-"telephone": "619065166"
-```
+| Artículo | Etiqueta que sale hoy | Nº |
+|---|---|---|
+| Bañera de crioterapia | `Bañera de crioterapia: La guía definitiva para atletas y fisioterapeut – BPS Performance` | **88** ✂️ |
+| LED Boots | `LED Boots para recuperación: ¿funcionan? análisis y beneficios en 2026 – BPS Performance` | **88** |
+| Presoterapia en casa | `Presoterapia en casa: qué es, para qué sirve y cómo escogerla en 2026 – BPS Performance` | **87** |
 
-Dos problemas:
+El primero se corta a mitad de palabra —«fisioterapeut»— porque el campo **«Título
+de la página» admite 70 caracteres** y se ha rellenado con el título completo del
+artículo. Y encima el tema le añade ` – BPS Performance`, otros 18.
 
-- **El correo es de otro dominio.** Para Google, la señal de marca se debilita:
-  la ficha de empresa de `bpsperformance.com` da un contacto de
-  `fisioterapiabackpackretiro.es`. Funciona igual como correo, pero como señal de
-  identidad resta.
-- **El teléfono no está en formato internacional.** Debe ser `+34619065166`.
-
-### Cómo debe quedar
-
-```json
-"email": "info@bpsperformance.com",
-"telephone": "+34619065166"
-```
-
-### Paso a paso
-
-Primero hay que **tener el correo del dominio**. Si no existe:
-
-1. **Configuración** (abajo a la izquierda) → **Dominios**.
-2. Busca la opción de **reenvío de correo** o **«Correo electrónico del
-   dominio»**, y crea `info@bpsperformance.com` reenviando al buzón que ya usáis.
-   Así no cambia nada de vuestro día a día y de cara al mundo el contacto es
-   vuestro.
-
-Luego, el marcado:
-
-1. **Tienda online** → **Temas** → **Personalizar**.
-2. Ve a la **home** y busca la sección de **«Liquid personalizado»** donde está el
-   bloque `Organization` (la que añadisteis).
-3. Cambia esas dos líneas.
-4. **Guardar**.
-
-### Cómo comprobarlo
-
-Test de resultados enriquecidos con `https://bpsperformance.com/`: en el bloque
-`Organization` deben salir el correo y el teléfono nuevos.
-
----
-
-## 15 · El logotipo del marcado es un SVG
-
-### Cómo está ahora
-
-```json
-"logo": "https://bpsperformance.com/cdn/shop/files/bps-logo-horizontal-white.svg"
-```
-
-Google, para el logotipo de una empresa, acepta **JPG, PNG y GIF**. **El SVG no
-está entre los formatos admitidos**, así que ese campo probablemente lo está
-ignorando — y es el que alimenta el logotipo del panel de marca. Además el
-logotipo es **blanco**, o sea invisible sobre el fondo blanco de Google.
+**Recordatorio de la regla:** el tema coge el «Título de la página» y, si ese
+texto **no** contiene «BPS Performance», le pega la marca al final. Así que hay
+dos maneras de que quepa: o el título mide 40 o menos, o mide hasta 60 pero ya
+incluye «BPS Performance».
 
 ### Cómo debe quedar
 
-Un **PNG con el logotipo en negro o en color, con fondo transparente**, de al
-menos 112 px de alto, y de proporción cuadrada o rectangular sencilla.
+| Artículo | «Título de la página» propuesto | Nº |
+|---|---|---|
+| Bañera de crioterapia | `Bañera de crioterapia: guía para atletas y clínicas` | 51 |
+| LED Boots | `LED Boots: ¿funcionan para recuperar? Qué dice la evidencia` | 58 |
+| Presoterapia en casa | `Presoterapia en casa: para qué sirve y cómo elegirla` | 52 |
+
+Y quitad el «en 2026» de la etiqueta: obliga a cambiarlo cada enero. Dentro del
+artículo, en el texto, sí tiene sentido.
+
+> **El título del artículo puede seguir siendo largo.** Lo que se cambia es solo
+> el campo de SEO. Es la misma separación que ya usáis en los productos: nombre
+> largo en la web, título corto en Google.
 
 ### Paso a paso
 
-1. Exporta el logotipo como **PNG** desde donde tengáis el original (idealmente
-   600 × 600 px, con márgenes, fondo transparente, versión oscura).
-2. **Contenido** → **Archivos** → botón **«Cargar archivos»** → súbelo.
-3. Cuando termine, clic en el archivo. En el panel de la derecha hay un botón
-   para **copiar el enlace** del archivo. Cópialo.
-4. **Tienda online** → **Temas** → **Personalizar** → la sección de **«Liquid
-   personalizado»** de la home con el `Organization`.
-5. Sustituye la dirección de `"logo"` por la que acabas de copiar. **Quítale
-   todo lo que venga después de `?`**, del tipo `?v=1788192622&width=500`.
+Para cada uno de los tres:
+
+1. **Contenido** → **Publicaciones de blog** → clic en el artículo.
+2. Baja hasta el final, al bloque **«Optimización para motores de búsqueda»**.
+3. Pulsa **«Editar»**.
+4. En **«Título de la página»**, borra lo que haya y pega el título de la tabla.
+   Vigila el contador: **que no pase de 60**.
+5. **No toques «Identificador de URL».**
 6. **Guardar**.
 
+### Cómo comprobarlo
+
+Abre el artículo y mira **el texto de la pestaña del navegador**: es exactamente
+lo que verá Google. No debe acabar en una palabra partida.
+
 ---
 
-# E. Fuera de Shopify
-
-## 7 · No hay reseñas, y eso se nota en dos sitios
+# 4 · No hay reseñas
 
 ### Cómo está ahora
 
-**No hay ninguna aplicación de reseñas instalada** en la tienda. Consecuencia: en
-el marcado de las 12 fichas **no hay `aggregateRating`**, o sea:
+**Ninguna aplicación de reseñas instalada.** Comprobado en el marcado de las 12
+fichas: no hay `aggregateRating` en ninguna.
 
-- En Google **no salen las estrellas** debajo del resultado. Las estrellas son lo
-  que más sube el porcentaje de clics de una ficha de producto, por encima de
-  cualquier cambio de título.
-- Y en la propia ficha, una página con 40 reseñas convierte mucho más que una sin
-  ninguna.
+Es, con diferencia, **lo que más margen de mejora tiene ahora mismo**, por dos
+motivos:
+
+- En Google **no salen las estrellas** debajo del resultado. Las estrellas suben
+  el porcentaje de clics más que cualquier cambio de título, y los títulos ya los
+  habéis arreglado.
+- En la propia ficha, una página con 40 reseñas convierte mucho más que una sin
+  ninguna. Y con productos de 549 a 2.500 €, la prueba social es determinante.
+
+### Cómo debe quedar
+
+Una aplicación que escriba el marcado de valoraciones y pida la reseña por correo
+después de cada entrega.
 
 ### Paso a paso
 
 1. Columna izquierda → **Aplicaciones** → **«Tienda de aplicaciones de
    Shopify»**.
-2. Busca `Judge.me` (tiene plan gratuito y escribe el marcado correctamente).
+2. Busca **`Judge.me`** (plan gratuito y escribe el marcado correctamente).
    Alternativas de pago: Loox, Okendo, Stamped.
-3. **«Instalar»** y sigue el asistente. Dos ajustes importantes:
-   - Activar **los datos estructurados / rich snippets** (a veces se llama
-     «SEO rich snippets»), que es lo que pone las estrellas.
-   - Activar el **correo automático de petición de reseña** unos 10-14 días
-     después de la entrega.
-4. En la propia aplicación, **importa o pide reseñas de los pedidos ya
-   servidos**. Casi todas tienen un botón para enviar la petición a los pedidos
-   anteriores.
+3. **«Instalar»** y sigue el asistente. Dos ajustes que hay que dejar activados:
+   - Los **datos estructurados** o *SEO rich snippets*: es lo que pone las
+     estrellas en Google.
+   - El **correo automático de petición de reseña**, 10-14 días después de la
+     entrega.
+4. Dentro de la aplicación, busca la opción de **pedir reseña a los pedidos ya
+   servidos**. Casi todas la tienen, y de ahí saldrán las primeras.
 
-> ⚠️ **No compres reseñas ni las escribas tú.** Además de ilegal en la Unión
-> Europea, Google detecta el marcado de valoraciones sin reseñas reales detrás y
-> retira las estrellas de todo el dominio.
+> ⚠️ **No compréis reseñas ni las escribáis vosotros.** Además de ilegal en la
+> Unión Europea, Google detecta el marcado de valoraciones sin reseñas reales
+> detrás y retira las estrellas de **todo el dominio**.
 
 ### Cómo comprobarlo
 
-Cuando haya la primera reseña publicada, test de resultados enriquecidos sobre esa
-ficha: debe aparecer **«Fragmento de reseña»** o `aggregateRating`.
+Cuando haya la primera reseña publicada, ve a
+**`search.google.com/test/rich-results`**, pega la URL de esa ficha y pulsa
+**«Probar URL»**. Debe aparecer **«Fragmento de reseña»** o `aggregateRating`.
 
 ---
 
-## 19 · La marca: salir el primero cuando busquen «BPS Performance»
+# 5 · «Los más buscados» no tiene texto propio
 
-Primero, una expectativa que hay que tener clara:
+### Cómo está ahora
 
-| Qué se busca | ¿Primer puesto? | Cuándo |
-|---|---|---|
-| **`BPS Performance`** | **Sí, y es obligatorio** | 2-6 semanas con lo de abajo |
-| **`BPS`** a secas | **No, y no merece la pena.** Son tres letras que ya usan decenas de organizaciones grandes. Google resuelve esa búsqueda con quien ya tiene autoridad | — |
-| `BPS presoterapia`, `BPS Ice Bath` | Sí | 1-3 meses |
-| `presoterapia en casa`, `bañera de crioterapia` | Sí, y ahí está el negocio | 3-8 meses, con los artículos |
-| `botas de presoterapia` (compra genérica) | Difícil: eso lo tienen Amazon, Decathlon y marcas con diez años | 9-18 meses, y hace falta que os enlacen |
+Las otras cuatro colecciones tienen entre 1.036 y 1.268 palabras. Esta tiene
+**676 y ningún texto propio**: solo los productos, que además son **los mismos
+que ya están en las otras cuatro**.
 
-El objetivo con la marca no es solo salir: es salir **con el panel de la derecha,
-los enlaces de sitio y la cajita de búsqueda**, ocupando toda la pantalla. Para
-eso:
+Una colección así es un duplicado a ojos de Google.
 
-### 19.1. Perfil de Empresa en Google
+### Las dos opciones
+
+**Opción A · Darle su texto** *(recomendada si de verdad la vais a usar).*
+No repitáis lo de las otras colecciones: aquí el ángulo es distinto, algo del
+tipo «Los cinco equipos que más se llevan y para quién es cada uno». Con 300-400
+palabras basta. Se hace igual que en las otras: **Personalizar** → plantilla de
+la colección → sección **«Texto enriquecido»** debajo de la cuadrícula, con
+**«Ancho completo» activado** y empezando por **H2**.
+
+**Opción B · Que no se indexe.** Si es solo un escaparate para la home y no
+esperáis que entre nadie por Google, mejor sacarla del índice. Es una línea más
+en el `noindex` de la tarea 2:
+
+```liquid
+{%- if request.path contains '/search'
+   or request.path == '/collections/all'
+   or request.path == '/collections/los-mas-buscados'
+   or current_tags -%}
+  <meta name="robots" content="noindex, follow">
+{%- endif -%}
+```
+
+Si dudáis, **la opción A**: una colección de «más vendidos» con texto propio
+posiciona bien por búsquedas del tipo «mejores aparatos de recuperación».
+
+---
+
+# 6 · El blog tiene dos `<h1>` iguales *(opcional)*
+
+### Cómo está ahora
+
+`/blogs/rendimiento` tiene **dos `<h1>` con el texto «Recuperación y
+rendimiento»**: el de nuestro bloque de cabecera y el de Dawn, que se esconde con
+`display: none`. Esconder no es quitar: en el código siguen los dos.
+
+Es el único punto de la lista donde **la recomendación es no hacer nada**. Google
+ignora en gran medida el contenido oculto, y quitarlo obliga a editar
+`sections/main-blog.liquid`, que pasaría a ser un sexto archivo de tema que
+rehacer en cada actualización.
+
+Si aun así lo queréis limpio: **Editar código** → `sections/main-blog.liquid` →
+borrar la línea del título. Y anotadlo en
+[ARCHIVOS-MODIFICADOS.md](ARCHIVOS-MODIFICADOS.md).
+
+---
+
+# 7 · La marca fuera de Shopify
+
+Esto no lo puedo comprobar desde la web, así que **verificad qué está hecho ya**.
+Es lo que decide si «BPS Performance» sale con el panel de la derecha ocupando
+toda la pantalla, o solo con un enlace azul.
+
+El marcado ya está perfecto —nombre, logotipo en PNG, descripción, correo del
+dominio, teléfono con prefijo, dirección de Madrid y las tres redes—, así que
+**la parte difícil está hecha**. Falta que existan las entidades a las que ese
+marcado apunta.
+
+### 7.1. Perfil de Empresa en Google
 
 Es lo que crea el panel de la derecha. Con la dirección de Madrid que ya tenéis
-en el marcado, se puede hacer.
+declarada, se puede hacer.
 
 1. Entra en **`business.google.com`** con la cuenta de Google de la empresa.
 2. **«Añadir tu empresa a Google»**.
-3. Nombre: **`BPS Performance`**, exactamente así.
-4. Categoría: **«Tienda de artículos deportivos»** (se puede añadir
-   «Proveedor de equipos médicos» como secundaria).
-5. Dirección: **Paseo de la Reina Cristina, 11, 28014 Madrid** — la misma, con el
-   mismo formato que en la web.
-6. Teléfono: **+34 619 06 51 66**. Web: **https://bpsperformance.com**.
-7. Google pedirá **verificar** (postal, teléfono o vídeo). Tarda de días a un par
-   de semanas.
-8. Cuando esté verificado: sube **10-15 fotos reales** (equipo, productos,
-   instalaciones), rellena horario y descripción, y **pide reseña a los clientes
-   presenciales**.
+3. Nombre **`BPS Performance`**, exactamente así.
+4. Categoría **«Tienda de artículos deportivos»**.
+5. Dirección **Paseo de la Reina Cristina, 11, 28014 Madrid** y teléfono
+   **+34 619 06 51 66** — **los mismos y con el mismo formato** que en el marcado
+   y en la página de contacto. Eso se llama coherencia NAP y es literalmente lo
+   que Google comprueba.
+6. Web: **https://bpsperformance.com**.
+7. Google pedirá **verificar** (postal, teléfono o vídeo): tarda de días a dos
+   semanas.
+8. Ya verificado: **10-15 fotos reales**, horario, descripción, y pedid reseña a
+   los clientes presenciales.
 
-### 19.2. Perfiles que Google usa para entender una marca
+### 7.2. Los perfiles que Google usa para entender una marca
 
-Cada uno es una entidad más que apunta a vosotros con el mismo nombre:
-
-| Perfil | Por qué | Qué hacer |
+| Perfil | Por qué | Estado |
 |---|---|---|
-| **LinkedIn de empresa** | De las fuentes que Google usa para el panel de marca | Crear página, nombre exacto, enlace a la web, logotipo |
-| **Canal de YouTube** | Los vídeos salen en las búsquedas de marca y ocupan sitio | Subir los vídeos de producto que ya tengáis |
-| **Trustpilot** | Ocupa el segundo resultado de casi cualquier búsqueda de marca. Mejor que lo ocupéis vosotros | Crear perfil e invitar a los clientes |
-| **Wikidata** | Una entrada de empresa bien referenciada ayuda al panel. No es Wikipedia: no hace falta notoriedad, sí fuentes | Cuando haya alguna mención en prensa |
+| **LinkedIn de empresa** | De las fuentes que Google usa para el panel de marca | ¿? |
+| **Canal de YouTube** | Los vídeos salen en las búsquedas de marca y ocupan sitio | ¿? |
+| **Trustpilot** | Ocupa el segundo resultado de casi cualquier búsqueda de marca. Mejor que lo ocupéis vosotros | ¿? |
+| Facebook, Instagram, TikTok | Ya existen y están en el marcado | ✅ |
 
-Y lo que ya tenéis: **Facebook, Instagram y TikTok** deben llevar el enlace a la
-web en la biografía y el nombre escrito igual.
+En los tres que ya tenéis, comprobad que **el enlace a la web está en la
+biografía** y que el nombre está escrito igual.
 
-### 19.3. La página «Sobre nosotros» es una página de SEO
+### 7.3. Enlaces: lo que decide las búsquedas genéricas
 
-Tiene 731 palabras y está bien escrita, pero le falta lo que Google busca para
-fiarse de una tienda que habla de salud: **quién está detrás, con nombre y cara**,
-desde cuándo, dónde, y qué os hace distintos con datos. Es la página que sostiene
-todo el contenido del blog.
-
-### 19.4. Enlaces: lo que decide las búsquedas genéricas
-
-Esto no se configura, se consigue. Ordenado por facilidad:
+Para «botas de presoterapia» hace falta que **otros sitios os enlacen**. Eso no
+se configura, se consigue. Por orden de facilidad:
 
 | Vía | Qué es |
 |---|---|
@@ -1169,103 +377,96 @@ Esto no se configura, se consigue. Ordenado por facilidad:
 | **Comparativas y blogs del sector** | Enviar producto a prueba |
 | **Prensa deportiva y de salud** | Nota de prensa al sacar producto, o un dato propio |
 
-Y el que más vale: **contenido que merezca enlace**. El artículo que dice lo que
-una tecnología NO hace es el que consigue que otros os citen.
-
 ---
 
-# Lo que ya está bien (no lo toquéis)
+# 8 · El blog: faltan dos pilares
 
-Para que quede claro qué no hay que arreglar:
+Los tres artículos publicados están bien montados —2.270, 1.567 y 1.505 palabras,
+con `Article`, `BreadcrumbList`, `FAQPage` y enlaces cruzados— y **ya cubren
+presoterapia y frío**.
 
-- **Los canónicos son correctos** en las 25 direcciones. Ninguna apunta a otra
-  parte.
-- **El marcado de producto está** en las 12 fichas: `Product`, `Brand` y `Offer`
-  con precio y disponibilidad.
-- **Los artículos llevan `Article`, `BreadcrumbList`, `WebPage` y `Person`**, y el
-  de presoterapia además `FAQPage`. Es más de lo que tiene la mayoría de tiendas.
-- **La home lleva `Organization` y `WebSite` con `SearchAction`**, que es lo que
-  puede darte la cajita de búsqueda debajo del resultado.
-- **El sitemap está completo** y `robots.txt` no bloquea nada importante.
-- **A las imágenes no les falta el texto alternativo**: las que tienen `alt=""`
-  son decorativas (fotos del menú, iconos) y así debe ser.
-- **Las fotos se sirven en WebP**: el banner pesa 1,9 MB de origen pero el
-  navegador recibe 285 KB. Shopify lo convierte solo.
-- **La etiqueta de verificación de Search Console está puesta**, y Google
-  Analytics 4 y Google Ads están conectados por los píxeles de Shopify.
-- **El 404 responde 404** de verdad, no un 200 disfrazado.
-- **El `«Colección: »` del H1 de las colecciones está oculto** (`visually-hidden`):
-  es una etiqueta para lectores de pantalla, no un texto visible. **No lo
-  quitéis**, es accesibilidad bien hecha. *(En la revisión anterior lo puse como
-  algo a corregir; era un error mío.)*
+Lo que falta, desarrollado en [ARTICULOS-1-3.md](ARTICULOS-1-3.md):
 
----
-
-# Contenido: lo que va a traer el tráfico
-
-Todo lo anterior es condición necesaria; el tráfico lo traen los artículos.
-Está desarrollado en [ARTICULOS-1-3.md](ARTICULOS-1-3.md), con un ajuste que sale
-de esta auditoría:
-
-**Ya hay tres artículos publicados**, no uno: `presoterapia-en-casa` (3.224
-palabras), `banera-crioterapia` (2.521) y `led-boots-recuperacion` (2.459). Los
-tres están en el sitemap y bien montados. Por eso:
-
-| Lo que proponía | Ahora |
+| Artículo | Por qué |
 |---|---|
-| Pilar de frío: «Baños de hielo» | **No escribirlo.** `banera-crioterapia` ya es el pilar de frío y se pisarían. En su lugar, un artículo de racimo: **«A cuántos grados y cuántos minutos según lo que busques»**, enlazando al pilar |
-| Pilar de luz roja | **Sigue haciendo falta.** `led-boots-recuperacion` va de un producto concreto, no de la tecnología |
-| Pilar de percusión | **Sigue haciendo falta.** No hay nada de pistola de masaje |
+| **Pilar de terapia de luz roja** | `led-boots-recuperacion` va de un producto concreto, no de la tecnología. Es la colección con más catálogo y más ticket, y no tiene pilar |
+| **Pilar de pistola de masaje** | No hay nada publicado sobre percusión |
+| **«A cuántos grados y cuántos minutos»** | Artículo de racimo que cuelga de `banera-crioterapia`. **No escribáis otro pilar de frío**: se pisaría con el que ya existe |
 
-Y los tres artículos existentes **están sueltos**: hay que enlazarlos entre sí.
+Ritmo realista: **dos artículos buenos al mes**. Y a partir del segundo mes, los
+temas no se eligen por intuición, se eligen mirando en Search Console por qué
+búsquedas ya os está enseñando Google y en qué posición.
 
 ---
 
-# Cómo comprobar todo cuando acabes
+# Lo que está bien y no hay que tocar
 
-Cuatro herramientas, todas gratis:
+Para que quede claro qué **no** es un problema:
+
+- **Los canónicos son correctos** en las 25 direcciones.
+- **El marcado de producto está completo** en las 12 fichas: `Product`, `Brand`
+  con «BPS Performance», y `Offer` con precio real y disponibilidad correcta.
+- **`FAQPage` en cuatro páginas**: preguntas frecuentes y los tres artículos.
+- **`Organization` completo** con dirección, contacto y redes, y el logotipo en
+  PNG.
+- **`WebSite` con `SearchAction`**, que es lo que puede darte la cajita de
+  búsqueda debajo del resultado.
+- **Las redirecciones de las dos colecciones renombradas funcionan** (301) y
+  ningún enlace interno apunta ya a las direcciones viejas.
+- **El sitemap está completo**, `robots.txt` no bloquea nada importante y el 404
+  responde 404 de verdad.
+- **`lang="es"` y sin `hreflang`**, que es lo correcto con un solo idioma.
+- **Las fotos se sirven en WebP**: el banner pesa 1,9 MB de origen pero el
+  navegador recibe 285 KB.
+- **El «Colección: » del H1** está oculto para lectores de pantalla. Es
+  accesibilidad bien hecha; no lo quitéis.
+
+---
+
+# Expectativas, para no frustrarse
+
+| Qué se busca | ¿Primer puesto? | Cuándo |
+|---|---|---|
+| **`BPS Performance`** | **Sí, y ya está casi todo hecho** | 2-6 semanas desde el perfil de empresa |
+| **`BPS`** a secas | **No, y no merece la pena.** Son tres letras que ya usan decenas de organizaciones grandes | — |
+| `BPS presoterapia`, `BPS Ice Bath` | Sí | 1-3 meses |
+| `presoterapia en casa`, `bañera de crioterapia` | Sí, y ahí está el negocio | 3-8 meses |
+| `botas de presoterapia` (compra genérica) | Difícil: lo tienen Amazon, Decathlon y marcas con diez años | 9-18 meses, y hace falta que os enlacen |
+
+---
+
+# Medición
 
 | Herramienta | Para qué | Cada cuánto |
 |---|---|---|
-| **Search Console** (`search.google.com/search-console`) | Por qué búsquedas salís y en qué posición. Es la única fuente real | Semanal |
-| ↳ **Indexación → Páginas** | Que las 25 direcciones estén indexadas y ninguna excluida por error | Mensual |
-| ↳ **Experiencia / Mejoras → Fragmentos de producto** | Errores del marcado. Aquí saldrá lo del precio a 0 y las marcas mal | Mensual |
-| **Test de resultados enriquecidos** (`search.google.com/test/rich-results`) | Comprobar página por página que el marcado se lee | Al terminar cada tarea |
-| **Merchant Center** | Productos rechazados. Con el precio a 0 y sin SKU habrá avisos | Semanal al principio |
-| **PageSpeed Insights** (`pagespeed.web.dev`) | Velocidad con datos reales de usuarios | Mensual |
-
-Y una regla: **pasado el mes 2, no toquéis nada por intuición.** Lo que se
-escribe y lo que se optimiza sale de mirar en Search Console qué consultas ya os
-están enseñando y en qué posición.
+| **Search Console** (`search.google.com/search-console`) | Por qué búsquedas salís y en qué posición. La única fuente real | Semanal |
+| ↳ **Indexación → Páginas** | Que las 25 direcciones estén indexadas. Después de la tarea 2, tres tipos de página deben empezar a salir como «Excluida por etiqueta noindex»: eso es lo correcto | Mensual |
+| ↳ **Mejoras → Fragmentos de producto** | Errores del marcado. Con el Ice Bath agotado saldrá un aviso de disponibilidad, y es normal | Mensual |
+| **Test de resultados enriquecidos** (`search.google.com/test/rich-results`) | Comprobar página por página | Al terminar cada tarea |
+| **Merchant Center** | Productos rechazados | Semanal al principio |
+| **PageSpeed Insights** (`pagespeed.web.dev`) | Velocidad con datos reales | Mensual |
 
 ---
 
 # Orden para ponerse
 
-| Cuándo | Qué | Fichas |
+| Cuándo | Qué | Tarea |
 |---|---|---|
-| **Día 1, una hora** | Subir el `card-product.liquid` nuevo, poner precio y stock al Ice Bath, y arreglar «Proveedor» y «Tipo de producto» de los 12 | 1, 2 |
-| **Día 1, media hora** | Texto alternativo del logotipo y del banner | 8, 10 |
-| **Día 2, una hora** | Los 12 títulos de producto y las 5 colecciones | 3, 4, 5 |
-| **Día 3, una hora** | SKU de los 12, y `noindex` en `theme.liquid` | 6, 13 |
-| **Día 3, media hora** | Correo y teléfono del marcado, y logotipo en PNG | 14, 15 |
-| **Semana 2** | Instalar reseñas y pedirlas a los pedidos ya servidos | 7 |
-| **Semana 2** | `FAQPage` en la página de preguntas y en los dos artículos | 11, 12 |
-| **Semana 2** | Datos de la empresa visibles en Contacto | 16 |
-| **Semana 3** | Perfil de Empresa en Google y LinkedIn | 19 |
-| **Semana 3-4** | Textos alternativos de las galerías, poco a poco | 9 |
-| **Semana 4** | Texto propio en las cuatro colecciones | 17 |
-| **Mes 2** | Los dos pilares que faltan y enlazar los tres artículos | ARTICULOS-1-3 |
-| **Mes 2-3** | Enlaces: clínicas, clubes, directorios | 19.4 |
-| **Mes 3** | Revisar Search Console y **decidir con datos** | — |
+| **Hoy, 15 minutos** | Subir `bps-hyperice.css` y `bps-hyperice.js` | 1 |
+| **Hoy, 10 minutos** | El `noindex` en `theme.liquid` | 2 |
+| **Hoy, 10 minutos** | Los tres títulos de artículo | 3 |
+| **Esta semana** | Instalar reseñas y pedirlas a los pedidos ya servidos | 4 |
+| **Esta semana** | Decidir qué hacer con «Los más buscados» | 5 |
+| **Semana 2** | Perfil de Empresa en Google, LinkedIn, Trustpilot | 7 |
+| **Mes 1-2** | Los dos pilares del blog y el artículo de frío | 8 |
+| **Mes 2 en adelante** | Enlaces desde clínicas, clubes y directorios | 7.3 |
 
 ---
 
 # Resumen en una frase
 
-Lo técnico está sorprendentemente bien —canónicos, sitemap, marcado de producto y
-de artículo, WebP, y la ficha de empresa que ya añadisteis—, y lo que falta es de
-tienda: **un precio a cero, cinco marcas que llevan el nombre de la categoría, títulos que
-se cortan a mitad de palabra, cero reseñas y colecciones sin texto**. Solo una de las 19 tareas toca
-código —y es pegar un archivo que ya está escrito—; el resto son minutos en el
-panel.
+De 19 tareas quedan 8, y **solo tres son de hoy**: subir la hoja de estilos —que
+es lo que hace que se vea bien el texto que acabáis de escribir en las cuatro
+colecciones—, el `noindex` de tres tipos de página, y acortar los títulos de los
+tres artículos. Lo demás ya no es configuración: son **reseñas, perfiles de marca
+y contenido**, que es de lo que depende el posicionamiento a partir de aquí.
