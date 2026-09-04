@@ -50,7 +50,7 @@ Ordenadas por urgencia. Las tres primeras son de hoy.
 
 | # | Qué | Dónde | Esfuerzo |
 |---|---|---|---|
-| **1** | **Subir `bps-hyperice.css`.** Sin esto, el texto que acabáis de escribir en las cuatro colecciones se ve en una columna de 516px | Editar código | 5 min |
+| **1** | **Subir `bps-hyperice.css`.** Sin esto, el texto de las cuatro colecciones se ve en una columna de 516px **y el banner de la home sigue cortando a la persona en el móvil** | Editar código | 5 min |
 | **2** | Tres tipos de página **se pueden indexar** y no deberían | Editar código | 10 min |
 | **3** | **Los tres títulos de artículo se cortan a mitad de palabra** | Contenido → Publicaciones | 10 min |
 | **4** | **Cero reseñas**: ninguna aplicación instalada, así que no hay estrellas en Google | Aplicaciones | 30 min |
@@ -111,6 +111,35 @@ apartado tienen que verse claramente más pequeños que «Colección: Presoterap
 > Aprovecha y sube también **`bps-hyperice.js`** si no lo has hecho: lleva el
 > arreglo del hueco de la cabecera, que evita que el titular de las páginas suba
 > hasta tocar el menú.
+
+### La misma subida arregla el banner de la home en móvil
+
+En la hoja nueva van también dos arreglos del banner principal, que en el móvil
+se veía mal por dos motivos distintos:
+
+- **La persona quedaba fuera del encuadre.** La foto es horizontal —1536 × 1024—
+  con la persona a la derecha, y en móvil la caja es vertical: `object-fit: cover`
+  recorta los lados. Medido a 390px: se veía **del 32 % al 67 %** del ancho de la
+  foto, y la persona está del 70 % al 95 %. Salían el brazo y una bota. Ahora se
+  ve **del 53 % al 88 %**: la cara, las botas y el mando.
+- **La entradilla no se leía.** Iba en el gris del resto del sitio (`#cbcbcb`) a
+  15px, sobre el césped iluminado, y el velo de la foto a esa altura valía 0,1.
+  Ahora la entradilla es **blanca**, el velo sube antes y las dos líneas de texto
+  llevan una sombra suave. Medido detrás de la entradilla: el contraste medio
+  pasa de **8,5:1 a 16,6:1**.
+
+> **Si algún día cambiáis la foto del banner, revisad un número.** El encuadre de
+> móvil está fijado al **82 %** del ancho, elegido para esta foto comparando
+> cuatro posiciones. Está en `bps-hyperice.css`, apartado 5, en la línea
+> `object-position: var(--bps-banner-foco, 82%) center` — 50 % es el centro y
+> 100 % el borde derecho. Es la única línea de la hoja que depende de una imagen
+> concreta.
+
+Y una cosa que sí es de contenido: **las tres primeras líneas de la entradilla
+están en cursiva** porque se escribieron así en el editor. En cursiva y a 15px,
+sobre una fotografía, se lee peor. Se quita en **Personalizar** → la sección del
+banner → el campo de descripción, seleccionando el texto y desactivando la
+cursiva.
 
 ---
 

@@ -570,6 +570,60 @@ button.shopify-payment-button__button--unbranded {
   min-height: 88svh;
 }
 
+/* --- EN MÓVIL EL BANNER NECESITA DOS COSAS MÁS -------------------------------
+
+   1. EL ENCUADRE. La foto es horizontal —1536 × 1024— con la persona a la
+      derecha, y en móvil la caja es vertical: `object-fit: cover` recorta los
+      lados, y con el centro por defecto la persona se queda fuera. Medido a
+      390px: se veía del 32 % al 67 % del ancho de la foto, y la persona está
+      del 70 % al 95 %. En pantalla salían el brazo y una bota, nada más.
+
+      El 82 % está elegido PARA ESTA FOTO, comparando cuatro encuadres: al 62 %
+      se corta media cabeza, al 72 % entra pero descentrada, y al 82 % salen la
+      cara, las botas y el mando, que es el producto. **Si se cambia la imagen
+      del banner hay que revisar ese número**: 50 % es el centro y 100 % el
+      borde derecho.
+
+   2. EL CONTRASTE. El velo de más arriba se diseñó para el escritorio, donde el
+      texto ocupa la franja baja de la foto. En móvil el bloque ocupa del 37 %
+      al 87 % del alto —el titular en cuatro líneas y la entradilla en cinco—, y
+      a media altura ese velo valía 0,1: la entradilla caía sobre el césped
+      iluminado y no se leía. Aquí el velo sube antes, y la entradilla pasa del
+      gris del resto del sitio a blanco, que sobre una fotografía es lo único
+      que garantiza contraste.
+   -------------------------------------------------------------------------- */
+
+/* La entradilla, en blanco y no en el gris del resto del sitio: ese gris está
+   pensado para fondos planos oscuros —el pie, las descripciones—, y sobre una
+   fotografía no llega. Medido detrás de la entradilla en móvil: con el gris, el
+   contraste medio era de 8,5:1; en blanco, 16,6:1. */
+.banner__text,
+.banner__text p { color: var(--bps-white); }
+
+/* Y una sombra suave de red de seguridad, para las dos: la foto se puede cambiar
+   mañana, y basta un reflejo blanco detrás de una letra para borrarla. */
+.banner__heading,
+.banner__text p { text-shadow: 0 1px 14px rgb(0 0 0 / 0.5); }
+
+/* El encuadre y el velo, hasta 989px: es donde la caja es más alta que ancha.
+   A 1440 se ve la foto entera —del 0 % al 100 %— y no hace falta tocar nada. */
+@media screen and (max-width: 989px) {
+  .banner__media img {
+    object-position: var(--bps-banner-foco, 82%) center;
+  }
+
+  .banner__media::after {
+    background: linear-gradient(
+      to top,
+      rgb(0 0 0 / 0.88) 0%,
+      rgb(0 0 0 / 0.72) 30%,
+      rgb(0 0 0 / 0.5) 55%,
+      rgb(0 0 0 / 0.2) 80%,
+      rgb(0 0 0 / 0.35) 100%
+    );
+  }
+}
+
 /* --------------------------------------------------------------------------
    6. Tarjeta de producto
    No es una imagen con texto suelto debajo: es una caja con fondo #f7f5f5 y
