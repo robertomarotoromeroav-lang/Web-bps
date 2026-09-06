@@ -128,11 +128,18 @@ body {
   color: rgb(var(--color-foreground));
 }
 
-/* El párrafo del banner iba al blanco al 75 % de Dawn; el prototipo usa el gris
-   claro de la paleta. */
+/* El párrafo del banner iba al blanco al 75 % de Dawn. Aquí va en BLANCO PLENO,
+   y el porqué está en el apartado 5: el gris claro de la paleta está pensado
+   para fondos planos oscuros —el pie, las descripciones de tarjeta—, y sobre una
+   fotografía no llega al contraste mínimo.
+
+   El selector universal no sobra. Sin él, un trozo en cursiva o en negrita
+   escrito desde el editor —`<em>`, `<strong>`— se queda con el color anterior:
+   pasó exactamente eso, y en el móvil las tres primeras líneas de la entradilla,
+   que están en cursiva, salían grises mientras el resto salía blanco. */
 .banner__text,
 .banner__text * {
-  color: var(--bps-grey-300);
+  color: var(--bps-white);
 }
 
 /* --------------------------------------------------------------------------
@@ -593,17 +600,17 @@ button.shopify-payment-button__button--unbranded {
       que garantiza contraste.
    -------------------------------------------------------------------------- */
 
-/* La entradilla, en blanco y no en el gris del resto del sitio: ese gris está
-   pensado para fondos planos oscuros —el pie, las descripciones—, y sobre una
-   fotografía no llega. Medido detrás de la entradilla en móvil: con el gris, el
-   contraste medio era de 8,5:1; en blanco, 16,6:1. */
-.banner__text,
-.banner__text p { color: var(--bps-white); }
+/* El color de la entradilla se pone en el apartado 1, con su explicación: blanco
+   pleno, porque el gris de la paleta sobre una fotografía no llega. Medido
+   detrás de ella en móvil: con el gris, contraste medio de 8,5:1; en blanco,
+   16,6:1.
 
-/* Y una sombra suave de red de seguridad, para las dos: la foto se puede cambiar
-   mañana, y basta un reflejo blanco detrás de una letra para borrarla. */
+   Aquí, una sombra suave de red de seguridad para titular y entradilla: la foto
+   se puede cambiar mañana, y basta un reflejo blanco detrás de una letra para
+   borrarla. */
 .banner__heading,
-.banner__text p { text-shadow: 0 1px 14px rgb(0 0 0 / 0.5); }
+.banner__text,
+.banner__text * { text-shadow: 0 1px 14px rgb(0 0 0 / 0.5); }
 
 /* El encuadre y el velo, hasta 989px: es donde la caja es más alta que ancha.
    A 1440 se ve la foto entera —del 0 % al 100 %— y no hace falta tocar nada. */
@@ -621,6 +628,47 @@ button.shopify-payment-button__button--unbranded {
       rgb(0 0 0 / 0.2) 80%,
       rgb(0 0 0 / 0.35) 100%
     );
+  }
+
+  /* Y UN VELO PROPIO DETRÁS DEL TEXTO.
+
+     Con el velo de la foto no basta, y el motivo es que **la altura del bloque de
+     texto cambia con la pantalla**: medido, la entradilla cae del 62 % al 77 %
+     del alto en un móvil de 360px, y del 70 % al 81 % en uno de 412. Un degradado
+     fijo sobre la foto no puede cubrir bien las dos cosas, y encima lo que hay
+     detrás cambia —la pared clara, el césped, las botas con su logotipo—.
+
+     Este segundo velo va pegado AL TEXTO, así que lo acompaña esté donde esté y
+     dé igual la foto que se ponga mañana. Y no se ve como una caja: se difumina
+     por arriba y por abajo con el propio degradado, y por la derecha con una
+     máscara, de modo que la cara y el producto quedan limpios. Se probó también
+     un panel con esquinas redondeadas y desenfoque, al estilo de la cabecera, y
+     se descartó: `.banner__box` ocupa todo el ancho, así que el radio no se lee
+     y lo que aparece es una banda con dos bordes rectos cruzando la fotografía.
+
+     `isolation: isolate` hace falta para que el `z-index: -1` se quede dentro de
+     la caja y no se vaya por detrás de la imagen. */
+  .banner__box {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .banner__box::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -30px -24px -22px -24px;
+    background: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 0) 0%,
+      rgb(0 0 0 / 0.6) 14%,
+      rgb(0 0 0 / 0.66) 50%,
+      rgb(0 0 0 / 0.6) 88%,
+      rgb(0 0 0 / 0) 100%
+    );
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 74%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, #000 74%, transparent 100%);
+    pointer-events: none;
   }
 }
 

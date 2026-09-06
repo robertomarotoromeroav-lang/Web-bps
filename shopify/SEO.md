@@ -122,11 +122,23 @@ se veía mal por dos motivos distintos:
   recorta los lados. Medido a 390px: se veía **del 32 % al 67 %** del ancho de la
   foto, y la persona está del 70 % al 95 %. Salían el brazo y una bota. Ahora se
   ve **del 53 % al 88 %**: la cara, las botas y el mando.
-- **La entradilla no se leía.** Iba en el gris del resto del sitio (`#cbcbcb`) a
-  15px, sobre el césped iluminado, y el velo de la foto a esa altura valía 0,1.
-  Ahora la entradilla es **blanca**, el velo sube antes y las dos líneas de texto
-  llevan una sombra suave. Medido detrás de la entradilla: el contraste medio
-  pasa de **8,5:1 a 16,6:1**.
+- **La entradilla no se leía.** Aquí había tres cosas, no una:
+  1. Iba en el gris del resto del sitio (`#cbcbcb`), que está pensado para fondos
+     planos oscuros —el pie, las descripciones— y sobre una fotografía no llega.
+     Ahora va en **blanco**.
+  2. **Las tres primeras líneas seguían grises aunque el resto ya fuera blanco**,
+     porque están en cursiva: el `<em>` se quedaba con el color anterior. Con el
+     selector universal, todo el párrafo va del mismo color.
+  3. El velo de la foto no puede cubrir bien el texto, porque **el bloque cambia
+     de altura con la pantalla**: la entradilla cae del 62 % al 77 % del alto en
+     un móvil de 360px y del 70 % al 81 % en uno de 412. Así que ahora hay **un
+     segundo velo pegado al propio texto**, que lo acompaña esté donde esté. No
+     se ve como una caja: se difumina por arriba, por abajo y por la derecha, y
+     la cara y el producto quedan limpios.
+
+  Medido detrás de la entradilla, en tres anchos de móvil: el contraste medio
+  pasa de **8,5:1 a 19,2-19,4:1**, y los píxeles por debajo del mínimo legible
+  bajan del **2,7-4,0 % al 0-1 %**.
 
 > **Si algún día cambiáis la foto del banner, revisad un número.** El encuadre de
 > móvil está fijado al **82 %** del ancho, elegido para esta foto comparando
