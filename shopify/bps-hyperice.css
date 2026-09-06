@@ -3656,3 +3656,37 @@ main[data-template='article'] .collection__title .title {
   .bps-cajon__nav { padding: 30px; }
   .bps-cajon__pestanas { max-width: 620px; }
 }
+
+/* --------------------------------------------------------------------------
+   30. La rejilla de colecciones de la home: sin iconos en móvil
+
+   La sección «Recuperación, rendimiento y resultados» pone, encima del nombre de
+   cada colección, un icono de 40×40 —la pelota, el copo, el sol y las ondas—. En
+   escritorio va bien: la tarjeta es horizontal, con la foto a la izquierda y el
+   icono abriendo la columna de texto.
+
+   En móvil la tarjeta se apila y el icono queda solo, en una línea propia entre
+   la foto y el título, repitiendo lo que ya dicen la foto y el nombre. Y su texto
+   alternativo es literalmente el nombre de la colección, así que tampoco aporta
+   nada a quien no ve la imagen.
+
+   EL SELECTOR VA POR TROZO DE CLASE A PROPÓSITO. Esa sección se generó con un
+   identificador propio pegado a cada clase:
+
+     ai-collection-card__icon-wrapper-aq3duz3vcuknmmfgvvaigenblockbdd4400dgkzpx
+
+   Ese sufijo cambia si el bloque se vuelve a crear, así que escribir la clase
+   entera dejaría de funcionar el día que se toque la sección. Con `[class*=…]`
+   se busca por el trozo estable del nombre.
+
+   El contenedor del texto es `flex` con `gap: 16px`, así que al esconder el
+   icono no queda ningún hueco suelto: el título sube y ya está.
+
+   OJO: el icono se deja de VER, pero el navegador se lo sigue descargando —son
+   unos 10 KB cada uno—. Para que ni siquiera se descargue habría que quitarlo de
+   los ajustes de la sección, y entonces desaparecería también en escritorio.
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 749px) {
+  [class*="ai-collection-card__icon-wrapper"] { display: none; }
+}

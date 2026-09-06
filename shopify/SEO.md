@@ -147,6 +147,13 @@ se veía mal por dos motivos distintos:
 > 100 % el borde derecho. Es la única línea de la hoja que depende de una imagen
 > concreta.
 
+Y en la misma subida va un tercer arreglo, este pedido: en la rejilla de
+colecciones de la home —«Recuperación, rendimiento y resultados»— **los iconos de
+40×40 desaparecen en móvil**. En escritorio abren la columna de texto y quedan
+bien; apilados en móvil se quedaban solos en una línea entre la foto y el título,
+repitiendo lo que ya dicen las dos. Medido: la tarjeta pasa de 512 a 456px de
+alto y no queda ningún hueco suelto. En tableta y escritorio siguen igual.
+
 Y una cosa que sí es de contenido: **las tres primeras líneas de la entradilla
 están en cursiva** porque se escribieron así en el editor. En cursiva y a 15px,
 sobre una fotografía, se lee peor. Se quita en **Personalizar** → la sección del
