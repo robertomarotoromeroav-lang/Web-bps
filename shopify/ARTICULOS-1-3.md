@@ -1,199 +1,306 @@
-# Los tres primeros artículos, listos para escribir
+# Plan de artículos del blog · versión 2
 
-Propuesta cerrada de los tres artículos que hay que publicar ahora, con palabra
-clave, esquema, enlaces y todos los campos del admin. Continúa
-[GUIA-BLOG.md](GUIA-BLOG.md), que ya define la arquitectura del blog: **un solo
-blog, categorías por etiquetas, y cuatro pilares que son las cuatro
-colecciones**.
+**Revisión: 8 de septiembre de 2026.** Reescrito entero **a partir de los cuatro
+artículos ya publicados**, medidos uno a uno. La versión anterior proponía tres
+artículos desde cero; dos de ellos ya están escritos, así que ese plan ya no
+sirve.
 
-**Por qué estos tres y en este orden.** El blog tiene hoy **un artículo
-publicado**, el pilar de presoterapia. Faltan los pilares de las otras tres
-colecciones. Un pilar es el artículo que responde a la búsqueda genérica de esa
-tecnología y del que colgarán después seis u ocho artículos cortos; sin él, los
-cortos no tienen a dónde apuntar y Google no entiende que la tienda va de eso.
+> El archivo sigue llamándose `ARTICULOS-1-3.md` para no romper los enlaces de
+> [README.md](../README.md), [SEO.md](SEO.md) y [GUIA-BLOG.md](GUIA-BLOG.md),
+> pero el plan ya no es de tres artículos: son **seis nuevos y cuatro
+> reparaciones**.
 
-| # | Artículo | Colección | Por qué va primero |
-|---|---|---|---|
-| 1 | Terapia de luz roja | `energia-luminica` | Es donde hay más catálogo —panel, lámpara, portátil y tres gafas— y más ticket (120 a 2.500 €). La competencia en español todavía es floja |
-| 2 | Baños de hielo | `recuperacion-polar` | Tema en alza y ticket alto (1.850 €). Y es el artículo donde se puede ser **más honesto** que la competencia, que es lo que da autoridad |
-| 3 | Pistola de masaje | `liberacion-muscular` | Mucho volumen, pero las búsquedas de compra las tienen Amazon y Decathlon. Se entra por la de uso —«cómo usarla»—, no por la de compra |
+Documentos hermanos: [GUIA-BLOG.md](GUIA-BLOG.md) (arquitectura del blog: un solo
+blog, categorías por etiquetas) y [SEO.md](SEO.md) (todo lo demás del sitio).
 
 ---
 
-> **Actualización tras auditar el sitio publicado** (ver [SEO.md](SEO.md)): ya hay
-> **tres artículos publicados**, no uno. Se publicaron `banera-crioterapia` y
-> `led-boots-recuperacion`. Eso cambia el artículo 2 de esta propuesta: el pilar
-> de frío **ya existe**, así que «Baños de hielo» se pisaría con él y hay que
-> escribir en su lugar un artículo de racimo —«a cuántos grados y cuántos
-> minutos»— que enlace al pilar. Los artículos 1 y 3 siguen igual: no hay nada
-> publicado sobre la tecnología de luz roja en general ni sobre percusión.
+## 1. Lo que hay publicado hoy, medido
 
-## Antes de escribir: cuatro cosas de la tienda
+Cuatro artículos, uno por etiqueta. Estos son los números reales, contando **solo
+el cuerpo del artículo** —sin cabecera, sin pie, sin la rejilla de productos del
+final—, que es lo que Google evalúa como contenido:
 
-No son opinables: los tres artículos enlazan a estas páginas y a estos productos.
+| Artículo | Etiqueta | Palabras | Enlaces salientes | Tabla | Imágenes en el texto | `FAQPage` |
+|---|---|---|---|---|---|---|
+| `presoterapia-en-casa` | Presoterapia | **1.316** | 6 (3 fichas, cada una dos veces) | 1 | 0 | Sí, 7 preguntas reales |
+| `como-usar-pistola-de-masaje` | Liberación muscular | **942** | 1 (una colección) | 1 | 0 | **No** |
+| `banera-crioterapia` | Frío | **670** | 2 (dos fichas) | 0 | 0 | Sí, pero mal (ver §2) |
+| `led-boots-recuperacion` | Luz roja | **615** | **0** | 1 | 0 | Sí, pero mal (ver §2) |
 
-1. **`BPS Ice Bath` está publicado a 0,00 €.** Comprobado en
-   `/products/banera-crioterapia-portatil-hielo.json`: la única variante tiene
-   `price: "0.00"`. El artículo 2 enlaza a esa ficha dos veces, y un producto a
-   cero euros en una página que acabas de posicionar es peor que no tenerlo. O se
-   le pone precio o se despublica y el artículo enlaza solo al `Recovery Pod`.
-2. **El título de la tarjeta se corta a los 50 caracteres.** Es de Dawn:
-   `snippets/article-card.liquid` hace `{{ article.title | truncate: 50 }}`. Por
-   eso el artículo actual sale como «Presoterapia en casa: qué es, para qué sirve
-   y …». Los títulos de aquí abajo están escritos **por debajo de 50** a
-   propósito, y el título largo va en el campo de SEO. Si preferís títulos largos
-   en la tarjeta, hay que tocar ese snippet, y pasa a ser un archivo más que
-   rehacer en cada actualización del tema.
-3. **Autoría real.** Los tres artículos tocan salud y Google mide eso (E-E-A-T).
-   Hoy el artículo firma «BPS Performance». Hay que firmar con **una persona**, y
-   si podéis con un fisioterapeuta colaborador y su número de colegiado.
-4. **El extracto no puede quedarse vacío.** Si se deja, Dawn recorta el primer
-   párrafo y la tarjeta acaba a mitad de frase, que es lo que pasa hoy. Los
-   extractos van escritos más abajo, ya en 150-160 caracteres.
+Y lo que está bien resuelto y no hay que volver a mirar: los cuatro tienen
+`Article` y `BreadcrumbList` en el marcado, título de SEO corto y sin cortes,
+descripción de 148-159 caracteres, imagen destacada con texto alternativo,
+canónico correcto y **una etiqueta cada uno**, así que las cuatro páginas de
+etiqueta funcionan.
 
-> **Sobre las palabras clave.** Las de esta propuesta salen del catálogo, de la
-> estructura de las colecciones y de cómo se busca en español, no de una
-> herramienta de volumen: no tengo acceso a datos de búsqueda. **Antes de
-> escribir, pasad las cinco palabras de cada artículo por el Planificador de
-> Palabras Clave de Google Ads** (gratis con una cuenta) y, si alguna tiene mucho
-> más volumen que la elegida, se cambia el título. Cuesta veinte minutos y evita
-> escribir 3.000 palabras para una búsqueda que no existe.
+### Corrección a lo que os dije antes
+
+En la revisión de septiembre puse que los artículos tenían 1.505, 1.567, 2.270 y
+2.843 palabras. **Estaba contando toda la página** —menú, pie, fichas de la
+rejilla, avisos—, no el artículo. Los números buenos son los de la tabla de
+arriba: **entre 615 y 1.316**. Cambia el diagnóstico, y por eso este documento
+empieza por reparar y no por escribir.
 
 ---
 
-## Artículo 1 · Terapia de luz roja
+## 2. Los tres agujeros
+
+### Agujero 1 · La colección con más catálogo no tiene pilar
+
+`terapia-luz-roja` tiene **7 productos de 90 a 2.500 €** —el catálogo más grande
+y el ticket más alto de la tienda— y su único artículo, `led-boots-recuperacion`,
+va de **un producto concreto**, no de la tecnología. Nadie busca «LED boots»;
+se busca «terapia de luz roja», «para qué sirve la luz roja» o «panel de luz
+roja». Hoy, para esas búsquedas, el sitio no tiene nada.
+
+Es el hueco más caro de los tres.
+
+### Agujero 2 · Tres productos sin una línea escrita
+
+Las **BPS Recovery Glasses** —`DAILY LIGHT`, `NIGHT FLOW` y `NIGHT MAX`, 90 €
+cada una— son **la cuarta parte del catálogo** y no hay ni un artículo, ni un
+párrafo, ni un enlace que hable de ellas. Son además el producto de entrada más
+barato: el que hace que alguien compre por primera vez y vuelva.
+
+### Agujero 3 · Los artículos están sueltos del catálogo
+
+Esto es lo que más frena, y no cuesta dinero arreglarlo:
+
+- **Ninguna ficha de producto enlaza a ningún artículo.** Comprobadas las 12.
+- **Ninguna colección enlaza a ningún artículo**, aunque las cuatro tienen entre
+  422 y 482 palabras de texto propio donde cabría de sobra.
+- **`led-boots-recuperacion` no enlaza ni al producto del que habla**
+  (`/products/botas-presoterapia-luz-roja`). Cero enlaces en todo el artículo.
+- **Ningún artículo enlaza a otro artículo.** Los cuatro son islas.
+- **Ningún artículo tiene un solo enlace externo.** En contenido de salud, eso
+  es justo lo que Google mira para decidir si te cree.
+
+Un artículo sin enlaces entrantes tarda meses más en posicionar, y una ficha sin
+enlace al artículo pierde el argumento de venta más largo que tenéis escrito.
+
+---
+
+## 3. Primero reparar, después escribir
+
+Cuatro tardes de trabajo que valen más que dos artículos nuevos, porque estas
+páginas **ya están indexadas**: cualquier mejora se nota en semanas, no en meses.
+
+### 3.1. Los enlaces que faltan del catálogo al blog
+
+En la **descripción larga** de cada ficha, un párrafo al final con un enlace.
+`Productos` → el producto → campo de descripción:
+
+| Fichas | Enlace a poner |
+|---|---|
+| `presoterapia-bps-plus`, `presoterapia-bps-pro-recuperacion-muscular-profesional`, `botas-presoterapia-luz-roja` | `/blogs/rendimiento/presoterapia-en-casa` |
+| `banera-crioterapia-portatil-bps-recovery-pod`, `banera-crioterapia-bps-ice-bath` | `/blogs/rendimiento/banera-crioterapia` |
+| `pistola-de-masaje` | `/blogs/rendimiento/como-usar-pistola-de-masaje` |
+| `botas-presoterapia-luz-roja` (segundo enlace) | `/blogs/rendimiento/led-boots-recuperacion` |
+| `panel-terapia-luz-roja-cuerpo-completo`, `lampara-profesional-luz-roja-soporte`, `dispositivo-terapia-luz-roja-portatil` | el pilar de luz roja, **en cuanto exista** (artículo 1) |
+
+Y en el **texto enriquecido de cada colección**, una frase con enlace al artículo
+de esa tecnología. `Personalizar` → plantilla de la colección → la sección de
+texto enriquecido. Cuatro frases, veinte minutos.
+
+Texto del enlace: **descriptivo, no «leer más»**. `guía completa de presoterapia
+en casa` sirve; `aquí` no sirve para nada.
+
+### 3.2. Los cuatro artículos, uno a uno
+
+| Artículo | Qué hacer |
+|---|---|
+| `led-boots-recuperacion` | **El más urgente.** 615 palabras y cero enlaces. Subir a 1.200-1.400 añadiendo un apartado de protocolo de uso (minutos, frecuencia, en qué momento del día) y otro de mantenimiento. Meter 4 enlaces: la ficha `botas-presoterapia-luz-roja`, la colección `terapia-luz-roja`, `presoterapia-en-casa` y el pilar de luz roja cuando exista. Y 2 externos |
+| `banera-crioterapia` | 670 palabras para un producto de 1.850-1.999 €. Subir a 1.400-1.600. Le falta **la tabla de grados y minutos** y el apartado de montaje en casa (agua, hielo, limpieza). Enlazar a la colección `recuperacion-fria` y al artículo 2 cuando exista. Y avisar de que el `Ice Bath` está agotado, con enlace al `Recovery Pod` |
+| `como-usar-pistola-de-masaje` | 942 palabras y bien enfocado. Le falta **el enlace a `/products/pistola-de-masaje`** —enlaza a la colección pero no al producto—, un enlace a otro artículo y **el marcado `FAQPage`**, que es el único de los cuatro que no lo tiene |
+| `presoterapia-en-casa` | El mejor de los cuatro. Solo le faltan **enlaces a los otros tres artículos** y 2 enlaces externos. Los 6 que tiene apuntan a las mismas 3 fichas repetidas |
+
+### 3.3. El `FAQPage` de dos artículos está mal montado
+
+Comprobado en el marcado publicado: el bloque de preguntas de
+`banera-crioterapia` contiene esto como «preguntas»:
+
+- *«Beneficios de la crioterapia para la recuperación deportiva»*
+- *«¿Cómo hacer una sesión de crioterapia de forma segura?»*
+
+Y en `led-boots-recuperacion`:
+
+- *«Principales Beneficios de las LED Boots para Atletas»*
+- *«Conclusión: ¿Vale la pena invertir en unas LED Boots?»*
+
+Dos de esas cuatro **no son preguntas**. El marcado se está generando **copiando
+los títulos `h2` del artículo**, así que si el `h2` no es una pregunta, sale una
+pregunta que no lo es. Google lo valida como inválido y, si algún día vuelve a
+enseñar preguntas en los resultados, esas no entran.
+
+De aquí sale la regla de redacción más útil de todo el documento, y está en §5:
+**escribid los `h2` en forma de pregunta**. Sale gratis y arregla el marcado sin
+tocar código.
+
+Comparad con `presoterapia-en-casa`, que sí está bien: sus siete preguntas son
+las siete preguntas de verdad («¿La presoterapia duele?», «¿Cuántas sesiones son
+necesarias?»...), porque ahí los encabezados se escribieron como preguntas.
+
+---
+
+## 4. Los seis artículos que hay que publicar
+
+Por orden. Los cuatro primeros llevan la ficha completa; los dos últimos van
+resumidos porque el tema se elegirá definitivamente **con los datos de Search
+Console** que habrá para entonces.
+
+| # | Artículo | Etiqueta | Qué agujero tapa | Palabras |
+|---|---|---|---|---|
+| 1 | **Terapia de luz roja: guía completa** | Luz roja | El pilar que falta. 7 productos, hasta 2.500 € | 2.000-2.400 |
+| 2 | **Baño de hielo: minutos y grados** | Frío | La búsqueda concreta que hoy no responde nadie en el sitio | 1.600-2.000 |
+| 3 | **Qué equipo de luz roja elegir** | Luz roja | Convierte: separa panel, lámpara y portátil | 1.400-1.800 |
+| 4 | **Gafas de filtro de luz azul** | Luz roja | Tres productos sin una línea escrita | 1.400-1.700 |
+| 5 | **Presoterapia: quién no debe usarla** | Presoterapia | Búsqueda de mucho volumen y la que más confianza da | 1.200-1.500 |
+| 6 | **¿Frío o calor?** | Frío | Entrada de tráfico general a las cuatro colecciones | 1.400-1.800 |
+
+> **Sobre las palabras clave.** Salen del catálogo, de la estructura de las
+> colecciones y de cómo se busca en español, **no de datos de volumen**: no tengo
+> acceso a ellos. Antes de escribir cada artículo, pasad sus palabras por el
+> **Planificador de Palabras Clave de Google Ads** (gratis con una cuenta) y, si
+> alguna secundaria tiene mucho más volumen que la principal, cambiad el título.
+> Veinte minutos que evitan escribir 2.000 palabras para una búsqueda que no
+> existe.
+
+---
+
+## Artículo 1 · Terapia de luz roja *(el pilar que falta)*
 
 ### Ficha para el admin
 
 | Campo | Valor |
 |---|---|
 | **Palabra clave principal** | `terapia de luz roja` |
-| **Secundarias** | `para qué sirve la luz roja`, `fotobiomodulación`, `660 nm y 850 nm`, `panel de luz roja`, `cuánto tiempo luz roja` |
-| **Intención** | Informativa con intención de compra detrás: quien busca esto está decidiendo si comprar |
-| **Título (tarjeta, 45)** | `Terapia de luz roja: guía para usarla en casa` |
-| **SEO · título (52)** | `Terapia de luz roja: qué es, evidencia y cómo usarla` |
-| **SEO · URL** | `/blogs/rendimiento/terapia-luz-roja-guia` |
-| **SEO · descripción (152)** | `Qué es la terapia de luz roja, qué dice la evidencia, en qué se diferencian 660 y 850 nm y cómo montar una rutina en casa sin pasarte de dosis.` |
-| **Extracto (157)** | `Qué es la fotobiomodulación, para qué hay evidencia y para qué no, la diferencia real entre luz roja e infrarroja y cuánto tiempo usarla cada día.` |
-| **Etiquetas** | `Luz roja` (principal) + `Entrenamiento` |
-| **Longitud** | 2.800-3.200 palabras (es pilar) |
-| **Imagen destacada** | 1.600 × 900 JPG. Alt: `Panel de terapia de luz roja BPS iluminando la espalda de una deportista en una sala en penumbra` |
+| **Secundarias** | `para qué sirve la terapia de luz roja`, `fotobiomodulación`, `660 nm y 850 nm`, `cuánto tiempo luz roja`, `luz roja contraindicaciones` |
+| **Intención** | Informativa con compra detrás: quien busca esto está decidiendo si comprar |
+| **Título del artículo (45)** | `Terapia de luz roja: guía para usarla en casa` |
+| **«Título de la página» (41)** | `Terapia de luz roja: qué es y cómo usarla` |
+| **«Identificador de URL»** | `terapia-luz-roja-guia` |
+| **«Metadescripción» (151)** | `Qué es la terapia de luz roja, para qué hay evidencia, en qué se diferencian 660 y 850 nm y cómo montar una rutina en casa sin pasarte de dosis.` |
+| **Extracto (149)** | `Qué es la fotobiomodulación, para qué funciona y para qué no, la diferencia real entre luz roja e infrarroja y cuánto tiempo usarla al día.` |
+| **Etiqueta** | `Luz roja` |
+| **Imagen destacada** | 1.600 × 900. Alt: `Panel de luz roja BPS Pro-Panel iluminando la espalda de una deportista en una sala en penumbra` |
 
-### Las primeras 60 palabras (esto es lo que Google enseña)
+### Las primeras 60 palabras
+
+Es lo que Google puede enseñar como fragmento destacado, así que la búsqueda se
+responde aquí, no en el apartado tercero:
 
 > La terapia de luz roja, o fotobiomodulación, consiste en exponer la piel a luz
 > roja (unos 660 nm) o infrarroja cercana (unos 850 nm) para estimular la
-> actividad de las mitocondrias. La evidencia disponible es más sólida en dolor
-> muscular y recuperación después del ejercicio que en otros usos. Una sesión
-> típica en casa son 10 minutos, a 15-30 cm, cuatro o cinco días por semana.
+> actividad de las mitocondrias. La evidencia es más sólida en dolor muscular y
+> recuperación después del ejercicio que en el resto de usos que se le atribuyen.
+> Una sesión típica en casa son 10 minutos, a 15-30 cm, cuatro o cinco días por
+> semana.
 
-Ese párrafo ya contiene la palabra clave, la definición, el matiz honesto y el
-dato accionable. Es el que puede salir como fragmento destacado.
+Definición, matiz honesto y dato accionable en un párrafo.
 
 ### Esquema
 
+Los `h2` van **en forma de pregunta** (§5.2), y las respuestas empiezan justo
+debajo, en el primer párrafo:
+
 | Encabezado | Qué dice | Palabras |
 |---|---|---|
-| *(entradilla)* | Las 60 palabras de arriba, y en qué te va a ayudar el artículo | 120 |
-| `h2` **Qué es la terapia de luz roja** | Fotobiomodulación en lenguaje normal: luz que llega al tejido y actúa sobre el citocromo c oxidasa de la mitocondria. Sin metáforas de «energía» | 300 |
-| `h3` Por qué se llama fotobiomodulación | El nombre técnico y por qué se abandonó «láser de baja potencia» | 120 |
-| `h2` **660 nm y 850 nm: qué cambia** | La diferencia real: penetración. 660 se queda en piel y tejido superficial; 850 llega a músculo y articulación. Aquí va **la tabla** | 400 |
-| `h2` **Para qué hay evidencia y para qué no** | El apartado más importante del artículo. Tres bloques: *evidencia razonable* (dolor muscular tardío, recuperación de fuerza), *evidencia preliminar* (piel, sueño), *sin evidencia suficiente* (todo lo demás que se vende por ahí). Con enlaces externos | 600 |
-| `h2` **Cómo usarla en casa sin liarse con la dosis** | Distancia, tiempo, frecuencia. Explicar J/cm² una vez y luego traducirlo a minutos, que es lo que la gente usa | 450 |
-| `h3` Una rutina de 10 minutos, cuatro días por semana | Protocolo concreto por zonas | 200 |
-| `h3` Cuándo hacerla: antes o después de entrenar | Duda muy buscada | 150 |
-| `h2` **Seguridad: qué no hacer** | Ojos, embarazo, fotosensibilizantes, lunares y manchas. Y que no es un producto sanitario | 350 |
-| `h2` **Panel, lámpara con soporte o portátil: cuál te toca** | Comparativa de las tres gamas propias con el criterio de decisión, no con la ficha técnica | 350 |
-| `h2` **Preguntas frecuentes** | Las cinco de más abajo | 350 |
-| *(cierre)* | Una acción: la ficha que resuelve lo que acaba de leer | 80 |
-| *(aviso)* | El descargo de responsabilidad de GUIA-BLOG §3 | 40 |
+| *(entradilla)* | Las 60 palabras y qué vas a encontrar | 120 |
+| `h2` **¿Qué es la terapia de luz roja?** | Fotobiomodulación en lenguaje normal: luz que llega al tejido y actúa sobre el citocromo c oxidasa. Sin metáforas de «energía» | 300 |
+| `h3` Por qué se llama fotobiomodulación | El nombre técnico y por qué se dejó de decir «láser de baja potencia» | 120 |
+| `h2` **¿Qué diferencia hay entre 660 y 850 nm?** | La diferencia real es la penetración. Aquí va **la tabla** | 350 |
+| `h2` **¿Para qué funciona de verdad la luz roja?** | El apartado más importante. Tres bloques: *evidencia razonable* (dolor muscular tardío, recuperación de fuerza), *preliminar* (piel, sueño), *insuficiente* (todo lo demás que se vende por ahí). Con los enlaces externos | 500 |
+| `h2` **¿Cuánto tiempo hay que usarla y a qué distancia?** | Distancia, minutos, frecuencia. Explicar J/cm² una vez y traducirlo a minutos, que es lo que la gente usa | 400 |
+| `h3` Una rutina de 10 minutos, cuatro días por semana | Protocolo por zonas | 200 |
+| `h3` ¿Antes o después de entrenar? | Duda muy buscada | 150 |
+| `h2` **¿Tiene contraindicaciones?** | Ojos, embarazo, medicación fotosensibilizante, lunares y manchas. Y que **no es un producto sanitario** | 300 |
+| `h2` **¿Panel, lámpara con soporte o portátil?** | Las tres gamas propias con el criterio de decisión, no la ficha técnica. Y remite al artículo 3 | 300 |
+| `h2` **Preguntas frecuentes** | Las cinco de abajo | 300 |
+| *(cierre + aviso)* | Una acción concreta y el descargo de [GUIA-BLOG](GUIA-BLOG.md) §3 | 120 |
 
-### La tabla que hay que meter
+### La tabla
 
 | | Luz roja · 660 nm | Infrarrojo cercano · 850 nm |
 |---|---|---|
 | Hasta dónde llega | Piel y tejido justo por debajo | Músculo, tendón y articulación |
 | Se ve | Sí, rojo intenso | Casi nada, un brillo tenue |
 | Para qué se usa más | Piel, cicatrización superficial | Dolor muscular, articulaciones, recuperación |
-| En qué producto | Presente en los tres | Presente en los tres |
+| En qué equipo BPS | Pro-Panel, Red Light Mini, Clinic-Stand | Pro-Panel, Red Light Mini, Clinic-Stand |
 
-### Preguntas frecuentes (para el metacampo `faq`)
-
-Van tal cual al metaobjeto de preguntas que ya está configurado (GUIA-BLOG §5).
+### Preguntas frecuentes
 
 1. **¿Cuánto tiempo hay que usar la luz roja al día?**
    Entre 10 y 20 minutos por zona, según la potencia del equipo y la distancia.
    Más tiempo no da más resultado: por encima de cierta dosis el efecto se
-   estanca o incluso baja.
+   estanca.
 2. **¿Se puede usar todos los días?**
    Sí, pero cuatro o cinco días por semana es suficiente y es más fácil de
    mantener. La constancia importa más que la frecuencia.
 3. **¿Hay que ponerse gafas?**
-   Con luz roja visible, no es imprescindible si no se mira directamente al
-   panel. Con infrarrojo, que no se ve, conviene no mirar la fuente. Nunca
-   mirar fijamente el emisor.
+   Con luz roja visible no es imprescindible si no se mira al panel. Con
+   infrarrojo, que no se ve, conviene no mirar la fuente. Nunca fijamente.
 4. **¿En cuánto tiempo se nota algo?**
    En dolor muscular después de entrenar, a veces en la misma sesión o al día
-   siguiente. En cambios de piel, se habla de semanas. Si alguien promete
-   resultados inmediatos en todo, desconfía.
+   siguiente. En piel se habla de semanas. Quien prometa resultados inmediatos en
+   todo, desconfiad.
 5. **¿Sirve para adelgazar o para la celulitis?**
-   No hay evidencia suficiente para afirmarlo, y nosotros no lo vendemos así.
-   La luz roja es una herramienta de recuperación y bienestar, no un tratamiento
-   médico ni estético garantizado.
+   No hay evidencia suficiente para afirmarlo y no lo vendemos así. Es una
+   herramienta de recuperación, no un tratamiento médico ni estético garantizado.
 
-### Enlaces internos (5)
+### Enlaces internos (6)
 
 | Texto del enlace | A dónde |
 |---|---|
 | panel de luz roja de cuerpo completo | `/products/panel-terapia-luz-roja-cuerpo-completo` |
-| dispositivo portátil de luz roja e infrarroja | `/products/dispositivo-terapia-luz-roja-portatil` |
-| toda la gama de terapia de luz roja | `/collections/energia-luminica` |
-| gafas con filtro para la luz azul de la noche | `/products/bps-recovery-glasses-gafas-con-filtro-night-flow` |
+| dispositivo portátil de 660 y 850 nm | `/products/dispositivo-terapia-luz-roja-portatil` |
+| lámpara con soporte para clínicas | `/products/lampara-profesional-luz-roja-soporte` |
+| toda la gama de terapia de luz roja | `/collections/terapia-luz-roja` |
+| las botas de presoterapia con luz roja | `/blogs/rendimiento/led-boots-recuperacion` |
 | la guía de presoterapia en casa | `/blogs/rendimiento/presoterapia-en-casa` |
 
-Y en el apartado de clínicas o uso profesional, un sexto a
-`/products/lampara-profesional-luz-roja-soporte`.
-
-### Enlaces externos (2-3, en `rel="nofollow"` no; que sean normales)
+### Enlaces externos (3, normales, sin `nofollow`)
 
 - La revisión de **Michael R. Hamblin sobre los mecanismos antiinflamatorios de
   la fotobiomodulación** (2017), que es la referencia que cita todo el campo.
-- Una búsqueda en **PubMed** (`pubmed.ncbi.nlm.nih.gov`) de
-  *photobiomodulation muscle recovery* como fuente para el apartado de evidencia.
-- La **AEMPS** para respaldar la frase de que los equipos son productos de
-  bienestar y no productos sanitarios.
+- Una búsqueda en **PubMed** de *photobiomodulation muscle recovery* como fuente
+  del apartado de evidencia.
+- La **AEMPS** para respaldar que los equipos son productos de bienestar y no
+  productos sanitarios.
 
 > **Verificad cada cita antes de publicar.** Si no encontráis el estudio con su
 > DOI, no se cita. Una referencia inventada en contenido de salud hace más daño
 > que no poner ninguna.
 
-### Imágenes (3)
+### Imágenes (3 dentro del texto)
 
-| Dónde | Qué | Alt |
-|---|---|---|
-| Cabecera | Panel iluminando una espalda | `Panel de terapia de luz roja BPS iluminando la espalda de una deportista en una sala en penumbra` |
-| En «660 y 850 nm» | Esquema de penetración por capas de tejido | `Esquema de la profundidad que alcanzan la luz roja de 660 nm y el infrarrojo de 850 nm en piel y músculo` |
-| En «cómo usarla» | Alguien midiendo la distancia al panel | `Distancia de 20 cm entre el panel de luz roja y la pierna durante una sesión` |
+| Dónde | Alt |
+|---|---|
+| Cabecera | `Panel de luz roja BPS Pro-Panel iluminando la espalda de una deportista en una sala en penumbra` |
+| En «660 y 850 nm» | `Esquema de la profundidad que alcanzan la luz roja de 660 nm y el infrarrojo de 850 nm en piel y músculo` |
+| En «cuánto tiempo» | `Distancia de 20 cm entre el panel de luz roja BPS y la pierna durante una sesión` |
 
 ---
 
-## Artículo 2 · Baños de hielo
+## Artículo 2 · Baño de hielo: minutos y grados
+
+Cuelga de `banera-crioterapia`, que ya es el pilar de frío. **No escribáis otro
+pilar de frío**: este responde la búsqueda concreta y enlaza hacia arriba.
 
 ### Ficha para el admin
 
 | Campo | Valor |
 |---|---|
-| **Palabra clave principal** | `baños de hielo` |
-| **Secundarias** | `cuánto tiempo baño de hielo`, `temperatura baño de hielo`, `inmersión en agua fría`, `crioterapia en casa`, `baño de hielo beneficios` |
-| **Intención** | Informativa. La duda concreta es siempre **grados y minutos** |
-| **Título (tarjeta, 48)** | `Baños de hielo: temperatura, tiempo y frecuencia` |
-| **SEO · título (48)** | `Baños de hielo: temperatura, tiempo y frecuencia` |
-| **SEO · URL** | `/blogs/rendimiento/banos-de-hielo-guia` |
-| **SEO · descripción (150)** | `A cuántos grados, cuántos minutos y cuántas veces por semana, según busques recuperar, dormir mejor o ganar músculo. Y cuándo el frío te resta.` |
-| **Extracto (155)** | `Los grados y los minutos que dice la evidencia, según lo que busques. Incluye el caso en el que el frío después de pesas te juega en contra.` |
-| **Etiquetas** | `Frío` (principal) + `Entrenamiento` |
-| **Longitud** | 2.500-3.000 palabras |
-| **Imagen destacada** | 1.600 × 900 JPG. Alt: `Deportista sumergido hasta el pecho en una bañera de hielo portátil BPS en una terraza al amanecer` |
+| **Palabra clave principal** | `baño de hielo cuánto tiempo` |
+| **Secundarias** | `temperatura baño de hielo`, `cada cuánto baño de hielo`, `inmersión en agua fría`, `baño de hielo antes o después de entrenar` |
+| **Intención** | Informativa. La duda es siempre **grados y minutos** |
+| **Título del artículo (45)** | `Baño de hielo: cuántos minutos y a qué grados` |
+| **«Título de la página» (45)** | `Baño de hielo: cuántos minutos y a qué grados` |
+| **«Identificador de URL»** | `bano-de-hielo-tiempo-temperatura` |
+| **«Metadescripción» (150)** | `A cuántos grados, cuántos minutos y cuántas veces por semana, según busques recuperar, dormir mejor o ganar músculo. Y cuándo el frío te resta.` |
+| **Extracto (152)** | `Los grados y los minutos que dice la evidencia, según lo que busques. Incluye el caso en el que el frío después de pesas te juega en contra.` |
+| **Etiqueta** | `Frío` |
+| **Imagen destacada** | Alt: `Deportista sumergido hasta el pecho en la bañera de hielo portátil BPS Recovery Pod en una terraza al amanecer` |
 
 ### Las primeras 60 palabras
 
@@ -203,243 +310,404 @@ Y en el apartado de clínicas o uso profesional, un sexto a
 > mejor. Y hay un caso en el que conviene no hacerlo: justo después de una sesión
 > de fuerza, si el objetivo es ganar músculo.
 
-Responde la búsqueda en la primera frase y adelanta el matiz que hace que el
-artículo se comparta.
-
 ### Esquema
 
 | Encabezado | Qué dice | Palabras |
 |---|---|---|
-| *(entradilla)* | Las 60 palabras, y el índice de lo que viene | 120 |
-| `h2` **A cuántos grados y cuántos minutos** | El apartado que resuelve la búsqueda. Aquí va **la tabla por objetivo** | 450 |
-| `h3` Por qué no hace falta bajar de 10 °C | Aguantar menos tiempo no compensa | 180 |
-| `h2` **Qué le pasa al cuerpo en el agua fría** | Vasoconstricción, percepción del dolor, respuesta de estrés agudo. Sin misticismo | 350 |
-| `h2` **Para qué funciona: lo que dice la evidencia** | Dolor muscular percibido y sensación de recuperación: razonable. Rendimiento del día siguiente: depende del deporte. Grasa, inmunidad, longevidad: no | 450 |
-| `h2` **Frío después de pesas: el caso en el que resta** | **El apartado clave del artículo.** Si el objetivo es hipertrofia, el frío inmediato después de la sesión de fuerza puede reducir la adaptación. Qué hacer entonces: separarlo unas horas, o reservarlo para los días de mucha carga o de competición | 400 |
-| `h2` **Cómo montarlo en casa** | Agua, hielo, cuántos kilos, cada cuánto se cambia, cómo se limpia, dónde ponerlo. Es lo que nadie cuenta y lo que más se agradece | 450 |
-| `h3` Cuánto hielo hace falto de verdad | Cálculo sencillo por litros | 150 |
-| `h2` **Seguridad: cuándo no meterse** | Problemas cardiovasculares, hipertensión no controlada, embarazo, solo en casa la primera vez, no aguantar la respiración | 300 |
-| `h2` **Bañera portátil o instalación fija** | Comparativa de las dos gamas propias | 300 |
-| `h2` **Preguntas frecuentes** | Las cinco de abajo | 350 |
-| *(cierre + aviso)* | Acción y descargo | 120 |
+| *(entradilla)* | Las 60 palabras | 110 |
+| `h2` **¿Cuántos minutos y a qué temperatura?** | Resuelve la búsqueda. Aquí va **la tabla por objetivo** | 400 |
+| `h3` Por qué no hace falta bajar de 10 °C | Aguantar menos no compensa | 180 |
+| `h2` **¿Qué le pasa al cuerpo en el agua fría?** | Vasoconstricción, percepción del dolor, respuesta de estrés agudo. Sin misticismo | 300 |
+| `h2` **¿Para qué funciona y para qué no?** | Dolor percibido y sensación de recuperación: razonable. Rendimiento del día siguiente: depende del deporte. Grasa, inmunidad, longevidad: no | 400 |
+| `h2` **¿El frío después de pesas resta músculo?** | **El apartado que hace que el artículo se comparta.** Si el objetivo es hipertrofia, el frío inmediato tras la fuerza puede reducir la adaptación. Qué hacer: separarlo unas horas o reservarlo para competición | 350 |
+| `h2` **¿Cómo se monta en casa?** | Agua, kilos de hielo, cada cuánto se cambia, cómo se limpia, dónde ponerlo. Es lo que nadie cuenta | 350 |
+| `h2` **¿Quién no debería meterse?** | Problemas cardiovasculares, hipertensión no controlada, embarazo, nunca solo la primera vez, no aguantar la respiración | 250 |
+| `h2` **Preguntas frecuentes** | Las de abajo | 280 |
+| *(cierre + aviso)* | Acción y descargo | 110 |
 
-### La tabla que hay que meter
+### La tabla
 
 | Lo que buscas | Temperatura | Tiempo | Cuántas veces |
 |---|---|---|---|
 | Recuperar después de entrenar | 10-15 °C | 10-15 min | 2-3 por semana |
 | Bajar la sensación de agujetas | 11-15 °C | 11-15 min | El mismo día del esfuerzo |
 | Empezar desde cero | 15-18 °C | 3-5 min | 1-2 por semana, subiendo |
-| Ganar masa muscular | **Mejor separarlo de la sesión de fuerza** | — | — |
+| Ganar masa muscular | **Separarlo de la sesión de fuerza** | — | — |
 
-### Preguntas frecuentes (para el metacampo `faq`)
+### Preguntas frecuentes
 
 1. **¿Cuánto tiempo hay que estar en un baño de hielo?**
-   Entre 10 y 15 minutos a 10-15 °C para recuperar. Si estás empezando, 3-5
-   minutos a 15-18 °C ya sirve; el objetivo es acabar tranquilo, no aguantar.
+   Entre 10 y 15 minutos a 10-15 °C para recuperar. Empezando, 3-5 minutos a
+   15-18 °C ya sirve: el objetivo es salir tranquilo, no aguantar.
 2. **¿A qué temperatura debe estar el agua?**
-   Entre 10 y 15 °C para la mayoría de los usos. Bajar de 10 °C reduce el tiempo
-   que se aguanta sin que se haya demostrado mejor resultado.
-3. **¿Es mejor antes o después de entrenar?**
-   Después, y con una excepción: si el entreno era de fuerza y buscas ganar
-   músculo, conviene dejar pasar unas horas o reservar el frío para otro día.
-4. **¿Puedo hacerlo todos los días?**
+   Entre 10 y 15 °C para casi todo. Bajar de 10 °C reduce el tiempo que se
+   aguanta sin que se haya demostrado mejor resultado.
+3. **¿Antes o después de entrenar?**
+   Después, con una excepción: si el entreno era de fuerza y buscas ganar
+   músculo, deja pasar unas horas o resérvalo para otro día.
+4. **¿Se puede hacer todos los días?**
    Se puede, pero dos o tres veces por semana cubre lo que se busca. Diario tiene
-   más sentido en periodos de mucha carga o competición.
+   sentido en periodos de mucha carga o competición.
 5. **¿Quién no debería meterse?**
    Quien tenga problemas cardiovasculares o hipertensión no controlada, esté
-   embarazada o tome medicación que afecte a la circulación, sin hablarlo antes
-   con un profesional sanitario. Y nunca la primera vez estando solo en casa.
+   embarazada o tome medicación que afecte a la circulación, sin consultarlo
+   antes. Y nunca la primera vez estando solo en casa.
 
 ### Enlaces internos (5)
 
 | Texto del enlace | A dónde |
 |---|---|
-| bañera de hielo portátil para inmersión en frío | `/products/banera-hielo-portatil-cold-plunge` |
-| bañera de crioterapia portátil | `/products/banera-crioterapia-portatil-hielo` *(solo si se le pone precio)* |
-| toda la gama de recuperación en frío | `/collections/recuperacion-polar` |
-| la guía de presoterapia en casa | `/blogs/rendimiento/presoterapia-en-casa` |
-| la guía de terapia de luz roja | `/blogs/rendimiento/terapia-luz-roja-guia` |
+| la guía completa de bañeras de crioterapia | `/blogs/rendimiento/banera-crioterapia` |
+| bañera de hielo portátil BPS Recovery Pod | `/products/banera-crioterapia-portatil-bps-recovery-pod` |
+| toda la gama de recuperación en frío | `/collections/recuperacion-fria` |
+| la terapia de luz roja, que actúa al contrario | `/blogs/rendimiento/terapia-luz-roja-guia` |
+| cómo usar la pistola de masaje | `/blogs/rendimiento/como-usar-pistola-de-masaje` |
 
-### Enlaces externos (2-3)
+Al **`BPS Ice Bath`** se puede enlazar, pero **diciendo que está agotado** y con
+enlace al `Recovery Pod` al lado. Enviar tráfico de Google a una ficha agotada
+sin avisar sube la tasa de rebote, y eso sí se mide.
+
+### Enlaces externos (3)
 
 - **Roberts LA y colaboradores, *Journal of Physiology*, 2015**, sobre cómo la
   inmersión en agua fría después del entreno de fuerza atenúa la señalización
   anabólica. Es el estudio que sostiene el apartado clave.
-- La **revisión Cochrane sobre inmersión en agua fría y dolor muscular** para el
-  apartado de evidencia.
-- **PubMed** como fuente general para quien quiera tirar del hilo.
-
-Misma regla: si no aparece con su DOI, no se cita.
+- La **revisión Cochrane sobre inmersión en agua fría y dolor muscular**.
+- **PubMed** como fuente general.
 
 ### Imágenes (3)
 
-| Dónde | Qué | Alt |
-|---|---|---|
-| Cabecera | Inmersión en la bañera portátil | `Deportista sumergido hasta el pecho en una bañera de hielo portátil BPS en una terraza al amanecer` |
-| En «grados y minutos» | La tabla como gráfico, o un termómetro en el agua | `Termómetro marcando 12 grados en el agua de una bañera de hielo` |
-| En «montarlo en casa» | Bolsas de hielo y la bañera vacía | `Bañera de hielo portátil BPS montada en una terraza junto a las bolsas de hielo` |
+| Dónde | Alt |
+|---|---|
+| Cabecera | `Deportista sumergido hasta el pecho en la bañera de hielo portátil BPS Recovery Pod en una terraza al amanecer` |
+| En «minutos y grados» | `Termómetro marcando 12 grados en el agua de una bañera de hielo` |
+| En «cómo se monta» | `Bañera de hielo portátil BPS montada en una terraza junto a las bolsas de hielo` |
 
 ---
 
-## Artículo 3 · Pistola de masaje
+## Artículo 3 · Qué equipo de luz roja elegir
+
+El artículo que **convierte**: quien lo lee ya está decidido a comprar y solo
+duda entre tres precios (120, 999 y 2.500 €). Se publica **después** del pilar,
+porque cuelga de él.
 
 ### Ficha para el admin
 
 | Campo | Valor |
 |---|---|
-| **Palabra clave principal** | `cómo usar una pistola de masaje` |
-| **Secundarias** | `pistola de masaje para qué sirve`, `pistola de masaje antes o después de entrenar`, `cuánto tiempo por músculo`, `pistola de masaje contraindicaciones` |
-| **Intención** | De uso, no de compra. Las búsquedas de compra las tienen los grandes; esta es ganable |
-| **Título (tarjeta, 35)** | `Pistola de masaje: cómo usarla bien` |
-| **SEO · título (45)** | `Cómo usar una pistola de masaje (y cuándo no)` |
-| **SEO · URL** | `/blogs/rendimiento/como-usar-pistola-de-masaje` |
-| **SEO · descripción (148)** | `Cuánto tiempo por músculo, con qué cabezal, antes o después de entrenar y las cinco zonas en las que no se debe usar una pistola de masaje.` |
-| **Extracto (153)** | `Cuánto tiempo por grupo muscular, qué cabezal usar en cada zona, si va antes o después del entreno y las zonas donde no hay que acercarla.` |
-| **Etiquetas** | `Liberación muscular` (principal) + `Entrenamiento` |
-| **Longitud** | 2.200-2.600 palabras |
-| **Imagen destacada** | 1.600 × 900 JPG. Alt: `Pistola de masaje BPS aplicada sobre el cuádriceps de un corredor sentado en un banco` |
-
-### Las primeras 60 palabras
-
-> Una pistola de masaje se usa **60-90 segundos por grupo muscular**, moviéndola
-> despacio y sin apretar: el peso del aparato basta. Antes de entrenar, pasadas
-> cortas de 30 segundos para activar; después, pasadas más lentas para bajar la
-> tensión. No se usa sobre hueso, articulación, cuello por delante, zona lumbar
-> baja con dolor agudo ni sobre una lesión reciente.
+| **Palabra clave principal** | `panel de luz roja` |
+| **Secundarias** | `qué panel de luz roja comprar`, `660 nm o 850 nm`, `luz roja portátil`, `irradiancia luz roja`, `luz roja para clínica` |
+| **Intención** | Comercial. Comparativa |
+| **Título del artículo (46)** | `Panel, lámpara o portátil: qué luz roja elegir` |
+| **«Título de la página» (44)** | `Qué panel de luz roja elegir: guía de compra` |
+| **«Identificador de URL»** | `elegir-equipo-luz-roja` |
+| **«Metadescripción» (147)** | `Panel de cuerpo completo, lámpara con soporte o dispositivo portátil: qué mirar antes de comprar, qué es la irradiancia y para quién es cada uno.` |
+| **Extracto (146)** | `Cuatro criterios para decidir entre un panel, una lámpara con soporte y un portátil, y qué significan de verdad los vatios de los anuncios.` |
+| **Etiqueta** | `Luz roja` |
 
 ### Esquema
 
-| Encabezado | Qué dice | Palabras |
-|---|---|---|
-| *(entradilla)* | Las 60 palabras | 110 |
-| `h2` **Para qué sirve de verdad** | Percusión: efecto sobre la percepción de tensión y el rango de movimiento a corto plazo. No «rompe» nudos ni «drena toxinas» | 300 |
-| `h2` **Cuánto tiempo por músculo** | La duda número uno. 60-90 s, hasta 2 min en grupos grandes, y por qué más no es mejor | 300 |
-| `h2` **¿Antes o después de entrenar?** | Dos protocolos distintos, con la diferencia explicada | 300 |
-| `h2` **Zona por zona** | El apartado largo, con un `h3` por zona: cuádriceps, isquios, gemelo, glúteo, dorsal, trapecio, planta del pie. Cabezal, presión y qué evitar en cada una | 600 |
-| `h2` **Qué cabezal usar** | Los cuatro típicos y para qué es cada uno. Tabla | 250 |
-| `h2` **Cinco errores** | Apretar, ir demasiado rápido, pasar por hueso, usarla sobre una lesión, usarla en vez de moverse | 300 |
-| `h2` **Cuándo no usarla** | Contraindicaciones claras. Es el apartado que genera confianza | 250 |
-| `h2` **Pistola o rodillo: para qué sirve cada uno** | Comparativa honesta; no todo se resuelve con percusión | 200 |
-| `h2` **Preguntas frecuentes** | Las cinco de abajo | 320 |
-| *(cierre + aviso)* | Acción y descargo | 110 |
+| Encabezado | Qué dice |
+|---|---|
+| *(entradilla)* | Las tres opciones en dos frases y a quién le toca cada una |
+| `h2` **¿Qué hay que mirar antes de comprar?** | Los cuatro criterios: superficie que cubre, irradiancia a la distancia de uso, longitudes de onda y montaje. En ese orden |
+| `h3` Por qué los vatios del anuncio no dicen nada | El apartado que da autoridad: 1.500 W de consumo no son 1.500 W en la piel. Lo que importa es mW/cm² **a la distancia real** |
+| `h2` **¿Panel de cuerpo completo para quién?** | Casa con sitio, sesiones para todo el cuerpo, 999 € |
+| `h2` **¿Lámpara con soporte para quién?** | Clínica, camilla, varios pacientes al día, 2.500 € |
+| `h2` **¿Portátil para quién?** | Zona concreta, viaje, primera compra, 120 € |
+| `h2` **La tabla de decisión** | **La tabla** de abajo |
+| `h2` **¿Se puede empezar por el portátil y ampliar?** | Sí, y decirlo así: es honesto y quita el miedo a equivocarse |
+| `h2` **Preguntas frecuentes** | Cinco de compra, no de tecnología: garantía, consumo eléctrico, ruido, si sirve para toda la familia, plazo de entrega |
+| *(cierre + aviso)* | Acción y descargo |
 
-### La tabla que hay que meter
+### La tabla
 
-| Cabezal | Para qué | Dónde no |
-|---|---|---|
-| Bola grande | Grupos grandes: cuádriceps, glúteo, dorsal | Cerca de hueso |
-| Plano | Toda la zona, presión repartida | — |
-| Bala / punta | Punto concreto muy tenso | Articulaciones y columna |
-| Horquilla | A los lados de un tendón o de la columna | Encima de la columna |
-
-### Preguntas frecuentes (para el metacampo `faq`)
-
-1. **¿Cuánto tiempo hay que usar la pistola en cada músculo?**
-   Entre 60 y 90 segundos, hasta dos minutos en grupos grandes. Insistir más en
-   la misma zona no mejora el resultado y puede dejarla dolorida.
-2. **¿Se usa antes o después de entrenar?**
-   Las dos cosas, con protocolos distintos: antes, pasadas cortas de unos 30
-   segundos para activar; después, pasadas lentas para bajar la tensión.
-3. **¿Se puede usar en el cuello y en la espalda?**
-   En el trapecio sí, con cuidado y cabezal plano. En la parte delantera del
-   cuello y directamente sobre la columna, no.
-4. **¿Duele o tiene que doler?**
-   No. Debe notarse intenso pero tolerable. Si duele, hay que aliviar la presión
-   o cambiar de cabezal.
-5. **¿Sirve para las agujetas?**
-   Puede reducir la sensación de dolor a corto plazo. No acelera la reparación
-   del músculo: para eso lo que funciona es dormir, comer y dosificar la carga.
+| | Red Light Mini | Pro-Panel | Clinic-Stand |
+|---|---|---|---|
+| Precio | 120 € | 999 € | 2.500 € |
+| Para qué zona | Una, pequeña | Todo el cuerpo | Todo el cuerpo, con camilla |
+| Dónde encaja | Bolsa de viaje | Habitación o gimnasio de casa | Clínica o box |
+| Para quién | Primera compra, prueba | Uso diario en casa | Uso profesional |
 
 ### Enlaces internos (5)
 
-| Texto del enlace | A dónde |
+Los tres productos de la tabla, la colección `terapia-luz-roja` y el pilar
+(`terapia-luz-roja-guia`). Y desde el pilar, un enlace de vuelta a este.
+
+---
+
+## Artículo 4 · Gafas de filtro de luz azul
+
+Tapa el agujero 2: tres productos de 90 € sin una línea escrita. Es también el
+artículo **más honesto** de los seis, porque la evidencia aquí está dividida, y
+decirlo es exactamente lo que hace que un sitio de salud gane confianza.
+
+### Ficha para el admin
+
+| Campo | Valor |
 |---|---|
-| pistola de masaje de percusión profesional | `/products/pistola-de-masaje` |
-| toda la gama de liberación muscular | `/collections/liberacion-muscular` |
-| los baños de hielo, y cuándo tienen sentido | `/blogs/rendimiento/banos-de-hielo-guia` |
-| la terapia de luz roja para el dolor muscular | `/blogs/rendimiento/terapia-luz-roja-guia` |
-| la presoterapia, que trabaja de otra manera | `/blogs/rendimiento/presoterapia-en-casa` |
+| **Palabra clave principal** | `gafas de luz azul para dormir` |
+| **Secundarias** | `filtro de luz azul funciona`, `gafas para pantallas`, `luz azul y melatonina`, `gafas naranjas para dormir` |
+| **Intención** | Informativa con compra detrás y ticket bajo: la compra de entrada |
+| **Título del artículo (48)** | `Gafas de filtro de luz azul: ¿sirven para dormir?` |
+| **«Título de la página» (43)** | `Gafas de luz azul: ¿sirven para dormir?` |
+| **«Identificador de URL»** | `gafas-filtro-luz-azul-dormir` |
+| **«Metadescripción» (152)** | `Qué dice la evidencia sobre las gafas de filtro de luz azul, en qué se diferencian los filtros amarillo, naranja y rojo, y cuándo ponérselas.` |
+| **Extracto (150)** | `Qué hace de verdad un filtro de luz azul, qué dice la evidencia sobre el sueño y qué filtro corresponde a cada momento del día.` |
+| **Etiqueta** | `Luz roja` |
+
+> **Sobre la etiqueta.** No creéis una etiqueta nueva («Sueño», «Descanso») para
+> un solo artículo: una página de etiqueta con un artículo es un duplicado del
+> listado. La regla está en §5.6: **etiqueta nueva a partir de tres artículos**.
+
+### Esquema
+
+| Encabezado | Qué dice |
+|---|---|
+| *(entradilla)* | Qué filtran, qué no, y la respuesta corta a «¿funcionan?» |
+| `h2` **¿Qué es la luz azul y por qué molesta de noche?** | Melatonina y ritmo circadiano, en lenguaje normal |
+| `h2` **¿Funcionan de verdad las gafas de filtro?** | **El apartado honesto.** Para el sueño hay evidencia moderada si se usan 2-3 horas antes de dormir; para la fatiga visual la evidencia es débil. Decirlo tal cual, con los enlaces externos |
+| `h2` **¿Amarillo, naranja o rojo?** | **La tabla.** Cuánto filtra cada uno y a qué hora se usa |
+| `h2` **¿A qué hora hay que ponérselas?** | El dato accionable: 2-3 horas antes de dormir, y no quitárselas para mirar el móvil |
+| `h2` **¿Sirven para trabajar con pantallas todo el día?** | Aquí se es honesto: para eso importan más los descansos y el brillo. El `DAILY LIGHT` es filtro suave, no una solución médica |
+| `h2` **¿Se pueden usar con gafas graduadas?** | Duda de compra muy frecuente |
+| `h2` **Preguntas frecuentes** | Cinco |
+| *(cierre + aviso)* | Acción y descargo |
+
+### La tabla
+
+| | DAILY LIGHT · amarillo | NIGHT FLOW · naranja | NIGHT MAX · rojo |
+|---|---|---|---|
+| Cuánto filtra | Suave | Medio | Máximo |
+| Cuándo | Todo el día, pantallas | Tarde y noche | Últimas horas antes de dormir |
+| Distorsiona el color | Poco | Algo | Mucho |
+| Precio | 90 € | 90 € | 90 € |
+
+### Enlaces internos (5)
+
+Las tres fichas de gafas, la colección `terapia-luz-roja` y el pilar de luz roja.
+Y el pilar enlaza aquí desde su apartado de «¿Hay que ponerse gafas?».
 
 ### Enlaces externos (2)
 
-- Una **revisión sistemática sobre terapia de percusión y rango de movimiento**,
-  buscada en PubMed con *percussive massage therapy range of motion*. Es el campo
-  con menos evidencia de los tres artículos: conviene decirlo en el texto.
-- El **Consejo General de Colegios de Fisioterapeutas de España** para la frase
-  de «esto no sustituye a un fisioterapeuta».
-
-### Imágenes (4, es un artículo de uso)
-
-| Dónde | Qué | Alt |
-|---|---|---|
-| Cabecera | Aplicación en cuádriceps | `Pistola de masaje BPS aplicada sobre el cuádriceps de un corredor sentado en un banco` |
-| En «zona por zona» | Dos o tres fotos por zona | `Pistola de masaje BPS sobre el gemelo, con el pie apoyado en el suelo` |
-| En «qué cabezal» | Los cuatro cabezales | `Los cuatro cabezales de la pistola de masaje BPS: bola, plano, bala y horquilla` |
-| En «cuándo no usarla» | Zonas marcadas sobre una silueta | `Silueta con las zonas marcadas en las que no se debe usar una pistola de masaje` |
+- Una **revisión sistemática sobre gafas de bloqueo de luz azul y sueño** buscada
+  en PubMed (*blue-light blocking glasses sleep*). Hay revisiones con resultados
+  mixtos: citad una de esas, no la más favorable.
+- La **Academia Americana de Oftalmología**, que sostiene que no hay pruebas de
+  que la luz azul de las pantallas dañe el ojo. **Citadla aunque juegue en
+  contra**: eso es exactamente lo que Google llama experiencia y fiabilidad, y os
+  diferencia de las tiendas que exageran.
 
 ---
 
-## Lo que hay que enlazar DESDE lo que ya existe
+## Artículo 5 · Presoterapia: quién no debe usarla *(resumido)*
 
-Esto es la mitad del trabajo y es lo que casi siempre se olvida. Un artículo
-nuevo sin enlaces entrantes tarda mucho más en posicionar.
-
-**En el artículo de presoterapia que ya está publicado**, añadir tres enlaces:
-
-| Dónde | Texto | A dónde |
-|---|---|---|
-| Donde se hable de combinar tecnologías | `la terapia de luz roja` | `/blogs/rendimiento/terapia-luz-roja-guia` |
-| Donde se hable de recuperación después de entrenar | `los baños de hielo` | `/blogs/rendimiento/banos-de-hielo-guia` |
-| Donde se hable de liberar tensión | `la pistola de masaje` | `/blogs/rendimiento/como-usar-pistola-de-masaje` |
-
-**En las fichas de producto**, un enlace al artículo de su tecnología en la
-descripción larga. Son cinco minutos por ficha y es el enlace interno de más
-valor que tenéis, porque las fichas ya reciben tráfico:
-
-| Ficha | Enlaza a |
+| Campo | Valor |
 |---|---|
-| `panel-terapia-luz-roja-cuerpo-completo`, `dispositivo-terapia-luz-roja-portatil`, `lampara-profesional-luz-roja-soporte` | el artículo de luz roja |
-| `banera-hielo-portatil-cold-plunge`, `banera-crioterapia-portatil-hielo` | el artículo de baños de hielo |
-| `pistola-de-masaje` | el artículo de la pistola |
-| `presoterapia-bps-plus`, `presoterapia-bps-pro`, `botas-presoterapia-luz-roja` | el artículo de presoterapia |
+| **Palabra clave** | `presoterapia contraindicaciones` |
+| **Título del artículo (34)** | `Presoterapia: quién no debe usarla` |
+| **«Título de la página» (44)** | `Presoterapia: contraindicaciones y avisos` |
+| **URL** | `presoterapia-contraindicaciones` |
+| **Etiqueta** | `Presoterapia` · **1.200-1.500 palabras** |
 
-**En la descripción de cada colección**, una frase con enlace al pilar. Además de
-SEO, es lo que aparece en el desplegable del menú.
+Cuelga de `presoterapia-en-casa`, que ya tiene un apartado corto de
+contraindicaciones: aquí se desarrolla y **desde el pilar se enlaza aquí**.
 
-**En el menú**, cuando los tres estén publicados: crear la entrada **Terapia**
-que apunta al blog, con las cuatro etiquetas como hijas (paso 4 de
-[MEGAMENU.md](MEGAMENU.md)). Con eso, el desplegable de escritorio y las pestañas
-del móvil enseñan las categorías del blog y los dos últimos artículos.
+Apartados, todos en pregunta: trombosis y problemas venosos · insuficiencia
+cardiaca · infección o inflamación activa · embarazo · cáncer y linfedema
+(remitir siempre a profesional) · marcapasos y prótesis · qué hacer si te pasa
+algo durante la sesión · cuándo parar. Cierre con: **esto no sustituye una
+consulta**, y el descargo.
+
+Es el artículo con **más riesgo YMYL** de los seis: aquí la autoría de una
+persona con credenciales (§5.7) no es opcional.
 
 ---
 
-## Calendario
+## Artículo 6 · ¿Frío o calor? *(resumido)*
+
+| Campo | Valor |
+|---|---|
+| **Palabra clave** | `frío o calor para el dolor muscular` |
+| **Título del artículo (33)** | `¿Frío o calor? Cuál usar y cuándo` |
+| **«Título de la página» (42)** | `¿Frío o calor? Guía para elegir bien` |
+| **URL** | `frio-o-calor-dolor-muscular` |
+| **Etiqueta** | `Frío` · **1.400-1.800 palabras** |
+
+El artículo de entrada: mucho volumen, intención informativa pura, y **enlaza a
+las cuatro colecciones**, así que reparte autoridad por todo el sitio. Tabla
+central de dos columnas —lesión aguda, contractura, agujetas, tendinopatía,
+antes de entrenar— con la respuesta en cada caso. Enlaza a `banera-crioterapia`,
+al artículo 2, al de la pistola y al pilar de luz roja.
+
+**Este es el candidato a cambiar.** Cuando toque escribirlo habrá dos meses de
+Search Console; si hay una consulta con impresiones y mala posición, se escribe
+esa en su lugar (§7).
+
+---
+
+## 5. Pautas para posicionar
+
+Esto es la parte que se reutiliza en todos los artículos siguientes. Está sacada
+de comparar lo que hay publicado con lo que hace la competencia que sale por
+encima.
+
+### 5.1. Longitud
+
+**Mínimo 1.500 palabras de cuerpo; los pilares, 2.000-2.500.** No porque Google
+cuente palabras, sino porque por debajo de eso no caben la tabla, las
+contraindicaciones, las preguntas y los enlaces, y son esas cuatro cosas las que
+posicionan. Los cuatro artículos publicados están entre 615 y 1.316: **todos por
+debajo**.
+
+### 5.2. Los `h2` se escriben como preguntas
+
+La regla más rentable del documento. Dos motivos, y el segundo está comprobado en
+vuestro propio sitio:
+
+1. Coincide con cómo se busca en español, y es lo que Google usa para elegir el
+   fragmento destacado.
+2. **El marcado `FAQPage` del sitio se genera copiando los `h2`.** Si el `h2` es
+   una pregunta, sale un marcado válido sin tocar nada. Si es un titular
+   («Principales beneficios de las LED Boots»), sale una «pregunta» que no es una
+   pregunta y el marcado queda inválido, que es lo que pasa hoy en dos artículos.
+
+Y **la respuesta va en el primer párrafo debajo del `h2`**, en dos o tres frases.
+Lo que se argumenta, después.
+
+### 5.3. Las primeras 60 palabras responden la búsqueda
+
+Sin introducción de calentamiento. Nada de «en el mundo del deporte de hoy en
+día...». Definición, matiz y dato en el primer párrafo. Es lo que Google puede
+enseñar como fragmento y lo que decide si el lector se queda.
+
+### 5.4. Una tabla por artículo, y que sea la respuesta
+
+La tabla es lo que se comparte, lo que se copia y lo que Google enseña. **Que
+contenga el dato que se busca** —grados, minutos, precios, longitudes de onda—,
+no una lista de características.
+
+### 5.5. Enlaces: tres reglas
+
+- **Salientes: 4-6 por artículo**, y siempre al menos **un producto, una
+  colección y otro artículo**. Con texto descriptivo, nunca «aquí» ni «leer más».
+  Hoy hay artículos con cero.
+- **Entrantes: cada artículo nuevo necesita al menos dos**, desde la ficha del
+  producto del que habla y desde su colección. Se hace **el mismo día que se
+  publica**, no «cuando haya tiempo». Es la mitad del trabajo (§3.1).
+- **Externos: 2-3, normales, sin `nofollow`**, a fuentes que se puedan verificar
+  con DOI. Si no encontráis el estudio, no se cita. Y **citad también lo que os
+  juega en contra**: es lo que separa un sitio fiable de un folleto.
+
+### 5.6. Etiquetas
+
+Solo las cuatro que existen: `Presoterapia`, `Frío`, `Luz roja`, `Liberación
+muscular`. **Una etiqueta principal por artículo.** Etiqueta nueva solo cuando
+vaya a tener **tres artículos o más**: con uno, la página de etiqueta es un
+duplicado del listado (y por eso están todas en `noindex`).
+
+### 5.7. Autoría
+
+Los seis artículos tocan salud, y eso Google lo mide aparte. Hoy los cuatro
+firman **«BPS Performance»**, que como autor no es nadie. Hay que:
+
+- Firmar con **una persona**, con nombre y apellidos.
+- Una **página de autor** con su formación y, si es fisioterapeuta colaborador,
+  su número de colegiado.
+- En los artículos 5 y 1, **revisión por un profesional sanitario** con su nombre
+  y la fecha de revisión al principio del artículo.
+
+### 5.8. Los campos del admin, con los topes reales
+
+| Campo | Dónde | Tope real | Por qué |
+|---|---|---|---|
+| **Título del artículo** | Arriba, en la publicación | **50** | La tarjeta del listado lo recorta a 50 caracteres exactos (es de Dawn: `article-card.liquid`) |
+| **«Título de la página»** | Bloque «Optimización para motores de búsqueda» → **Editar** | **45** | El tema le añade ` – BPS Performance`, otros 18. Si el título ya contiene «BPS Performance», el tema no lo añade y podéis llegar a 60 |
+| **«Metadescripción»** | El mismo bloque | **140-155** | Por encima, Google la corta |
+| **Extracto** | Sección «Extracto» de la publicación | **150-160** | Si se deja vacío, Dawn recorta el primer párrafo y la tarjeta acaba a mitad de frase |
+| **«Identificador de URL»** | El mismo bloque de SEO | 3-5 palabras | **Sin año y sin fecha.** Y **no se cambia nunca** después de publicar |
+
+**Y nada de «en 2026» en el campo de SEO.** Obliga a repasarlo cada enero y, si
+no se repasa, envejece a la vista. En el texto del artículo sí vale.
+
+### 5.9. Imágenes
+
+**3 o 4 dentro del texto**, no solo la destacada. Hoy los cuatro artículos tienen
+**cero imágenes en el cuerpo**, y en artículos de uso —protocolos, zonas,
+distancias— la imagen es media explicación.
+
+Alt descriptivo con el nombre del producto cuando aparezca: `Pistola de masaje
+BPS Gun sobre el gemelo, con el pie apoyado en el suelo`. Ni `IMG_2043` ni
+`pistola de masaje comprar`.
+
+### 5.10. Mantenimiento
+
+- **Fecha de actualización:** al revisar un artículo, cambiadla. Google la usa y
+  estos temas envejecen.
+- **Descargo sanitario** al final de todos, el de [GUIA-BLOG](GUIA-BLOG.md) §3.
+  En contenido de salud no es opcional.
+- **Nada de generar el artículo entero con una aplicación y publicarlo tal cual.**
+  Se nota en lo que hay publicado: apartados con `Título En Mayúsculas Todas Las
+  Palabras`, «Conclusión» como encabezado y numeraciones tipo `1. Zonas
+  Anatómicas Prohibidas`. Google no penaliza usar la máquina; penaliza que no
+  aporte nada. Lo que la máquina no puede escribir —y es lo que os va a
+  posicionar— es lo que sabéis vosotros: qué preguntan los clientes por teléfono,
+  qué devuelven y por qué, qué pasa cuando una bañera lleva tres meses en una
+  terraza en agosto.
+
+---
+
+## 6. Calendario
+
+Ritmo realista para una tienda pequeña: **dos publicaciones al mes**. Y las
+reparaciones primero, porque esas páginas ya están indexadas.
 
 | Semana | Qué |
 |---|---|
-| 0 | Validar las palabras clave en el Planificador. Poner precio al `Ice Bath` o despublicarlo. Decidir la firma |
-| 1 | Escribir y publicar **luz roja**. Añadir su enlace en las tres fichas de luz roja y en el artículo de presoterapia |
-| 3 | Escribir y publicar **baños de hielo**. Enlazar desde las dos fichas de frío y desde luz roja |
-| 5 | Escribir y publicar **pistola de masaje**. Enlazar desde su ficha y desde los otros dos |
-| 6 | Crear la entrada **Terapia** del menú. Enviar el sitemap en Search Console y pedir indexación de los tres |
-| 8 | Mirar en Search Console qué consultas están entrando y **con eso** elegir los cuatro artículos del mes siguiente |
-
-Ese último punto es el que importa: los artículos del segundo mes no se eligen
-por intuición, se eligen leyendo por qué búsquedas ya te está enseñando Google.
+| **1** | §3.1 completo: los enlaces de las 12 fichas y de las 4 colecciones al blog. Y los 4 enlaces que faltan dentro de `presoterapia-en-casa` |
+| **1** | Decidir la firma (§5.7) y crear la página de autor |
+| **2** | Reparar `led-boots-recuperacion`: de 615 a 1.300 palabras, 4 enlaces, 2 externos, `h2` en pregunta |
+| **3** | **Artículo 1 · pilar de luz roja.** Y el mismo día, sus enlaces entrantes desde las tres fichas de luz roja y desde la colección |
+| **4** | Reparar `banera-crioterapia`: tabla de grados y minutos, apartado de montaje, enlaces |
+| **5** | **Artículo 2 · baño de hielo.** Enlaces entrantes desde las dos fichas de frío |
+| **6** | Reparar `como-usar-pistola-de-masaje`: enlace a su ficha y marcado de preguntas |
+| **7** | **Artículo 3 · qué equipo de luz roja elegir** |
+| **8** | Crear la entrada **Terapia** del menú (paso 4 de [MEGAMENU.md](MEGAMENU.md)): hoy «Blog» es un enlace suelto sin hijos, así que el desplegable del escritorio y las pestañas del móvil no enseñan las categorías del blog |
+| **9** | **Artículo 4 · gafas de filtro** |
+| **10** | Revisar Search Console y **elegir con datos** los artículos 5 y 6 |
+| **11-14** | Artículos 5 y 6, o los que digan los datos |
 
 ---
 
-## Los remates que no se ven
+## 7. Cómo saber si funciona
 
-Todo esto ya está montado en el tema (GUIA-BLOG §5); solo hay que rellenarlo.
+A partir de la semana 10, **los temas ya no se eligen por intuición**. En
+**Search Console** → **Rendimiento** → pestaña **Consultas**, filtrando por
+`/blogs/`:
 
-| Remate | Qué hacer en cada artículo |
-|---|---|
-| `Article` en JSON-LD | Automático. No hay que hacer nada |
-| `FAQPage` | Rellenar el metacampo con las cinco preguntas de arriba |
-| `BreadcrumbList` | Automático |
-| Índice del artículo | Automático: el script lo pinta si hay tres o más `h2` |
-| Etiquetas | Una principal y `Entrenamiento` como secundaria. Nada fuera del vocabulario de seis |
-| Fecha de actualización | Cuando se revise un artículo, cambiar la fecha. Google lo tiene en cuenta y estos temas envejecen |
-| Aviso legal | Los tres llevan el descargo al final. No es opcional en contenido de salud |
+| Lo que veis | Lo que significa | Qué hacer |
+|---|---|---|
+| Una consulta con impresiones y **posición 8-20** | Estáis cerca de la primera página | Reforzar **ese** artículo: más contenido en el apartado que responde esa consulta, y un enlace entrante más. Rinde más que un artículo nuevo |
+| Una consulta con impresiones y **CTR bajo** | Salís pero no os clican | El «Título de la página» y la metadescripción de ese artículo |
+| Una consulta que **no cubre ningún artículo** | Un tema que no habíais visto | Ese es el siguiente artículo, y con prioridad sobre esta lista |
+| Un artículo con **cero impresiones a las 6 semanas** | No tiene enlaces entrantes o el tema no se busca | Comprobad primero los enlaces entrantes (§5.5) antes de dar el tema por muerto |
+
+Y un aviso para no desanimarse: **un artículo tarda de 6 a 12 semanas en
+asentarse**. Mirar posiciones a los cuatro días no dice nada.
+
+---
+
+## 8. Ideas para después, sin desarrollar
+
+Cuando los seis estén publicados, y siempre validando antes en Search Console:
+
+| Idea | Etiqueta | Por qué |
+|---|---|---|
+| Cómo recuperar después de una media maratón | Frío | Mucho volumen y toca las cuatro tecnologías |
+| Presoterapia o medias de compresión | Presoterapia | Comparativa con producto que no vendéis: da credibilidad |
+| Cuántas cámaras necesitan unas botas de presoterapia | Presoterapia | Comercial, decide entre `Plus` y `Pro` |
+| Pistola de masaje o foam roller | Liberación muscular | Comparativa, y el ticket de entrada de 99 € |
+| Montar una sala de recuperación en una clínica | Transversal | Va a por el cliente profesional, que es el de 2.500 € |
+| Retención de líquidos en las piernas: qué ayuda | Presoterapia | Público no deportista, que es mercado nuevo |
+| Cómo limpiar y mantener una bañera de hielo | Frío | Postventa, y nadie lo tiene escrito |
+| Qué es la fotobiomodulación (glosario) | Luz roja | Cola larga que refuerza el pilar |
