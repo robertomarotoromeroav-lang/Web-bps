@@ -119,6 +119,8 @@ shopify/GUIA-BLOG.md         Qué publicar en el blog y cómo configurarlo para 
 shopify/ARTICULOS-1-3.md     Los 3 primeros artículos: palabra clave, esquema, enlaces y campos
 shopify/SEO.md               Manual de SEO: lo que queda por hacer, medido sobre las 25 URL
 shopify/MEGAMENU.md          El menú tipo Hyperice: desplegable con fotos y móvil con pestañas
+shopify/MEXICO.md            Vender en México: por qué un .mx y por qué tienda aparte
+shopify/GUIA-MEXICO.md       Montar la tienda mexicana: las 13 fases, en orden
 shopify/bps-hyperice.css     Capa CSS sobre Dawn 15.4.1 / 16.0.0
 shopify/bps-hyperice.js      Los 3 scripts, en un archivo (antes iban en theme.liquid)
 shopify/AJUSTES-SECCIONES.md Ajustes de cada sección de Dawn, opción por opción

@@ -4,6 +4,9 @@ Documento de decisión, no de ejecución. Responde a la propuesta del cliente:
 *«replico bpsperformance.com en un .mx manteniendo textos, estilos y contenido,
 cambiando solo los euros por pesos»*.
 
+**El cómo está en [GUIA-MEXICO.md](GUIA-MEXICO.md)**: las 13 fases de montar la
+tienda mexicana, en orden. Este documento es el por qué.
+
 Documentos hermanos: [GUIA-SHOPIFY.md](GUIA-SHOPIFY.md) (el tema),
 [SEO.md](SEO.md) (lo que queda del sitio actual).
 
@@ -272,7 +275,10 @@ son plantillas.
 
 ---
 
-## Parte 4 · Configuración de la opción B, paso a paso
+## Parte 4 · Configuración de la opción B, en resumen
+
+> Esto es el mapa. El orden de trabajo completo, fase por fase, con las
+> dependencias y las pruebas, está en **[GUIA-MEXICO.md](GUIA-MEXICO.md)**.
 
 ### Dominios
 
