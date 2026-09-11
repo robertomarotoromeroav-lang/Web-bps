@@ -211,10 +211,19 @@ Comprobado hoy en las 26 direcciones:
 - **Ningún artículo tiene un solo enlace externo.**
 
 En la revisión anterior puse «los tres artículos enlazan entre sí y cada uno a 4
-productos y 5 colecciones». Eso era **la rejilla de productos y el menú**, que
-salen en todas las páginas del sitio. **Enlaces escritos dentro del texto** hay
-6 en `presoterapia-en-casa`, 2 en `banera-crioterapia`, 1 en el de la pistola y
-0 en el de las LED boots.
+productos y 5 colecciones». Eso era **el menú y los dos bloques automáticos del
+final del artículo** —«Colección destacada» y «Sigue leyendo»—, que salen igual
+en todas las páginas. **Enlaces escritos dentro del texto** hay 6 en
+`presoterapia-en-casa`, 2 en `banera-crioterapia`, 1 en el de la pistola y 0 en
+el de las LED boots.
+
+> **Los bloques automáticos no sustituyen a los enlaces escritos**, y además los
+> dos de este sitio enseñan **lo mismo en los cuatro artículos**: «Sigue leyendo»
+> muestra los tres más recientes —así que tres artículos se enlazan a sí mismos y
+> `presoterapia-en-casa` no recibe ninguno— y «Colección destacada» repite las
+> mismas cuatro fichas, dejando **ocho de las doce sin aparecer en ningún
+> artículo**. El por qué, con la tabla de los tres trabajos que hace un enlace
+> interno, está en [ARTICULOS-1-3.md](ARTICULOS-1-3.md) §5.5.
 
 ### Por qué es de las tres cosas más rentables de la lista
 

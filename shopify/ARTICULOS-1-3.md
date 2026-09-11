@@ -599,6 +599,61 @@ no una lista de características.
   con DOI. Si no encontráis el estudio, no se cita. Y **citad también lo que os
   juega en contra**: es lo que separa un sitio fiable de un folleto.
 
+#### Por qué el bloque «Sigue leyendo» no cuenta como esos enlaces
+
+Es la duda más razonable de todo el documento: si el artículo ya termina con tres
+tarjetas que enlazan a otros artículos, ¿para qué hacen falta enlaces escritos?
+
+Porque **un enlace interno hace tres trabajos distintos** y el bloque automático
+solo hace los dos primeros, y a medias:
+
+| Trabajo del enlace | ¿Lo hace el bloque? |
+|---|---|
+| **Que Google descubra la página** | Sí. Aunque eso ya lo hace el sitemap, así que aporta poco |
+| **Pasar autoridad** | A medias. Google separa el **contenido principal** del **contenido repetido** —menús, pies, módulos idénticos en todas las páginas— y al segundo le da mucho menos peso. Un bloque igual en las cuatro páginas es contenido repetido por definición |
+| **Decirle a Google de qué va la página de destino** | **No**, y es el que importa |
+
+El tercero solo se consigue escribiendo, porque **Google lee el texto que rodea
+al enlace**. «Conviene separarlo unas horas, como explicamos en la guía de baños
+de hielo» le dice que el destino trata de eso. Una tarjeta con una foto y un
+título no tiene texto alrededor que leer.
+
+En corto: el bloque dice *«aquí hay más artículos»*; el enlace escrito dice *«ese
+artículo responde exactamente a esta duda»*.
+
+**Y en este sitio el bloque tiene además dos fallos**, medidos el 8 de septiembre:
+
+```
+banera-crioterapia          → pistola | led-boots | banera-crioterapia  ← a sí mismo
+como-usar-pistola-de-masaje → pistola ← a sí mismo | led-boots | banera-crioterapia
+led-boots-recuperacion      → pistola | led-boots ← a sí mismo | banera-crioterapia
+presoterapia-en-casa        → pistola | led-boots | banera-crioterapia
+```
+
+1. Enseña **los tres artículos más recientes, no los relacionados**. Por eso son
+   los mismos tres en las cuatro páginas y **tres de los cuatro se enlazan a sí
+   mismos**, lo cual no hace nada.
+2. **`presoterapia-en-casa` no recibe ni un enlace**, porque es el más antiguo y
+   nunca entra en «los tres últimos». Y esto no se arregla publicando más: los
+   artículos viejos nunca volverán a aparecer ahí.
+
+Lo mismo con **«Colección destacada»**: las **mismas cuatro fichas en los cuatro
+artículos** (`BPS Plus`, `Pro-Panel`, `Recovery Pod`, `BPS Gun`), así que el
+artículo de la bañera no empuja el `Ice Bath` y **hay ocho fichas de doce que no
+aparecen en ningún artículo**.
+
+**Qué hacer:** el bloque se queda —para el lector funciona: baja el rebote y sube
+las páginas por visita—, pero **no sustituye a los 4-6 enlaces escritos**. Y dos
+mejoras opcionales:
+
+- **Colección destacada por tecnología.** En el editor se pueden crear
+  **plantillas de artículo alternativas** (`article.luz-roja`, `article.frio`...)
+  con una colección destacada distinta en cada una, y asignar a cada publicación
+  la suya en su campo **«Plantilla»**. Sin tocar código.
+- **Quitar el enlace a sí mismo** obliga a editar la sección en `Editar código`
+  —una condición comparando el artículo actual— y sería otro archivo de tema que
+  rehacer en cada actualización. Con cuatro artículos, **no merece la pena**.
+
 ### 5.6. Etiquetas
 
 Solo las cuatro que existen: `Presoterapia`, `Frío`, `Luz roja`, `Liberación
